@@ -1,5 +1,8 @@
 package org.simulationsystems.simulationframework.adapters.repastsimulationwrapper;
+
 import java.io.File;
+
+import org.simulationsystems.simulationframework.internal.api.SimulationAdapterAPI;
 
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.engine.controller.Controller;
@@ -25,10 +28,11 @@ import simphony.util.messages.MessageCenter;
 
  */
 public class RepastSimulationRunner extends AbstractRunner {
-	private boolean isStopped;
+	private SimulationAdapterAPI simulationAdapterAPI;
 	
-	private static MessageCenter msgCenter = MessageCenter
-			.getMessageCenter(RepastSimulationRunner.class);
+	private boolean isStopped;
+
+	private static MessageCenter msgCenter = MessageCenter.getMessageCenter(RepastSimulationRunner.class);
 
 	private RunEnvironmentBuilder runEnvironmentBuilder;
 	protected Controller controller;
@@ -43,44 +47,53 @@ public class RepastSimulationRunner extends AbstractRunner {
 		controller.setScheduleRunner(this);
 	}
 
-	public void load(File scenarioDir) throws Exception {
+	public void load(File scenarioDir, String frameworkConfigurationFileName) throws Exception {
 		if (scenarioDir.exists()) {
 			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
 			controller.setControllerRegistry(registry);
 		} else {
-			msgCenter.error("Scenario not found", new IllegalArgumentException(
-					"Invalid scenario " + scenarioDir.getAbsolutePath()));
+			msgCenter.error("Scenario not found",
+					new IllegalArgumentException("Invalid scenario " + scenarioDir.getAbsolutePath()));
 			return;
 		}
 
 		controller.batchInitialize();
-		
-		//ParametersCreator pc = new ParametersCreator();
+
+		// Set the Parameters across all simulation runs of this simulation
+		// HARD CODED FOR NOW
+		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
-		//defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME, ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1,
-		//		true);
 		defaultParameters.addParameter("human_count", "Human Count", Number.class, 200, true);
 		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5, true);
-		//Parameters p = pc.createParameters();
 		controller.runParameterSetters(defaultParameters);
+
+		// If Common Framework configuration file is provided, initialize Common
+		// Framework
+		// otherwise run the simulation as a regular Repast simulation
+		// (programmatically).		
+		if (frameworkConfigurationFileName != null) {
+			simulationAdapterAPI = SimulationAdapterAPI.getInstance();
+			simulationAdapterAPI.initializeAPI(frameworkConfigurationFileName);
+		}
+		//RunEnvironment.getInstance();
 	}
 
 	public void runInitialize() {
+		// Set the Seed Parameter for this simulation run
+		// HARD CODED FOR NOW
+		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME, ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1,
-				true);
-		//defaultParameters.addParameter("human_count", "Human Count", Number.class, 200, true);
-		//defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5, true);
-		
+		defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
+				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1, true);
+
 		controller.runInitialize(defaultParameters);
-		schedule = RunState.getInstance().getScheduleRegistry()
-				.getModelSchedule();
+		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 	}
 
 	public void cleanUpRun() {
 		controller.runCleanup();
-		isStopped=false;
+		isStopped = false;
 	}
 
 	public void cleanUpBatch() {
@@ -89,8 +102,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 
 	// returns the tick count of the next scheduled item
 	public double getNextScheduledTime() {
-		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule())
-				.peekNextAction().getNextTime();
+		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule()).peekNextAction().getNextTime();
 	}
 
 	// returns the number of model actions on the schedule
@@ -105,7 +117,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 
 	// Step the schedule
 	public void step() {
-		//System.out.println("Step");
+		// System.out.println("Step");
 		schedule.execute();
 	}
 
@@ -125,7 +137,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 		// required AbstractRunner stub. We will control the
 		// schedule directly.
 	}
-	
+
 	public boolean getIsStopped() {
 		return isStopped;
 	}

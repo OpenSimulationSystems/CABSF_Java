@@ -1,4 +1,4 @@
-package org.simulationsystems.simulationframework.internal.api;
+package org.simulationsystems.simulationframework.internal.simulationadapter.api;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -12,9 +12,13 @@ import java.util.List;
 import org.simulationsystems.simulationframework.internal.api.distributedagents.AgentMapping;
 import org.simulationsystems.simulationframework.internal.api.distributedagents.CommonFrameworkDistributedAgentManager;
 
+import repast.simphony.context.Context;
+import repast.simphony.engine.environment.RunState;
+
 public class SimulationAdapterInitializationHelper {
 	private SimulationAdapterAPI simulationAdapterAPI;
-
+	private Context ctx = RunState.getSafeMasterContext();
+	
 	// Disabled
 	private SimulationAdapterInitializationHelper() {
 	}
@@ -31,14 +35,18 @@ public class SimulationAdapterInitializationHelper {
 	 * Throws exception for error reading the Common Simulation Framework
 	 * configuration file.
 	 */
-	protected void initializeAPI(String frameworkConfigurationFileNameName)
+	protected void initializeAPI(String frameworkConfigurationFileNameName, String simulationTool)
 			throws IOException {
 
-		processFrameworkConfigurationProperties(frameworkConfigurationFileNameName);
-		mapSimulationAgentsToDistributedAgents();
-		
+		processFrameworkConfigurationProperties(frameworkConfigurationFileNameName);		
 	}
 
+	/*
+	 * 
+	 */
+	protected void initializeSimulationRun() {
+		mapSimulationAgentsToDistributedAgents();
+	}
 	/*
 	 * Reads the Common Simulation Framework Configuration File
 	 */
@@ -65,7 +73,7 @@ public class SimulationAdapterInitializationHelper {
 		
 		// Mock up some data for now. Takle jzombies Repast simulation
 		//Distribute all Human agents
-		String fullyQualifiedSimulationAgent = "jzombies.Human";
+		import repast.simphony.engine.environment.RunState;
 		AgentMapping am = mgr.createAgentMapping(fullyQualifiedSimulationAgent);
 	}
 	

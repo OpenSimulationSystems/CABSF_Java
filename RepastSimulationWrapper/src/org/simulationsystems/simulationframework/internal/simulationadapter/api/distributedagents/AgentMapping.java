@@ -1,4 +1,4 @@
-package org.simulationsystems.simulationframework.internal.api.distributedagents;
+package org.simulationsystems.simulationframework.internal.simulationadapter.api.distributedagents;
 
 import java.util.UUID;
 

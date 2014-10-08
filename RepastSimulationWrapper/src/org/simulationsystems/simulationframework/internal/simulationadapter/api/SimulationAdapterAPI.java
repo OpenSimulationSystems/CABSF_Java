@@ -1,9 +1,9 @@
-package org.simulationsystems.simulationframework.internal.api;
+package org.simulationsystems.simulationframework.internal.simulationadapter.api;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.simulationframework.internal.api.distributedagents.CommonFrameworkDistributedAgentManager;
+import org.simulationsystems.simulationframework.internal.simulationadapter.api.distributedagents.CommonFrameworkDistributedAgentManager;
 
 /**
  * This API is only for use by developers of adapters to connect simulation
@@ -54,7 +54,11 @@ public class SimulationAdapterAPI {
 		// Initialize the Simulation
 		simulationAdapterInitializationHelper.initializeAPI(frameworkConfigurationFileName);
 	}
-
+	
+	public void initializeSimulationRun() {
+		simulationAdapterInitializationHelper.initializeSimulationRun();
+	}
+	
 	/**
 	 * 
 	 * The API singleton for clients that are simulation systems adapters to

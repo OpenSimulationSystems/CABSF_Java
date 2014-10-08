@@ -1,7 +1,10 @@
-package org.simulationsystems.simulationframework.adapters.repastsimulationwrapper;
+package org.simulationsystems.simulationframework.runners.repastssimphonysimulationwrapper;
 
 import java.io.File;
+
+import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.environment.RunState;
 
 /*
  * The Repast Simulation Wrapper is an application that programmatically runs a Repast simulation
@@ -20,7 +23,7 @@ import repast.simphony.engine.environment.RunEnvironment;
  * @author Jorge Calderon
  * 
  */
-public class RepastSimulationWrapper {
+public class Wrapper {
 
 	public static void main(String[] args) {
 		// The Repast scenario Directory
@@ -30,7 +33,7 @@ public class RepastSimulationWrapper {
 		if (args.length >=2)
 			frameworkConfigurationFileName = args[1];
 
-		RepastSimulationRunner runner = new RepastSimulationRunner();
+		Runner runner = new Runner();
 
 		try {
 			runner.load(file, frameworkConfigurationFileName); // Load the Repast Scenario
@@ -42,7 +45,7 @@ public class RepastSimulationWrapper {
 		int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
 			runner.runInitialize(); // initialize the run
-
+			
 			// double endTime = 1000.0; // some arbitrary end time
 			// RunEnvironment.getInstance().endAt(endTime);
 			int max_ticks = 3;

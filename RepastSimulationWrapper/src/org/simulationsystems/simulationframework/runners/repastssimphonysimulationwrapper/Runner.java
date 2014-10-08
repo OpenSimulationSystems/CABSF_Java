@@ -1,8 +1,8 @@
-package org.simulationsystems.simulationframework.adapters.repastsimulationwrapper;
+package org.simulationsystems.simulationframework.runners.repastssimphonysimulationwrapper;
 
 import java.io.File;
 
-import org.simulationsystems.simulationframework.internal.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.internal.simulationadapter.api.SimulationAdapterAPI;
 
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.engine.controller.Controller;
@@ -27,12 +27,12 @@ import simphony.util.messages.MessageCenter;
  * http://sourceforge.net/p/repast/repast-simphony-docs/ci/master/tree/docs/RepastFAQ/TestMain_2.java
 
  */
-public class RepastSimulationRunner extends AbstractRunner {
-	private SimulationAdapterAPI simulationAdapterAPI;
+public class Runner extends AbstractRunner {
+	private RepastSimphonySimulationAdapterAPI repastSimphonySimulationAdapterAPI;
 	
 	private boolean isStopped;
 
-	private static MessageCenter msgCenter = MessageCenter.getMessageCenter(RepastSimulationRunner.class);
+	private static MessageCenter msgCenter = MessageCenter.getMessageCenter(Runner.class);
 
 	private RunEnvironmentBuilder runEnvironmentBuilder;
 	protected Controller controller;
@@ -41,7 +41,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 	protected SweeperProducer producer;
 	private ISchedule schedule;
 
-	public RepastSimulationRunner() {
+	public Runner() {
 		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
 		controller = new DefaultController(runEnvironmentBuilder);
 		controller.setScheduleRunner(this);

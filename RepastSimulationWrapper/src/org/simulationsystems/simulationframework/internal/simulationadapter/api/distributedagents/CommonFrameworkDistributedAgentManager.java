@@ -1,9 +1,9 @@
-package org.simulationsystems.simulationframework.internal.api.distributedagents;
+package org.simulationsystems.simulationframework.internal.simulationadapter.api.distributedagents;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.simulationframework.internal.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.internal.simulationadapter.api.SimulationAdapterAPI;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation framework.  

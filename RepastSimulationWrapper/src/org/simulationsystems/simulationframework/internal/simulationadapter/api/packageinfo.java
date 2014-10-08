@@ -6,10 +6,18 @@
  * the overall system this code sits:<br/>
  * <br/>
  * 
+ * Simulation-side:<br/>
+ * 1-Common Framework---> 2-***COMMON FRAMEWORK API*** --> 3-Simulation
+ * Adapters (Common Framework Repast Adapter)- API --> 4-Simulation Tool (Either programmatic runner such as the 
+ * Repast Simulation Wrapper or, for future work, GUIs such as Repast Simphony GUI) --> 5-End users of Simulation<br/><br/>
+ * 
+ * Distributed Agent side:<br/>
+ * 1-Common Framework---> 2-***COMMON FRAMEWORK API*** --> 3-Distributed Agent
+ * Adapters (Common Framework Adapter)- API --> 4-Simulation Tool (Either programmatic runner such as the 
+ * Rep
  * Common Framework---> ***COMMON FRAMEWORK API*** --> Simulation and Agent
  * Adapter(s) --> Simulations and Agents (Such as Repast simulations and JADE
- * agents) --> End Users of Simulation<br/>
- * <br/>
+ * agents) --> End Users of Simulation<br/><br/>
  * 
  * Currently supported Adaptors (Implementors of this API):<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repast - Via the "Repast Simulation Wrapper"
@@ -25,4 +33,4 @@
  * 
  * @author Jorge Calderon
  */
-package org.simulationsystems.simulationframework.internal.api;
+package org.simulationsystems.simulationframework.internal.simulationadapter.api;

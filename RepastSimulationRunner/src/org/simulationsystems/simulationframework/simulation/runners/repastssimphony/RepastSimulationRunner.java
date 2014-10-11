@@ -122,7 +122,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 		Context<Object> contextForThisRun = RunState.getInstance().getMasterContext();
 
 		if (simulationRunnerType == RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.COMMON_SIMULATION_FRAMEWORK)
-			repastSimphonySimulationAdapterAPI.initializeSimulationRun();
+			repastSimphonySimulationAdapterAPI.initializeSimulationRun(contextForThisRun);
 	}
 
 	public void cleanUpRun() {

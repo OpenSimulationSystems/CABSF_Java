@@ -18,7 +18,8 @@ import repast.simphony.engine.environment.RunState;
 public class SimulationAdapterInitializationHelper {
 	private SimulationAdapterAPI simulationAdapterAPI;
 
-	// Disabled
+	// Disabled for other classes. Use the other Constructor instead.
+	@SuppressWarnings("unused")
 	private SimulationAdapterInitializationHelper() {
 	}
 
@@ -72,23 +73,12 @@ public class SimulationAdapterInitializationHelper {
 		return new SimulationConfiguration(simulationAdapterAPI);
 	}
 
-	private void mapSimulationAgentsToDistributedAgents() {
-		CommonFrameworkDistributedAgentManager mgr = simulationAdapterAPI
-				.getCommonFrameworkDistributedAgentManager();
+	/*
+	 * This method is caused to assign an existing AgentMapping object to a
+	 * simulation-side agent.
+	 */
+	public void mapSimulationSideAgent(Object simulationAgent) {
+		simulationAdapterAPI.getCommonFrameworkDistributedAgentManager().addSimulationAgentToAgentMapping(simulationAgent);
 
-		// Loop through the Agent mappings from the configuration file
-		// TODO Auto-generated constructor stub
-		// List<Object> simulationObjects = getSimulationAgents();
-
-		//AgentMapping am = mgr.createAgentMapping(fullyQualifiedSimulationAgent);
-	}
-
-	private List<Object> getSimulationAgents() {
-		return new ArrayList();
-	}
-
-	public void configureAgentMapping(Class item, Object simulationAgent) {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -40,7 +40,7 @@ public class SimulationAdapterAPI {
 	private static SimulationAdapterAPI instance = new SimulationAdapterAPI();
 	private SimulationAdapterInitializationHelper simulationAdapterInitializationHelper = new SimulationAdapterInitializationHelper(
 			instance);
-	private CommonFrameworkDistributedAgentManager commonFrameworkDistributedAgentManager = new CommonFrameworkDistributedAgentManager();
+	private CommonFrameworkDistributedAgentManager commonFrameworkDistributedAgentManager = new CommonFrameworkDistributedAgentManager(instance);
 	private ConcurrentHashMap<String, Object> simulationOptions = new ConcurrentHashMap<String, Object>();
 
 	// Use the getInstance() instead.
@@ -53,7 +53,7 @@ public class SimulationAdapterAPI {
 	 * 
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
-	protected void initializeAPI(String frameworkConfigurationFileName,
+	public void initializeAPI(String frameworkConfigurationFileName,
 			String simulationToolName) throws IOException {
 		SIMULATION_TOOL_NAME = simulationToolName.toUpperCase();
 
@@ -107,8 +107,7 @@ public class SimulationAdapterAPI {
 	 */
 	public void mapSimulationSideAgents(Class item, Iterable<Object> agentsOfOneType) {
 		for (Object simulationAgent : agentsOfOneType) {
-			simulationAdapterInitializationHelper.configureAgentMapping(item,
-					simulationAgent);
+			simulationAdapterInitializationHelper.mapSimulationSideAgent(simulationAgent);
 		}
 	}
 
@@ -125,8 +124,7 @@ public class SimulationAdapterAPI {
 	 * @see mapSimulationSideAgents
 	 */
 	public void mapSimulationSideAgent(Object simulationAgent) {
-		simulationAdapterInitializationHelper
-				.configureAgentMapping(simulationAgent.getClass(), simulationAgent);
+		simulationAdapterInitializationHelper.mapSimulationSideAgent(simulationAgent);
 	}
 
 }

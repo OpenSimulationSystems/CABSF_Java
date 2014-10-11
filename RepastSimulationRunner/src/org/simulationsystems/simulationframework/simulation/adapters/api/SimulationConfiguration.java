@@ -3,20 +3,17 @@ package org.simulationsystems.simulationframework.simulation.adapters.api;
 import java.util.HashMap;
 
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.CommonFrameworkDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.CommonFrameworkDistributedAgentManager.CONFIGURATION_KEYS;
 
 public class SimulationConfiguration {
 	private SimulationAdapterAPI simulationAdapterAPI;
 
 	HashMap<CONFIGURATION_KEYS, Object> simulationConfigurationProperties = new HashMap<CONFIGURATION_KEYS, Object>();
 
-	public enum CONFIGURATION_KEYS {
-		DISTRIBUTED_AGENTS
-
-	}
-
 	public SimulationConfiguration(SimulationAdapterAPI simulationAdapterAPI) {
 		this.simulationAdapterAPI = simulationAdapterAPI;
-
+		this.simulationAdapterAPI.setSimulationConfiguration(this);
+		
 		// <String fullyQualifiedSimulationAgentName, String
 		// fullyQualifiedDistributedAgentName>
 		HashMap<String, String> distributedAgents = new HashMap<String, String>();
@@ -29,10 +26,10 @@ public class SimulationConfiguration {
 		// Mocking data for now;
 		CommonFrameworkDistributedAgentManager agentManager = simulationAdapterAPI
 				.getCommonFrameworkDistributedAgentManager();
-		agentManager.createUninitializedAgentMapping("jzombies.Human", "jade.Agent");
-		agentManager.createUninitializedAgentMapping("jzombies.Human", "jade.Agent");
-		agentManager.createUninitializedAgentMapping("jzombies.Human", "jade.Agent");
-		agentManager.createUninitializedAgentMapping("jzombies.Human", "jade.Agent");
-		agentManager.createUninitializedAgentMapping("jzombies.Human", "jade.Agent");
+		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
+		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
+		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
+		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
+		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
 	}
 }

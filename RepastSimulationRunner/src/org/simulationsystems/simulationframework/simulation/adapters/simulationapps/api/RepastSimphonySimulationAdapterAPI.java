@@ -37,7 +37,9 @@ import repast.simphony.context.Context;
  * 
  * @author Jorge Calderon
  */
-public class RepastSimphonySimulationAdapterAPI extends SimulationAdapterAPI {
+public class RepastSimphonySimulationAdapterAPI {
+	private SimulationAdapterAPI simulationAdapterAPI = SimulationAdapterAPI
+			.getInstance();
 	private String simToolNameToSetInParent = "REPAST_SIMPHONY";
 
 	private static RepastSimphonySimulationAdapterAPI instance = new RepastSimphonySimulationAdapterAPI();
@@ -55,7 +57,8 @@ public class RepastSimphonySimulationAdapterAPI extends SimulationAdapterAPI {
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
 	public void initializeAPI(String frameworkConfigurationFileName) throws IOException {
-		super.initializeAPI(frameworkConfigurationFileName, simToolNameToSetInParent);
+		simulationAdapterAPI.initializeAPI(frameworkConfigurationFileName,
+				simToolNameToSetInParent);
 	}
 
 	/**
@@ -73,7 +76,7 @@ public class RepastSimphonySimulationAdapterAPI extends SimulationAdapterAPI {
 	 * (already-created in the simulation API initialization) AgentMapping objects
 	 */
 	public void initializeSimulationRun(Context<Object> contextForThisRun) {
-		super.initializeSimulationRun();
+		simulationAdapterAPI.initializeSimulationRun();
 
 		// Repast Simphony-specific simulation run initialization
 		@SuppressWarnings({ "rawtypes" })
@@ -85,12 +88,12 @@ public class RepastSimphonySimulationAdapterAPI extends SimulationAdapterAPI {
 			Class<Object> i = item;
 			Iterable<Object> agentsOfOneType = contextForThisRun.getAgentLayer(i);
 
-			for (Object individualAgent : agentsOfOneType) {
-				super.mapSimulationSideAgent(item);
+			for (Object simulationAgent : agentsOfOneType) {
+				simulationAdapterAPI.mapSimulationSideAgent(simulationAgent);
 			}
 
-			 //super.configureAgentMappings(item,
-			 //agentsOfOneType);
+			// super.configureAgentMappings(item,
+			// agentsOfOneType);
 		}
 	}
 

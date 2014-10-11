@@ -13,6 +13,7 @@ public class AgentMapping {
 	Object simulationAgent;
 
 	// Disabled
+	@SuppressWarnings("unused")
 	private AgentMapping() {
 	}
 

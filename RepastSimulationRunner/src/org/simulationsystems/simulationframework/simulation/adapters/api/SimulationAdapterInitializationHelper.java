@@ -47,8 +47,6 @@ public class SimulationAdapterInitializationHelper {
 		// AgentMapping objects), and store the configuration in the SimulationAdapterAPI.
 		simulationAdapterAPI
 				.setSimulationConfiguration(processFrameworkConfigurationProperties(frameworkConfigurationFileNameName));
-
-		mapSimulationAgentsToDistributedAgents();
 	}
 
 	/*

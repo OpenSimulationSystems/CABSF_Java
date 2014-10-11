@@ -23,9 +23,8 @@ public class CommonFrameworkDistributedAgentManager {
 
 	/*
 	 * Creates object to hold Agent Mappings between the simulation-side and
-	 * distributed-agent-side agents. The actual setting of mapped objects occurs later.
-	 * This method is best called during the initialization phase after reading the
-	 * configuration.
+	 * distributed-agent-side agents. The actual setting of mapped objects occurs later on.
+	 * This method should be called as part of the common simulation framework configuration.
 	 */
 	public AgentMapping createUninitializedAgentMapping(String fullyQualifiedSimulationAgentName,
 			String fullyQualifiedDistributedAgentName) {

@@ -93,20 +93,40 @@ public class SimulationAdapterAPI {
 	}
 
 	/*
-	 * After the Simulation is initialized, the Simulation Adaptor API (or child class) is
-	 * initialized, and prior to executing a simulation run, this method must be called to
-	 * configure the simulation-side of the AgentMappings for one type (class) of
-	 * simulation agent. If multiple agent classes are distributed, this method must be
-	 * called for each type. This is done prior to the distributed agent-side mappings.
+	 * After the Simulation and Common Framework are initialized, the Simulation Adaptor
+	 * API (or child class) is initialized, and prior to executing a simulation run, this
+	 * method must be called to configure the simulation-side of the AgentMappings for one
+	 * type (class) of simulation agent. If multiple agent classes are distributed, this
+	 * method must be called for each type. This is done prior to the distributed
+	 * agent-side mappings.
+	 * 
+	 * Use this method to send an Iterable collection of Agents, all members a particular
+	 * class.
+	 * 
+	 * @see mapSimulationSideAgent
 	 */
-	public void configureAgentMappings(Class item, Iterable<Object> agentsOfOneType) {
+	public void mapSimulationSideAgents(Class item, Iterable<Object> agentsOfOneType) {
 		for (Object simulationAgent : agentsOfOneType) {
 			simulationAdapterInitializationHelper.configureAgentMapping(item,
 					simulationAgent);
 		}
 	}
 
-	private void mapOneSimulationSideAgent(Object simulationSideAgent) {
-
+	/*
+	 * After the Simulation and Common Framework are initialized, the Simulation Adaptor
+	 * API (or child class) is initialized, and prior to executing a simulation run, this
+	 * method must be called to configure the simulation-side of the AgentMappings for one
+	 * type (class) of simulation agent. If multiple agent classes are distributed, this
+	 * method must be called for each type. This is done prior to the distributed
+	 * agent-side mappings.
+	 * 
+	 * Use this method to send a single Simulation Agent object.
+	 * 
+	 * @see mapSimulationSideAgents
+	 */
+	public void mapSimulationSideAgent(Object simulationAgent) {
+		simulationAdapterInitializationHelper
+				.configureAgentMapping(simulationAgent.getClass(), simulationAgent);
 	}
+
 }

@@ -37,6 +37,12 @@ import simphony.util.messages.MessageCenter;
 public class RepastSimulationRunner extends AbstractRunner {
 	private RepastSimphonySimulationAdapterAPI repastSimphonySimulationAdapterAPI;
 
+	public enum SIMULATION_RUNNER_RUN_TYPE {
+		NON_FRAMEWORK_SIMULATION, COMMON_SIMULATION_FRAMEWORK
+	}
+
+	private SIMULATION_RUNNER_RUN_TYPE simulationRunnerType;
+
 	private boolean isStopped;
 
 	private static MessageCenter msgCenter = MessageCenter
@@ -79,20 +85,27 @@ public class RepastSimulationRunner extends AbstractRunner {
 				true);
 		controller.runParameterSetters(defaultParameters);
 
-		// If Common Framework configuration file is provided, initialize Common
-		// Framework
-		// otherwise run the simulation as a regular Repast simulation
-		// (programmatically).
+		// If Common Framework configuration file is provided, initialize Common Framework
+		// otherwise run the simulation as a regular Repast simulation (programmatically).
 		if (frameworkConfigurationFileName != null) {
 			// Call the concreate Adapter as this Adapter is only for Repast Simphony
 			repastSimphonySimulationAdapterAPI = RepastSimphonySimulationAdapterAPI
 					.getInstance();
 			repastSimphonySimulationAdapterAPI
 					.initializeAPI(frameworkConfigurationFileName);
-		}
-		// RunEnvironment.getInstance();
+			simulationRunnerType = RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.COMMON_SIMULATION_FRAMEWORK;
+		} else
+			simulationRunnerType = RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.NON_FRAMEWORK_SIMULATION;
 	}
 
+	public SIMULATION_RUNNER_RUN_TYPE getSimulationRunnerType() {
+		return simulationRunnerType;
+	}
+
+	/*
+	 * Initializes a single simulation run. Called after the simulation and (if
+	 * configured) Common Simulation Framework are initialized.
+	 */
 	public void runInitialize() {
 		// Set the Seed Parameter for this simulation run
 		// HARD CODED FOR NOW
@@ -104,25 +117,12 @@ public class RepastSimulationRunner extends AbstractRunner {
 
 		controller.runInitialize(defaultParameters);
 		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
-		
+
 		@SuppressWarnings("unchecked")
-		Context<Object> ctx = RunState.getInstance().getMasterContext();
-		
-		@SuppressWarnings({"rawtypes"})
-		Iterable<Class> agentTypeClasses = ctx.getAgentTypes();
-		for (@SuppressWarnings("rawtypes") Class item : agentTypeClasses){
-		    //Finish mapping all agents of this type
-			@SuppressWarnings("unchecked")
-			Class<Object> i = item;
-			Iterable<Object> agentsOfOneType = ctx.getAgentLayer(i);
-/*			for (Object individualAgent : agentsOfOneType) {
-				repastSimphonySimulationAdapterAPI.assignAgent();
-			}*/
-			
-			repastSimphonySimulationAdapterAPI.configureAgentMappings(item, agentsOfOneType);
-		}
-		
-		repastSimphonySimulationAdapterAPI.initializeSimulationRun();
+		Context<Object> contextForThisRun = RunState.getInstance().getMasterContext();
+
+		if (simulationRunnerType == RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.COMMON_SIMULATION_FRAMEWORK)
+			repastSimphonySimulationAdapterAPI.initializeSimulationRun();
 	}
 
 	public void cleanUpRun() {

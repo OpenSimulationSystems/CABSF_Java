@@ -1,4 +1,4 @@
-package org.simulationsystems.simulationframework.internal.simulationadapter.api.distributedagents;
+package org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents;
 
 import java.util.UUID;
 
@@ -8,15 +8,19 @@ import java.util.UUID;
 public class AgentMapping {
 	UUID uuid;
 	private String fullyQualifiedSimulationAgent;
+	private String fullyQualifiedDistributedAgentName;
+
 	Object simulationAgent;
 
-	//Disabled
+	// Disabled
 	private AgentMapping() {
 	}
-	
-	public AgentMapping(UUID uuid, String fullyQualifiedSimulationAgent) {
+
+	public AgentMapping(UUID uuid, String fullyQualifiedSimulationAgent,
+			String fullyQualifiedDistributedAgentName) {
 		this.uuid = uuid;
 		this.fullyQualifiedSimulationAgent = fullyQualifiedSimulationAgent;
+		this.fullyQualifiedDistributedAgentName = fullyQualifiedDistributedAgentName;
 	}
 
 	public String getFullyQualifiedSimulationAgent() {

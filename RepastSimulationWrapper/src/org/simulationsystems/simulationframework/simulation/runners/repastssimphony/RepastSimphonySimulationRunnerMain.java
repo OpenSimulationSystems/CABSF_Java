@@ -1,4 +1,4 @@
-package org.simulationsystems.simulationframework.runners.repastssimphonysimulationwrapper;
+package org.simulationsystems.simulationframework.simulation.runners.repastssimphony;
 
 import java.io.File;
 
@@ -7,9 +7,9 @@ import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunState;
 
 /*
- * The Repast Simulation Wrapper is an application that programmatically runs a Repast simulation
+ * The Repast Simulation RepastSimphonySimulationRunnerMain is an application that programmatically runs a Repast simulation
  * (See http://repast.sourceforge.net/docs/RepastSimphonyFAQ.pdf )
- * It also has an embedded Adapter into the Common Simulation Framework.  For basic functionality
+ * It also has an embedded RepastSimphonySimulationAdapterAPI into the Common Simulation Framework.  For basic functionality
  * users should not have to modify this application.
  * 
  * The following shows where this code fits in to the common framework: 
@@ -23,7 +23,7 @@ import repast.simphony.engine.environment.RunState;
  * @author Jorge Calderon
  * 
  */
-public class Wrapper {
+public class RepastSimphonySimulationRunnerMain {
 
 	public static void main(String[] args) {
 		// The Repast scenario Directory
@@ -33,10 +33,10 @@ public class Wrapper {
 		if (args.length >=2)
 			frameworkConfigurationFileName = args[1];
 
-		Runner runner = new Runner();
+		RepastSimulationRunner repastSimulationRunner = new RepastSimulationRunner();
 
 		try {
-			runner.load(file, frameworkConfigurationFileName); // Load the Repast Scenario
+			repastSimulationRunner.load(file, frameworkConfigurationFileName); // Load the Repast Scenario
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,32 +44,32 @@ public class Wrapper {
 		// Run the Sim a few times to check for cleanup and init issues.
 		int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
-			runner.runInitialize(); // initialize the run
+			repastSimulationRunner.runInitialize(); // initialize the run
 			
 			// double endTime = 1000.0; // some arbitrary end time
 			// RunEnvironment.getInstance().endAt(endTime);
 			int max_ticks = 3;
 			double tick = 0;
 			// loop until last action is left
-			while (runner.getActionCount() > 0) {
+			while (repastSimulationRunner.getActionCount() > 0) {
 				// max_ticks-2: -1 since this check is done on the second to
 				// last tick and another -1 since we start counting at 0
 				// Ticks actually jump from -1 to 1,2,3,etc. in this code, but
 				// in the model output file it goes: 0, 1, 2, etc.
-				if (runner.getModelActionCount() == 0 || (max_ticks - tick == 2) || runner.getIsStopped()) {
-					runner.setFinishing(true);
+				if (repastSimulationRunner.getModelActionCount() == 0 || (max_ticks - tick == 2) || repastSimulationRunner.getIsStopped()) {
+					repastSimulationRunner.setFinishing(true);
 				}
 				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-				System.out.println("Ticks: " + tick + " Model Action Count: " + runner.getModelActionCount()
-						+ " isStopped: " + runner.getIsStopped());
-				runner.step(); // execute all scheduled actions at next tick
+				System.out.println("Ticks: " + tick + " Model Action Count: " + repastSimulationRunner.getModelActionCount()
+						+ " isStopped: " + repastSimulationRunner.getIsStopped());
+				repastSimulationRunner.step(); // execute all scheduled actions at next tick
 			}
 
-			if (!runner.getIsStopped())
-				runner.stop(); // Execute any actions scheduled at run at the
+			if (!repastSimulationRunner.getIsStopped())
+				repastSimulationRunner.stop(); // Execute any actions scheduled at run at the
 								// end
-			runner.cleanUpRun();
+			repastSimulationRunner.cleanUpRun();
 		}
-		runner.cleanUpBatch(); // run after all runs complete
+		repastSimulationRunner.cleanUpBatch(); // run after all runs complete
 	}
 }

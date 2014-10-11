@@ -1,10 +1,13 @@
-package org.simulationsystems.simulationframework.runners.repastssimphonysimulationwrapper;
+package org.simulationsystems.simulationframework.simulation.runners.repastssimphony;
 
 import java.io.File;
+import java.util.HashSet;
 
-import org.simulationsystems.simulationframework.internal.simulationadapter.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastSimphonySimulationAdapterAPI;
 
 import repast.simphony.batch.BatchScenarioLoader;
+import repast.simphony.context.Context;
 import repast.simphony.engine.controller.Controller;
 import repast.simphony.engine.controller.DefaultController;
 import repast.simphony.engine.environment.AbstractRunner;
@@ -20,19 +23,24 @@ import repast.simphony.parameter.ParameterConstants;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.parameter.ParametersCreator;
 import repast.simphony.parameter.SweeperProducer;
+import repast.simphony.util.collections.IterableAdaptor;
 import simphony.util.messages.MessageCenter;
 
+//The Repast AbstractRunner that programmatically runs a Repast Simulation.  This class is taken from the Repast FAQ and enhanced to allow incorporation of the common simulation framework. testtest test test test test test test
 /*
+ *  The Repast AbstractRunner that programmatically runs a Repast Simulation.  This class is taken from the Repast FAQ and enhanced to allow incorporation of the common simulation framework. testtest test test test test test test    
+ *  
  *  Based on TestRunner_2.java from:
  * http://sourceforge.net/p/repast/repast-simphony-docs/ci/master/tree/docs/RepastFAQ/TestMain_2.java
 
  */
-public class Runner extends AbstractRunner {
+public class RepastSimulationRunner extends AbstractRunner {
 	private RepastSimphonySimulationAdapterAPI repastSimphonySimulationAdapterAPI;
-	
+
 	private boolean isStopped;
 
-	private static MessageCenter msgCenter = MessageCenter.getMessageCenter(Runner.class);
+	private static MessageCenter msgCenter = MessageCenter
+			.getMessageCenter(RepastSimulationRunner.class);
 
 	private RunEnvironmentBuilder runEnvironmentBuilder;
 	protected Controller controller;
@@ -41,20 +49,21 @@ public class Runner extends AbstractRunner {
 	protected SweeperProducer producer;
 	private ISchedule schedule;
 
-	public Runner() {
+	public RepastSimulationRunner() {
 		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
 		controller = new DefaultController(runEnvironmentBuilder);
 		controller.setScheduleRunner(this);
 	}
 
-	public void load(File scenarioDir, String frameworkConfigurationFileName) throws Exception {
+	public void load(File scenarioDir, String frameworkConfigurationFileName)
+			throws Exception {
 		if (scenarioDir.exists()) {
 			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
 			controller.setControllerRegistry(registry);
 		} else {
-			msgCenter.error("Scenario not found",
-					new IllegalArgumentException("Invalid scenario " + scenarioDir.getAbsolutePath()));
+			msgCenter.error("Scenario not found", new IllegalArgumentException(
+					"Invalid scenario " + scenarioDir.getAbsolutePath()));
 			return;
 		}
 
@@ -64,19 +73,24 @@ public class Runner extends AbstractRunner {
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter("human_count", "Human Count", Number.class, 200, true);
-		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5, true);
+		defaultParameters.addParameter("human_count", "Human Count", Number.class, 200,
+				true);
+		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5,
+				true);
 		controller.runParameterSetters(defaultParameters);
 
 		// If Common Framework configuration file is provided, initialize Common
 		// Framework
 		// otherwise run the simulation as a regular Repast simulation
-		// (programmatically).		
+		// (programmatically).
 		if (frameworkConfigurationFileName != null) {
-			simulationAdapterAPI = SimulationAdapterAPI.getInstance();
-			simulationAdapterAPI.initializeAPI(frameworkConfigurationFileName);
+			// Call the concreate Adapter as this Adapter is only for Repast Simphony
+			repastSimphonySimulationAdapterAPI = RepastSimphonySimulationAdapterAPI
+					.getInstance();
+			repastSimphonySimulationAdapterAPI
+					.initializeAPI(frameworkConfigurationFileName);
 		}
-		//RunEnvironment.getInstance();
+		// RunEnvironment.getInstance();
 	}
 
 	public void runInitialize() {
@@ -85,10 +99,30 @@ public class Runner extends AbstractRunner {
 		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
 		defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
-				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1, true);
+				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1,
+				true);
 
 		controller.runInitialize(defaultParameters);
 		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
+		
+		@SuppressWarnings("unchecked")
+		Context<Object> ctx = RunState.getInstance().getMasterContext();
+		
+		@SuppressWarnings({"rawtypes"})
+		Iterable<Class> agentTypeClasses = ctx.getAgentTypes();
+		for (@SuppressWarnings("rawtypes") Class item : agentTypeClasses){
+		    //Finish mapping all agents of this type
+			@SuppressWarnings("unchecked")
+			Class<Object> i = item;
+			Iterable<Object> agentsOfOneType = ctx.getAgentLayer(i);
+/*			for (Object individualAgent : agentsOfOneType) {
+				repastSimphonySimulationAdapterAPI.assignAgent();
+			}*/
+			
+			repastSimphonySimulationAdapterAPI.configureAgentMappings(item, agentsOfOneType);
+		}
+		
+		repastSimphonySimulationAdapterAPI.initializeSimulationRun();
 	}
 
 	public void cleanUpRun() {
@@ -102,7 +136,8 @@ public class Runner extends AbstractRunner {
 
 	// returns the tick count of the next scheduled item
 	public double getNextScheduledTime() {
-		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule()).peekNextAction().getNextTime();
+		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule())
+				.peekNextAction().getNextTime();
 	}
 
 	// returns the number of model actions on the schedule

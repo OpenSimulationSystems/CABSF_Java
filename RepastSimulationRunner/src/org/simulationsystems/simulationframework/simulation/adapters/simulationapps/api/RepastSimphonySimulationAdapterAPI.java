@@ -9,22 +9,25 @@ import org.simulationsystems.simulationframework.simulation.adapters.api.distrib
 import repast.simphony.context.Context;
 
 /**
- * This API is only for use by developers of adapters to connect simulation tools (such as
- * Repast) and agent-based systems (such as JADE) into the common simulation framework.
- * Simulation and Agent developers using such systems should use the appropriate
- * adapter(s). The following highlights the where in the overall system this code sits:<br/>
+ * This API is only for use by developers of adapters to connect simulation
+ * tools (such as Repast) and agent-based systems (such as JADE) into the common
+ * simulation framework. Simulation and Agent developers using such systems
+ * should use the appropriate adapter(s). The following highlights the where in
+ * the overall system this code sits:<br/>
  * <br/>
  * 
  * Common Framework---> ***COMMON FRAMEWORK API*** --> Simulation and Agent
- * RepastSimphonyRepastSimphonySimulationAdapterAPI(s) --> Simulations and Agents (Such as
- * Repast simulations and JADE agents) --> End Users of Simulation<br/>
+ * RepastSimphonyRepastSimphonySimulationAdapterAPI(s) --> Simulations and
+ * Agents (Such as Repast simulations and JADE agents) --> End Users of
+ * Simulation<br/>
  * <br/>
  * 
  * Currently supported Adaptors (Implementors of this API):<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repast - Via the
- * "Repast Simulation RepastSimphonySimulationRunnerMain" Application, which is both an
- * RepastSimphonyRepastSimphonySimulationAdapterAPI into the common simulation framework
- * and its own application programmatically running Repast as a library.<br/>
+ * "Repast Simulation RepastSimphonySimulationRunnerMain" Application, which is
+ * both an RepastSimphonyRepastSimphonySimulationAdapterAPI into the common
+ * simulation framework and its own application programmatically running Repast
+ * as a library.<br/>
  * <br/>
  * 
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JADE - Via the
@@ -40,7 +43,7 @@ import repast.simphony.context.Context;
 public class RepastSimphonySimulationAdapterAPI {
 	private SimulationAdapterAPI simulationAdapterAPI = SimulationAdapterAPI
 			.getInstance();
-	private String simToolNameToSetInParent = "REPAST_SIMPHONY";
+	private String simToolNameToSet = "REPAST_SIMPHONY";
 
 	private static RepastSimphonySimulationAdapterAPI instance = new RepastSimphonySimulationAdapterAPI();
 
@@ -50,21 +53,22 @@ public class RepastSimphonySimulationAdapterAPI {
 	}
 
 	/*
-	 * This method should be called after RepastSimphonySimulationAdapterAPI.getInstance()
-	 * to initialize the common framework simulation based on the supplied configuration
-	 * properties.
+	 * This method should be called after
+	 * RepastSimphonySimulationAdapterAPI.getInstance() to initialize the common
+	 * framework simulation based on the supplied configuration properties.
 	 * 
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
-	public void initializeAPI(String frameworkConfigurationFileName) throws IOException {
+	public void initializeAPI(String frameworkConfigurationFileName)
+			throws IOException {
 		simulationAdapterAPI.initializeAPI(frameworkConfigurationFileName,
-				simToolNameToSetInParent);
+				simToolNameToSet);
 	}
 
 	/**
 	 * 
-	 * The API singleton for clients that are simulation systems adapters to into the
-	 * common simulation framework
+	 * The API singleton for clients that are simulation systems adapters to
+	 * into the common simulation framework
 	 * 
 	 */
 	public static RepastSimphonySimulationAdapterAPI getInstance() {
@@ -72,8 +76,9 @@ public class RepastSimphonySimulationAdapterAPI {
 	}
 
 	/*
-	 * Initialize the simulation run in Repast Simphony. THis method configures the
-	 * (already-created in the simulation API initialization) AgentMapping objects
+	 * Initialize the simulation run in Repast Simphony. THis method configures
+	 * the (already-created in the simulation API initialization) AgentMapping
+	 * objects
 	 */
 	public void initializeSimulationRun(Context<Object> contextForThisRun) {
 		simulationAdapterAPI.initializeSimulationRun();
@@ -86,10 +91,24 @@ public class RepastSimphonySimulationAdapterAPI {
 			// Finish mapping all agents of this type
 			@SuppressWarnings("unchecked")
 			Class<Object> i = item;
-			Iterable<Object> agentsOfOneType = contextForThisRun.getAgentLayer(i);
+			Iterable<Object> simulationAgentClasses = contextForThisRun
+					.getAgentLayer(i);
 
-			for (Object simulationAgent : agentsOfOneType) {
-				simulationAdapterAPI.mapSimulationSideAgent(simulationAgent);
+			for (Object simulationAgentClass : simulationAgentClasses) {
+				@SuppressWarnings("unchecked")
+				Class<Object> agentClass = (Class<Object>) simulationAgentClass
+						.getClass();
+				if (simulationAdapterAPI.getSimulationConfiguration()
+						.isAgentClassDistributedType(agentClass)) {
+					Iterable<Object> agentsOfThisClass = contextForThisRun
+							.getAgentLayer(agentClass);
+					for (Object simulationAgent : agentsOfThisClass) {
+						simulationAdapterAPI
+								.mapSimulationSideAgent(simulationAgent);
+					}
+				}
+				else
+					continue;
 			}
 
 			// super.configureAgentMappings(item,

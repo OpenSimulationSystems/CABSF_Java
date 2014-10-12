@@ -13,15 +13,17 @@ public class SimulationConfiguration {
 	public SimulationConfiguration(SimulationAdapterAPI simulationAdapterAPI) {
 		this.simulationAdapterAPI = simulationAdapterAPI;
 		this.simulationAdapterAPI.setSimulationConfiguration(this);
-		
+
 		// <String fullyQualifiedSimulationAgentName, String
 		// fullyQualifiedDistributedAgentName>
 		HashMap<String, String> distributedAgents = new HashMap<String, String>();
-		simulationConfigurationProperties.put(CONFIGURATION_KEYS.DISTRIBUTED_AGENTS,
-				distributedAgents);
+		simulationConfigurationProperties.put(
+				CONFIGURATION_KEYS.DISTRIBUTED_AGENTS, distributedAgents);
 
-		// Create AgentMapping objects based on the configured type and number of agents.
-		// These objects will be populated with actual mapped simulation-side and
+		// Create AgentMapping objects based on the configured type and number
+		// of agents.
+		// These objects will be populated with actual mapped simulation-side
+		// and
 		// distributed-agent-side data.
 		// Mocking data for now;
 		CommonFrameworkDistributedAgentManager agentManager = simulationAdapterAPI
@@ -31,5 +33,15 @@ public class SimulationConfiguration {
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
+	}
+
+	public boolean isAgentClassDistributedType(Class agentClass) {
+		// TODO: Tie this to the simulation configuration
+
+		if (agentClass.toString() == "jzombies.Human")
+			return true;
+		else
+			return false;
+
 	}
 }

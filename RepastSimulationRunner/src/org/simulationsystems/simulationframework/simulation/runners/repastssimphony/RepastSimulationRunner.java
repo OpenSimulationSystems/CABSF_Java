@@ -119,10 +119,10 @@ public class RepastSimulationRunner extends AbstractRunner {
 		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 
 		@SuppressWarnings("unchecked")
-		Context<Object> contextForThisRun = RunState.getInstance().getMasterContext();
+		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
 
 		if (simulationRunnerType == RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.COMMON_SIMULATION_FRAMEWORK)
-			repastSimphonySimulationAdapterAPI.initializeSimulationRun(contextForThisRun);
+			repastSimphonySimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun);
 	}
 
 	public void cleanUpRun() {

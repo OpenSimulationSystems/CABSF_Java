@@ -8,17 +8,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.AgentMapping;
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.CommonFrameworkDistributedAgentManager;
-
-import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunState;
+import java.util.UUID;
 
 public class SimulationAdapterInitializationHelper {
 	private SimulationAdapterAPI simulationAdapterAPI;
 
-	// Disabled for other classes. Use the other Constructor instead.
+	/*
+	 * Use the other Constructor instead
+	 */
 	@SuppressWarnings("unused")
 	private SimulationAdapterInitializationHelper() {
 	}
@@ -28,57 +25,60 @@ public class SimulationAdapterInitializationHelper {
 	}
 
 	/*
-	 * Initializes the API objects for the simulation adaptor client(s). Reads the
-	 * properties from the configuration file, and prepares AgentMapping objects, which
-	 * will be populated later once the distributed agents join the simulation.
+	 * Initializes the API objects for the simulation adaptor client(s). Reads the properties from
+	 * the configuration file, and prepares AgentMapping objects, which will be populated later once
+	 * the distributed agents join the simulation.
 	 * 
-	 * It is expected that this API is only called once before any simulation runs in a
-	 * simulation group are executed. All simulation runs within a simulation run group
-	 * contain the same agents, both on the simulation-side and distributed-agent-side. If
-	 * a different number or type of agents are needed, this should be set up as a
-	 * separate simulation run group.
+	 * It is expected that this API is only called once before any simulation runs in a simulation
+	 * group are executed. All simulation runs within a simulation run group contain the same
+	 * agents, both on the simulation-side and distributed-agent-side. If a different number or type
+	 * of agents are needed, this should be set up as a separate simulation run group.
 	 * 
-	 * Throws exception for error reading the Common Simulation Framework configuration
-	 * file.
+	 * Throws exception for error reading the Common Simulation Framework configuration file.
 	 */
-	protected void initializeAPI(String frameworkConfigurationFileNameName)
+	protected CommonSimulationFrameworkContext initializeAPI(
+			String frameworkConfigurationFileNameName)
 			throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
 		// AgentMapping objects), and store the configuration in the SimulationAdapterAPI.
-		simulationAdapterAPI
-				.setSimulationConfiguration(processFrameworkConfigurationProperties(frameworkConfigurationFileNameName));
+		CommonSimulationFrameworkContext csfContext = new CommonSimulationFrameworkContext();
+		SimulationConfiguration config = processFrameworkConfigurationProperties(
+				frameworkConfigurationFileNameName, csfContext);
+		csfContext.setSimulationConfiguration(config);
+		return csfContext;
 	}
 
 	/*
-	 * creates the mappings between the Simulation-side agents and distributed agents.
+	 * Placeholder for future functionality.  
 	 */
 	protected void initializeSimulationRun() {
 	}
 
 	/*
-	 * Reads the Common Simulation Framework Configuration File. Creates the AgentMapping
-	 * objects, with the actual mappings added in later.
+	 * Reads the Common Simulation Framework Configuration File. Creates the AgentMapping objects,
+	 * with the actual mappings added in later.
 	 */
 	private SimulationConfiguration processFrameworkConfigurationProperties(
-			String frameworkConfigurationFileNameName) throws IOException {
+			String frameworkConfigurationFileNameName, CommonSimulationFrameworkContext commonSimulationFrameworkContext) throws IOException {
 		/*
-		 * FileInputStream fstream = new FileInputStream("textfile.txt"); // Get the
-		 * object of DataInputStream DataInputStream in = new DataInputStream(fstream);
-		 * BufferedReader br = new BufferedReader(new InputStreamReader(in)); String
-		 * strLine; // Read File Line By Line while ((strLine = br.readLine()) != null) {
-		 * // Print the content on the console System.out.println(strLine); }
+		 * FileInputStream fstream = new FileInputStream("textfile.txt"); // Get the object of
+		 * DataInputStream DataInputStream in = new DataInputStream(fstream); BufferedReader br =
+		 * new BufferedReader(new InputStreamReader(in)); String strLine; // Read File Line By Line
+		 * while ((strLine = br.readLine()) != null) { // Print the content on the console
+		 * System.out.println(strLine); }
 		 */
-
-		return new SimulationConfiguration(simulationAdapterAPI);
+		SimulationConfiguration config = new SimulationConfiguration(commonSimulationFrameworkContext);
+		return config;
 	}
 
 	/*
-	 * This method is caused to assign an existing AgentMapping object to a
-	 * simulation-side agent.
+	 * This method is caused to assign an existing AgentMapping object to a simulation-side agent.
 	 */
-	public void mapSimulationSideAgent(Object simulationAgent) {
-		simulationAdapterAPI.getCommonFrameworkDistributedAgentManager().addSimulationAgentToAgentMapping(simulationAgent);
+	public void mapSimulationSideAgent(Object simulationAgent,
+			CommonSimulationFrameworkContext commonSimulationFrameworkContext) {
+		commonSimulationFrameworkContext.getCommonFrameworkDistributedAgentManager()
+				.addSimulationAgentToAgentMapping(simulationAgent);
 
 	}
 }

@@ -35,6 +35,10 @@ public class SimulationConfiguration {
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
 	}
 
+	/*
+	 * Checks whether this agent belongs to a class that is expected to be
+	 * distributed outside of the simulation runtime environment.
+	 */
 	public boolean isAgentClassDistributedType(Class agentClass) {
 		// TODO: Tie this to the simulation configuration
 

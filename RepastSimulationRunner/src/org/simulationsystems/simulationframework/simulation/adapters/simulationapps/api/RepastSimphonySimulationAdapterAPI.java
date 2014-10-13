@@ -78,41 +78,35 @@ public class RepastSimphonySimulationAdapterAPI {
 	/*
 	 * Initialize the simulation run in Repast Simphony. THis method configures
 	 * the (already-created in the simulation API initialization) AgentMapping
-	 * objects
+	 * objects.
 	 */
 	public void initializeSimulationRun(Context<Object> contextForThisRun) {
 		simulationAdapterAPI.initializeSimulationRun();
 
 		// Repast Simphony-specific simulation run initialization
 		@SuppressWarnings({ "rawtypes" })
-		Iterable<Class> agentTypeClasses = contextForThisRun.getAgentTypes();
+		Iterable<Class> simulationAgentsInAllClasses = contextForThisRun
+				.getAgentTypes();
 		for (@SuppressWarnings("rawtypes")
-		Class item : agentTypeClasses) {
+		Class simulationAgentClass : simulationAgentsInAllClasses) {
 			// Finish mapping all agents of this type
 			@SuppressWarnings("unchecked")
-			Class<Object> i = item;
-			Iterable<Object> simulationAgentClasses = contextForThisRun
-					.getAgentLayer(i);
+			Class<Object> simulationAgentClazz = simulationAgentClass;
+			Iterable<Object> simulationAgentsInSingleClass = contextForThisRun
+					.getAgentLayer(simulationAgentClazz);
 
-			for (Object simulationAgentClass : simulationAgentClasses) {
+			for (Object simulationAgent : simulationAgentsInSingleClass) {
 				@SuppressWarnings("unchecked")
-				Class<Object> agentClass = (Class<Object>) simulationAgentClass
+				Class<Object> agentClass = (Class<Object>) simulationAgent
 						.getClass();
 				if (simulationAdapterAPI.getSimulationConfiguration()
 						.isAgentClassDistributedType(agentClass)) {
-					Iterable<Object> agentsOfThisClass = contextForThisRun
-							.getAgentLayer(agentClass);
-					for (Object simulationAgent : agentsOfThisClass) {
-						simulationAdapterAPI
-								.mapSimulationSideAgent(simulationAgent);
-					}
-				}
-				else
+					simulationAdapterAPI
+							.mapSimulationSideAgent(simulationAgent);
+				} else
 					continue;
 			}
 
-			// super.configureAgentMappings(item,
-			// agentsOfOneType);
 		}
 	}
 

@@ -79,7 +79,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter("human_count", "Human Count", Number.class, 200,
+		defaultParameters.addParameter("human_count", "Human Count", Number.class, 5,
 				true);
 		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5,
 				true);

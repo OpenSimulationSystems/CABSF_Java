@@ -31,6 +31,7 @@ public class RepastSimphonySimulationRunnerMain {
 		
 		String frameworkConfigurationFileName = null;
 		if (args.length >=2)
+			//Read the directory to the Common Simulation Framework configuration file (second argument)
 			frameworkConfigurationFileName = args[1];
 
 		RepastSimulationRunner repastSimulationRunner = new RepastSimulationRunner();
@@ -41,31 +42,40 @@ public class RepastSimphonySimulationRunnerMain {
 			e.printStackTrace();
 		}
 
-		// Run the Sim a few times to check for cleanup and init issues.
+		// Run the simulation a few times to check for cleanup and init issues.
 		int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
 			repastSimulationRunner.runInitialize(); // initialize the run
 			
-			// double endTime = 1000.0; // some arbitrary end time
-			// RunEnvironment.getInstance().endAt(endTime);
-			int max_ticks = 3;
-			double tick = 0;
+			//Hard Coded for now
+			double max_ticks = 3;
+			double tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+			System.out.println("Tick: " + tick + " Model Action Count: " + repastSimulationRunner.getModelActionCount()
+					+ " isStopped: " + repastSimulationRunner.getIsStopped());
+			
 			// loop until last action is left
-			while (repastSimulationRunner.getActionCount() > 0) {
-				// max_ticks-2: -1 since this check is done on the second to
-				// last tick and another -1 since we start counting at 0
-				// Ticks actually jump from -1 to 1,2,3,etc. in this code, but
-				// in the model output file it goes: 0, 1, 2, etc.
-				if (repastSimulationRunner.getModelActionCount() == 0 || (max_ticks - tick == 2) || repastSimulationRunner.getIsStopped()) {
+			while (repastSimulationRunner.getActionCount() > 0 ) {
+				System.out.println("Enter Loop. tick:"+tick);
+
+				if (repastSimulationRunner.getModelActionCount() == 0 || repastSimulationRunner.getIsStopped()) {
 					repastSimulationRunner.setFinishing(true);
+					System.out.println("setting finishing");
 				}
-				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-				System.out.println("Ticks: " + tick + " Model Action Count: " + repastSimulationRunner.getModelActionCount()
-						+ " isStopped: " + repastSimulationRunner.getIsStopped());
+				System.out.println("stepping");
 				repastSimulationRunner.step(); // execute all scheduled actions at next tick
+				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+				if (max_ticks - tick == 0.0 && !repastSimulationRunner.getIsStopped()) { //just executed the last step
+					repastSimulationRunner.stop();
+					System.out.println("Tick="+tick+" Stopping");
+				}
+				
+				//Prints out one or two extra times depending on where the simulation is ended from,
+				//either in the model: print twice,  or through the runner: print three times
+				System.out.println("Executed step. Tick: " + tick + " Model Action Count: " + repastSimulationRunner.getModelActionCount()
+						+ " isStopped: " + repastSimulationRunner.getIsStopped());
 			}
 
-			if (!repastSimulationRunner.getIsStopped())
+			if (!repastSimulationRunner.getIsStopped()) //Don't stop twice
 				repastSimulationRunner.stop(); // Execute any actions scheduled at run at the
 								// end
 			repastSimulationRunner.cleanUpRun();

@@ -8,11 +8,11 @@ import org.simulationsystems.simulationframework.simulation.adapters.api.distrib
 public class SimulationConfiguration {
 	private SimulationRunGroup simulationRunGroup;
 	
-	public SimulationConfiguration(CommonSimulationFrameworkContext commonSimulationFrameworkContext) {
-				
-		//TODO: Read the actual statif Simulation Run Group ID
-		simulationRunGroup = new SimulationRunGroup("12345");
-		commonSimulationFrameworkContext.setSimulationRunGroup(simulationRunGroup);
+	public SimulationConfiguration(SimulationFrameworkContext simulationFrameworkContext) {
+
+		//TODO: Read the actual values from the configuration file
+		simulationRunGroup = new SimulationRunGroup("12345","1.0","1.0");
+		simulationFrameworkContext.setSimulationRunGroup(simulationRunGroup);
 
 		// Create AgentMapping objects based on the configured type and number
 		// of agents.
@@ -20,7 +20,7 @@ public class SimulationConfiguration {
 		// and
 		// distributed-agent-side data.
 		// Mocking data for now;
-		CommonFrameworkDistributedAgentManager agentManager = commonSimulationFrameworkContext
+		CommonFrameworkDistributedAgentManager agentManager = simulationFrameworkContext
 				.getCommonFrameworkDistributedAgentManager();
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");

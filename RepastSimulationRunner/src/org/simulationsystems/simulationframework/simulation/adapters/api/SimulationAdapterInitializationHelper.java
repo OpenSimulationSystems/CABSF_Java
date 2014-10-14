@@ -36,13 +36,13 @@ public class SimulationAdapterInitializationHelper {
 	 * 
 	 * Throws exception for error reading the Common Simulation Framework configuration file.
 	 */
-	protected CommonSimulationFrameworkContext initializeAPI(
+	protected SimulationFrameworkContext initializeAPI(
 			String frameworkConfigurationFileNameName)
 			throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
 		// AgentMapping objects), and store the configuration in the SimulationAdapterAPI.
-		CommonSimulationFrameworkContext csfContext = new CommonSimulationFrameworkContext();
+		SimulationFrameworkContext csfContext = new SimulationFrameworkContext();
 		SimulationConfiguration config = processFrameworkConfigurationProperties(
 				frameworkConfigurationFileNameName, csfContext);
 		csfContext.setSimulationConfiguration(config);
@@ -52,7 +52,7 @@ public class SimulationAdapterInitializationHelper {
 	/*
 	 * Placeholder for future functionality.  
 	 */
-	protected void initializeSimulationRun() {
+	protected void initializeSimulationRun(Object simulationSideContext, SimulationFrameworkContext simulationFrameworkContext) {
 	}
 
 	/*
@@ -60,7 +60,7 @@ public class SimulationAdapterInitializationHelper {
 	 * with the actual mappings added in later.
 	 */
 	private SimulationConfiguration processFrameworkConfigurationProperties(
-			String frameworkConfigurationFileNameName, CommonSimulationFrameworkContext commonSimulationFrameworkContext) throws IOException {
+			String frameworkConfigurationFileNameName, SimulationFrameworkContext simulationFrameworkContext) throws IOException {
 		/*
 		 * FileInputStream fstream = new FileInputStream("textfile.txt"); // Get the object of
 		 * DataInputStream DataInputStream in = new DataInputStream(fstream); BufferedReader br =
@@ -68,7 +68,7 @@ public class SimulationAdapterInitializationHelper {
 		 * while ((strLine = br.readLine()) != null) { // Print the content on the console
 		 * System.out.println(strLine); }
 		 */
-		SimulationConfiguration config = new SimulationConfiguration(commonSimulationFrameworkContext);
+		SimulationConfiguration config = new SimulationConfiguration(simulationFrameworkContext);
 		return config;
 	}
 
@@ -76,8 +76,8 @@ public class SimulationAdapterInitializationHelper {
 	 * This method is caused to assign an existing AgentMapping object to a simulation-side agent.
 	 */
 	public void mapSimulationSideAgent(Object simulationAgent,
-			CommonSimulationFrameworkContext commonSimulationFrameworkContext) {
-		commonSimulationFrameworkContext.getCommonFrameworkDistributedAgentManager()
+			SimulationFrameworkContext simulationFrameworkContext) {
+		simulationFrameworkContext.getCommonFrameworkDistributedAgentManager()
 				.addSimulationAgentToAgentMapping(simulationAgent);
 
 	}

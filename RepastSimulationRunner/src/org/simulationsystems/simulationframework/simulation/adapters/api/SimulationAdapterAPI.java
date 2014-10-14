@@ -49,22 +49,22 @@ public class SimulationAdapterAPI {
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
 	// TODO: Add the UUID for the simulation run group instance.
-	public CommonSimulationFrameworkContext initializeAPI(String frameworkConfigurationFileName,
+	public SimulationFrameworkContext initializeAPI(String frameworkConfigurationFileName,
 			String simulationToolName) throws IOException {
 		SIMULATION_TOOL_NAME = simulationToolName.toUpperCase();
 
 		// Initialize the Simulation's Configuration Properties
-		CommonSimulationFrameworkContext commonSimulationFrameworkContext = simulationAdapterInitializationHelper
+		SimulationFrameworkContext simulationFrameworkContext = simulationAdapterInitializationHelper
 				.initializeAPI(frameworkConfigurationFileName);
-		return commonSimulationFrameworkContext;
+		return simulationFrameworkContext;
 	}
 
 	/*
 	 * Placeholder for future functionality. Adapter clients should call this first before any
 	 * custom simulation run initialization is performed.
 	 */
-	public void initializeSimulationRun() {
-		simulationAdapterInitializationHelper.initializeSimulationRun();
+	public void initializeSimulationRun(Object simulationSideContext, SimulationFrameworkContext simulationFrameworkContext) {
+		simulationAdapterInitializationHelper.initializeSimulationRun(simulationSideContext, simulationFrameworkContext);
 	}
 
 	/**

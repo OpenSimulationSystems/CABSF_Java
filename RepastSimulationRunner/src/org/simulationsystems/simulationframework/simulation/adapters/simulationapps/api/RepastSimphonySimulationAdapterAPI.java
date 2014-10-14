@@ -2,7 +2,7 @@ package org.simulationsystems.simulationframework.simulation.adapters.simulation
 
 import java.io.IOException;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.CommonSimulationFrameworkContext;
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationFrameworkContext;
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationAdapterAPI;
 
 import repast.simphony.context.Context;
@@ -53,7 +53,7 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * 
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
-	public CommonSimulationFrameworkContext initializeAPI(String frameworkConfigurationFileName) throws IOException {
+	public SimulationFrameworkContext initializeAPI(String frameworkConfigurationFileName) throws IOException {
 		return simulationAdapterAPI.initializeAPI(frameworkConfigurationFileName,
 				simToolNameToSetInSimulationAPI);
 	}
@@ -74,10 +74,9 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * Repast Simphony-specific simulation run initialization
 	 */
 	// TODO: 
-	public void initializeSimulationRun(Context<Object> repastContextForThisRun, CommonSimulationFrameworkContext commonSimulationFrameworkContext) {
-		simulationAdapterAPI.initializeSimulationRun();
+	public void initializeSimulationRun(Context<Object> repastContextForThisRun, SimulationFrameworkContext simulationFrameworkContext) {
+		simulationAdapterAPI.initializeSimulationRun(repastContextForThisRun, simulationFrameworkContext);
 
-		// 
 		@SuppressWarnings({ "rawtypes" })
 		Iterable<Class> simulationAgentsInAllClasses = repastContextForThisRun.getAgentTypes();
 		for (@SuppressWarnings("rawtypes")
@@ -91,9 +90,9 @@ public class RepastSimphonySimulationAdapterAPI {
 			for (Object simulationAgent : simulationAgentsInSingleClass) {
 				@SuppressWarnings("unchecked")
 				Class<Object> agentClass = (Class<Object>) simulationAgent.getClass();
-				if (commonSimulationFrameworkContext.getSimulationConfiguration().isAgentClassDistributedType(
+				if (simulationFrameworkContext.getSimulationConfiguration().isAgentClassDistributedType(
 						agentClass)) {
-					commonSimulationFrameworkContext.mapSimulationSideAgent(simulationAgent);
+					simulationFrameworkContext.mapSimulationSideAgent(simulationAgent);
 				} else
 					continue;
 			}

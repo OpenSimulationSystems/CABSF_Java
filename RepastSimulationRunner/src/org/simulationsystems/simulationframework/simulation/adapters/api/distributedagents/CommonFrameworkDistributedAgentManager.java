@@ -5,14 +5,14 @@ import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.CommonSimulationFrameworkContext;
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationFrameworkContext;
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationAdapterAPI;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation framework.  
  */
 public class CommonFrameworkDistributedAgentManager {
-	private CommonSimulationFrameworkContext commonSimulationFrameworkContext;
+	private SimulationFrameworkContext simulationFrameworkContext;
 	ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
 	HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
 	HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
@@ -28,8 +28,8 @@ public class CommonFrameworkDistributedAgentManager {
 	}
 
 	public CommonFrameworkDistributedAgentManager(
-			CommonSimulationFrameworkContext commonSimulationFrameworkContext) {
-		this.commonSimulationFrameworkContext = commonSimulationFrameworkContext;
+			SimulationFrameworkContext simulationFrameworkContext) {
+		this.simulationFrameworkContext = simulationFrameworkContext;
 	}
 
 	public ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {

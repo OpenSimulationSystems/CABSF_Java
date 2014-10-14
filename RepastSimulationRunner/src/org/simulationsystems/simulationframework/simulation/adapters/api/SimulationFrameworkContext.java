@@ -6,7 +6,7 @@ import org.simulationsystems.simulationframework.simulation.adapters.api.distrib
  * This context contains an instances
  * of a Simulation Run Group, which may contain 1 to many simulation runs.
  */
-public class CommonSimulationFrameworkContext {
+public class SimulationFrameworkContext {
 	protected void setSimulationConfiguration(SimulationConfiguration simulationConfiguration) {
 		this.simulationConfiguration = simulationConfiguration;
 	}
@@ -15,11 +15,24 @@ public class CommonSimulationFrameworkContext {
 	private CommonFrameworkDistributedAgentManager commonFrameworkDistributedAgentManager = new CommonFrameworkDistributedAgentManager(
 			this);
 	private SimulationRunGroup simulationRunGroup;
+	private Object simulationToolContext;
+
+	/*
+	 * Convenience method to return the context of the Simulation Software. For example, for Repast
+	 * Simphony, this method would return a repast.simphony.context.Context<T>
+	 */
+	public Object getSimulationToolContext() {
+		return simulationToolContext;
+	}
+
+	protected void setSimulationToolContext(Object simulationToolContext) {
+		this.simulationToolContext = simulationToolContext;
+	}
 
 	/*
 	 * Creates the context for the Common Simulation Framework.
 	 */
-	protected CommonSimulationFrameworkContext() {
+	protected SimulationFrameworkContext() {
 	}
 
 	public CommonFrameworkDistributedAgentManager getCommonFrameworkDistributedAgentManager() {

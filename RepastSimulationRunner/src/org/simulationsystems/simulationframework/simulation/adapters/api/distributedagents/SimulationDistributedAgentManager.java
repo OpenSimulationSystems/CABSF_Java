@@ -11,11 +11,11 @@ import org.simulationsystems.simulationframework.simulation.adapters.api.Simulat
 /*
  * Class to manage the distributed agents from other systems through the common simulation framework.  
  */
-public class CommonFrameworkDistributedAgentManager {
+public class SimulationDistributedAgentManager {
 	private SimulationFrameworkContext simulationFrameworkContext;
-	ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
-	HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
-	HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
+	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
+	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
+	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
 
 	public enum CONFIGURATION_KEYS {
 		DISTRIBUTED_AGENTS
@@ -24,23 +24,27 @@ public class CommonFrameworkDistributedAgentManager {
 	// private agentMappingsDirectory;
 
 	@SuppressWarnings("unused")
-	private CommonFrameworkDistributedAgentManager() {
+	private SimulationDistributedAgentManager() {
 	}
 
-	public CommonFrameworkDistributedAgentManager(
-			SimulationFrameworkContext simulationFrameworkContext) {
+	public SimulationDistributedAgentManager(SimulationFrameworkContext simulationFrameworkContext) {
 		this.simulationFrameworkContext = simulationFrameworkContext;
 	}
 
-	public ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {
+	protected ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {
 		return agentMappings;
 	}
 
 	/*
-	 * Creates object to hold Agent Mappings between the simulation-side and
-	 * distributed-agent-side agents. The actual setting of mapped objects occurs later
-	 * on. This method should be called as part of the common simulation framework
-	 * configuration.
+	 * Creates objects to hold Agent Mappings between the simulation-side and distributed-agent-side
+	 * agents. The actual setting of mapped objects occurs later on. See
+	 * org.simulationsystems.simulationframework
+	 * .simulation.adapters.simulationapps.api.distributedagents
+	 * .RepastSimphonySimulationDistributedAgentManager for reference; <br/><br/>
+	 * 
+	 * It is preferred for Adapter authors to create a Simulation-Toolkit-specific class inheriting
+	 * form this class. Its purpose is to convert generic "Object"s back to native
+	 * Simulation-Toolkit-specific objects, which aids the API clients at compile time.
 	 */
 	public AgentMapping createAgentMapping(String fullyQualifiedSimulationAgentName,
 			String fullyQualifiedDistributedAgentName) {

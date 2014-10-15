@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationFrameworkContext;
 import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastSimphonySimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.SimulationFrameworkContextForRepastSimphony;
 
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.context.Context;
@@ -54,7 +55,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 	protected Object monitor = new Object();
 	protected SweeperProducer producer;
 	private ISchedule schedule;
-	private SimulationFrameworkContext csfContext; //Simulation-run level
+	private SimulationFrameworkContextForRepastSimphony csfContext; //Simulation-run level
 
 	public RepastSimulationRunner() {
 		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);

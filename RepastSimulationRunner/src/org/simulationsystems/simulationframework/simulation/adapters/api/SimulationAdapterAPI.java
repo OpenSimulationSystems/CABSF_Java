@@ -3,7 +3,7 @@ package org.simulationsystems.simulationframework.simulation.adapters.api;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.CommonFrameworkDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
 /**
  * This API is only for use by developers of adapters to connect simulation tools (such as Repast)
@@ -50,12 +50,12 @@ public class SimulationAdapterAPI {
 	 */
 	// TODO: Add the UUID for the simulation run group instance.
 	public SimulationFrameworkContext initializeAPI(String frameworkConfigurationFileName,
-			String simulationToolName) throws IOException {
+			String simulationToolName, String fullyQualifiedClassNameForDistributedAgentManager) throws IOException {
 		SIMULATION_TOOL_NAME = simulationToolName.toUpperCase();
 
 		// Initialize the Simulation's Configuration Properties
 		SimulationFrameworkContext simulationFrameworkContext = simulationAdapterInitializationHelper
-				.initializeAPI(frameworkConfigurationFileName);
+				.initializeAPI(frameworkConfigurationFileName, fullyQualifiedClassNameForDistributedAgentManager);
 		return simulationFrameworkContext;
 	}
 

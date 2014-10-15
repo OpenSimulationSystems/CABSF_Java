@@ -38,6 +38,8 @@ import repast.simphony.context.Context;
 public class RepastSimphonySimulationAdapterAPI {
 	private SimulationAdapterAPI simulationAdapterAPI = SimulationAdapterAPI.getInstance();
 	private String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
+	private String fullyQualifiedClassNameForDistributedAgentManager = "org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
+
 	private static RepastSimphonySimulationAdapterAPI instance = new RepastSimphonySimulationAdapterAPI();
 
 	/*
@@ -53,11 +55,20 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * 
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
-	public SimulationFrameworkContext initializeAPI(String frameworkConfigurationFileName) throws IOException {
-		return simulationAdapterAPI.initializeAPI(frameworkConfigurationFileName,
-				simToolNameToSetInSimulationAPI);
+	public SimulationFrameworkContextForRepastSimphony initializeAPI(
+			String frameworkConfigurationFileName) throws IOException {
+		SimulationFrameworkContext simulationFrameworkContext = simulationAdapterAPI.initializeAPI(
+				frameworkConfigurationFileName, simToolNameToSetInSimulationAPI,
+				fullyQualifiedClassNameForDistributedAgentManager);
+
+		// Set the Repast-Simphony-specific objects
+		SimulationFrameworkContextForRepastSimphony simulationFrameworkContextForRepastSimphony = new SimulationFrameworkContextForRepastSimphony(
+				simulationFrameworkContext);
+
+		return simulationFrameworkContextForRepastSimphony;
 	}
 
+	// private SimulationFrameworkContext
 	/**
 	 * 
 	 * The API singleton for clients that are simulation systems adapters to into the common
@@ -70,12 +81,14 @@ public class RepastSimphonySimulationAdapterAPI {
 
 	/*
 	 * Initialize the simulation run in Repast Simphony. This method configures the (already-created
-	 * in the simulation API initialization) AgentMapping objects.
-	 * Repast Simphony-specific simulation run initialization
+	 * in the simulation API initialization) AgentMapping objects. Repast Simphony-specific
+	 * simulation run initialization
 	 */
-	// TODO: 
-	public void initializeSimulationRun(Context<Object> repastContextForThisRun, SimulationFrameworkContext simulationFrameworkContext) {
-		simulationAdapterAPI.initializeSimulationRun(repastContextForThisRun, simulationFrameworkContext);
+	// LOW: Allow the same simulation agent class to be both distributed and non-distributed.
+	public void initializeSimulationRun(Context<Object> repastContextForThisRun,
+			SimulationFrameworkContextForRepastSimphony simulationFrameworkContextForRepastSimphony) {
+		simulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
+				simulationFrameworkContextForRepastSimphony.getSimulationFrameworkContext());
 
 		@SuppressWarnings({ "rawtypes" })
 		Iterable<Class> simulationAgentsInAllClasses = repastContextForThisRun.getAgentTypes();
@@ -90,9 +103,10 @@ public class RepastSimphonySimulationAdapterAPI {
 			for (Object simulationAgent : simulationAgentsInSingleClass) {
 				@SuppressWarnings("unchecked")
 				Class<Object> agentClass = (Class<Object>) simulationAgent.getClass();
-				if (simulationFrameworkContext.getSimulationConfiguration().isAgentClassDistributedType(
-						agentClass)) {
-					simulationFrameworkContext.mapSimulationSideAgent(simulationAgent);
+				if (simulationFrameworkContextForRepastSimphony.getSimulationConfiguration()
+						.isAgentClassDistributedType(agentClass)) {
+					simulationFrameworkContextForRepastSimphony
+							.mapSimulationSideAgent(simulationAgent);
 				} else
 					continue;
 			}

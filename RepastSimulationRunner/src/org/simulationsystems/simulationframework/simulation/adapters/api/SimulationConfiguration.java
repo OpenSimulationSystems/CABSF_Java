@@ -2,8 +2,8 @@ package org.simulationsystems.simulationframework.simulation.adapters.api;
 
 import java.util.HashMap;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.CommonFrameworkDistributedAgentManager;
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.CommonFrameworkDistributedAgentManager.CONFIGURATION_KEYS;
+import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager.CONFIGURATION_KEYS;
 
 public class SimulationConfiguration {
 	private SimulationRunGroup simulationRunGroup;
@@ -20,8 +20,8 @@ public class SimulationConfiguration {
 		// and
 		// distributed-agent-side data.
 		// Mocking data for now;
-		CommonFrameworkDistributedAgentManager agentManager = simulationFrameworkContext
-				.getCommonFrameworkDistributedAgentManager();
+		SimulationDistributedAgentManager agentManager = simulationFrameworkContext
+				.getSimulationDistributedAgentManager();
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");
 		agentManager.createAgentMapping("jzombies.Human", "jade.Agent");

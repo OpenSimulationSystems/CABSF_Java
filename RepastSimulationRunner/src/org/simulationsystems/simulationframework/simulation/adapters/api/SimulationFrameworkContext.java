@@ -1,19 +1,19 @@
 package org.simulationsystems.simulationframework.simulation.adapters.api;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.CommonFrameworkDistributedAgentManager;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
 /*
- * This context contains an instances
- * of a Simulation Run Group, which may contain 1 to many simulation runs.
+ * Provides the context for the Common Simulation Framework.  Adapter developers may use this context directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g., org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.SimulationFrameworkContextForRepastSimphony).  The benefit is that the API client would be able to utilize native Simulation-Toolkit-specific objects instead of the generic "Object" that is used by this generic Simulation Framework API.
+ * 
+ * Adapter developers should instantiate this class first before the Simulation-Toolkit-specific Context object.
  */
 public class SimulationFrameworkContext {
-	protected void setSimulationConfiguration(SimulationConfiguration simulationConfiguration) {
-		this.simulationConfiguration = simulationConfiguration;
-	}
-
 	protected SimulationConfiguration simulationConfiguration;
-	private CommonFrameworkDistributedAgentManager commonFrameworkDistributedAgentManager = new CommonFrameworkDistributedAgentManager(
-			this);
+	private SimulationDistributedAgentManager simulationDistributedAgentManager;
 	private SimulationRunGroup simulationRunGroup;
 	private Object simulationToolContext;
 
@@ -32,11 +32,38 @@ public class SimulationFrameworkContext {
 	/*
 	 * Creates the context for the Common Simulation Framework.
 	 */
-	protected SimulationFrameworkContext() {
+	protected SimulationFrameworkContext(String fullyQualifiedClassNameForDistributedAgentManager) {
+
+		// Check if the Adaptor author is providing a custom DistributedAgentManager
+		// TODO: Add exception/return if unable to create object or cast object
+		// Class<?> c;
+		if (fullyQualifiedClassNameForDistributedAgentManager != null) {
+			try {
+				Class<?> cl = Class.forName(fullyQualifiedClassNameForDistributedAgentManager);
+				Constructor<?> cons = cl.getConstructor(this.getClass());
+				simulationDistributedAgentManager = (SimulationDistributedAgentManager) cons
+						.newInstance(this);
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else
+			simulationDistributedAgentManager = new SimulationDistributedAgentManager(this);
 	}
 
-	public CommonFrameworkDistributedAgentManager getCommonFrameworkDistributedAgentManager() {
-		return commonFrameworkDistributedAgentManager;
+	public SimulationDistributedAgentManager getSimulationDistributedAgentManager() {
+		return simulationDistributedAgentManager;
 	}
 
 	public SimulationConfiguration getSimulationConfiguration() {
@@ -51,10 +78,14 @@ public class SimulationFrameworkContext {
 		this.simulationRunGroup = simulationRunGroup;
 	}
 
+	protected void setSimulationConfiguration(SimulationConfiguration simulationConfiguration) {
+		this.simulationConfiguration = simulationConfiguration;
+	}
+
 	/*
 	 * @see mapSimulationSideAgent
 	 */
-	public void mapSimulationSideAgents(Class item, Iterable<Object> agentsOfOneType) {
+	public void mapSimulationSideAgents(Iterable<Object> agentsOfOneType) {
 		for (Object simulationAgent : agentsOfOneType) {
 			mapSimulationSideAgent(simulationAgent);
 		}

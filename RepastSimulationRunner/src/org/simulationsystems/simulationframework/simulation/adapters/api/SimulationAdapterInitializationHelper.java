@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
+
 public class SimulationAdapterInitializationHelper {
 	private SimulationAdapterAPI simulationAdapterAPI;
 
@@ -37,12 +39,12 @@ public class SimulationAdapterInitializationHelper {
 	 * Throws exception for error reading the Common Simulation Framework configuration file.
 	 */
 	protected SimulationFrameworkContext initializeAPI(
-			String frameworkConfigurationFileNameName)
+			String frameworkConfigurationFileNameName, String fullyQualifiedClassNameForDistributedAgentManager)
 			throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
 		// AgentMapping objects), and store the configuration in the SimulationAdapterAPI.
-		SimulationFrameworkContext csfContext = new SimulationFrameworkContext();
+		SimulationFrameworkContext csfContext = new SimulationFrameworkContext(fullyQualifiedClassNameForDistributedAgentManager);
 		SimulationConfiguration config = processFrameworkConfigurationProperties(
 				frameworkConfigurationFileNameName, csfContext);
 		csfContext.setSimulationConfiguration(config);
@@ -77,7 +79,7 @@ public class SimulationAdapterInitializationHelper {
 	 */
 	public void mapSimulationSideAgent(Object simulationAgent,
 			SimulationFrameworkContext simulationFrameworkContext) {
-		simulationFrameworkContext.getCommonFrameworkDistributedAgentManager()
+		simulationFrameworkContext.getSimulationDistributedAgentManager()
 				.addSimulationAgentToAgentMapping(simulationAgent);
 
 	}

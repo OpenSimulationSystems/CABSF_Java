@@ -17,10 +17,10 @@ public class AgentMapping {
 	private AgentMapping() {
 	}
 
-	public AgentMapping(UUID uuid, String fullyQualifiedSimulationAgent,
+	public AgentMapping(UUID uuid, String fullyQualifiedSimulationAgentName,
 			String fullyQualifiedDistributedAgentName) {
 		this.uuid = uuid;
-		this.fullyQualifiedSimulationAgent = fullyQualifiedSimulationAgent;
+		this.fullyQualifiedSimulationAgent = fullyQualifiedSimulationAgentName;
 		this.fullyQualifiedDistributedAgentName = fullyQualifiedDistributedAgentName;
 	}
 

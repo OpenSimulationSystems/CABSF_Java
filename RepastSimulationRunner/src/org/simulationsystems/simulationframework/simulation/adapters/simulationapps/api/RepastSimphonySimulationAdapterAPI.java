@@ -55,17 +55,17 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * 
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
-	public SimulationFrameworkContextForRepastSimphony initializeAPI(
+	public RepastSimphonySimulationFrameworkContext initializeAPI(
 			String frameworkConfigurationFileName) throws IOException {
 		SimulationFrameworkContext simulationFrameworkContext = simulationAdapterAPI.initializeAPI(
 				frameworkConfigurationFileName, simToolNameToSetInSimulationAPI,
 				fullyQualifiedClassNameForDistributedAgentManager);
 
 		// Set the Repast-Simphony-specific objects
-		SimulationFrameworkContextForRepastSimphony simulationFrameworkContextForRepastSimphony = new SimulationFrameworkContextForRepastSimphony(
+		RepastSimphonySimulationFrameworkContext repastSimphonySimulationFrameworkContext = new RepastSimphonySimulationFrameworkContext(
 				simulationFrameworkContext);
 
-		return simulationFrameworkContextForRepastSimphony;
+		return repastSimphonySimulationFrameworkContext;
 	}
 
 	// private SimulationFrameworkContext
@@ -83,35 +83,72 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * Initialize the simulation run in Repast Simphony. This method configures the (already-created
 	 * in the simulation API initialization) AgentMapping objects. Repast Simphony-specific
 	 * simulation run initialization
+	 * 
+	 * RepastSimphonySimulationFrameworkContext result from initializing the API is passed in, in
+	 * this method.
 	 */
 	// LOW: Allow the same simulation agent class to be both distributed and non-distributed.
 	public void initializeSimulationRun(Context<Object> repastContextForThisRun,
-			SimulationFrameworkContextForRepastSimphony simulationFrameworkContextForRepastSimphony) {
+			RepastSimphonySimulationFrameworkContext repastSimphonySimulationFrameworkContext) {
+		// Placeholder for any future functionality at the Framework-to-Adapter-API level
 		simulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
-				simulationFrameworkContextForRepastSimphony.getSimulationFrameworkContext());
+				repastSimphonySimulationFrameworkContext.getCurrentSimulationFrameworkContext());
 
+		repastSimphonySimulationFrameworkContext
+				.setCurrentRepastContextForThisRun(repastContextForThisRun);
+		repastSimphonySimulationFrameworkContext.getSimulationConfiguration().initializeAgentMappings();
+		
+		// Find all of the individual Repast agents to be mapped in the framework to distributed
+		// agents
 		@SuppressWarnings({ "rawtypes" })
-		Iterable<Class> simulationAgentsInAllClasses = repastContextForThisRun.getAgentTypes();
+		Iterable<Class> simulationAgentsClasses = repastContextForThisRun.getAgentTypes();
+		// For each simulation agent class
 		for (@SuppressWarnings("rawtypes")
-		Class simulationAgentClass : simulationAgentsInAllClasses) {
-			// Finish mapping all agents of this type
-			@SuppressWarnings("unchecked")
-			Class<Object> simulationAgentClazz = simulationAgentClass;
-			Iterable<Object> simulationAgentsInSingleClass = repastContextForThisRun
-					.getAgentLayer(simulationAgentClazz);
-
-			for (Object simulationAgent : simulationAgentsInSingleClass) {
+		Class simulationAgentClass : simulationAgentsClasses) {
+			// LOW: Allow individual simulation agent classes to be either simulation-only or
+			// representations of distributed agents.
+			if (repastSimphonySimulationFrameworkContext.getSimulationConfiguration()
+					.isAgentClassDistributedType(simulationAgentClass)) {
 				@SuppressWarnings("unchecked")
-				Class<Object> agentClass = (Class<Object>) simulationAgent.getClass();
-				if (simulationFrameworkContextForRepastSimphony.getSimulationConfiguration()
-						.isAgentClassDistributedType(agentClass)) {
-					simulationFrameworkContextForRepastSimphony
-							.mapSimulationSideAgent(simulationAgent);
-				} else
-					continue;
-			}
-
+				Class<Object> simulationAgentClazz = simulationAgentClass;
+				Iterable<Object> simulationAgentsInSingleClass = repastContextForThisRun
+						.getAgentLayer(simulationAgentClazz);
+				// For a distributed agent class type, for each individual simulation agent, map
+				for (Object simulationAgent : simulationAgentsInSingleClass) {
+					mapSimulationSideAgent(simulationAgent,
+							repastSimphonySimulationFrameworkContext
+									.getCurrentSimulationFrameworkContext());
+				}
+			} else
+				continue; // Not an agent we need to map.
 		}
+	}
+
+	/*
+	 * @see mapSimulationSideAgent
+	 */
+	@SuppressWarnings("unused")
+	private void mapSimulationSideAgents(Iterable<Object> agentsOfOneType,
+			SimulationFrameworkContext simulationFrameworkContext) {
+		for (Object simulationAgent : agentsOfOneType) {
+			mapSimulationSideAgent(simulationAgent, simulationFrameworkContext);
+		}
+	}
+
+	/*
+	 * After the Simulation and Common Framework are initialized, the Simulation Adaptor API (or
+	 * child class) is initialized, and prior to executing a simulation run, this method must be
+	 * called to configure the simulation-side of the AgentMappings for one type (class) of
+	 * simulation agent. If multiple agent classes are distributed, this method must be called for
+	 * each type. This is done prior to the distributed agent-side mappings.
+	 * 
+	 * Use this method to send a single Simulation Agent object.
+	 * 
+	 * @see mapSimulationSideAgents
+	 */
+	private void mapSimulationSideAgent(Object simulationAgent,
+			SimulationFrameworkContext simulationFrameworkContext) {
+		simulationAdapterAPI.mapSimulationSideAgent(simulationAgent, simulationFrameworkContext);
 	}
 
 }

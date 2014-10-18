@@ -83,5 +83,10 @@ public class SimulationAdapterAPI {
 	protected SimulationAdapterInitializationHelper getSimulationAdapterInitializationHelper() {
 		return simulationAdapterInitializationHelper;
 	}
+	
+	public void mapSimulationSideAgent(Object simulationAgent,
+			SimulationFrameworkContext simulationFrameworkContext) {
+		simulationAdapterInitializationHelper.mapSimulationSideAgent(simulationAgent, simulationFrameworkContext);
+	}
 
 }

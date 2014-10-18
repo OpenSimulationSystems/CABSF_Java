@@ -64,13 +64,21 @@ public class SimulationDistributedAgentManager {
 		// Add Validation to make sure mappings exist. / Throw exception
 
 		// Take first available
-		UUID agentMappingToAssign = agentsReadyForSimulationSideMapping.iterator().next();
-		AgentMapping am = agentMappings.get(agentMappingToAssign);
-		am.setSimulationAgent(agent);
-		agentsReadyForSimulationSideMapping.remove(agentMappingToAssign);
-		agentsReadyForDistributedAgentMapping.add(agentMappingToAssign);
+		AgentMapping am = null;
+		try {
+			UUID agentMappingToAssign = agentsReadyForSimulationSideMapping.iterator().next();
+			am = agentMappings.get(agentMappingToAssign);
+			am.setSimulationAgent(agent);
+			agentsReadyForSimulationSideMapping.remove(agentMappingToAssign);
+			agentsReadyForDistributedAgentMapping.add(agentMappingToAssign);
+			System.out.println("Successfully mapped " + agentMappingToAssign.toString()
+					+ " class: " + am.getClass().getCanonicalName());
+		} catch (java.util.NoSuchElementException e) {
+			System.out.println("exception:" + e.getMessage() + "  class: "
+					+ agent.getClass().getCanonicalName());
+		}
+
 		return am;
 
 	}
-
 }

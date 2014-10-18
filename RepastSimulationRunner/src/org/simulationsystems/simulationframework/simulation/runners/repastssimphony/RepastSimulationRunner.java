@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationFrameworkContext;
 import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastSimphonySimulationAdapterAPI;
-import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.SimulationFrameworkContextForRepastSimphony;
+import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastSimphonySimulationFrameworkContext;
 
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.context.Context;
@@ -40,7 +40,6 @@ public class RepastSimulationRunner extends AbstractRunner {
 	public enum SIMULATION_RUNNER_RUN_TYPE {
 		NON_CSF_SIMULATION, CSW_SIMULATION
 	}
-	
 	private SIMULATION_RUNNER_RUN_TYPE simulationRunnerType;
 
 	private boolean isStopped;
@@ -55,7 +54,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 	protected Object monitor = new Object();
 	protected SweeperProducer producer;
 	private ISchedule schedule;
-	private SimulationFrameworkContextForRepastSimphony csfContext; //Simulation-run level
+	private RepastSimphonySimulationFrameworkContext repastSimphonySimulationFrameworkContext; //Simulation-run-group level
 
 	public RepastSimulationRunner() {
 		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
@@ -89,7 +88,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 		if (frameworkConfigurationFileName != null) {
 			// Call the concrete Adapter as this Adapter is only for Repast Simphony
 			repastSimphonySimulationAdapterAPI = RepastSimphonySimulationAdapterAPI.getInstance();
-			csfContext = repastSimphonySimulationAdapterAPI.initializeAPI(frameworkConfigurationFileName);
+			repastSimphonySimulationFrameworkContext = repastSimphonySimulationAdapterAPI.initializeAPI(frameworkConfigurationFileName);
 			simulationRunnerType = RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION;
 		} else
 			simulationRunnerType = RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.NON_CSF_SIMULATION;
@@ -118,7 +117,7 @@ public class RepastSimulationRunner extends AbstractRunner {
 		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
 
 		if (simulationRunnerType == RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION)
-			repastSimphonySimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun, csfContext);
+			repastSimphonySimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun, repastSimphonySimulationFrameworkContext);
 	}
 
 	public void cleanUpRun() {

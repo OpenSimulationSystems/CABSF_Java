@@ -5,36 +5,41 @@ import org.simulationsystems.simulationframework.simulation.adapters.api.Simulat
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroup;
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
+import repast.simphony.context.Context;
+
 /*
  * Provides the context for the Common Simulation Framework.  This Simulation-Toolkit-specific context mirrors the generic SimulationFrameworkContext provided by the Common Framework API.  It enables API users to get native Simulation-Toolkit objects instead of generic "Object"s.  This aids the API client at compile time.
- * 
+ * The simulation context is created for the entire simulation run group, unlike in Repast where the simulation context exists per simulation run.
  * Adapter developers should first instantiate SimulationFrameworkContext, before instantiating a Simulation-Toolkit-specific Context such as this class.
  */
-public class SimulationFrameworkContextForRepastSimphony {
+public class RepastSimphonySimulationFrameworkContext {
 	private SimulationFrameworkContext simulationFrameworkContext;
+	Context<Object> currentRepastContext;
 
 	/*
 	 * Use the other constructor
 	 */
 	@SuppressWarnings("unused")
-	private SimulationFrameworkContextForRepastSimphony() {
+	private RepastSimphonySimulationFrameworkContext() {
 
 	}
 
-	public SimulationFrameworkContextForRepastSimphony(
+	public RepastSimphonySimulationFrameworkContext(
 			SimulationFrameworkContext simulationFrameworkContext) {
 		this.simulationFrameworkContext = simulationFrameworkContext;
 	}
-	
-	protected SimulationFrameworkContext getSimulationFrameworkContext() {
+
+	protected SimulationFrameworkContext getCurrentSimulationFrameworkContext() {
 		return simulationFrameworkContext;
 	}
 
 	/*
-	 * Returns the Simulation Distributed Agent Manager.  
+	 * Returns the Simulation Distributed Agent Manager.
 	 */
+	//FIXME: 
 	public SimulationDistributedAgentManager getSimulationDistributedAgentManager() {
-		return simulationFrameworkContext.getSimulationDistributedAgentManager();
+		SimulationDistributedAgentManager dam = simulationFrameworkContext.getCurrentSimulationDistributedAgentManager();
+		return dam;
 	}
 
 	public SimulationConfiguration getSimulationConfiguration() {
@@ -44,29 +49,20 @@ public class SimulationFrameworkContextForRepastSimphony {
 	public SimulationRunGroup getSimulationRunGroup() {
 		return simulationFrameworkContext.getSimulationRunGroup();
 	}
-
+	
 	/*
-	 * @see mapSimulationSideAgent
+	 * 
 	 */
-	public void mapSimulationSideAgents(Iterable<Object> agentsOfOneType) {
-		for (Object simulationAgent : agentsOfOneType) {
-			simulationFrameworkContext.mapSimulationSideAgent(simulationAgent);
-		}
+	/*
+	 * LOW:  Add the ability to support many simultaneous "Context"s
+	 */
+	public void setCurrentRepastContextForThisRun(Context<Object> repastContextForThisRun) {
+		this.currentRepastContext = repastContextForThisRun;
+		
 	}
 
-	/*
-	 * After the Simulation and Common Framework are initialized, the Simulation Adaptor API (or
-	 * child class) is initialized, and prior to executing a simulation run, this method must be
-	 * called to configure the simulation-side of the AgentMappings for one type (class) of
-	 * simulation agent. If multiple agent classes are distributed, this method must be called for
-	 * each type. This is done prior to the distributed agent-side mappings.
-	 * 
-	 * Use this method to send a single Simulation Agent object.
-	 * 
-	 * @see mapSimulationSideAgents
-	 */
-	public void mapSimulationSideAgent(Object simulationAgent) {
-		simulationFrameworkContext.mapSimulationSideAgent(simulationAgent);
+	public Context<Object> getCurrentRepastContext() {
+		return currentRepastContext;
 	}
 
 }

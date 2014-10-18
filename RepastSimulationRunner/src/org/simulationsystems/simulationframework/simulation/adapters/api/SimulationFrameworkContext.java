@@ -1,20 +1,20 @@
 package org.simulationsystems.simulationframework.simulation.adapters.api;
 
-import java.lang.reflect.Constructor;
+/*import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Method;*/
 
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
 /*
- * Provides the context for the Common Simulation Framework.  Adapter developers may use this context directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g., org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.SimulationFrameworkContextForRepastSimphony).  The benefit is that the API client would be able to utilize native Simulation-Toolkit-specific objects instead of the generic "Object" that is used by this generic Simulation Framework API.
+ * Provides the context for the Common Simulation Framework.  Adapter developers may use this context directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g., org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastSimphonySimulationFrameworkContext).  The benefit is that the API client would be able to utilize native Simulation-Toolkit-specific objects instead of the generic "Object" that is used by this generic Simulation Framework API.
  * 
  * Adapter developers should instantiate this class first before the Simulation-Toolkit-specific Context object.
  */
 public class SimulationFrameworkContext {
-	protected SimulationConfiguration simulationConfiguration;
+	protected SimulationConfiguration simulationConfiguration; //Simulation Run-group-wide
 	private SimulationDistributedAgentManager simulationDistributedAgentManager;
-	private SimulationRunGroup simulationRunGroup;
+	private SimulationRunGroup currentSimulationRunGroup;
 	private Object simulationToolContext;
 
 	/*
@@ -32,15 +32,16 @@ public class SimulationFrameworkContext {
 	/*
 	 * Creates the context for the Common Simulation Framework.
 	 */
-	protected SimulationFrameworkContext(String fullyQualifiedClassNameForDistributedAgentManager) {
+	//protected SimulationFrameworkContext(String fullyQualifiedClassNameForDistributedAgentManager) {
+		protected SimulationFrameworkContext() {
 
 		// Check if the Adaptor author is providing a custom DistributedAgentManager
 		// TODO: Add exception/return if unable to create object or cast object
 		// Class<?> c;
-		if (fullyQualifiedClassNameForDistributedAgentManager != null) {
+/*		if (fullyQualifiedClassNameForDistributedAgentManager != null) {
 			try {
 				Class<?> cl = Class.forName(fullyQualifiedClassNameForDistributedAgentManager);
-				Constructor<?> cons = cl.getConstructor(this.getClass());
+				Constructor<?> cons = cl.getConstructor(cl.getClass());
 				simulationDistributedAgentManager = (SimulationDistributedAgentManager) cons
 						.newInstance(this);
 			} catch (InstantiationException e) {
@@ -59,11 +60,17 @@ public class SimulationFrameworkContext {
 				e.printStackTrace();
 			}
 		} else
+			*/
 			simulationDistributedAgentManager = new SimulationDistributedAgentManager(this);
 	}
 
-	public SimulationDistributedAgentManager getSimulationDistributedAgentManager() {
+	public SimulationDistributedAgentManager getCurrentSimulationDistributedAgentManager() {
 		return simulationDistributedAgentManager;
+	}
+
+	public void setCurrentSimulationDistributedAgentManager(
+			SimulationDistributedAgentManager simulationDistributedAgentManager) {
+		this.simulationDistributedAgentManager = simulationDistributedAgentManager;
 	}
 
 	public SimulationConfiguration getSimulationConfiguration() {
@@ -71,11 +78,11 @@ public class SimulationFrameworkContext {
 	}
 
 	public SimulationRunGroup getSimulationRunGroup() {
-		return simulationRunGroup;
+		return currentSimulationRunGroup;
 	}
 
-	protected void setSimulationRunGroup(SimulationRunGroup simulationRunGroup) {
-		this.simulationRunGroup = simulationRunGroup;
+	protected void setCurrentSimulationRunGroup(SimulationRunGroup currentSimulationRunGroup) {
+		this.currentSimulationRunGroup = currentSimulationRunGroup;
 	}
 
 	protected void setSimulationConfiguration(SimulationConfiguration simulationConfiguration) {
@@ -104,5 +111,9 @@ public class SimulationFrameworkContext {
 	 */
 	public void mapSimulationSideAgent(Object simulationAgent) {
 		mapSimulationSideAgent(simulationAgent);
+	}
+	
+	public void cleanup() {
+		
 	}
 }

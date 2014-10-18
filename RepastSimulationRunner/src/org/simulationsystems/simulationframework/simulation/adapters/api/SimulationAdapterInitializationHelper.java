@@ -44,11 +44,12 @@ public class SimulationAdapterInitializationHelper {
 
 		// Process the configuration properties (creating the not yet populated
 		// AgentMapping objects), and store the configuration in the SimulationAdapterAPI.
-		SimulationFrameworkContext csfContext = new SimulationFrameworkContext(fullyQualifiedClassNameForDistributedAgentManager);
+		//SimulationFrameworkContext simFrameworkContext = new SimulationFrameworkContext(fullyQualifiedClassNameForDistributedAgentManager);
+		SimulationFrameworkContext simFrameworkContext = new SimulationFrameworkContext();
 		SimulationConfiguration config = processFrameworkConfigurationProperties(
-				frameworkConfigurationFileNameName, csfContext);
-		csfContext.setSimulationConfiguration(config);
-		return csfContext;
+				frameworkConfigurationFileNameName, simFrameworkContext);
+		simFrameworkContext.setSimulationConfiguration(config);
+		return simFrameworkContext;
 	}
 
 	/*
@@ -79,7 +80,7 @@ public class SimulationAdapterInitializationHelper {
 	 */
 	public void mapSimulationSideAgent(Object simulationAgent,
 			SimulationFrameworkContext simulationFrameworkContext) {
-		simulationFrameworkContext.getSimulationDistributedAgentManager()
+		simulationFrameworkContext.getCurrentSimulationDistributedAgentManager()
 				.addSimulationAgentToAgentMapping(simulationAgent);
 
 	}

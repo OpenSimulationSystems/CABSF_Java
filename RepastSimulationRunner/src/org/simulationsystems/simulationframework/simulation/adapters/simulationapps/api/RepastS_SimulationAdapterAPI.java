@@ -2,10 +2,10 @@ package org.simulationsystems.simulationframework.simulation.adapters.simulation
 
 import java.io.IOException;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunContext;
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationAdapterAPI;
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunContext;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.api.distributedagents.SimulationDistributedAgentManager;
 
 import repast.simphony.context.Context;
 

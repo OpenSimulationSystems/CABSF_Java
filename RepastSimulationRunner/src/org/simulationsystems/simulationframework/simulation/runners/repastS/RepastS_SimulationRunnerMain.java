@@ -1,6 +1,11 @@
 package org.simulationsystems.simulationframework.simulation.runners.repastS;
 
 import java.io.File;
+
+import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastS_SimulationRunContext;
+import org.simulationsystems.simulationframework.simulation.api.messaging.FRAMEWORK_TO_DISTRIBUTEDAGENTS_MESSAGE_TYPE;
+import org.simulationsystems.simulationframework.simulation.api.messaging.FrameworkToDistributedAgentsMessage;
+
 import repast.simphony.engine.environment.RunEnvironment;
 
 /*
@@ -38,7 +43,7 @@ public class RepastS_SimulationRunnerMain {
 
 		try {
 			repastS_SimulationRunner.load(file, frameworkConfigurationFileName); // Load the Repast
-																				// Scenario
+																					// Scenario
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,15 +52,21 @@ public class RepastS_SimulationRunnerMain {
 		// TODO: Tie in the number of simulation runs from the configuration
 		int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
-			repastS_SimulationRunner.runInitialize(); // initialize the run
+			RepastS_SimulationRunContext repastS_SimulationRunContext = repastS_SimulationRunner
+					.runInitialize(); // initialize the run
+			repastS_SimulationRunContext
+					.getSimulationDistributedAgentManager()
+					.messageDistributedAgents(
+							new FrameworkToDistributedAgentsMessage(
+									FRAMEWORK_TO_DISTRIBUTEDAGENTS_MESSAGE_TYPE.SIMULATION_RUN_STARTED));
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the configuration
 			double max_ticks = 3;
 			double tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-			
+
 			System.out
-			.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
+					.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
 			logHelper(tick, repastS_SimulationRunner.getModelActionCount(),
 					repastS_SimulationRunner.getIsStopped());
 			// loop until last action is left
@@ -101,7 +112,7 @@ public class RepastS_SimulationRunnerMain {
 	 * TODO: Switch to sl4j
 	 */
 	static private void logHelper(double tick, int modelActionCount, boolean isStopped) {
-				System.out.println("Tick: " + tick + " Model Action Count: " + modelActionCount
+		System.out.println("Tick: " + tick + " Model Action Count: " + modelActionCount
 				+ " isStopped: " + isStopped);
 	}
 }

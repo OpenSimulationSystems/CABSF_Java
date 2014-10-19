@@ -1,9 +1,9 @@
-package org.simulationsystems.simulationframework.simulation.adapters.api;
+package org.simulationsystems.simulationframework.simulation.api;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.api.distributedagents.SimulationDistributedAgentManager;
 
 /**
  * This API is only for use by developers of adapters to connect simulation tools (such as Repast)

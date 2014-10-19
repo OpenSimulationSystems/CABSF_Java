@@ -1,10 +1,11 @@
 package org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunContext;
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroup;
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
-import org.simulationsystems.simulationframework.simulation.adapters.api.configuration.SimulationRunGroupConfiguration;
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunContext;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunGroup;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.api.configuration.SimulationRunGroupConfiguration;
+import org.simulationsystems.simulationframework.simulation.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.api.messaging.FrameworkMessage;
 
 import repast.simphony.context.Context;
 
@@ -64,4 +65,6 @@ public class RepastS_SimulationRunContext {
 		SimulationDistributedAgentManager dam = simulationRunContext.getSimulationDistributedAgentManager();
 		return dam;
 	}
+	
+
 }

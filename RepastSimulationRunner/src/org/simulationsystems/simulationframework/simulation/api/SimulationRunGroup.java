@@ -1,4 +1,4 @@
-package org.simulationsystems.simulationframework.simulation.adapters.api;
+package org.simulationsystems.simulationframework.simulation.api;
 
 import java.util.HashMap;
 import java.util.UUID;

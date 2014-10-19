@@ -1,11 +1,11 @@
-package org.simulationsystems.simulationframework.simulation.adapters.api.configuration;
+package org.simulationsystems.simulationframework.simulation.api.configuration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager.CONFIGURATION_KEYS;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.api.distributedagents.SimulationDistributedAgentManager.CONFIGURATION_KEYS;
 
 public class SimulationRunGroupConfiguration {
 	// LOW: Support Multiple Simulation Run Configurations

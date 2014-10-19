@@ -1,4 +1,4 @@
-package org.simulationsystems.simulationframework.simulation.adapters.api;
+package org.simulationsystems.simulationframework.simulation.api;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.configuration.SimulationRunGroupConfiguration;
-import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.simulationframework.simulation.api.configuration.SimulationRunGroupConfiguration;
+import org.simulationsystems.simulationframework.simulation.api.distributedagents.SimulationDistributedAgentManager;
 
 public class SimulationAdapterInitializationHelper {
 	private SimulationAdapterAPI simulationAdapterAPI;

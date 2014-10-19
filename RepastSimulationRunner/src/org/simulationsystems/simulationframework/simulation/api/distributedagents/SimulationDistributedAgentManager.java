@@ -1,13 +1,14 @@
-package org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents;
+package org.simulationsystems.simulationframework.simulation.api.distributedagents;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunContext;
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationAdapterAPI;
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunContext;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.api.messaging.FrameworkMessage;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation framework.  
@@ -111,5 +112,9 @@ public class SimulationDistributedAgentManager {
 	
 	public Object logHelper() {
 		return agentMappings;
+	}
+	
+	public void messageDistributedAgents(FrameworkMessage frameworkMessage) {
+		
 	}
 }

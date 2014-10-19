@@ -1,6 +1,6 @@
 package org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.api.SimulationRunGroupContext;
 
 public class RepastS_SimulationRunGroupContext {
 

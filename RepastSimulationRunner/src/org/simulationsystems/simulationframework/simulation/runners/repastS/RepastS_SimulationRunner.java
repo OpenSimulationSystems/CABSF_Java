@@ -104,7 +104,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 * Initializes a single simulation run. Called after the simulation and (if configured) Common
 	 * Simulation Framework are initialized.
 	 */
-	public void runInitialize() {
+	public RepastS_SimulationRunContext runInitialize() {
 		// Set the Seed Parameter for this simulation run
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters
@@ -117,15 +117,16 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 		@SuppressWarnings("unchecked")
 		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
-
+		
+		RepastS_SimulationRunContext repastS_SimulationRunContext=null;
 		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
-			RepastS_SimulationRunContext repastS_SimulationRunContext =repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
+			repastS_SimulationRunContext = repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
 					repastS_SimulationRunGroupContext);
 			// repastS_SimulationRunContext.notifyDistributedAgents()
 			System.out.println(repastS_SimulationRunContext.getSimulationDistributedAgentManager().logHelper());
 		}
 		
-
+		return repastS_SimulationRunContext;
 	}
 
 	public void cleanUpRun() {

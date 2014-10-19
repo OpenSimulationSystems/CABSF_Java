@@ -33,4 +33,4 @@
  * 
  * @author Jorge Calderon
  */
-package org.simulationsystems.simulationframework.simulation.adapters.api;
+package org.simulationsystems.simulationframework.simulation.api;

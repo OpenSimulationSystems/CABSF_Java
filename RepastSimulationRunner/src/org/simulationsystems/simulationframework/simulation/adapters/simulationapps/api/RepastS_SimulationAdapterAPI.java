@@ -97,7 +97,7 @@ public class RepastS_SimulationAdapterAPI {
 
 		SimulationRunContext simulationRunContext = simulationAdapterAPI.initializeSimulationRun(
 				repastContextForThisRun,
-				repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
+				repastS_SimulationRunGroupContext.getSimulationRunGroupContext(), simulationDistributedAgentMessagingManagerStr);
 
 		// User Decorator Pattern for RepastS_SimulationRunContext
 		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(

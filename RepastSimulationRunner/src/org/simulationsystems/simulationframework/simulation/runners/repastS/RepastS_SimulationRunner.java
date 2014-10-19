@@ -1,11 +1,9 @@
-package org.simulationsystems.simulationframework.simulation.runners.repastssimphony;
+package org.simulationsystems.simulationframework.simulation.runners.repastS;
 
 import java.io.File;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationFrameworkContext;
-import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastSimphonySimulationAdapterAPI;
-import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastSimphonySimulationFrameworkContext;
-
+import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastS_SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastS_SimulationRunGroupContext;
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.context.Context;
 import repast.simphony.engine.controller.Controller;
@@ -32,31 +30,32 @@ import simphony.util.messages.MessageCenter;
  * @author 
 
  */
-public class RepastSimulationRunner extends AbstractRunner {
-	private RepastSimphonySimulationAdapterAPI repastSimphonySimulationAdapterAPI;
-	
-	//NON_CSF_SIMULATION Run RepastS Programmatically without the Common Simulation Framework
-	//CSW_SIMULATION Run RepastS programmatically with the Common Simulation Framework
+public class RepastS_SimulationRunner extends AbstractRunner {
+	private RepastS_SimulationAdapterAPI repastS_SimulationAdapterAPI;
+	private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
+
+	// NON_CSF_SIMULATION Run RepastS Programmatically without the Common Simulation Framework
+	// CSW_SIMULATION Run RepastS programmatically with the Common Simulation Framework
 	public enum SIMULATION_RUNNER_RUN_TYPE {
 		NON_CSF_SIMULATION, CSW_SIMULATION
 	}
+
 	private SIMULATION_RUNNER_RUN_TYPE simulationRunnerType;
 
 	private boolean isStopped;
-	
-	//TODO: Add public getter to use native Repast logging from the runner main
+
+	// TODO: Add public getter to use native Repast logging from the runner main
 	private static MessageCenter msgCenter = MessageCenter
-			.getMessageCenter(RepastSimulationRunner.class);
+			.getMessageCenter(RepastS_SimulationRunner.class);
 
 	private RunEnvironmentBuilder runEnvironmentBuilder;
 	protected Controller controller;
 	protected boolean pause = false;
 	protected Object monitor = new Object();
 	protected SweeperProducer producer;
-	private ISchedule schedule;
-	private RepastSimphonySimulationFrameworkContext repastSimphonySimulationFrameworkContext; //Simulation-run-group level
+	private ISchedule schedule;																						// level
 
-	public RepastSimulationRunner() {
+	public RepastS_SimulationRunner() {
 		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
 		controller = new DefaultController(runEnvironmentBuilder);
 		controller.setScheduleRunner(this);
@@ -87,11 +86,12 @@ public class RepastSimulationRunner extends AbstractRunner {
 		// otherwise run the simulation as a regular Repast simulation (programmatically).
 		if (frameworkConfigurationFileName != null) {
 			// Call the concrete Adapter as this Adapter is only for Repast Simphony
-			repastSimphonySimulationAdapterAPI = RepastSimphonySimulationAdapterAPI.getInstance();
-			repastSimphonySimulationFrameworkContext = repastSimphonySimulationAdapterAPI.initializeAPI(frameworkConfigurationFileName);
-			simulationRunnerType = RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION;
+			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
+			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
+					.initializeAPI(frameworkConfigurationFileName);
+			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION;
 		} else
-			simulationRunnerType = RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.NON_CSF_SIMULATION;
+			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.NON_CSF_SIMULATION;
 	}
 
 	public SIMULATION_RUNNER_RUN_TYPE getSimulationRunnerType() {
@@ -116,8 +116,11 @@ public class RepastSimulationRunner extends AbstractRunner {
 		@SuppressWarnings("unchecked")
 		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
 
-		if (simulationRunnerType == RepastSimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION)
-			repastSimphonySimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun, repastSimphonySimulationFrameworkContext);
+		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
+			repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
+					repastS_SimulationRunGroupContext);
+			// repastS_SimulationRunContext.notifyDistributedAgents()
+		}
 	}
 
 	public void cleanUpRun() {
@@ -158,13 +161,13 @@ public class RepastSimulationRunner extends AbstractRunner {
 			schedule.executeEndActions();
 		}
 	}
-	
-	//Called after the last step in the simulation run executes.
+
+	// Called after the last step in the simulation run executes.
 	public void setFinishing(boolean fin) {
 		schedule.setFinishing(fin);
 	}
 
-	//Comment is from the Repast development team
+	// Comment is from the Repast development team
 	public void execute(RunState toExecuteOn) {
 		// required AbstractRunner stub. We will control the
 		// schedule directly.
@@ -173,4 +176,5 @@ public class RepastSimulationRunner extends AbstractRunner {
 	public boolean getIsStopped() {
 		return isStopped;
 	}
+
 }

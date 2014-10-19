@@ -13,19 +13,19 @@ import org.simulationsystems.simulationframework.simulation.adapters.api.distrib
  * <br/>
  * 
  * Common Framework---> ***COMMON FRAMEWORK API*** --> Simulation and Agent
- * RepastSimphonySimulationAdapterAPI(s) --> Simulations and Agents (Such as Repast simulations and
+ * RepastS_SimulationAdapterAPI(s) --> Simulations and Agents (Such as Repast simulations and
  * JADE agents) --> End Users of Simulation<br/>
  * <br/>
  * 
  * Currently supported Adaptors (Implementors of this API):<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repast - Via the
- * "Repast Simulation RepastSimphonySimulationRunnerMain" Application, which is both an
- * RepastSimphonySimulationAdapterAPI into the common simulation framework and its own application
+ * "Repast Simulation RepastS_SimulationRunnerMain" Application, which is both an
+ * RepastS_SimulationAdapterAPI into the common simulation framework and its own application
  * programmatically running Repast as a library.<br/>
  * <br/>
  * 
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JADE - Via the
- * "Common Simulation Framework RepastSimphonySimulationAdapterAPI JADE Agent".<br/>
+ * "Common Simulation Framework RepastS_SimulationAdapterAPI JADE Agent".<br/>
  * <br/>
  * 
  * THIS PACKAGE WILL BE MOVED TO A SEPARATE JAR. TEMPORARILY HERE WIH THE REPAST SIMULATION WRAPPER
@@ -49,22 +49,27 @@ public class SimulationAdapterAPI {
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
 	// TODO: Add the UUID for the simulation run group instance.
-	public SimulationFrameworkContext initializeAPI(String frameworkConfigurationFileName,
-			String simulationToolName, String fullyQualifiedClassNameForDistributedAgentManager) throws IOException {
+	/*public SimulationRunContext initializeAPI(String frameworkConfigurationFileName,
+			String simulationToolName, String fullyQualifiedClassNameForDistributedAgentManager) throws IOException {*/
+	public SimulationRunGroupContext initializeAPI(String frameworkConfigurationFileName,
+			String simulationToolName) throws IOException {
 		SIMULATION_TOOL_NAME = simulationToolName.toUpperCase();
 
 		// Initialize the Simulation's Configuration Properties
-		SimulationFrameworkContext simulationFrameworkContext = simulationAdapterInitializationHelper
-				.initializeAPI(frameworkConfigurationFileName, fullyQualifiedClassNameForDistributedAgentManager);
-		return simulationFrameworkContext;
+		/*SimulationRunContext simulationFrameworkContext = simulationAdapterInitializationHelper
+				.initializeAPI(frameworkConfigurationFileName, fullyQualifiedClassNameForDistributedAgentManager);*/
+		SimulationRunGroupContext simulationRunContext = simulationAdapterInitializationHelper
+				.initializeAPI(frameworkConfigurationFileName);
+		
+		return simulationRunContext;
 	}
 
 	/*
 	 * Placeholder for future functionality. Adapter clients should call this first before any
 	 * custom simulation run initialization is performed.
 	 */
-	public void initializeSimulationRun(Object simulationSideContext, SimulationFrameworkContext simulationFrameworkContext) {
-		simulationAdapterInitializationHelper.initializeSimulationRun(simulationSideContext, simulationFrameworkContext);
+	public SimulationRunContext initializeSimulationRun(Object simulationSideContext, SimulationRunGroupContext simulationRunGroupContext) {
+		return simulationAdapterInitializationHelper.initializeSimulationRun(simulationSideContext, simulationRunGroupContext);
 	}
 
 	/**
@@ -85,8 +90,8 @@ public class SimulationAdapterAPI {
 	}
 	
 	public void mapSimulationSideAgent(Object simulationAgent,
-			SimulationFrameworkContext simulationFrameworkContext) {
-		simulationAdapterInitializationHelper.mapSimulationSideAgent(simulationAgent, simulationFrameworkContext);
+			SimulationRunContext simulationRunContext) {
+		simulationAdapterInitializationHelper.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
 
 }

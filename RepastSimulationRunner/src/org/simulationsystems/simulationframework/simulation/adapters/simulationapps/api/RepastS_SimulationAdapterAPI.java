@@ -2,8 +2,10 @@ package org.simulationsystems.simulationframework.simulation.adapters.simulation
 
 import java.io.IOException;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationFrameworkContext;
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunContext;
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
 import repast.simphony.context.Context;
 
@@ -20,10 +22,9 @@ import repast.simphony.context.Context;
  * <br/>
  * 
  * Currently supported Adaptors (Implementors of this API):<br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repast - Via the
- * "Repast Simulation RepastSimphonySimulationRunnerMain" Application, which is both an
- * RepastSimphonyRepastSimphonySimulationAdapterAPI into the common simulation framework and its own
- * application programmatically running Repast as a library.<br/>
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repast - Via the "Repast Simulation RepastS_SimulationRunnerMain"
+ * Application, which is both an RepastSimphonyRepastSimphonySimulationAdapterAPI into the common
+ * simulation framework and its own application programmatically running Repast as a library.<br/>
  * <br/>
  * 
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JADE - Via the
@@ -35,17 +36,17 @@ import repast.simphony.context.Context;
  * 
  * @author Jorge Calderon
  */
-public class RepastSimphonySimulationAdapterAPI {
+public class RepastS_SimulationAdapterAPI {
 	private SimulationAdapterAPI simulationAdapterAPI = SimulationAdapterAPI.getInstance();
 	private String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
 	private String fullyQualifiedClassNameForDistributedAgentManager = "org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
 
-	private static RepastSimphonySimulationAdapterAPI instance = new RepastSimphonySimulationAdapterAPI();
+	private static RepastS_SimulationAdapterAPI instance = new RepastS_SimulationAdapterAPI();
 
 	/*
-	 * Use RepastSimphonySimulationAdapterAPI.getInstance() instead.
+	 * Use RepastS_SimulationAdapterAPI.getInstance() instead.
 	 */
-	private RepastSimphonySimulationAdapterAPI() {
+	private RepastS_SimulationAdapterAPI() {
 		super();
 	}
 
@@ -55,27 +56,31 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * 
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
-	public RepastSimphonySimulationFrameworkContext initializeAPI(
-			String frameworkConfigurationFileName) throws IOException {
-		SimulationFrameworkContext simulationFrameworkContext = simulationAdapterAPI.initializeAPI(
-				frameworkConfigurationFileName, simToolNameToSetInSimulationAPI,
-				fullyQualifiedClassNameForDistributedAgentManager);
+	public RepastS_SimulationRunGroupContext initializeAPI(String frameworkConfigurationFileName)
+			throws IOException {
+		/*
+		 * SimulationRunContext simulationFrameworkContext = simulationAdapterAPI.initializeAPI(
+		 * frameworkConfigurationFileName, simToolNameToSetInSimulationAPI,
+		 * fullyQualifiedClassNameForDistributedAgentManager);
+		 */
+		SimulationRunGroupContext simulationRunGroupContext = simulationAdapterAPI.initializeAPI(
+				frameworkConfigurationFileName, simToolNameToSetInSimulationAPI);
 
-		// Set the Repast-Simphony-specific objects
-		RepastSimphonySimulationFrameworkContext repastSimphonySimulationFrameworkContext = new RepastSimphonySimulationFrameworkContext(
-				simulationFrameworkContext);
+		// Set the Repast-Simphony-specific objects, using the Decorator Pattern
+		RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
+				simulationRunGroupContext);
 
-		return repastSimphonySimulationFrameworkContext;
+		return repastS_SimulationRunGroupContext;
 	}
 
-	// private SimulationFrameworkContext
+	// private SimulationRunContext
 	/**
 	 * 
 	 * The API singleton for clients that are simulation systems adapters to into the common
 	 * simulation framework
 	 * 
 	 */
-	public static RepastSimphonySimulationAdapterAPI getInstance() {
+	public static RepastS_SimulationAdapterAPI getInstance() {
 		return instance;
 	}
 
@@ -84,20 +89,25 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * in the simulation API initialization) AgentMapping objects. Repast Simphony-specific
 	 * simulation run initialization
 	 * 
-	 * RepastSimphonySimulationFrameworkContext result from initializing the API is passed in, in
-	 * this method.
+	 * RepastS_SimulationRunContext result from initializing the API is passed in, in this method.
 	 */
 	// LOW: Allow the same simulation agent class to be both distributed and non-distributed.
 	public void initializeSimulationRun(Context<Object> repastContextForThisRun,
-			RepastSimphonySimulationFrameworkContext repastSimphonySimulationFrameworkContext) {
-		// Placeholder for any future functionality at the Framework-to-Adapter-API level
-		simulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
-				repastSimphonySimulationFrameworkContext.getCurrentSimulationFrameworkContext());
+			RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
 
-		repastSimphonySimulationFrameworkContext
-				.setCurrentRepastContextForThisRun(repastContextForThisRun);
-		repastSimphonySimulationFrameworkContext.getSimulationConfiguration().initializeAgentMappings();
-		
+		SimulationRunContext simulationRunContext = simulationAdapterAPI.initializeSimulationRun(
+				repastContextForThisRun,
+				repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
+
+		// User Decorator Pattern for RepastS_SimulationRunContext
+		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
+				simulationRunContext);
+		repastS_SimulationRunContext.setRepastContextForThisRun(repastContextForThisRun);
+
+		// TODO: Support multiple Simulation Run Groups. For now just assume that there's one.
+		repastS_SimulationRunContext.getSimulationDistributedAgentManager()
+				.initializeAgentMappings();
+
 		// Find all of the individual Repast agents to be mapped in the framework to distributed
 		// agents
 		@SuppressWarnings({ "rawtypes" })
@@ -107,7 +117,7 @@ public class RepastSimphonySimulationAdapterAPI {
 		Class simulationAgentClass : simulationAgentsClasses) {
 			// LOW: Allow individual simulation agent classes to be either simulation-only or
 			// representations of distributed agents.
-			if (repastSimphonySimulationFrameworkContext.getSimulationConfiguration()
+			if (repastS_SimulationRunContext.getSimulationDistributedAgentManager()
 					.isAgentClassDistributedType(simulationAgentClass)) {
 				@SuppressWarnings("unchecked")
 				Class<Object> simulationAgentClazz = simulationAgentClass;
@@ -116,8 +126,7 @@ public class RepastSimphonySimulationAdapterAPI {
 				// For a distributed agent class type, for each individual simulation agent, map
 				for (Object simulationAgent : simulationAgentsInSingleClass) {
 					mapSimulationSideAgent(simulationAgent,
-							repastSimphonySimulationFrameworkContext
-									.getCurrentSimulationFrameworkContext());
+							repastS_SimulationRunContext.getSimulationRunContext());
 				}
 			} else
 				continue; // Not an agent we need to map.
@@ -129,9 +138,9 @@ public class RepastSimphonySimulationAdapterAPI {
 	 */
 	@SuppressWarnings("unused")
 	private void mapSimulationSideAgents(Iterable<Object> agentsOfOneType,
-			SimulationFrameworkContext simulationFrameworkContext) {
+			SimulationRunContext simulationRunContext) {
 		for (Object simulationAgent : agentsOfOneType) {
-			mapSimulationSideAgent(simulationAgent, simulationFrameworkContext);
+			mapSimulationSideAgent(simulationAgent, simulationRunContext);
 		}
 	}
 
@@ -147,8 +156,8 @@ public class RepastSimphonySimulationAdapterAPI {
 	 * @see mapSimulationSideAgents
 	 */
 	private void mapSimulationSideAgent(Object simulationAgent,
-			SimulationFrameworkContext simulationFrameworkContext) {
-		simulationAdapterAPI.mapSimulationSideAgent(simulationAgent, simulationFrameworkContext);
+			SimulationRunContext simulationRunContext) {
+		simulationAdapterAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
 
 }

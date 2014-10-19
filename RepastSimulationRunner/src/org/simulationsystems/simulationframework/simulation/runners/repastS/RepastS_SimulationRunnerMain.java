@@ -1,12 +1,12 @@
-package org.simulationsystems.simulationframework.simulation.runners.repastssimphony;
+package org.simulationsystems.simulationframework.simulation.runners.repastS;
 
 import java.io.File;
 import repast.simphony.engine.environment.RunEnvironment;
 
 /*
- * The Repast Simulation RepastSimphonySimulationRunnerMain is an application that programmatically runs a Repast simulation
+ * The Repast Simulation RepastS_SimulationRunnerMain is an application that programmatically runs a Repast simulation
  * (See http://repast.sourceforge.net/docs/RepastSimphonyFAQ.pdf )
- * It also has an embedded RepastSimphonySimulationAdapterAPI into the Common Simulation Framework.  For basic functionality
+ * It also has an embedded RepastS_SimulationAdapterAPI into the Common Simulation Framework.  For basic functionality
  * users should not have to modify this application.
  * 
  * The following shows where this code fits in to the common framework: 
@@ -20,7 +20,7 @@ import repast.simphony.engine.environment.RunEnvironment;
  * @author Jorge Calderon
  * 
  */
-public class RepastSimphonySimulationRunnerMain {
+public class RepastS_SimulationRunnerMain {
 
 	public static void main(String[] args) {
 		// The Repast scenario Directory
@@ -34,10 +34,10 @@ public class RepastSimphonySimulationRunnerMain {
 		// TODO: Add Validation of CSF configuration file
 		if (frameworkConfigurationFileName != null)
 			;
-		RepastSimulationRunner repastSimulationRunner = new RepastSimulationRunner();
+		RepastS_SimulationRunner repastS_SimulationRunner = new RepastS_SimulationRunner();
 
 		try {
-			repastSimulationRunner.load(file, frameworkConfigurationFileName); // Load the Repast
+			repastS_SimulationRunner.load(file, frameworkConfigurationFileName); // Load the Repast
 																				// Scenario
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class RepastSimphonySimulationRunnerMain {
 		// TODO: Tie in the number of simulation runs from the configuration
 		int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
-			repastSimulationRunner.runInitialize(); // initialize the run
+			repastS_SimulationRunner.runInitialize(); // initialize the run
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the configuration
@@ -56,19 +56,19 @@ public class RepastSimphonySimulationRunnerMain {
 			
 			System.out
 			.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
-			logHelper(tick, repastSimulationRunner.getModelActionCount(),
-					repastSimulationRunner.getIsStopped());
+			logHelper(tick, repastS_SimulationRunner.getModelActionCount(),
+					repastS_SimulationRunner.getIsStopped());
 			// loop until last action is left
-			while (repastSimulationRunner.getActionCount() > 0) {
+			while (repastS_SimulationRunner.getActionCount() > 0) {
 				System.out.println("Enter Loop. tick:" + tick);
 
-				if (repastSimulationRunner.getModelActionCount() == 0
-						|| repastSimulationRunner.getIsStopped()) {
-					repastSimulationRunner.setFinishing(true);
+				if (repastS_SimulationRunner.getModelActionCount() == 0
+						|| repastS_SimulationRunner.getIsStopped()) {
+					repastS_SimulationRunner.setFinishing(true);
 					System.out.println("Setting Finishing");
 				}
 				System.out.println("Stepping");
-				repastSimulationRunner.step(); // execute all scheduled actions at next tick
+				repastS_SimulationRunner.step(); // execute all scheduled actions at next tick
 				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 				System.out.println("Finished Stepping.  New Tick: " + tick);
 
@@ -76,22 +76,22 @@ public class RepastSimphonySimulationRunnerMain {
 				// iterations of this loop will occur instead of one extra one when the end is
 				// specified from within the Repast model.
 
-				if (max_ticks - tick == 0.0 && !repastSimulationRunner.getIsStopped()) {
-					repastSimulationRunner.stop();
+				if (max_ticks - tick == 0.0 && !repastS_SimulationRunner.getIsStopped()) {
+					repastS_SimulationRunner.stop();
 					System.out.println("Stopping");
 				}
 
 				// Prints out one or two extra times depending on where the simulation is ended
 				// from, either in the model: print twice, or through the runner: print three times
-				logHelper(tick, repastSimulationRunner.getModelActionCount(),
-						repastSimulationRunner.getIsStopped());
+				logHelper(tick, repastS_SimulationRunner.getModelActionCount(),
+						repastS_SimulationRunner.getIsStopped());
 			}
 
-			if (!repastSimulationRunner.getIsStopped()) // Don't stop twice
-				repastSimulationRunner.stop(); // Execute any actions scheduled at run at the end
-			repastSimulationRunner.cleanUpRun();
+			if (!repastS_SimulationRunner.getIsStopped()) // Don't stop twice
+				repastS_SimulationRunner.stop(); // Execute any actions scheduled at run at the end
+			repastS_SimulationRunner.cleanUpRun();
 		}
-		repastSimulationRunner.cleanUpBatch(); // run after all runs complete
+		repastS_SimulationRunner.cleanUpBatch(); // run after all runs complete
 	}
 
 	/*

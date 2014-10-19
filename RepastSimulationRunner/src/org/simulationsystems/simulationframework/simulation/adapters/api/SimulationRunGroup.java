@@ -1,5 +1,6 @@
 package org.simulationsystems.simulationframework.simulation.adapters.api;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 /*
@@ -9,9 +10,17 @@ import java.util.UUID;
  * LOW: Add an arbitrary number of options to be set/queried.
  */
 public class SimulationRunGroup {
-	static private String simulationID;
-	static private String simulationVersion;
-	static private String simulationConfigurationID;
+	// Simulation-specific IDs (Either from the simulation toolkit or from the simulation
+	// administrator)
+	private String simulationID;
+	private String simulationVersionID;
+	private String simulationSpecificationConfigurationID;
+
+	// Common- Simulation-Framework-specific IDs
+	private String simulationRunGroupID;
+	private String simulationRunGroupConfigurationID;
+	private HashMap<String, Object> userSpecifiedConfigurations;
+
 	private UUID simulationRunGroupInstanceID;
 
 	/*
@@ -25,25 +34,112 @@ public class SimulationRunGroup {
 	 * Initializes a SimulationRunGroup. The simulationID should be a unique id for the simulation.
 	 * To ensure global uniqueness, a UUID should be generated (can be done with
 	 * http://www.famkruithof.net/uuid/uuidgen), and set up in the Common Simulation Framework
-	 * configuration, and supplied to this method.
-	 * The optional simulationVersion allows the simulation authors to keep track of different versions of a simulation.
-	 * simulationConfigurationID may be used for versioning of the Simulation Tool such as Repast (e.g. varying the number of agents or grid cells).
-	 * commonSimulationFrameoworkConfigurationID may be used for versioning of Common Simulation Framework configuration (such changing the number of simulations runs to execute or number of ticks for each simulation run).
+	 * configuration, and supplied to this method. The optional simulationVersion allows the
+	 * simulation authors to keep track of different versions of a simulation.
+	 * simulationConfigurationID may be used for versioning of the Simulation Tool such as Repast
+	 * (e.g. varying the number of agents or grid cells). commonSimulationFrameoworkConfigurationID
+	 * may be used for versioning of Common Simulation Framework configuration (such changing the
+	 * number of simulations runs to execute or number of ticks for each simulation run). It is
+	 * assumed that all simulation runs in a simulation run group have the same configuration.
+	 * 
+	 * It is assumed that all simulation runs in a simulation run group have the same simulation
+	 * specification.
+	 * 
+	 * This constructor must be followed up by a call to setSimulationFrameworkOptions method to set
+	 * the Common-Simulation-Framework-specific configuration of the SimulationRunGroup.
+	 * 
+	 * @param simulationID The globally unique id for the simulation specification itself. Most
+	 * configuration items, such as the number of agents, would not normally imply a difference id
+	 * for the simulation. It is suggested that this value be globally unique, generating a UUID and
+	 * storing it with the simulation specification files.
+	 * 
+	 * @param simulationVersionID An optional ID, stored statically, to specify the version of the
+	 * simulation specification. This ID should not be used to version different configurable items
+	 * of a simulation, such as the number of agents, but rather is meant to version the more
+	 * structural changes of a simulation. If one is not provided, the simulation leaves this null.
+	 * 
+	 * @param simulationSpecificationConfigurationID An optional ID to track different
+	 * simulation-toolkit-side configurations for the simulation, especially for differing sets of
+	 * configurable initial conditions. For example, you may wish to run your simulation with 100
+	 * agents, and then run it again with 200 agents. This ID could be used to differentiate the
+	 * results. Individual simulation runs in a simulation run group may also have their own unique
+	 * configurations, but these differences are instead tracked in the SimulationRun object. If the
+	 * simulationSpecificationConfigurationID parameter is not supplied, the framework keeps it
+	 * null.
 	 */
-	public SimulationRunGroup(String simulationID, String simulationVersion,
-			String simulationConfigurationID) {
-		SimulationRunGroup.simulationID = simulationID;
-		SimulationRunGroup.simulationVersion = simulationVersion;
-		SimulationRunGroup.simulationConfigurationID = simulationConfigurationID;
+	public SimulationRunGroup(String simulationID, String simulationVersionID,
+			String simulationSpecificationConfigurationID) {
+		// Simulation-specific IDs (Either from the simulation toolkit or from the simulation
+		// administrator)
+		this.simulationID = simulationID;
+		this.simulationVersionID = simulationVersionID;
+		this.simulationSpecificationConfigurationID = simulationSpecificationConfigurationID;
 		
-		simulationRunGroupInstanceID = UUID.randomUUID();
+		// This RunGroup Instance
+		this.simulationRunGroupInstanceID = UUID.randomUUID();
 	}
 
-	public static String getSimulationID() {
+	/*
+	 * * <!--The parameters below are defined in the Common Simulation Framework configuration file
+	 * -->
+	 * 
+	 * @param simulationRunGroupID An optional ID stored statically to track a group of related
+	 * simulation runs for a simulation. Simulation runs in a group may be run sequentially from the
+	 * same process (such as an entire run through the Repast Simphony Simulation Runner), in
+	 * parallel using multiple machines, or spaced out temporally. Using the same
+	 * SimulationRunGroupID allows the simulation results to be grouped together, which may be
+	 * useful in analysis with Monte Carlo methods. If the simulationRunGroupID is not specified,
+	 * the framework generates a new UUID. Any new executions of the framework would generate a new
+	 * simulationRunGroupID. For parallel processing (future support), each execution thread's
+	 * SimulationRunGroupID would still be the same, as it is stored statically. A separate ID is
+	 * created internally for each instance of the SimulationRunGroup. Every new run through the
+	 * Simulation Framework would generate a new instance ID (a UUID).
+	 * 
+	 * @param simulationRunGroupConfigurationID An optional ID to track the configuration (mostly
+	 * from the framework configuration file, not the simulation toolkit configuration file) of a
+	 * simulation run group, which is a group of related simulation runs. For example, this
+	 * configuration ID could version and track whether the framework will connect to one set of
+	 * distributed agents, or a different set. If this parameter is not supplied, the framework
+	 * keeps it null.
+	 * 
+	 * @param userSpecifiedConfigurations An optional collection of user-specified configurations
+	 * that vary along domain-specific or other dimensions. This parameter only applies to
+	 * Simulation Run Groups. A similar parameter exists for the individual simulation runs.
+	 */
+	public void setSimulationFrameworkOptions(String simulationRunGroupID, String simulationRunGroupConfigurationID,
+			HashMap<String, Object> userSpecifiedConfigurations) {
+		// Common-Simulation-Framework-specific IDs
+		this.simulationRunGroupID = simulationRunGroupID;
+		this.simulationRunGroupConfigurationID = simulationRunGroupConfigurationID;
+		this.userSpecifiedConfigurations = userSpecifiedConfigurations;
+
+	}
+
+	public String getSimulationID() {
 		return simulationID;
 	}
 
-	public UUID getInstanceSimulationRunGroupInstanceID() {
+	public String getSimulationVersionID() {
+		return simulationVersionID;
+	}
+
+	public String getSimulationSpecificationConfigurationID() {
+		return simulationSpecificationConfigurationID;
+	}
+
+	public String getSimulationRunGroupID() {
+		return simulationRunGroupID;
+	}
+
+	public String getSimulationRunGroupConfigurationID() {
+		return simulationRunGroupConfigurationID;
+	}
+
+	public HashMap<String, Object> getUserSpecifiedConfigurations() {
+		return userSpecifiedConfigurations;
+	}
+
+	public UUID getSimulationRunGroupInstanceID() {
 		return simulationRunGroupInstanceID;
 	}
 

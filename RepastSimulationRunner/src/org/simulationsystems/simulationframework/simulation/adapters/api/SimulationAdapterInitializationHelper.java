@@ -38,32 +38,39 @@ public class SimulationAdapterInitializationHelper {
 	 * 
 	 * Throws exception for error reading the Common Simulation Framework configuration file.
 	 */
-	protected SimulationFrameworkContext initializeAPI(
-			String frameworkConfigurationFileNameName, String fullyQualifiedClassNameForDistributedAgentManager)
+/*	protected SimulationRunContext initializeAPI(
+			String frameworkConfigurationFileNameName, String fullyQualifiedClassNameForDistributedAgentManager)*/
+	protected SimulationRunGroupContext initializeAPI(
+			String frameworkConfigurationFileNameName)
+
 			throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
-		// AgentMapping objects), and store the configuration in the SimulationAdapterAPI.
-		//SimulationFrameworkContext simFrameworkContext = new SimulationFrameworkContext(fullyQualifiedClassNameForDistributedAgentManager);
-		SimulationFrameworkContext simFrameworkContext = new SimulationFrameworkContext();
-		SimulationConfiguration config = processFrameworkConfigurationProperties(
-				frameworkConfigurationFileNameName, simFrameworkContext);
-		simFrameworkContext.setSimulationConfiguration(config);
-		return simFrameworkContext;
+		//SimulationRunContext simFrameworkContext = new SimulationRunContext(fullyQualifiedClassNameForDistributedAgentManager);
+		SimulationRunGroupContext simulationRunGroupContext = new SimulationRunGroupContext();
+		SimulationRunGroupConfiguration config = processFrameworkConfigurationProperties(
+				frameworkConfigurationFileNameName, simulationRunGroupContext);
+		simulationRunGroupContext.setSimulationConfiguration(config);
+		
+		return simulationRunGroupContext;
 	}
 
-	/*
-	 * Placeholder for future functionality.  
-	 */
-	protected void initializeSimulationRun(Object simulationSideContext, SimulationFrameworkContext simulationFrameworkContext) {
+	protected SimulationRunContext initializeSimulationRun(Object simulationSideContext, SimulationRunGroupContext simulationRunGroupContext) {
+		//TODO: Hook in the configutration to get the actual values
+		SimulationRunContext simulationRunContext = new SimulationRunContext(simulationRunGroupContext.getSimulationRunGroup());
+		simulationRunGroupContext.setSimulationRunGroupContext(simulationRunContext);
+		
+		SimulationDistributedAgentManager simulationDistributedAgentManager = new SimulationDistributedAgentManager(
+				simulationRunContext);
+		simulationRunContext.setSimulationDistributedAgentManager(simulationDistributedAgentManager);
+		return simulationRunContext;
 	}
-
 	/*
 	 * Reads the Common Simulation Framework Configuration File. Creates the AgentMapping objects,
 	 * with the actual mappings added in later.
 	 */
-	private SimulationConfiguration processFrameworkConfigurationProperties(
-			String frameworkConfigurationFileNameName, SimulationFrameworkContext simulationFrameworkContext) throws IOException {
+	private SimulationRunGroupConfiguration processFrameworkConfigurationProperties(
+			String frameworkConfigurationFileNameName, SimulationRunGroupContext simulationRunGroupContext) throws IOException {
 		/*
 		 * FileInputStream fstream = new FileInputStream("textfile.txt"); // Get the object of
 		 * DataInputStream DataInputStream in = new DataInputStream(fstream); BufferedReader br =
@@ -71,7 +78,13 @@ public class SimulationAdapterInitializationHelper {
 		 * while ((strLine = br.readLine()) != null) { // Print the content on the console
 		 * System.out.println(strLine); }
 		 */
-		SimulationConfiguration config = new SimulationConfiguration(simulationFrameworkContext);
+		SimulationRunGroupConfiguration config = new SimulationRunGroupConfiguration(simulationRunGroupContext);
+		
+		//TODO: Retrieve the Simulation Run Group level configuration and use those values here:
+		SimulationRunGroup simulationRunGroup = new SimulationRunGroup("12345", "1.0", "1.0");
+		simulationRunGroup.setSimulationFrameworkOptions("MonteCarlo_TestGroupA", null, null);
+		simulationRunGroupContext.setSimulationRunGroup(simulationRunGroup);
+		
 		return config;
 	}
 
@@ -79,8 +92,8 @@ public class SimulationAdapterInitializationHelper {
 	 * This method is caused to assign an existing AgentMapping object to a simulation-side agent.
 	 */
 	public void mapSimulationSideAgent(Object simulationAgent,
-			SimulationFrameworkContext simulationFrameworkContext) {
-		simulationFrameworkContext.getCurrentSimulationDistributedAgentManager()
+			SimulationRunContext simulationRunContext) {
+		simulationRunContext.getSimulationDistributedAgentManager()
 				.addSimulationAgentToAgentMapping(simulationAgent);
 
 	}

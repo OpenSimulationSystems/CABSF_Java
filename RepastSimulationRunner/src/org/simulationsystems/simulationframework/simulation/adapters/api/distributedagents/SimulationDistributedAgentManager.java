@@ -5,14 +5,15 @@ import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationFrameworkContext;
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunContext;
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation framework.  
  */
 public class SimulationDistributedAgentManager {
-	private SimulationFrameworkContext simulationFrameworkContext;
+	private SimulationRunContext simulationRunContext;
 	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
 	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
 	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
@@ -27,8 +28,8 @@ public class SimulationDistributedAgentManager {
 	private SimulationDistributedAgentManager() {
 	}
 
-	public SimulationDistributedAgentManager(SimulationFrameworkContext simulationFrameworkContext) {
-		this.simulationFrameworkContext = simulationFrameworkContext;
+	public SimulationDistributedAgentManager(SimulationRunContext simulationRunContext) {
+		this.simulationRunContext = simulationRunContext;
 	}
 
 	protected ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {
@@ -57,6 +58,33 @@ public class SimulationDistributedAgentManager {
 		return am;
 	}
 
+	public void initializeAgentMappings() {
+		// Create AgentMapping objects based on the configured type and number
+		// of agents.
+		// These objects will be populated with actual mapped simulation-side
+		// and
+		// distributed-agent-side data.
+		// Mocking data for now;
+
+		createAgentMapping("jzombies.Human", "jade.Agent");
+		createAgentMapping("jzombies.Human", "jade.Agent");
+		createAgentMapping("jzombies.Human", "jade.Agent");
+		createAgentMapping("jzombies.Human", "jade.Agent");
+		createAgentMapping("jzombies.Human", "jade.Agent");
+	}
+	/*
+	 * Checks whether this agent belongs to a class that is expected to be distributed outside of
+	 * the simulation runtime environment.
+	 */
+	public boolean isAgentClassDistributedType(Class agentClass) {
+		// TODO: Tie this to the simulation configuration
+
+		if (agentClass.getCanonicalName().equals("jzombies.Human"))
+			return true;
+		else
+			return false;
+
+	}
 	/*
 	 * Assigns a Simulation Agent to an AgentMapping
 	 */
@@ -79,6 +107,5 @@ public class SimulationDistributedAgentManager {
 		}
 
 		return am;
-
 	}
 }

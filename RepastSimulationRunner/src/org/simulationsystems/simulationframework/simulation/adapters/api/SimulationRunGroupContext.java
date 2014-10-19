@@ -1,5 +1,7 @@
 package org.simulationsystems.simulationframework.simulation.adapters.api;
 
+import org.simulationsystems.simulationframework.simulation.adapters.api.configuration.SimulationRunGroupConfiguration;
+
 public class SimulationRunGroupContext {
 	private SimulationRunGroup simulationRunGroup;
 	private SimulationRunGroupConfiguration simulationRunGroupConfiguration;

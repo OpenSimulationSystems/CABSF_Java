@@ -108,4 +108,8 @@ public class SimulationDistributedAgentManager {
 
 		return am;
 	}
+	
+	public Object logHelper() {
+		return agentMappings;
+	}
 }

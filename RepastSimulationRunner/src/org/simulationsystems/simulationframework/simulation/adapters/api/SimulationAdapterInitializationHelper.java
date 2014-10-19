@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.simulationsystems.simulationframework.simulation.adapters.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
 public class SimulationAdapterInitializationHelper {

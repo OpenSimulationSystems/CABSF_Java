@@ -1,8 +1,9 @@
-package org.simulationsystems.simulationframework.simulation.adapters.api;
+package org.simulationsystems.simulationframework.simulation.adapters.api.configuration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager.CONFIGURATION_KEYS;
 

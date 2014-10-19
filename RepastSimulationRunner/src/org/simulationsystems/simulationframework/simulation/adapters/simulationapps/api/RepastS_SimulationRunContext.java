@@ -1,9 +1,9 @@
 package org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api;
 
-import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupConfiguration;
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunContext;
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroup;
 import org.simulationsystems.simulationframework.simulation.adapters.api.SimulationRunGroupContext;
+import org.simulationsystems.simulationframework.simulation.adapters.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
 import repast.simphony.context.Context;

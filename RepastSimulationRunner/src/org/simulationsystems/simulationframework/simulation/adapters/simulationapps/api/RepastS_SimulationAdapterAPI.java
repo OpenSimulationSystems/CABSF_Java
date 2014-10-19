@@ -92,7 +92,7 @@ public class RepastS_SimulationAdapterAPI {
 	 * RepastS_SimulationRunContext result from initializing the API is passed in, in this method.
 	 */
 	// LOW: Allow the same simulation agent class to be both distributed and non-distributed.
-	public void initializeSimulationRun(Context<Object> repastContextForThisRun,
+	public RepastS_SimulationRunContext initializeSimulationRun(Context<Object> repastContextForThisRun,
 			RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
 
 		SimulationRunContext simulationRunContext = simulationAdapterAPI.initializeSimulationRun(
@@ -131,6 +131,8 @@ public class RepastS_SimulationAdapterAPI {
 			} else
 				continue; // Not an agent we need to map.
 		}
+		
+		return repastS_SimulationRunContext;
 	}
 
 	/*
@@ -158,6 +160,10 @@ public class RepastS_SimulationAdapterAPI {
 	private void mapSimulationSideAgent(Object simulationAgent,
 			SimulationRunContext simulationRunContext) {
 		simulationAdapterAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
+	}
+	
+	public void logHelper(RepastS_SimulationRunContext repastS_SimulationRunContext) {
+		System.out.println(repastS_SimulationRunContext.getSimulationDistributedAgentManager().logHelper());
 	}
 
 }

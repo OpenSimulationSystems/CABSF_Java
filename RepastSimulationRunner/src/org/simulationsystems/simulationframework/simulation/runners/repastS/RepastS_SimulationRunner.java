@@ -3,7 +3,9 @@ package org.simulationsystems.simulationframework.simulation.runners.repastS;
 import java.io.File;
 
 import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastS_SimulationAdapterAPI;
+import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastS_SimulationRunContext;
 import org.simulationsystems.simulationframework.simulation.adapters.simulationapps.api.RepastS_SimulationRunGroupContext;
+
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.context.Context;
 import repast.simphony.engine.controller.Controller;
@@ -117,10 +119,13 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
 
 		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
-			repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
+			RepastS_SimulationRunContext repastS_SimulationRunContext =repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
 					repastS_SimulationRunGroupContext);
 			// repastS_SimulationRunContext.notifyDistributedAgents()
+			System.out.println(repastS_SimulationRunContext.getSimulationDistributedAgentManager().logHelper());
 		}
+		
+
 	}
 
 	public void cleanUpRun() {

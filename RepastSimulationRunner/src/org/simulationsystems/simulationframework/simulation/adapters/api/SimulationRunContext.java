@@ -4,6 +4,7 @@ package org.simulationsystems.simulationframework.simulation.adapters.api;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;*/
 
+import org.simulationsystems.simulationframework.simulation.adapters.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.simulationframework.simulation.adapters.api.distributedagents.SimulationDistributedAgentManager;
 
 /*

@@ -97,7 +97,7 @@ public class RepastS_SimulationAdapterAPI {
 
 		SimulationRunContext simulationRunContext = simulationAdapterAPI.initializeSimulationRun(
 				repastContextForThisRun,
-				repastS_SimulationRunGroupContext.getSimulationRunGroupContext(), simulationDistributedAgentMessagingManagerStr);
+				repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
 
 		// User Decorator Pattern for RepastS_SimulationRunContext
 		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
@@ -161,9 +161,10 @@ public class RepastS_SimulationAdapterAPI {
 			SimulationRunContext simulationRunContext) {
 		simulationAdapterAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
-	
+
 	public void logHelper(RepastS_SimulationRunContext repastS_SimulationRunContext) {
-		System.out.println(repastS_SimulationRunContext.getSimulationDistributedAgentManager().logHelper());
+		System.out.println(repastS_SimulationRunContext.getSimulationDistributedAgentManager()
+				.logHelper());
 	}
 
 }

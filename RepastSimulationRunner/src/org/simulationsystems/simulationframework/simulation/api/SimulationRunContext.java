@@ -4,6 +4,7 @@ package org.simulationsystems.simulationframework.simulation.api;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;*/
 
+import org.simulationsystems.simulationframework.simulation.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.simulationframework.simulation.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.simulationframework.simulation.api.distributedagents.SimulationDistributedAgentManager;
 
@@ -17,6 +18,7 @@ public class SimulationRunContext {
 	private SimulationDistributedAgentManager simulationDistributedAgentManager;
 	private SimulationRunGroup simulationRunGroup;
 	private Object simulationToolContext;
+	private SimulationRunConfiguration simulationRunConfiguration;
 
 	/*
 	 * Convenience method to return the context of the Simulation Software. For example, for Repast
@@ -24,6 +26,14 @@ public class SimulationRunContext {
 	 */
 	public Object getSimulationToolContext() {
 		return simulationToolContext;
+	}
+
+	public SimulationRunConfiguration getSimulationRunConfiguration() {
+		return simulationRunConfiguration;
+	}
+
+	public void setSimulationRunConfiguration(SimulationRunConfiguration simulationRunConfiguration) {
+		this.simulationRunConfiguration = simulationRunConfiguration;
 	}
 
 	protected void setSimulationToolContext(Object simulationToolContext) {
@@ -68,11 +78,6 @@ public class SimulationRunContext {
 
 	public SimulationDistributedAgentManager getSimulationDistributedAgentManager() {
 		return simulationDistributedAgentManager;
-	}
-
-	public void setCurrentSimulationDistributedAgentManager(
-			SimulationDistributedAgentManager simulationDistributedAgentManager) {
-		this.simulationDistributedAgentManager = simulationDistributedAgentManager;
 	}
 
 	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {

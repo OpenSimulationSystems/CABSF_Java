@@ -5,9 +5,7 @@ import org.simulationsystems.simulationframework.simulation.api.messaging.Framew
 public class RedisMessaging implements CommonMessagingInterfaceAPI {
 
 	@Override
-	public void sendMessageToDistributedAgents(FrameworkMessage frameworkMessage) {
-		// TODO Auto-generated method stub
-		
+	public void sendMessageToDistributedAgents(FrameworkMessage frameworkMessage) {	
 	}
 
 }

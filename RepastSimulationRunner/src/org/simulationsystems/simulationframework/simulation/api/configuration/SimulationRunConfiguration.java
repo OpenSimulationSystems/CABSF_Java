@@ -7,7 +7,16 @@ public class SimulationRunConfiguration {
 	private SimulationRunContext simulationRunContext;
 	private SimulationDistributedAgentManager simulationDistributedAgentManager;
 	private SimulationDistributedAgentManager agentManager;
-	
-	
+	private String simulationDistributedAgentMessagingManagerStr;
+
+	// TODO: Read actual simultion-run-level properties
+	public SimulationRunConfiguration() {
+		// Redis or "WebServices"
+		simulationDistributedAgentMessagingManagerStr = "org.simulationsystems.simulationframework.simulation.api.framework.core.api.api.commonmessaging.RedisMessaging";
+	}
+
+	public String getSimulationDistributedAgentMessagingManagerStr() {
+		return simulationDistributedAgentMessagingManagerStr;
+	}
 
 }

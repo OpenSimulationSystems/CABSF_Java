@@ -66,13 +66,17 @@ public class SimulationAdapterInitializationHelper {
 				simulationRunGroupContext.getSimulationRunGroup());
 		simulationRunGroupContext.setSimulationRunGroupContext(simulationRunContext);
 
+		//Configuration
 		SimulationRunConfiguration simulationRunConfiguration = new SimulationRunConfiguration();
 		simulationRunContext.setSimulationRunConfiguration(simulationRunConfiguration);
 		
+		//Distributed Agents
 		SimulationDistributedAgentManager simulationDistributedAgentManager = new SimulationDistributedAgentManager(
 				simulationRunContext, simulationRunConfiguration.getSimulationDistributedAgentMessagingManagerStr());
 		simulationRunContext
 				.setSimulationDistributedAgentManager(simulationDistributedAgentManager);
+		
+		//
 		
 		return simulationRunContext;
 	}

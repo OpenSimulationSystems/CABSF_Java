@@ -12,7 +12,7 @@ public class SimulationRunConfiguration {
 	// TODO: Read actual simultion-run-level properties
 	public SimulationRunConfiguration() {
 		// Redis or "WebServices"
-		simulationDistributedAgentMessagingManagerStr = "org.simulationsystems.simulationframework.simulation.api.framework.core.api.api.commonmessaging.RedisMessaging";
+		simulationDistributedAgentMessagingManagerStr = "org.simulationsystems.simulationframework.simulation.internal.messaging.bridge.abstraction.RedisMessagingConcreteImplementor";
 	}
 
 	public String getSimulationDistributedAgentMessagingManagerStr() {

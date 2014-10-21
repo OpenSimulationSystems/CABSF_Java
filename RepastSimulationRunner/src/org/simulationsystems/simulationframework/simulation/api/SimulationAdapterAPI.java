@@ -74,7 +74,7 @@ public class SimulationAdapterAPI {
 	 * custom simulation run initialization is performed.
 	 */
 	public SimulationRunContext initializeSimulationRun(Object simulationSideContext,
-			SimulationRunGroupContext simulationRunGroupContext, String simulationDistributedAgentMessagingManagerStr) {
+			SimulationRunGroupContext simulationRunGroupContext) {
 		return simulationAdapterInitializationHelper.initializeSimulationRun(simulationSideContext,
 				simulationRunGroupContext);
 	}

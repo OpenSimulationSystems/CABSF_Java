@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.simulationsystems.simulationframework.simulation.api.SimulationAdapterAPI;
 import org.simulationsystems.simulationframework.simulation.api.SimulationRunContext;
 import org.simulationsystems.simulationframework.simulation.api.SimulationRunGroupContext;
-import org.simulationsystems.simulationframework.simulation.api.framework.core.api.SimulationDistributedAgentMessagingManager;
 import org.simulationsystems.simulationframework.simulation.api.messaging.FrameworkMessage;
+import org.simulationsystems.simulationframework.simulation.internal.messaging.bridge.abstraction.SimulationDistributedAgentMessagingManager;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation framework.  

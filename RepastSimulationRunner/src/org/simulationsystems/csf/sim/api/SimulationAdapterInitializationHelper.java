@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
-import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 public class SimulationAdapterInitializationHelper {
 	private SimulationAdapterAPI simulationAdapterAPI;
@@ -66,18 +66,19 @@ public class SimulationAdapterInitializationHelper {
 				simulationRunGroupContext.getSimulationRunGroup());
 		simulationRunGroupContext.setSimulationRunGroupContext(simulationRunContext);
 
-		//Configuration
+		// Configuration
 		SimulationRunConfiguration simulationRunConfiguration = new SimulationRunConfiguration();
 		simulationRunContext.setSimulationRunConfiguration(simulationRunConfiguration);
-		
-		//Distributed Agents
-		SimulationDistributedAgentManager simulationDistributedAgentManager = new SimulationDistributedAgentManager(
-				simulationRunContext, simulationRunConfiguration.getSimulationDistributedAgentMessagingManagerStr());
+
+		// Distributed Agents
+		SimulationDistributedSystemManager simulationDistributedSystemManager = new SimulationDistributedSystemManager(
+				simulationRunContext,
+				simulationRunConfiguration.getCommonMessagingConcreateImpl());
 		simulationRunContext
-				.setSimulationDistributedAgentManager(simulationDistributedAgentManager);
-		
+				.setSimulationDistributedSystemManager(simulationDistributedSystemManager);
+
 		//
-		
+
 		return simulationRunContext;
 	}
 

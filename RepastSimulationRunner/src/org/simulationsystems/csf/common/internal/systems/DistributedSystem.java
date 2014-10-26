@@ -8,12 +8,15 @@ import java.util.UUID;
  * Represents a single distributed system containing one or more distributed agents.
  */
 public class DistributedSystem {
-	UUID distributedSystemUUID;
+	String distributedSystemID;
 	Set<UUID> distributedAgentUUIDs = new HashSet<UUID>();
 	boolean allUUIDsFlag = false;
 
-	public DistributedSystem(UUID distributedSystemUUID) {
-		this.distributedSystemUUID = distributedSystemUUID;
+	public DistributedSystem(String distributedSystemID) {
+		if (distributedSystemID==null)
+			this.distributedSystemID = distributedSystemID.toString();
+		else
+			this.distributedSystemID = distributedSystemID;
 	}
 
 	public void setDistributedAgentUUIDs(Set<UUID> uuids) {
@@ -43,8 +46,8 @@ public class DistributedSystem {
 		return distributedAgentUUIDs;
 	}
 
-	public UUID getDistributedSystemUUID() {
-		return distributedSystemUUID;
+	public String getDistributedSystemID() {
+		return distributedSystemID;
 	}
 
 }

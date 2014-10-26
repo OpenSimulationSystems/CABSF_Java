@@ -2,12 +2,13 @@ package org.simulationsystems.csf.sim.internal.messaging.dao;
 
 import java.util.UUID;
 
+import org.simulationsystems.csf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
-	static private DistributedAgentRedisDaoImpl distributedAgentRedisDaoImpl = new DistributedAgentRedisDaoImpl();
+	static private RedisConnectionManager redisConnectionManager = new RedisConnectionManager();
 
 	/*
 	 * Disable this constructor so we can use a Singleton
@@ -17,7 +18,19 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	}
 
 	static public DistributedAgentDao getInstance() {
-		return (DistributedAgentDao) distributedAgentRedisDaoImpl;
+		return (DistributedAgentDao) redisConnectionManager;
+	}
+
+	/*
+	 * Redis channel names follow this format: csf.commands.simToDistSystem.IDOFDISTRIBUTEDSYSTEM
+	 */
+	// TODO: configuration: add id of distributed system(s)
+	private String createRedisChannelStr(SimulationRunContext simulationRunContext,
+			DistributedSystem distributedSystem) {
+		// LOW: Make this configurable on the CSF side.
+		String csfPrefix = "csf.commands";
+		// LOW: Make this configurable
+		return csfPrefix + "simToDistSystem" + distributedSystem.getDistributedSystemID();
 	}
 
 	// LOW: Add functionality for handling multiple distributed agent systems
@@ -26,23 +39,19 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.simulationsystems.csf.sim.internal.messaging.dao.DistributedAgentDao
+	 * @see org.simulationsystems.csf.sim.internal.messaging.dao.DistributedAgentDao
 	 * #sendMessagesToDistributedAgents(org.simulationsystems.csf.sim.api.
 	 * messaging.FrameworkMessage,
 	 * org.simulationsystems.csf.sim.api.messaging.DistributedSystemAgentSet,
 	 * org.simulationsystems.csf.sim.api.SimulationRunContext)
 	 */
 	@Override
-	public void sendMessagesToDistributedAgents(FrameworkMessage frameworkMessage,
-			DistributedSystem distributedSystem,
-			SimulationRunContext simulationRunContext) {
-		
-		//TODO: Mapping between agent IDs and UUIDs in this class?
-		//Message all of the agents in each each target distributed system
-		for (UUID distributedSystemAgentUUID : distributedSystem.getDistributedAgentUUIDs()) {
-			distributedAgentRedisDaoImpl.sendMessagesToDistributedAgents(frameworkMessage, distributedSystem, simulationRunContext);
-		}
+	public void sendMessagesToDistributedAgents(SimulationRunContext simulationRunContext,
+			FrameworkMessage frameworkMessage, DistributedSystem distributedSystem) {
+
+		String redisChannelStr = createRedisChannelStr(simulationRunContext, distributedSystem);
+		redisConnectionManager.postMessage(redisChannelStr,
+				frameworkMessage.transformToCommonMessagingXMLString(distributedSystem));
 
 	}
 

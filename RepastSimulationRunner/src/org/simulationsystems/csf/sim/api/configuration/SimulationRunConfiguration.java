@@ -1,22 +1,22 @@
 package org.simulationsystems.csf.sim.api.configuration;
 
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
-import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 public class SimulationRunConfiguration {
 	private SimulationRunContext simulationRunContext;
-	private SimulationDistributedAgentManager simulationDistributedAgentManager;
-	private SimulationDistributedAgentManager agentManager;
-	private String simulationDistributedAgentMessagingManagerStr;
+	private SimulationDistributedSystemManager simulationDistributedSystemManager;
+	private SimulationDistributedSystemManager agentManager;
+	private String CommonMessagingConcreateImpl;
 
-	// TODO: Read actual simultion-run-level properties
+	// TODO: Read actual simulation-run-level properties
 	public SimulationRunConfiguration() {
-		// Redis or "WebServices"
-		simulationDistributedAgentMessagingManagerStr = "org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.RedisMessagingConcreteImplementor";
+		// String to represent Redis or "WebServices"
+		CommonMessagingConcreateImpl = "org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.RedisMessagingConcreteImplementor";
 	}
 
-	public String getSimulationDistributedAgentMessagingManagerStr() {
-		return simulationDistributedAgentMessagingManagerStr;
+	public String getCommonMessagingConcreateImpl() {
+		return CommonMessagingConcreateImpl;
 	}
 
 }

@@ -7,11 +7,10 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
 /*
  * The implementor in the Bridge pattern, for the Common Simulation Framework's messaging
  */
-public interface CommonMessagingAPI {
+public interface CommonMessagingImplementationAPI {
 	public void readMessagesFromDistributedAgents(FrameworkMessage frameworkMessage);
-	
+
 	void sendMessagesToDistributedAgents(FrameworkMessage frameworkMessage,
-			DistributedSystem distributedSystem,
-			SimulationRunContext simulationRunContext);
+			DistributedSystem distributedSystem, SimulationRunContext simulationRunContext);
 
 }

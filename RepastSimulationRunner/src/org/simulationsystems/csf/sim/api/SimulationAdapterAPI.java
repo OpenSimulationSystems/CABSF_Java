@@ -3,7 +3,7 @@ package org.simulationsystems.csf.sim.api;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 /**
  * This API is only for use by developers of adapters to connect simulation tools (such as Repast)

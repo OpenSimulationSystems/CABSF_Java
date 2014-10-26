@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.simulationsystems.csf.sim.api.SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
-import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
 
@@ -105,7 +105,7 @@ public class RepastS_SimulationAdapterAPI {
 		repastS_SimulationRunContext.setRepastContextForThisRun(repastContextForThisRun);
 
 		// TODO: Support multiple Simulation Run Groups. For now just assume that there's one.
-		repastS_SimulationRunContext.getSimulationDistributedAgentManager()
+		repastS_SimulationRunContext.getSimulationDistributedSystemManager()
 				.initializeAgentMappings();
 
 		// Find all of the individual Repast agents to be mapped in the framework to distributed
@@ -117,7 +117,7 @@ public class RepastS_SimulationAdapterAPI {
 		Class simulationAgentClass : simulationAgentsClasses) {
 			// LOW: Allow individual simulation agent classes to be either simulation-only or
 			// representations of distributed agents.
-			if (repastS_SimulationRunContext.getSimulationDistributedAgentManager()
+			if (repastS_SimulationRunContext.getSimulationDistributedSystemManager()
 					.isAgentClassDistributedType(simulationAgentClass)) {
 				@SuppressWarnings("unchecked")
 				Class<Object> simulationAgentClazz = simulationAgentClass;
@@ -163,7 +163,7 @@ public class RepastS_SimulationAdapterAPI {
 	}
 
 	public void logHelper(RepastS_SimulationRunContext repastS_SimulationRunContext) {
-		System.out.println(repastS_SimulationRunContext.getSimulationDistributedAgentManager()
+		System.out.println(repastS_SimulationRunContext.getSimulationDistributedSystemManager()
 				.logHelper());
 	}
 

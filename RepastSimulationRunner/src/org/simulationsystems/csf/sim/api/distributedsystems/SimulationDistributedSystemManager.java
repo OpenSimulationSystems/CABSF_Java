@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.api.distributedagents;
+package org.simulationsystems.csf.sim.api.distributedsystems;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -8,20 +8,22 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
-import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.SimulationDistributedAgentMessagingManager;
+import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 
 /*
- * Class to manage the distributed agents from other systems through the common simulation framework.  
+ * Class to manage the distributed agents from other systems through the common simulation
+ * framework.
  */
-public class SimulationDistributedAgentManager {
+public class SimulationDistributedSystemManager {
 	private SimulationRunContext simulationRunContext;
 	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
 	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
 	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
-	private SimulationDistributedAgentMessagingManager simulationDistributedAgentMessagingManager;
+	private CommonMessagingRefinedAbstractionAPI commonMessagingRefinedAbstractionConcreteImpl;
 
 	public enum CONFIGURATION_KEYS {
 		DISTRIBUTED_AGENTS
@@ -30,22 +32,23 @@ public class SimulationDistributedAgentManager {
 	// private agentMappingsDirectory;
 
 	@SuppressWarnings("unused")
-	private SimulationDistributedAgentManager() {
+	private SimulationDistributedSystemManager() {
 	}
 
-	public SimulationDistributedAgentManager(SimulationRunContext simulationRunContext,
+	public SimulationDistributedSystemManager(SimulationRunContext simulationRunContext,
 			String simulationDistributedAgentMessagingManagerStr) {
 		this.simulationRunContext = simulationRunContext;
 
 		// Instantiate the correct manager for the common messaging interface (e.g., Redis or web
 		// services) using reflection.
 		// TODO: Handle exception when unable to instantiate class
+		// TODO: ?Handle configuration/reflection for Bridge Refined Abstraction?
 		try {
 			Class<?> cl = Class.forName(simulationDistributedAgentMessagingManagerStr);
 			// Constructor<?> cons = cl.getConstructor(cl.getClass());
-			// simulationDistributedAgentMessagingManager =
-			// (SimulationDistributedAgentMessagingManager) cons.newInstance();
-			simulationDistributedAgentMessagingManager = (SimulationDistributedAgentMessagingManager) cl
+			// commonMessagingRefinedAbstractionConcreteImpl =
+			// (commonMessagingRefinedAbstractionConcreteImpl) cons.newInstance();
+			commonMessagingRefinedAbstractionConcreteImpl = (CommonMessagingRefinedAbstractionAPI) cl
 					.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -62,12 +65,12 @@ public class SimulationDistributedAgentManager {
 			e.printStackTrace();
 		}
 
-		simulationDistributedAgentMessagingManager
+		commonMessagingRefinedAbstractionConcreteImpl
 				.initializeSimulationFrameworkCommonMessagingInterface();
 	}
 
-	public SimulationDistributedAgentMessagingManager getSimulationDistributedAgentMessagingManager() {
-		return simulationDistributedAgentMessagingManager;
+	public CommonMessagingRefinedAbstractionAPI getSimulationDistributedAgentMessagingManager() {
+		return commonMessagingRefinedAbstractionConcreteImpl;
 	}
 
 	protected ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {
@@ -104,7 +107,7 @@ public class SimulationDistributedAgentManager {
 		// and
 		// distributed-agent-side data.
 		// Mocking data for now;
-
+		// TODO: Pull from configuration
 		createAgentMapping("jzombies.Human", "jade.Agent");
 		createAgentMapping("jzombies.Human", "jade.Agent");
 		createAgentMapping("jzombies.Human", "jade.Agent");
@@ -154,9 +157,12 @@ public class SimulationDistributedAgentManager {
 		return agentMappings;
 	}
 
-	public void messageDistributedAgents(FrameworkMessage frameworkMessage) {
-		simulationDistributedAgentMessagingManager.sendMessageToDistributedAgents(frameworkMessage);
+	public void messageDistributedAgents(FrameworkMessage frameworkMessage,
+			SimulationRunContext simulationRunContext) {
+		// Loop through all of the distributed systems
+		// FIXME
+		// commonMessagingRefinedAbstractionConcreteImpl.sendMessageToDistributedAgents(frameworkMessage,
+		// distributedSystem, simulationRunContext);
 	}
-
 
 }

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;*/
 
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
-import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributedAgentManager;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 /*
  * Provides the context for the Common Simulation Framework.  Adapter developers may use this context directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g., org.simulationsystems.csf.sim.adapters.api.RepastSimphonySimulationFrameworkContext).  The benefit is that the API client would be able to utilize native Simulation-Toolkit-specific objects instead of the generic "Object" that is used by this generic Simulation Framework API.
@@ -15,7 +15,7 @@ import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributed
  */
 public class SimulationRunContext {
 	protected SimulationRunGroupConfiguration simulationRunGroupConfiguration; //Simulation Run-group-wide
-	private SimulationDistributedAgentManager simulationDistributedAgentManager;
+	private SimulationDistributedSystemManager simulationDistributedSystemManager;
 	private SimulationRunGroup simulationRunGroup;
 	private Object simulationToolContext;
 	private SimulationRunConfiguration simulationRunConfiguration;
@@ -45,39 +45,11 @@ public class SimulationRunContext {
 	 */
 	//protected SimulationRunContext(String fullyQualifiedClassNameForDistributedAgentManager) {
 		protected SimulationRunContext(SimulationRunGroup simulationRunGroup) {
-
-		// Check if the Adaptor author is providing a custom DistributedAgentManager
-		// TODO: Add exception/return if unable to create object or cast object
-		// Class<?> c;
-/*		if (fullyQualifiedClassNameForDistributedAgentManager != null) {
-			try {
-				Class<?> cl = Class.forName(fullyQualifiedClassNameForDistributedAgentManager);
-				Constructor<?> cons = cl.getConstructor(cl.getClass());
-				simulationDistributedAgentManager = (SimulationDistributedAgentManager) cons
-						.newInstance(this);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		} else
-			*/
-			//simulationDistributedAgentManager = new SimulationDistributedAgentManager(this);
 			this.simulationRunGroup = simulationRunGroup;
 		}
 
-	public SimulationDistributedAgentManager getSimulationDistributedAgentManager() {
-		return simulationDistributedAgentManager;
+	public SimulationDistributedSystemManager getSimulationDistributedAgentManager() {
+		return simulationDistributedSystemManager;
 	}
 
 	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
@@ -120,9 +92,9 @@ public class SimulationRunContext {
 		
 	}
 
-	public void setSimulationDistributedAgentManager(
-			SimulationDistributedAgentManager simulationDistributedAgentManager) {
-		this.simulationDistributedAgentManager = simulationDistributedAgentManager;
+	public void setSimulationDistributedSystemManager(
+			SimulationDistributedSystemManager simulationDistributedSystemManager) {
+		this.simulationDistributedSystemManager = simulationDistributedSystemManager;
 		
 	}
 }

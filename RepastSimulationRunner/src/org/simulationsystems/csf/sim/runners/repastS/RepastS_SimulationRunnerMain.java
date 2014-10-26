@@ -2,9 +2,12 @@ package org.simulationsystems.csf.sim.runners.repastS;
 
 import java.io.File;
 
-import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDAGENTS_MESSAGE_TYPE;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkToDistributedAgentsMessage;
+import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
+import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToDistributedSystemImpl;
+import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.adapters.api.RepastS_SimulationRunContext;
+import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE;
 
 import repast.simphony.engine.environment.RunEnvironment;
@@ -57,12 +60,13 @@ public class RepastS_SimulationRunnerMain {
 					.runInitialize(); // initialize the run
 			// Message the distributed systems that the simulation has started and is ready to
 			// accept messages from the distributed agents.
-			if (repastS_SimulationRunner.getSimulationRunnerType() == SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION)
-				repastS_SimulationRunContext
-						.getSimulationDistributedAgentManager()
-						.messageDistributedAgents(
-								new FrameworkToDistributedAgentsMessage(
-										FRAMEWORK_TO_DISTRIBUTEDAGENTS_MESSAGE_TYPE.SIMULATION_RUN_STARTED));
+			if (repastS_SimulationRunner.getSimulationRunnerType() == SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
+				FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl();
+				msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
+				repastS_SimulationRunContext.getSimulationDistributedSystemManager()
+						.messageDistributedAgents(msg,
+								repastS_SimulationRunContext.getSimulationRunContext());
+			}
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the configuration

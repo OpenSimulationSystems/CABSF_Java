@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
-import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributedAgentManager;
-import org.simulationsystems.csf.sim.api.distributedagents.SimulationDistributedAgentManager.CONFIGURATION_KEYS;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager.CONFIGURATION_KEYS;
 
 public class SimulationRunGroupConfiguration {
 	// LOW: Support Multiple Simulation Run Configurations

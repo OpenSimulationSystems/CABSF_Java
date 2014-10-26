@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.api.distributedagents;
+package org.simulationsystems.csf.sim.api.distributedsystems;
 
 import java.util.UUID;
 

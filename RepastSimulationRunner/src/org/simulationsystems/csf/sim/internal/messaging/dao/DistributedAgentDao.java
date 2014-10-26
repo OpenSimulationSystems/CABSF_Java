@@ -6,8 +6,8 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 public interface DistributedAgentDao {
 
-	public void sendMessagesToDistributedAgents(FrameworkMessage frameworkMessage,
-			DistributedSystem distributedSystem,
-			SimulationRunContext simulationRunContext);
+	public void sendMessagesToDistributedAgents(SimulationRunContext simulationRunContext, FrameworkMessage frameworkMessage,
+			DistributedSystem distributedSystem);
+	
 
 }

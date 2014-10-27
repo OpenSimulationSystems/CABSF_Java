@@ -122,7 +122,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
 			repastS_SimulationRunContext = repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
 					repastS_SimulationRunGroupContext);
-			System.out.println(repastS_SimulationRunContext.getSimulationDistributedSystemManager().logHelper());
+			//Fix after expanding to support multiple distributed systems.
+			System.out.println(repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator().next().logHelper());
 		}
 		
 		return repastS_SimulationRunContext;

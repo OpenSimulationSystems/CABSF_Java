@@ -8,8 +8,9 @@ import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
+	static private DistributedAgentDao instance;
 	static private RedisConnectionManager redisConnectionManager = new RedisConnectionManager();
-
+	
 	/*
 	 * Disable this constructor so we can use a Singleton
 	 */
@@ -18,7 +19,7 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	}
 
 	static public DistributedAgentDao getInstance() {
-		return (DistributedAgentDao) redisConnectionManager;
+		return instance;
 	}
 
 	/*
@@ -32,6 +33,8 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 		// LOW: Make this configurable
 		return csfPrefix + "simToDistSystem" + distributedSystem.getDistributedSystemID();
 	}
+	
+	
 
 	// LOW: Add functionality for handling multiple distributed agent systems
 	// Call sendMessagesToDistributedAgents for a single distributed agent system from here.

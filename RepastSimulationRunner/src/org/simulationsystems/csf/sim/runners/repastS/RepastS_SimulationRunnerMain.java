@@ -1,6 +1,7 @@
 package org.simulationsystems.csf.sim.runners.repastS;
 
 import java.io.File;
+import java.util.Set;
 
 import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
@@ -8,6 +9,7 @@ import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.adapters.api.RepastS_SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 import org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE;
 
 import repast.simphony.engine.environment.RunEnvironment;
@@ -63,9 +65,9 @@ public class RepastS_SimulationRunnerMain {
 			if (repastS_SimulationRunner.getSimulationRunnerType() == SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
 				FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl();
 				msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
-				repastS_SimulationRunContext.getSimulationDistributedSystemManager()
-						.messageDistributedAgents(msg,
-								repastS_SimulationRunContext.getSimulationRunContext());
+
+				repastS_SimulationRunContext.messageDistributedSystems(msg,
+						repastS_SimulationRunContext.getSimulationRunContext());
 			}
 
 			// Hard Coded for now

@@ -7,16 +7,16 @@ public class SimulationRunConfiguration {
 	private SimulationRunContext simulationRunContext;
 	private SimulationDistributedSystemManager simulationDistributedSystemManager;
 	private SimulationDistributedSystemManager agentManager;
-	private String CommonMessagingConcreateImpl;
+	private String commonMessagingConcreateImpl=null;
 
 	// TODO: Read actual simulation-run-level properties
 	public SimulationRunConfiguration() {
 		// String to represent Redis or "WebServices"
-		CommonMessagingConcreateImpl = "org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.RedisMessagingConcreteImplementor";
+		commonMessagingConcreateImpl = "org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.RedisMessagingConcreteImplementor";
 	}
 
-	public String getCommonMessagingConcreateImpl() {
-		return CommonMessagingConcreateImpl;
+	public String getCommonMessagingConcreteImpl() {
+		return commonMessagingConcreateImpl;
 	}
 
 }

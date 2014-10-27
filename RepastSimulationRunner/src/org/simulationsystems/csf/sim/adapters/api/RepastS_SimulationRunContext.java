@@ -42,8 +42,8 @@ public class RepastS_SimulationRunContext {
 		this.simulationRunContext = simulationRunContext;
 
 		// TODO: Make initialized based on configuration. For now, hard code one distributed system.
-		SimulationDistributedSystemManager dam = simulationRunContext
-				.getSimulationDistributedAgentManager();
+		// TODO: Handle multiple distributed systems
+		SimulationDistributedSystemManager dam = simulationRunContext.getSimulationDistributedSystemManagers().iterator().next();
 		simulationDistributedSystemManagers.add(dam);
 	}
 
@@ -71,12 +71,16 @@ public class RepastS_SimulationRunContext {
 	}
 
 	/*
-	 * Returns the Simulation Distributed Agent Manager.
+	 * Returns the Simulation Distributed Agent Managers.
 	 */
-	public SimulationDistributedSystemManager getSimulationDistributedSystemManager() {
+	public Set<SimulationDistributedSystemManager> getSimulationDistributedSystemManagers() {
 
 		// TODO: Return the actual manager, for now assume there is only 1.
-		return simulationDistributedSystemManagers.iterator().next();
+		return simulationDistributedSystemManagers;
 	}
 
+	public void messageDistributedSystems(FrameworkMessage frameworkMessage,
+			SimulationRunContext simulationRunContext) {
+		simulationRunContext.messageDistributedSystems(frameworkMessage, simulationRunContext);
+	}
 }

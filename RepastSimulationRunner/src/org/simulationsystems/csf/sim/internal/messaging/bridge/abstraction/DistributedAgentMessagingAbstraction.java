@@ -18,7 +18,7 @@ public abstract class DistributedAgentMessagingAbstraction {
 	abstract public void sendMessageToDistributedAgents(FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem, SimulationRunContext simulationRunContext);
 
-	DistributedAgentMessagingAbstraction(CommonMessagingImplementationAPI commonMessagingImplementationAPI) {
+	protected DistributedAgentMessagingAbstraction(CommonMessagingImplementationAPI commonMessagingImplementationAPI) {
 		this.commonMessagingImplementationAPI = commonMessagingImplementationAPI;
 	}
 }

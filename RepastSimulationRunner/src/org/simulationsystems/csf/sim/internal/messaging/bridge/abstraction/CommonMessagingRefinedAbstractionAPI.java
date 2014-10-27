@@ -14,7 +14,7 @@ import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.Co
  */
 public class CommonMessagingRefinedAbstractionAPI extends DistributedAgentMessagingAbstraction {
 
-	CommonMessagingRefinedAbstractionAPI(
+	public CommonMessagingRefinedAbstractionAPI(
 			CommonMessagingImplementationAPI commonMessagingImplementationAPI) {
 		super(commonMessagingImplementationAPI);
 	}

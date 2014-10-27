@@ -13,31 +13,55 @@ import org.simulationsystems.csf.sim.api.SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
+import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.DistributedAgentMessagingAbstraction;
+import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.RedisMessagingConcreteImplemtation;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation
- * framework.
+ * framework. Also acts as the client to the Bridge Pattern (through composition) to the common
+ * messaging.
  */
 public class SimulationDistributedSystemManager {
 	private SimulationRunContext simulationRunContext;
+	private DistributedSystem distributedSystem;
 	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
 	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
 	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
 	private CommonMessagingRefinedAbstractionAPI commonMessagingRefinedAbstractionConcreteImpl;
 
+	private DistributedAgentMessagingAbstraction distributedAgentMessagingRefinedAbstraction = null;
+
 	public enum CONFIGURATION_KEYS {
 		DISTRIBUTED_AGENTS
 	}
-
-	// private agentMappingsDirectory;
 
 	@SuppressWarnings("unused")
 	private SimulationDistributedSystemManager() {
 	}
 
 	public SimulationDistributedSystemManager(SimulationRunContext simulationRunContext,
-			String simulationDistributedAgentMessagingManagerStr) {
+			String simulationDistributedAgentMessagingManagerStr,
+			DistributedSystem distributedSystem) {
 		this.simulationRunContext = simulationRunContext;
+		this.distributedSystem = distributedSystem;
+
+		// Check which Bridge implementation we're going to use, based on what was specified in the
+		// configuration.
+		if (simulationRunContext
+				.getSimulationRunConfiguration()
+				.getCommonMessagingConcreteImpl()
+				.equals("org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.RedisMessagingConcreteImplementor")) {
+			distributedAgentMessagingRefinedAbstraction = new CommonMessagingRefinedAbstractionAPI(
+					new RedisMessagingConcreteImplemtation());
+		} else {
+			// TODO: Handle this better
+			throw new IllegalStateException(
+					"Error: Redis not properly configured in the CSF configuration file.");
+		}
+
+		// distributedAgentMessagingRefinedAbstraction =
+		// simulationRunContext.getSimulationRunConfiguration()
+		// = new CommonMessagingRefinedAbstractionAPI(null);
 
 		// Instantiate the correct manager for the common messaging interface (e.g., Redis or web
 		// services) using reflection.
@@ -159,10 +183,9 @@ public class SimulationDistributedSystemManager {
 
 	public void messageDistributedAgents(FrameworkMessage frameworkMessage,
 			SimulationRunContext simulationRunContext) {
-		// Loop through all of the distributed systems
-		// FIXME
-		// commonMessagingRefinedAbstractionConcreteImpl.sendMessageToDistributedAgents(frameworkMessage,
-		// distributedSystem, simulationRunContext);
+		// TODO: Multiple Distributed systems
+		distributedAgentMessagingRefinedAbstraction.sendMessageToDistributedAgents(
+				frameworkMessage, distributedSystem, simulationRunContext);
 	}
 
 }

@@ -35,6 +35,7 @@ import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistribute
 public class SimulationAdapterAPI {
 	protected String SIMULATION_TOOL_NAME;
 	private static SimulationAdapterAPI instance = new SimulationAdapterAPI();
+	
 	// TODO: Look into why have to do lazy initialization to get this to work. Need to figure this
 	// out for future multithreading
 	private static SimulationAdapterInitializationHelper simulationAdapterInitializationHelper = null;

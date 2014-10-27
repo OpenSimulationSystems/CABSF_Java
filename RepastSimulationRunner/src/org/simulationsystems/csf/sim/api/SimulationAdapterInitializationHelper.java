@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
@@ -71,13 +72,13 @@ public class SimulationAdapterInitializationHelper {
 		simulationRunContext.setSimulationRunConfiguration(simulationRunConfiguration);
 
 		// Distributed Agents
+		// LOW: Fix later to handle multiple distributed systems
+		// LOW: Read optional distributed system id from the configuration
+		DistributedSystem sys = new DistributedSystem(null);
 		SimulationDistributedSystemManager simulationDistributedSystemManager = new SimulationDistributedSystemManager(
-				simulationRunContext,
-				simulationRunConfiguration.getCommonMessagingConcreateImpl());
+				simulationRunContext, simulationRunConfiguration.getCommonMessagingConcreteImpl(), sys);
 		simulationRunContext
-				.setSimulationDistributedSystemManager(simulationDistributedSystemManager);
-
-		//
+				.addSimulationDistributedSystemManager(simulationDistributedSystemManager);
 
 		return simulationRunContext;
 	}
@@ -112,7 +113,8 @@ public class SimulationAdapterInitializationHelper {
 	 */
 	public void mapSimulationSideAgent(Object simulationAgent,
 			SimulationRunContext simulationRunContext) {
-		simulationRunContext.getSimulationDistributedAgentManager()
+		// TODO: Handle multiple distributed systems
+		simulationRunContext.getSimulationDistributedSystemManagers().iterator().next()
 				.addSimulationAgentToAgentMapping(simulationAgent);
 
 	}

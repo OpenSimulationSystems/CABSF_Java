@@ -6,7 +6,7 @@ import redis.clients.jedis.Jedis;
  * Manages the CRUD operations to Redis. This class has no business-level knowledge.
  */
 public class RedisConnectionManager {
-	private Jedis jedis;
+	private Jedis jedis=null;
 
 	public void initializeRedisConnection(final String host) {
 		jedis = new Jedis(host);

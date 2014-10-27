@@ -9,5 +9,5 @@ public interface DistributedAgentDao {
 	public void sendMessagesToDistributedAgents(SimulationRunContext simulationRunContext, FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem);
 	
-
+	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString);
 }

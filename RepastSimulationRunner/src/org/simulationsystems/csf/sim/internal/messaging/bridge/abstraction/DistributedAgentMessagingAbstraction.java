@@ -12,13 +12,16 @@ import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.Co
  */
 public abstract class DistributedAgentMessagingAbstraction {
 	protected CommonMessagingImplementationAPI commonMessagingImplementationAPI;
+	// LOW: Generalize this, maybe make it an object.
+	protected String messagingConnectionString; //The messaging connection string, such as the Redis connection string.
 
-	abstract public void initializeSimulationFrameworkCommonMessagingInterface();
+	abstract public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString);
 
 	abstract public void sendMessageToDistributedAgents(FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem, SimulationRunContext simulationRunContext);
 
-	protected DistributedAgentMessagingAbstraction(CommonMessagingImplementationAPI commonMessagingImplementationAPI) {
+	protected DistributedAgentMessagingAbstraction(CommonMessagingImplementationAPI commonMessagingImplementationAPI, String messagingConnectionString) {
 		this.commonMessagingImplementationAPI = commonMessagingImplementationAPI;
+		this.messagingConnectionString = messagingConnectionString;
 	}
 }

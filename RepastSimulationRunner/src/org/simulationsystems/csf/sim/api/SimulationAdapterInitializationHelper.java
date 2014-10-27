@@ -76,7 +76,7 @@ public class SimulationAdapterInitializationHelper {
 		// LOW: Read optional distributed system id from the configuration
 		DistributedSystem sys = new DistributedSystem(null);
 		SimulationDistributedSystemManager simulationDistributedSystemManager = new SimulationDistributedSystemManager(
-				simulationRunContext, simulationRunConfiguration.getCommonMessagingConcreteImpl(), sys);
+				simulationRunContext, simulationRunConfiguration.getCommonMessagingConcreteImplStr(), sys);
 		simulationRunContext
 				.addSimulationDistributedSystemManager(simulationDistributedSystemManager);
 

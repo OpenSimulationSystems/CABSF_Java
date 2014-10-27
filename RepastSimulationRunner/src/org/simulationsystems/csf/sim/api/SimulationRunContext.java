@@ -5,6 +5,7 @@ package org.simulationsystems.csf.sim.api;
  * java.lang.reflect.Method;
  */
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
@@ -25,7 +26,7 @@ import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistribute
 public class SimulationRunContext {
 	protected SimulationRunGroupConfiguration simulationRunGroupConfiguration; // Simulation
 																				// Run-group-wide
-	private Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers;
+	private Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
 	private SimulationRunGroup simulationRunGroup;
 	private Object simulationToolContext;
 	private SimulationRunConfiguration simulationRunConfiguration;
@@ -114,7 +115,7 @@ public class SimulationRunContext {
 		// TODO: Fix for handling multiple distributed systems, Loop through all systems
 		SimulationDistributedSystemManager mgr = getSimulationDistributedSystemManagers()
 				.iterator().next();
-		
+
 		mgr.messageDistributedAgents(frameworkMessage, simulationRunContext);
 
 	}

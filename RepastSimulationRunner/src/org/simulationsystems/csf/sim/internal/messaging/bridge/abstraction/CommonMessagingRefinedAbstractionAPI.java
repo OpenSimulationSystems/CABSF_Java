@@ -13,15 +13,15 @@ import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.Co
  * the framework is hidden from this class.
  */
 public class CommonMessagingRefinedAbstractionAPI extends DistributedAgentMessagingAbstraction {
-
 	public CommonMessagingRefinedAbstractionAPI(
-			CommonMessagingImplementationAPI commonMessagingImplementationAPI) {
-		super(commonMessagingImplementationAPI);
+			CommonMessagingImplementationAPI commonMessagingImplementationAPI, String connectionStr) {
+		super(commonMessagingImplementationAPI, connectionStr);
+		
 	}
 
 	@Override
-	public void initializeSimulationFrameworkCommonMessagingInterface() {
-
+	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString) {
+		commonMessagingImplementationAPI.initializeSimulationFrameworkCommonMessagingInterface(messagingConnectionString);
 	}
 
 	@Override

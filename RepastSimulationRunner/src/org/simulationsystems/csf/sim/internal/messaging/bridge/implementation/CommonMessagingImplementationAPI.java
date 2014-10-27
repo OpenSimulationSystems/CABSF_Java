@@ -13,4 +13,6 @@ public interface CommonMessagingImplementationAPI {
 	void sendMessagesToDistributedAgents(FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem, SimulationRunContext simulationRunContext);
 
+	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString);
+
 }

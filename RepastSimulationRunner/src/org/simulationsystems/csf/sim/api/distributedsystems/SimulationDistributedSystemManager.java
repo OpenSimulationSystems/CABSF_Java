@@ -14,7 +14,8 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.DistributedAgentMessagingAbstraction;
-import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.RedisMessagingConcreteImplemtation;
+import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
+import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation
@@ -27,7 +28,7 @@ public class SimulationDistributedSystemManager {
 	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
 	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
 	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
-	private CommonMessagingRefinedAbstractionAPI commonMessagingRefinedAbstractionConcreteImpl;
+	private CommonMessagingImplementationAPI commonMessagingImplementationAPI;
 
 	private DistributedAgentMessagingAbstraction distributedAgentMessagingRefinedAbstraction = null;
 
@@ -40,8 +41,7 @@ public class SimulationDistributedSystemManager {
 	}
 
 	public SimulationDistributedSystemManager(SimulationRunContext simulationRunContext,
-			String simulationDistributedAgentMessagingManagerStr,
-			DistributedSystem distributedSystem) {
+			String getCommonMessagingConcreteImplStr, DistributedSystem distributedSystem) {
 		this.simulationRunContext = simulationRunContext;
 		this.distributedSystem = distributedSystem;
 
@@ -49,10 +49,8 @@ public class SimulationDistributedSystemManager {
 		// configuration.
 		if (simulationRunContext
 				.getSimulationRunConfiguration()
-				.getCommonMessagingConcreteImpl()
-				.equals("org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.RedisMessagingConcreteImplementor")) {
-			distributedAgentMessagingRefinedAbstraction = new CommonMessagingRefinedAbstractionAPI(
-					new RedisMessagingConcreteImplemtation());
+				.getCommonMessagingConcreteImplStr()
+				.equals("org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation")) {
 		} else {
 			// TODO: Handle this better
 			throw new IllegalStateException(
@@ -68,33 +66,30 @@ public class SimulationDistributedSystemManager {
 		// TODO: Handle exception when unable to instantiate class
 		// TODO: ?Handle configuration/reflection for Bridge Refined Abstraction?
 		try {
-			Class<?> cl = Class.forName(simulationDistributedAgentMessagingManagerStr);
+			Class<?> cl = Class.forName(getCommonMessagingConcreteImplStr);
 			// Constructor<?> cons = cl.getConstructor(cl.getClass());
-			// commonMessagingRefinedAbstractionConcreteImpl =
-			// (commonMessagingRefinedAbstractionConcreteImpl) cons.newInstance();
-			commonMessagingRefinedAbstractionConcreteImpl = (CommonMessagingRefinedAbstractionAPI) cl
-					.newInstance();
+			// commonMessagingImplementationAPI =
+			// (commonMessagingImplementationAPI) cons.newInstance();
+			commonMessagingImplementationAPI = (CommonMessagingImplementationAPI) cl.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-		} /*
-		 * catch (InvocationTargetException e) { e.printStackTrace(); } catch (NoSuchMethodException
-		 * e) { e.printStackTrace(); }
-		 */catch (SecurityException e) {
+		}
+		 catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-
-		commonMessagingRefinedAbstractionConcreteImpl
-				.initializeSimulationFrameworkCommonMessagingInterface();
-	}
-
-	public CommonMessagingRefinedAbstractionAPI getSimulationDistributedAgentMessagingManager() {
-		return commonMessagingRefinedAbstractionConcreteImpl;
+		
+		distributedAgentMessagingRefinedAbstraction = new CommonMessagingRefinedAbstractionAPI(
+				commonMessagingImplementationAPI, simulationRunContext.getSimulationRunConfiguration().getRedisConnectionString());
+		
+		// TODO: Move this configuration to the Simulation Run Group level?
+		distributedAgentMessagingRefinedAbstraction
+				.initializeSimulationFrameworkCommonMessagingInterface(simulationRunContext.getSimulationRunConfiguration().getRedisConnectionString());
 	}
 
 	protected ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {

@@ -11,8 +11,8 @@ import org.simulationsystems.csf.sim.internal.messaging.dao.DistributedAgentRedi
  * acts as the client in the DAO pattern (through composition), to retrieve the data from one of the
  * common data interfaces, in this case the in-memory database Redis.
  */
-public class RedisMessagingConcreteImplemtation implements CommonMessagingImplementationAPI {
-	private DistributedAgentDao distributedAgentDao = DistributedAgentRedisDaoImpl.getInstance();
+public class RedisMessagingConcreteImplementation implements CommonMessagingImplementationAPI {
+	static private DistributedAgentDao distributedAgentDao = DistributedAgentRedisDaoImpl.getInstance();
 
 	/*
 	 * 
@@ -28,6 +28,12 @@ public class RedisMessagingConcreteImplemtation implements CommonMessagingImplem
 	public void readMessagesFromDistributedAgents(FrameworkMessage frameworkMessage) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString) {
+		distributedAgentDao.initializeSimulationFrameworkCommonMessagingInterface(messagingConnectionString);
+		
 	}
 
 }

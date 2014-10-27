@@ -8,7 +8,7 @@ import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
-	static private DistributedAgentDao instance;
+	static private DistributedAgentDao instance = new DistributedAgentRedisDaoImpl();
 	static private RedisConnectionManager redisConnectionManager = new RedisConnectionManager();
 	
 	/*
@@ -29,9 +29,9 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	private String createRedisChannelStr(SimulationRunContext simulationRunContext,
 			DistributedSystem distributedSystem) {
 		// LOW: Make this configurable on the CSF side.
-		String csfPrefix = "csf.commands";
+		String csfPrefix = "csf.commands.";
 		// LOW: Make this configurable
-		return csfPrefix + "simToDistSystem" + distributedSystem.getDistributedSystemID();
+		return csfPrefix + "simToDistSystem." + distributedSystem.getDistributedSystemID();
 	}
 	
 	
@@ -56,6 +56,13 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 		redisConnectionManager.postMessage(redisChannelStr,
 				frameworkMessage.transformToCommonMessagingXMLString(distributedSystem));
 
+	}
+
+	@Override
+	public void initializeSimulationFrameworkCommonMessagingInterface(
+			String messagingConnectionString) {
+		redisConnectionManager.initializeRedisConnection(messagingConnectionString);
+		
 	}
 
 }

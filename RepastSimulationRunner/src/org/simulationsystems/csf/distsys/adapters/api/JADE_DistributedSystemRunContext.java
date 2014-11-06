@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.adapters.api;
+package org.simulationsystems.csf.distsys.adapters.api;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ import repast.simphony.context.Context;
  * developers should first instantiate DistributedSystemSimulationRunContext, before instantiating a
  * Simulation-Toolkit-specific Context such as this class.
  */
-public class RepastS_SimulationRunContext {
+public class JADE_DistributedSystemRunContext {
 	private SimulationRunContext simulationRunContext;
 	Context<Object> repastS_ContextForThisRun;
 	Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
@@ -34,11 +34,11 @@ public class RepastS_SimulationRunContext {
 	 * Use the other constructor
 	 */
 	@SuppressWarnings("unused")
-	private RepastS_SimulationRunContext() {
+	private JADE_DistributedSystemRunContext() {
 
 	}
 
-	public RepastS_SimulationRunContext(SimulationRunContext simulationRunContext) {
+	public JADE_DistributedSystemRunContext(SimulationRunContext simulationRunContext) {
 		this.simulationRunContext = simulationRunContext;
 
 		// TODO: Make initialized based on configuration. For now, hard code one distributed system.

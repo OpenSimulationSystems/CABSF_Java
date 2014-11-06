@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.internal.messaging.dao;
+package org.simulationsystems.csf.common.internal.messaging.dao;
 
 import java.util.UUID;
 
@@ -9,6 +9,7 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	static private DistributedAgentDao instance = new DistributedAgentRedisDaoImpl();
+	//We're using a connection pool in Redis so it's ok to use a singleton.
 	static private RedisConnectionManager redisConnectionManager = new RedisConnectionManager();
 	
 	/*
@@ -42,7 +43,7 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.simulationsystems.csf.sim.internal.messaging.dao.DistributedAgentDao
+	 * @see org.simulationsystems.csf.common.internal.messaging.dao.DistributedAgentDao
 	 * #sendMessagesToDistributedAgents(org.simulationsystems.csf.sim.api.
 	 * messaging.FrameworkMessage,
 	 * org.simulationsystems.csf.sim.api.messaging.DistributedSystemAgentSet,

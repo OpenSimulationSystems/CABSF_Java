@@ -33,4 +33,4 @@
  * 
  * @author Jorge Calderon
  */
-package org.simulationsystems.csf.sim.api;
+package org.simulationsystems.csf.distsys.api;

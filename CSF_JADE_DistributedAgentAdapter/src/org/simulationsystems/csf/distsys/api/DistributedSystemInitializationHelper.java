@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.api;
+package org.simulationsystems.csf.distsys.api;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -15,18 +15,18 @@ import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguratio
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
-public class SimulationAdapterInitializationHelper {
-	private SimulationAdapterAPI simulationAdapterAPI;
+public class DistributedSystemInitializationHelper {
+	private DistributedSystemAdapterAPI distributedSystemAdapterAPI;
 
 	/*
 	 * Use the other Constructor instead
 	 */
 	@SuppressWarnings("unused")
-	private SimulationAdapterInitializationHelper() {
+	private DistributedSystemInitializationHelper() {
 	}
 
-	public SimulationAdapterInitializationHelper(SimulationAdapterAPI simulationAdapterAPI) {
-		this.simulationAdapterAPI = simulationAdapterAPI;
+	public DistributedSystemInitializationHelper(DistributedSystemAdapterAPI distributedSystemAdapterAPI) {
+		this.distributedSystemAdapterAPI = distributedSystemAdapterAPI;
 	}
 
 	/*
@@ -45,27 +45,27 @@ public class SimulationAdapterInitializationHelper {
 	 * protected SimulationRunContext initializeAPI( String frameworkConfigurationFileNameName,
 	 * String fullyQualifiedClassNameForDistributedAgentManager)
 	 */
-	protected SimulationRunGroupContext initializeAPI(String frameworkConfigurationFileNameName)
+	protected DistributedSystemGroupContext initializeAPI(String frameworkConfigurationFileNameName)
 
 	throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
 		// SimulationRunContext simFrameworkContext = new
 		// SimulationRunContext(fullyQualifiedClassNameForDistributedAgentManager);
-		SimulationRunGroupContext simulationRunGroupContext = new SimulationRunGroupContext();
+		DistributedSystemGroupContext distributedSystemGroupContext = new DistributedSystemGroupContext();
 		SimulationRunGroupConfiguration config = processFrameworkConfigurationProperties(
-				frameworkConfigurationFileNameName, simulationRunGroupContext);
-		simulationRunGroupContext.setSimulationConfiguration(config);
+				frameworkConfigurationFileNameName, distributedSystemGroupContext);
+		distributedSystemGroupContext.setSimulationConfiguration(config);
 
-		return simulationRunGroupContext;
+		return distributedSystemGroupContext;
 	}
 
 	protected SimulationRunContext initializeSimulationRun(Object simulationSideContext,
-			SimulationRunGroupContext simulationRunGroupContext) {
+			DistributedSystemGroupContext distributedSystemGroupContext) {
 		// TODO: Hook in the configuration to get the actual values
 		SimulationRunContext simulationRunContext = new SimulationRunContext(
-				simulationRunGroupContext.getSimulationRunGroup());
-		simulationRunGroupContext.setSimulationRunGroupContext(simulationRunContext);
+				distributedSystemGroupContext.getSimulationRunGroup());
+		distributedSystemGroupContext.setSimulationRunGroupContext(simulationRunContext);
 
 		// Configuration
 		SimulationRunConfiguration simulationRunConfiguration = new SimulationRunConfiguration();
@@ -89,7 +89,7 @@ public class SimulationAdapterInitializationHelper {
 	 */
 	private SimulationRunGroupConfiguration processFrameworkConfigurationProperties(
 			String frameworkConfigurationFileNameName,
-			SimulationRunGroupContext simulationRunGroupContext) throws IOException {
+			DistributedSystemGroupContext distributedSystemGroupContext) throws IOException {
 		/*
 		 * FileInputStream fstream = new FileInputStream("textfile.txt"); // Get the object of
 		 * DataInputStream DataInputStream in = new DataInputStream(fstream); BufferedReader br =
@@ -98,12 +98,12 @@ public class SimulationAdapterInitializationHelper {
 		 * System.out.println(strLine); }
 		 */
 		SimulationRunGroupConfiguration config = new SimulationRunGroupConfiguration(
-				simulationRunGroupContext);
+				distributedSystemGroupContext);
 
 		// TODO: Retrieve the Simulation Run Group level configuration and use those values here:
 		SimulationRunGroup simulationRunGroup = new SimulationRunGroup("12345", "1.0", "1.0");
 		simulationRunGroup.setSimulationFrameworkOptions("MonteCarlo_TestGroupA", null, null);
-		simulationRunGroupContext.setSimulationRunGroup(simulationRunGroup);
+		distributedSystemGroupContext.setSimulationRunGroup(simulationRunGroup);
 
 		return config;
 	}

@@ -1,16 +1,15 @@
-package org.simulationsystems.csf.sim.api;
+package org.simulationsystems.csf.distsys.api;
 
-import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
 
-public class SimulationRunGroupContext {
+public class DistributedSystemGroupContext {
 	private SimulationRunGroup simulationRunGroup;
 	private SimulationRunGroupConfiguration simulationRunGroupConfiguration;
 	
 	// LOW: Support Multiple simulation run groups/run contexts
 	private SimulationRunContext simulationRunContext;
 
-	public SimulationRunGroupContext() {
+	public DistributedSystemGroupContext() {
 	}
 
 	public SimulationRunGroupConfiguration getSimulationConfiguration() {
@@ -30,7 +29,7 @@ public class SimulationRunGroupContext {
 		
 	}
 
-	public void setSimulationRunContext(SimulationRunContext simulationRunContext) {
+	public void setSimulationRunGroupContext(SimulationRunContext simulationRunContext) {
 		this.simulationRunContext = simulationRunContext;
 		
 	}

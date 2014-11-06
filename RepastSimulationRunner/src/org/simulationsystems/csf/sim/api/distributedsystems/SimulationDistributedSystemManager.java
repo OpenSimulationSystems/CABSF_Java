@@ -7,15 +7,15 @@ import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingAbstraction;
+import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
+import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
+import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.sim.api.SimulationAdapterAPI;
+import org.simulationsystems.csf.sim.api.SimulationAPI;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
-import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
-import org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction.DistributedAgentMessagingAbstraction;
-import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
-import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation;
 
 /*
  * Class to manage the distributed agents from other systems through the common simulation
@@ -30,7 +30,7 @@ public class SimulationDistributedSystemManager {
 	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
 	private CommonMessagingImplementationAPI commonMessagingImplementationAPI;
 
-	private DistributedAgentMessagingAbstraction distributedAgentMessagingRefinedAbstraction = null;
+	private CommonMessagingAbstraction commonMessagingAbstraction = null;
 
 	public enum CONFIGURATION_KEYS {
 		DISTRIBUTED_AGENTS
@@ -50,14 +50,14 @@ public class SimulationDistributedSystemManager {
 		if (simulationRunContext
 				.getSimulationRunConfiguration()
 				.getCommonMessagingConcreteImplStr()
-				.equals("org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation")) {
+				.equals("org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation")) {
 		} else {
 			// TODO: Handle this better
 			throw new IllegalStateException(
 					"Error: Redis not properly configured in the CSF configuration file.");
 		}
 
-		// distributedAgentMessagingRefinedAbstraction =
+		// commonMessagingAbstraction =
 		// simulationRunContext.getSimulationRunConfiguration()
 		// = new CommonMessagingRefinedAbstractionAPI(null);
 
@@ -84,11 +84,11 @@ public class SimulationDistributedSystemManager {
 			e.printStackTrace();
 		}
 		
-		distributedAgentMessagingRefinedAbstraction = new CommonMessagingRefinedAbstractionAPI(
+		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, simulationRunContext.getSimulationRunConfiguration().getRedisConnectionString());
 		
 		// TODO: Move this configuration to the Simulation Run Group level?
-		distributedAgentMessagingRefinedAbstraction
+		commonMessagingAbstraction
 				.initializeSimulationFrameworkCommonMessagingInterface(simulationRunContext.getSimulationRunConfiguration().getRedisConnectionString());
 	}
 
@@ -140,7 +140,6 @@ public class SimulationDistributedSystemManager {
 	 */
 	public boolean isAgentClassDistributedType(Class agentClass) {
 		// TODO: Tie this to the simulation configuration
-
 		if (agentClass.getCanonicalName().equals("jzombies.Human"))
 			return true;
 		else
@@ -154,9 +153,9 @@ public class SimulationDistributedSystemManager {
 	public AgentMapping addSimulationAgentToAgentMapping(Object agent) {
 		// Add Validation to make sure mappings exist. / Throw exception
 
-		// Take first available
 		AgentMapping am = null;
 		try {
+			// Take first available
 			UUID agentMappingToAssign = agentsReadyForSimulationSideMapping.iterator().next();
 			am = agentMappings.get(agentMappingToAssign);
 			am.setSimulationAgent(agent);
@@ -179,7 +178,7 @@ public class SimulationDistributedSystemManager {
 	public void messageDistributedAgents(FrameworkMessage frameworkMessage,
 			SimulationRunContext simulationRunContext) {
 		// TODO: Multiple Distributed systems
-		distributedAgentMessagingRefinedAbstraction.sendMessageToDistributedAgents(
+		commonMessagingAbstraction.sendMessageToDistributedAgents(
 				frameworkMessage, distributedSystem, simulationRunContext);
 	}
 

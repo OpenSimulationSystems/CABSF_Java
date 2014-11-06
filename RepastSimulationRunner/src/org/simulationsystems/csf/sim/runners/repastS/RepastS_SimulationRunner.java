@@ -37,9 +37,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
 
 	// NON_CSF_SIMULATION Run RepastS Programmatically without the Common Simulation Framework
-	// CSW_SIMULATION Run RepastS programmatically with the Common Simulation Framework
+	// CSF_SIMULATION Run RepastS programmatically with the Common Simulation Framework
 	public enum SIMULATION_RUNNER_RUN_TYPE {
-		NON_CSF_SIMULATION, CSW_SIMULATION
+		NON_CSF_SIMULATION, CSF_SIMULATION
 	}
 
 	private SIMULATION_RUNNER_RUN_TYPE simulationRunnerType;
@@ -91,7 +91,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(frameworkConfigurationFileName);
-			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION;
+			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION;
 		} else
 			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.NON_CSF_SIMULATION;
 	}
@@ -119,7 +119,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
 		
 		RepastS_SimulationRunContext repastS_SimulationRunContext=null;
-		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
+		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION) {
 			repastS_SimulationRunContext = repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
 					repastS_SimulationRunGroupContext);
 			//Fix after expanding to support multiple distributed systems.

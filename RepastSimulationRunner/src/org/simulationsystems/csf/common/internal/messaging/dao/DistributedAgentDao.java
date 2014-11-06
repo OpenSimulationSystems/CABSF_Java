@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.internal.messaging.dao;
+package org.simulationsystems.csf.common.internal.messaging.dao;
 
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;

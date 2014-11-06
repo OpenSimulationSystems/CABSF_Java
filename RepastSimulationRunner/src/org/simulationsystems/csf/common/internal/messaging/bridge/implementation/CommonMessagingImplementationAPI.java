@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.internal.messaging.bridge.implementation;
+package org.simulationsystems.csf.common.internal.messaging.bridge.implementation;
 
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;

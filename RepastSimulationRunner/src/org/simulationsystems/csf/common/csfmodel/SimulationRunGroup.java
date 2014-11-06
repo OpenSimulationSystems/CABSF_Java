@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.api;
+package org.simulationsystems.csf.common.csfmodel;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class SimulationRunGroup {
 	}
 
 	/*
-	 * Initializes a SimulationRunGroup. The simulationID should be a unique id for the simulation.
+	 * Initializes a DistributedSystemSimulationRunGroup. The simulationID should be a unique id for the simulation.
 	 * To ensure global uniqueness, a UUID should be generated (can be done with
 	 * http://www.famkruithof.net/uuid/uuidgen), and set up in the Common Simulation Framework
 	 * configuration, and supplied to this method. The optional simulationVersion allows the
@@ -46,7 +46,7 @@ public class SimulationRunGroup {
 	 * specification.
 	 * 
 	 * This constructor must be followed up by a call to setSimulationFrameworkOptions method to set
-	 * the Common-Simulation-Framework-specific configuration of the SimulationRunGroup.
+	 * the Common-Simulation-Framework-specific configuration of the DistributedSystemSimulationRunGroup.
 	 * 
 	 * @param simulationID The globally unique id for the simulation specification itself. Most
 	 * configuration items, such as the number of agents, would not normally imply a difference id
@@ -67,6 +67,7 @@ public class SimulationRunGroup {
 	 * simulationSpecificationConfigurationID parameter is not supplied, the framework keeps it
 	 * null.
 	 */
+	//TODO: Provide mechanism for handling setting compatibility options for simulation versions
 	public SimulationRunGroup(String simulationID, String simulationVersionID,
 			String simulationSpecificationConfigurationID) {
 		// Simulation-specific IDs (Either from the simulation toolkit or from the simulation
@@ -92,10 +93,10 @@ public class SimulationRunGroup {
 	 * the framework generates a new UUID. Any new executions of the framework would generate a new
 	 * simulationRunGroupID. For parallel processing (future support), each execution thread's
 	 * SimulationRunGroupID would still be the same, as it is stored statically. A separate ID is
-	 * created internally for each instance of the SimulationRunGroup. Every new run through the
+	 * created internally for each instance of the DistributedSystemSimulationRunGroup. Every new run through the
 	 * Simulation Framework would generate a new instance ID (a UUID).
 	 * 
-	 * @param simulationRunGroupConfigurationID An optional ID to track the configuration (mostly
+	 * @param simulationRunGroupConfigurationID An optional ID to track the configuration (
 	 * from the framework configuration file, not the simulation toolkit configuration file) of a
 	 * simulation run group, which is a group of related simulation runs. For example, this
 	 * configuration ID could version and track whether the framework will connect to one set of
@@ -106,11 +107,11 @@ public class SimulationRunGroup {
 	 * that vary along domain-specific or other dimensions. This parameter only applies to
 	 * Simulation Run Groups. A similar parameter exists for the individual simulation runs.
 	 */
-	public void setSimulationFrameworkOptions(String simulationRunGroupID, String simulationRunGroupConfigurationID,
+	public void setSimulationFrameworkOptions(String simulationRunGroupID, String csfSimulationRunGroupConfigurationID,
 			HashMap<String, Object> userSpecifiedConfigurations) {
 		// Common-Simulation-Framework-specific IDs
 		this.simulationRunGroupID = simulationRunGroupID;
-		this.simulationRunGroupConfigurationID = simulationRunGroupConfigurationID;
+		this.simulationRunGroupConfigurationID = csfSimulationRunGroupConfigurationID;
 		this.userSpecifiedConfigurations = userSpecifiedConfigurations;
 
 	}

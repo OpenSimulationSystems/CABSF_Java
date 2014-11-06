@@ -1,10 +1,10 @@
-package org.simulationsystems.csf.sim.internal.messaging.bridge.implementation;
+package org.simulationsystems.csf.common.internal.messaging.bridge.implementation;
 
+import org.simulationsystems.csf.common.internal.messaging.dao.DistributedAgentDao;
+import org.simulationsystems.csf.common.internal.messaging.dao.DistributedAgentRedisDaoImpl;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
-import org.simulationsystems.csf.sim.internal.messaging.dao.DistributedAgentDao;
-import org.simulationsystems.csf.sim.internal.messaging.dao.DistributedAgentRedisDaoImpl;
 
 /*
  * The concrete implementor in the Bridge pattern for use of the Redis in-memory cache. <br/> Also

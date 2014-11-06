@@ -1,9 +1,9 @@
-package org.simulationsystems.csf.sim.internal.messaging.bridge.abstraction;
+package org.simulationsystems.csf.common.internal.messaging.bridge.abstraction;
 
+import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
-import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 
 /*
  * The refined abstraction class in the Bridge Pattern to represent the platform-independent
@@ -12,7 +12,7 @@ import org.simulationsystems.csf.sim.internal.messaging.bridge.implementation.Co
  * refined abstraction, so the implementation for the type of interface to common messaging part of
  * the framework is hidden from this class.
  */
-public class CommonMessagingRefinedAbstractionAPI extends DistributedAgentMessagingAbstraction {
+public class CommonMessagingRefinedAbstractionAPI extends CommonMessagingAbstraction {
 	public CommonMessagingRefinedAbstractionAPI(
 			CommonMessagingImplementationAPI commonMessagingImplementationAPI, String connectionStr) {
 		super(commonMessagingImplementationAPI, connectionStr);

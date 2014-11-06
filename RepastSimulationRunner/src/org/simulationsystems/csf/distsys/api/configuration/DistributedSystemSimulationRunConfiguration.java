@@ -1,9 +1,9 @@
-package org.simulationsystems.csf.sim.api.configuration;
+package org.simulationsystems.csf.distsys.api.configuration;
 
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
-public class SimulationRunConfiguration {
+public class DistributedSystemSimulationRunConfiguration {
 	private SimulationRunContext simulationRunContext;
 	private SimulationDistributedSystemManager simulationDistributedSystemManager;
 	private SimulationDistributedSystemManager agentManager;
@@ -11,7 +11,7 @@ public class SimulationRunConfiguration {
 	private String redisConnectionString=null;
 
 	// TODO: Read actual simulation-run-level properties
-	public SimulationRunConfiguration() {
+	public DistributedSystemSimulationRunConfiguration() {
 		// String to represent Redis or "WebServices"
 		commonMessagingConcreateImplStr = "org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation";
 		redisConnectionString="localhost";

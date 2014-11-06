@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.api;
+package org.simulationsystems.csf.distsys.api;
 
 /*
  * import java.lang.reflect.Constructor; import java.lang.reflect.InvocationTargetException; import
@@ -8,7 +8,6 @@ package org.simulationsystems.csf.sim.api;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
@@ -55,7 +54,7 @@ public class SimulationRunContext {
 	/*
 	 * Creates the context for the Common Simulation Framework.
 	 */
-	// protected DistributedSystemSimulationRunContext(String fullyQualifiedClassNameForDistributedAgentManager) {
+	// protected SimulationRunContext(String fullyQualifiedClassNameForDistributedAgentManager) {
 	protected SimulationRunContext(SimulationRunGroup simulationRunGroup) {
 		this.simulationRunGroup = simulationRunGroup;
 	}
@@ -111,12 +110,13 @@ public class SimulationRunContext {
 
 	}
 
-	public void messageDistributedSystems(FrameworkMessage frameworkMessage) {
-		// LOW: Fix for handling multiple distributed systems, Loop through all systems
+	public void messageDistributedSystems(FrameworkMessage frameworkMessage,
+			SimulationRunContext simulationRunContext) {
+		// TODO: Fix for handling multiple distributed systems, Loop through all systems
 		SimulationDistributedSystemManager mgr = getSimulationDistributedSystemManagers()
 				.iterator().next();
 
-		mgr.messageDistributedAgents(frameworkMessage, this);
+		mgr.messageDistributedAgents(frameworkMessage, simulationRunContext);
 
 	}
 }

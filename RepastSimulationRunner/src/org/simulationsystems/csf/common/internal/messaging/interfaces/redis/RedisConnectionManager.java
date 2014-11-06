@@ -23,10 +23,11 @@ public class RedisConnectionManager {
 		jedis.lpush(channel, message);
 
 		System.out.println("Set: " + message);
-		System.out.println("lpop: " + jedis.lpop(channel));
-		System.out.println("lpop: " + jedis.lpop(channel));
+		//System.out.println("lpop: " + jedis.lpop(channel));
+		//System.out.println("lpop: " + jedis.lpop(channel));
 		
 		// FIXME: Remove
+		// TODO: exception when cant connect to redis
 		closePool();
 	}
 

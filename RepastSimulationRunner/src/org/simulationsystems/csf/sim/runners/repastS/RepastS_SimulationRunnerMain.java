@@ -17,7 +17,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 /*
  * The Repast Simulation RepastS_SimulationRunnerMain is an application that programmatically runs a
  * Repast simulation (See http://repast.sourceforge.net/docs/RepastSimphonyFAQ.pdf ) It also has an
- * embedded RepastS_SimulationAdapterAPI into the Common Simulation Framework. For basic
+ * embedded JADE_DistributedSystemAdapterAPI into the Common Simulation Framework. For basic
  * functionality users should not have to modify this application.
  * 
  * The following shows where this code fits in to the common framework:
@@ -62,7 +62,7 @@ public class RepastS_SimulationRunnerMain {
 					.runInitialize(); // initialize the run
 			// Message the distributed systems that the simulation has started and is ready to
 			// accept messages from the distributed agents.
-			if (repastS_SimulationRunner.getSimulationRunnerType() == SIMULATION_RUNNER_RUN_TYPE.CSW_SIMULATION) {
+			if (repastS_SimulationRunner.getSimulationRunnerType() == SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION) {
 				FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl();
 				msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
 

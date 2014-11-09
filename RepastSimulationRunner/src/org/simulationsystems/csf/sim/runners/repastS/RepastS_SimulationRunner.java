@@ -2,9 +2,9 @@ package org.simulationsystems.csf.sim.runners.repastS;
 
 import java.io.File;
 
-import org.simulationsystems.csf.sim.adapters.api.RepastS_SimulationAdapterAPI;
-import org.simulationsystems.csf.sim.adapters.api.RepastS_SimulationRunContext;
-import org.simulationsystems.csf.sim.adapters.api.RepastS_SimulationRunGroupContext;
+import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationAdapterAPI;
+import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
+import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunGroupContext;
 
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.context.Context;

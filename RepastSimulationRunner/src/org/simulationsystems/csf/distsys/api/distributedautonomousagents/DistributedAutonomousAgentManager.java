@@ -1,19 +1,27 @@
-package org.simulationsystems.csf.distsys.api.simulationruntime;
+package org.simulationsystems.csf.distsys.api.distributedautonomousagents;
 
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingAbstraction;
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.distsys.api.DistSysRunContext;
-import org.simulationsystems.csf.sim.api.SimulationRunContext;
+import org.simulationsystems.csf.distsys.api.DistSysRunGroupContext;
 
-public class SimulationEngineManager {
+/*
+ * THis manager provides some utilities for the client (e.g. CSF JADE Controller Agent) to message
+ * its own distributed autonomous agents. The client uses its own native messaging (such as FIPA ACL
+ * for JADE). Unlike the SimulationEngineManager (for the distributed system to talk to the
+ * simulation side), this class does not perform any message brokering.
+ */
+public class DistributedAutonomousAgentManager {
 
 	private DistSysRunContext distSysRunContext;
 	private CommonMessagingAbstraction commonMessagingAbstraction = null;
 	private CommonMessagingImplementationAPI commonMessagingImplementationAPI;
-	
+
+	@SuppressWarnings("unused")
+	private DistributedAutonomousAgentManager() {
+	}
+
 	/*
 	 * @param simulationRuntimeID An optional ID to identify the simulation runtime instance for
 	 * this distributed system to connect to. If it is to be used, it should be provided by the
@@ -21,10 +29,10 @@ public class SimulationEngineManager {
 	 * Framework Distributed System API will look for the first simulation run group (when using
 	 * Redis) and attach to that simulation run group instance.
 	 */
-
-	public SimulationEngineManager(
-			DistSysRunContext distSysRunContext,
-			String getCommonMessagingConcreteImplStr) {
+	public DistributedAutonomousAgentManager(DistSysRunContext distSysRunContext) {
+		this.distSysRunContext = distSysRunContext;
+		// public DistributedAutonomousAgentManager(DistSysRunContext distSysRunContext,
+		// String getCommonMessagingConcreteImplStr) {
 		this.distSysRunContext = distSysRunContext;
 
 		// Check which Bridge implementation we're going to use, based on what was specified in the
@@ -47,23 +55,14 @@ public class SimulationEngineManager {
 		// services) using reflection.
 		// TODO: Handle exception when unable to instantiate class
 		// TODO: ?Handle configuration/reflection for Bridge Refined Abstraction?
-		try {
-			Class<?> cl = Class.forName(getCommonMessagingConcreteImplStr);
-			// Constructor<?> cons = cl.getConstructor(cl.getClass());
-			// commonMessagingImplementationAPI =
-			// (commonMessagingImplementationAPI) cons.newInstance();
-			commonMessagingImplementationAPI = (CommonMessagingImplementationAPI) cl.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try {// //Do we need reflection? Class<?> cl =
+		 * Class.forName(getCommonMessagingConcreteImplStr); commonMessagingImplementationAPI =
+		 * (CommonMessagingImplementationAPI) cl.newInstance(); } catch (InstantiationException e) {
+		 * e.printStackTrace(); } catch (IllegalAccessException e) { e.printStackTrace(); } catch
+		 * (IllegalArgumentException e) { e.printStackTrace(); } catch (SecurityException e) {
+		 * e.printStackTrace(); } catch (ClassNotFoundException e) { e.printStackTrace(); }
+		 */
 
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, distSysRunContext
@@ -73,11 +72,6 @@ public class SimulationEngineManager {
 		commonMessagingAbstraction
 				.initializeSimulationFrameworkCommonMessagingInterface(distSysRunContext
 						.getDistSysSimulationRunConfiguration().getRedisConnectionString());
-	}
-
-	public void sendMessage(FrameworkMessage frameworkMessage,
-			DistSysRunContext distSysRunContext) {
-
 	}
 
 }

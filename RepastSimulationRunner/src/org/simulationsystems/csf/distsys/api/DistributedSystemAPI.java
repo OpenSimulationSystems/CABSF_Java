@@ -38,7 +38,7 @@ public class DistributedSystemAPI {
 
 	// TODO: Look into why have to do lazy initialization to get this to work. Need to figure this
 	// out for future multithreading
-	private static DistributedSystemInitializationHelper distributedSystemInitializationHelper = null;
+	private static DistSysInitializationHelper distSysInitializationHelper = null;
 
 	// Use the getInstance() instead.
 	protected DistributedSystemAPI() {
@@ -52,24 +52,19 @@ public class DistributedSystemAPI {
 	 */
 	// TODO: Add the UUID for the simulation run group instance.
 	/*
-	 * public DistributedSystemSimulationRunContext initializeAPI(String
+	 * public DistSysRunContext initializeAPI(String
 	 * frameworkConfigurationFileName, String simulationToolName, String
 	 * fullyQualifiedClassNameForDistributedAgentManager) throws IOException {
 	 */
-	public DistributedSystemSimulationRunGroupContext initializeAPI(
-			String frameworkConfigurationFileName, String simulationToolName) throws IOException {
-		DISTRIBUTED_SYSTEM_NAME = simulationToolName.toUpperCase();
+	public DistSysRunGroupContext initializeAPI(
+			String frameworkConfigurationFileName, String distributedSystemName) throws IOException {
+		DISTRIBUTED_SYSTEM_NAME = distributedSystemName.toUpperCase();
 
-		// Initialize the Simulation's Configuration Properties
-		/*
-		 * DistributedSystemSimulationRunContext simulationFrameworkContext =
-		 * distributedSystemInitializationHelper .initializeAPI(frameworkConfigurationFileName,
-		 * fullyQualifiedClassNameForDistributedAgentManager);
-		 */
-		DistributedSystemSimulationRunGroupContext distributedSystemSimulationRunGroupContext = distributedSystemInitializationHelper
+		// Initialize the Distributed System's Configuration Properties
+		DistSysRunGroupContext distSysRunGroupContext = distSysInitializationHelper
 				.initializeAPI(frameworkConfigurationFileName);
 
-		return distributedSystemSimulationRunGroupContext;
+		return distSysRunGroupContext;
 	}
 
 	/*
@@ -79,11 +74,11 @@ public class DistributedSystemAPI {
 	 * @param Object distributedSystemSideContext An optional context for the distributed system,
 	 * native to the distributed system, if such an object exists for said system.
 	 */
-	public DistributedSystemSimulationRunContext initializeSimulationRun(
+	public DistSysRunContext initializeSimulationRun(
 			Object distributedSystemSideContext,
-			DistributedSystemSimulationRunGroupContext distributedSystemSimulationRunGroupContext) {
-		return distributedSystemInitializationHelper.initializeSimulationRun(
-				distributedSystemSideContext, distributedSystemSimulationRunGroupContext);
+			DistSysRunGroupContext distSysRunGroupContext) {
+		return distSysInitializationHelper.initializeSimulationRun(
+				distributedSystemSideContext, distSysRunGroupContext);
 	}
 
 	/**
@@ -93,14 +88,14 @@ public class DistributedSystemAPI {
 	 * 
 	 */
 	public static DistributedSystemAPI getInstance() {
-		if (distributedSystemInitializationHelper == null)
-			distributedSystemInitializationHelper = new DistributedSystemInitializationHelper(
+		if (distSysInitializationHelper == null)
+			distSysInitializationHelper = new DistSysInitializationHelper(
 					instance);
 		return instance;
 	}
 
-	protected DistributedSystemInitializationHelper getSimulationAdapterInitializationHelper() {
-		return distributedSystemInitializationHelper;
+	protected DistSysInitializationHelper getSimulationAdapterInitializationHelper() {
+		return distSysInitializationHelper;
 	}
 
 

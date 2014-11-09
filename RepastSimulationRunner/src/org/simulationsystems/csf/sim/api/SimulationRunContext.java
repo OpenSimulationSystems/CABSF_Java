@@ -17,7 +17,7 @@ import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistribute
 /*
  * Provides the context for the Common Simulation Framework. Adapter developers may use this context
  * directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g.,
- * org.simulationsystems.csf.sim.adapters.api.RepastSimphonySimulationFrameworkContext). The benefit
+ * org.simulationsystems.csf.sim.adapters.api.repastS.RepastSimphonySimulationFrameworkContext). The benefit
  * is that the API client would be able to utilize native Simulation-Toolkit-specific objects
  * instead of the generic "Object" that is used by this generic Simulation Framework API.
  * 
@@ -44,7 +44,7 @@ public class SimulationRunContext {
 		return simulationRunConfiguration;
 	}
 
-	public void setSimulationRunConfiguration(SimulationRunConfiguration simulationRunConfiguration) {
+	protected void setSimulationRunConfiguration(SimulationRunConfiguration simulationRunConfiguration) {
 		this.simulationRunConfiguration = simulationRunConfiguration;
 	}
 
@@ -55,7 +55,7 @@ public class SimulationRunContext {
 	/*
 	 * Creates the context for the Common Simulation Framework.
 	 */
-	// protected DistributedSystemSimulationRunContext(String fullyQualifiedClassNameForDistributedAgentManager) {
+	// protected DistSysRunContext(String fullyQualifiedClassNameForDistributedAgentManager) {
 	protected SimulationRunContext(SimulationRunGroup simulationRunGroup) {
 		this.simulationRunGroup = simulationRunGroup;
 	}

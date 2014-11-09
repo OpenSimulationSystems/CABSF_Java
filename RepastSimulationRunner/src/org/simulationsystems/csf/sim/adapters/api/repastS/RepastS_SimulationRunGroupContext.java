@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.sim.adapters.api;
+package org.simulationsystems.csf.sim.adapters.api.repastS;
 
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 

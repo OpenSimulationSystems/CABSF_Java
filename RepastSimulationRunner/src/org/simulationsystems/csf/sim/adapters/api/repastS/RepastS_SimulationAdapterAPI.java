@@ -1,10 +1,10 @@
-package org.simulationsystems.csf.distsys.adapters.api;
+package org.simulationsystems.csf.sim.adapters.api.repastS;
 
 import java.io.IOException;
 
-import org.simulationsystems.csf.distsys.api.DistributedSystemAPI;
-import org.simulationsystems.csf.distsys.api.DistributedSystemSimulationRunGroupContext;
+import org.simulationsystems.csf.sim.api.SimulationAPI;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
+import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
@@ -36,18 +36,18 @@ import repast.simphony.context.Context;
  * 
  * @author Jorge Calderon
  */
-public class JADE_DistributedSystemAdapterAPI {
-	private DistributedSystemAPI distributedSystemAPI = DistributedSystemAPI.getInstance();
-	private String simToolNameToSetInDistributedSystemAPI = "REPAST_SIMPHONY";
+public class RepastS_SimulationAdapterAPI {
+	private SimulationAPI simulationAPI = SimulationAPI.getInstance();
+	private String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
 	// private String fullyQualifiedClassNameForDistributedAgentManager =
-	// "org.simulationsystems.csf.sim.adapters.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
+	// "org.simulationsystems.csf.sim.adapters.api.repastS.distributedagents.RepastSimphonySimulationDistributedAgentManager";
 
-	private static JADE_DistributedSystemAdapterAPI instance = new JADE_DistributedSystemAdapterAPI();
+	private static RepastS_SimulationAdapterAPI instance = new RepastS_SimulationAdapterAPI();
 
 	/*
 	 * Use JADE_DistributedSystemAdapterAPI.getInstance() instead.
 	 */
-	private JADE_DistributedSystemAdapterAPI() {
+	private RepastS_SimulationAdapterAPI() {
 		super();
 	}
 
@@ -57,31 +57,27 @@ public class JADE_DistributedSystemAdapterAPI {
 	 * 
 	 * @ param String The path to the Common Simulation Configuration File
 	 */
-	public JADE_DistributedSystemRunGroupContext initializeAPI(String frameworkConfigurationFileName)
+	public RepastS_SimulationRunGroupContext initializeAPI(String frameworkConfigurationFileName)
 			throws IOException {
-		/*
-		 * DistributedSystemSimulationRunContext simulationFrameworkContext =
-		 * distributedSystemAPI.initializeAPI( frameworkConfigurationFileName,
-		 * simToolNameToSetInDistributedSystemAPI, fullyQualifiedClassNameForDistributedAgentManager);
-		 */
-		DistributedSystemSimulationRunGroupContext simulationRunGroupContext = distributedSystemAPI.initializeAPI(
-				frameworkConfigurationFileName, simToolNameToSetInDistributedSystemAPI);
+
+		SimulationRunGroupContext simulationRunGroupContext = simulationAPI.initializeAPI(
+				frameworkConfigurationFileName, simToolNameToSetInSimulationAPI);
 
 		// Set the Repast-Simphony-specific objects, using the Decorator Pattern
-		JADE_DistributedSystemRunGroupContext jADE_DistributedSystemRunGroupContext = new JADE_DistributedSystemRunGroupContext(
+		RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
 				simulationRunGroupContext);
 
-		return jADE_DistributedSystemRunGroupContext;
+		return repastS_SimulationRunGroupContext;
 	}
 
-	// private DistributedSystemSimulationRunContext
+	// private DistSysRunContext
 	/**
 	 * 
 	 * The API singleton for clients that are simulation systems adapters to into the common
 	 * simulation framework
 	 * 
 	 */
-	public static JADE_DistributedSystemAdapterAPI getInstance() {
+	public static RepastS_SimulationAdapterAPI getInstance() {
 		return instance;
 	}
 
@@ -90,29 +86,30 @@ public class JADE_DistributedSystemAdapterAPI {
 	 * in the simulation API initialization) AgentMapping objects. Repast Simphony-specific
 	 * simulation run initialization
 	 * 
-	 * JADE_DistributedSystemRunContext result from initializing the API is passed in, in this method.
+	 * JADE_DistSysRunContext result from initializing the API is passed in, in this method.
 	 */
 	// LOW: Allow the same simulation agent class to be both distributed and non-distributed.
-	public JADE_DistributedSystemRunContext initializeSimulationRun(
+	public RepastS_SimulationRunContext initializeSimulationRun(
 			Context<Object> repastContextForThisRun,
-			JADE_DistributedSystemRunGroupContext jADE_DistributedSystemRunGroupContext) {
+			RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
 
-		SimulationRunContext simulationRunContext = distributedSystemAPI.initializeSimulationRun(
+		SimulationRunContext simulationRunContext = simulationAPI.initializeSimulationRun(
 				repastContextForThisRun,
-				jADE_DistributedSystemRunGroupContext.getDistributedSystemSimulationRunGroupContext());
+				repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
 
-		// User Decorator Pattern for JADE_DistributedSystemRunContext
-		JADE_DistributedSystemRunContext jADE_DistributedSystemRunContext = new JADE_DistributedSystemRunContext(
+		// User Decorator Pattern for JADE_DistSysRunContext
+		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
 				simulationRunContext);
-		jADE_DistributedSystemRunContext.setRepastContextForThisRun(repastContextForThisRun);
+		repastS_SimulationRunContext.setRepastContextForThisRun(repastContextForThisRun);
 
-		// TODO: Support multiple Simulation Run Groups. For now just assume that there's one.
-		// TODO: Handle multiple distributed systems
-		jADE_DistributedSystemRunContext.getSimulationDistributedSystemManagers().iterator().next()
+		// LOW: Support multiple Simulation Run Groups. For now just assume that there's one.
+		// LOW: Handle multiple distributed systems
+		repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator().next()
 				.initializeAgentMappings();
 
 		// Find all of the individual Repast agents to be mapped in the framework to distributed
 		// agents
+		//TODO: Move all of this to the main simulation API to simplify Adapter code.  (Same for JADE API side)
 		@SuppressWarnings({ "rawtypes" })
 		Iterable<Class> simulationAgentsClasses = repastContextForThisRun.getAgentTypes();
 		// For each simulation agent class
@@ -121,7 +118,7 @@ public class JADE_DistributedSystemAdapterAPI {
 			// LOW: Allow individual simulation agent classes to be either simulation-only or
 			// representations of distributed agents.
 			// TODO: Handle multiple distributed systems
-			if (jADE_DistributedSystemRunContext.getSimulationDistributedSystemManagers().iterator()
+			if (repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
 					.next().isAgentClassDistributedType(simulationAgentClass)) {
 				@SuppressWarnings("unchecked")
 				Class<Object> simulationAgentClazz = simulationAgentClass;
@@ -131,13 +128,13 @@ public class JADE_DistributedSystemAdapterAPI {
 				// an existing free AgentMapping object
 				for (Object simulationAgent : simulationAgentsInSingleClass) {
 					mapSimulationSideAgent(simulationAgent,
-							jADE_DistributedSystemRunContext.getSimulationRunContext());
+							repastS_SimulationRunContext.getSimulationRunContext());
 				}
 			} else
 				continue; // Not an agent we need to map.
 		}
 
-		return jADE_DistributedSystemRunContext;
+		return repastS_SimulationRunContext;
 	}
 
 	/*
@@ -164,12 +161,12 @@ public class JADE_DistributedSystemAdapterAPI {
 	 */
 	private void mapSimulationSideAgent(Object simulationAgent,
 			SimulationRunContext simulationRunContext) {
-		distributedSystemAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
+		simulationAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
 
-	public void logHelper(JADE_DistributedSystemRunContext jADE_DistributedSystemRunContext) {
+	public void logHelper(RepastS_SimulationRunContext repastS_SimulationRunContext) {
 		// TODO: handle multiple distributed systems
-		System.out.println(jADE_DistributedSystemRunContext.getSimulationDistributedSystemManagers()
+		System.out.println(repastS_SimulationRunContext.getSimulationDistributedSystemManagers()
 				.iterator().next().logHelper());
 	}
 

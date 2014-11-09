@@ -43,7 +43,7 @@ public class SimulationInitializationHelper {
 	 * Throws exception for error reading the Common Simulation Framework configuration file.
 	 */
 	/*
-	 * protected DistributedSystemSimulationRunContext initializeAPI( String
+	 * protected DistSysRunContext initializeAPI( String
 	 * frameworkConfigurationFileNameName, String fullyQualifiedClassNameForDistributedAgentManager)
 	 */
 	protected SimulationRunGroupContext initializeAPI(String frameworkConfigurationFileNameName)
@@ -51,8 +51,8 @@ public class SimulationInitializationHelper {
 	throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
-		// DistributedSystemSimulationRunContext simFrameworkContext = new
-		// DistributedSystemSimulationRunContext(fullyQualifiedClassNameForDistributedAgentManager);
+		// DistSysRunContext simFrameworkContext = new
+		// DistSysRunContext(fullyQualifiedClassNameForDistributedAgentManager);
 		SimulationRunGroupContext simulationRunGroupContext = new SimulationRunGroupContext();
 		SimulationRunGroupConfiguration config = processFrameworkConfigurationProperties(
 				frameworkConfigurationFileNameName, simulationRunGroupContext);

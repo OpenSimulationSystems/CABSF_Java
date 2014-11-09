@@ -7,16 +7,16 @@ import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager.CONFIGURATION_KEYS;
 
-public class DistributedSystemSimulationRunGroupConfiguration {
+public class DistSysRunGroupConfiguration {
 	// LOW: Support Multiple Simulation Run Configurations
-	ArrayList<DistributedSystemSimulationRunConfiguration> distributedSystemSimulationRunConfigurations;
+	ArrayList<DistSysRunConfiguration> distSysRunConfigurations;
 
 	private SimulationRunGroupContext simulationRunGroupContext;
 
 	/*
 	 * DistributedSystemSimulationRunGroup Level.
 	 */
-	public DistributedSystemSimulationRunGroupConfiguration() {
+	public DistSysRunGroupConfiguration() {
 		// TODO: Read the actual values from the configuration file. Add methods to get into the
 		// configuration values.
 
@@ -24,8 +24,8 @@ public class DistributedSystemSimulationRunGroupConfiguration {
 	}
 	
 	// LOW: see above
-	public DistributedSystemSimulationRunConfiguration getSimulationRunConfiguration() {
-		return distributedSystemSimulationRunConfigurations.get(0);
+	public DistSysRunConfiguration getSimulationRunConfiguration() {
+		return distSysRunConfigurations.get(0);
 
 	}
 

@@ -12,24 +12,26 @@ import java.util.UUID;
 
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.distsys.api.configuration.DistributedSystemSimulationRunConfiguration;
-import org.simulationsystems.csf.distsys.api.configuration.DistributedSystemSimulationRunGroupConfiguration;
+import org.simulationsystems.csf.distsys.api.configuration.DistSysRunConfiguration;
+import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
+import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgentManager;
 import org.simulationsystems.csf.distsys.api.simulationruntime.SimulationEngineManager;
+import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
-public class DistributedSystemInitializationHelper {
+public class DistSysInitializationHelper {
 	private DistributedSystemAPI distributedSystemAPI;
 
 	/*
 	 * Use the other Constructor instead
 	 */
 	@SuppressWarnings("unused")
-	private DistributedSystemInitializationHelper() {
+	private DistSysInitializationHelper() {
 	}
 
-	public DistributedSystemInitializationHelper(DistributedSystemAPI distributedSystemAPI) {
+	public DistSysInitializationHelper(DistributedSystemAPI distributedSystemAPI) {
 		this.distributedSystemAPI = distributedSystemAPI;
 	}
 
@@ -46,55 +48,58 @@ public class DistributedSystemInitializationHelper {
 	 * Throws exception for error reading the Common Simulation Framework configuration file.
 	 */
 	/*
-	 * protected DistributedSystemSimulationRunContext initializeAPI( String
-	 * frameworkConfigurationFileNameName, String fullyQualifiedClassNameForDistributedAgentManager)
+	 * protected DistSysRunContext initializeAPI( String frameworkConfigurationFileNameName, String
+	 * fullyQualifiedClassNameForDistributedAgentManager)
 	 */
-	protected DistributedSystemSimulationRunGroupContext initializeAPI(
-			String frameworkConfigurationFileNameName)
+	protected DistSysRunGroupContext initializeAPI(String frameworkConfigurationFileNameName)
 
 	throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
-		// DistributedSystemSimulationRunContext simFrameworkContext = new
-		// DistributedSystemSimulationRunContext(fullyQualifiedClassNameForDistributedAgentManager);
-		DistributedSystemSimulationRunGroupContext distributedSystemSimulationRunGroupContext = new DistributedSystemSimulationRunGroupContext();
-		DistributedSystemSimulationRunGroupConfiguration config = processFrameworkConfigurationProperties(
-				frameworkConfigurationFileNameName, distributedSystemSimulationRunGroupContext);
-		distributedSystemSimulationRunGroupContext.setSimulationConfiguration(config);
+		// DistSysRunContext simFrameworkContext = new
+		// DistSysRunContext(fullyQualifiedClassNameForDistributedAgentManager);
+		DistSysRunGroupContext distSysRunGroupContext = new DistSysRunGroupContext();
+		DistSysRunGroupConfiguration config = processFrameworkConfigurationProperties(
+				frameworkConfigurationFileNameName, distSysRunGroupContext);
+		distSysRunGroupContext.setDistSysRunGroupConfiguration(config);
 
-		return distributedSystemSimulationRunGroupContext;
+		return distSysRunGroupContext;
 	}
 
-	protected DistributedSystemSimulationRunContext initializeSimulationRun(
-			Object simulationSideContext,
-			DistributedSystemSimulationRunGroupContext distributedSystemSimulationRunGroupContext) {
+	protected DistSysRunContext initializeSimulationRun(Object simulationSideContext,
+			DistSysRunGroupContext distSysRunGroupContext) {
 		// TODO: Hook in the configuration to get the actual values
-		DistributedSystemSimulationRunContext distributedSystemSimulationRunContext = new DistributedSystemSimulationRunContext(
-				distributedSystemSimulationRunGroupContext.getSimulationRunGroup());
-		distributedSystemSimulationRunGroupContext
-				.setSimulationRunContext(distributedSystemSimulationRunContext);
+		DistSysRunContext distSysRunContext = new DistSysRunContext(
+				distSysRunGroupContext.getSimulationRunGroup());
+		distSysRunGroupContext.setDistSysRunContext(distSysRunContext);
 
 		// Configuration
-		DistributedSystemSimulationRunConfiguration distributedSystemSimulationRunConfiguration = new DistributedSystemSimulationRunConfiguration();
-		distributedSystemSimulationRunContext
-				.setSimulationRunConfiguration(distributedSystemSimulationRunConfiguration);
+		// TODO: Actually setup run-level configuration?
+		DistSysRunConfiguration distSysRunConfiguration = new DistSysRunConfiguration();
+		distSysRunContext.setSimulationRunConfiguration(distSysRunConfiguration);
 
-		// Distributed Agents
-		// LOW: Fix later to handle multiple distributed systems
+		// Set up the manager for the simulation runtime. Uses reflection to specify the correct
+		// interface
 		// LOW: Read optional simulation runtime id from the configuration
-		SimulationEngineManager simRuntime = new SimulationEngineManager(null);
-		distributedSystemSimulationRunContext.setSimulationEngine(simRuntime);
+		SimulationEngineManager simRuntime = new SimulationEngineManager(distSysRunContext,
+				distSysRunConfiguration.getCommonMessagingConcreteImplStr());
+		distSysRunContext.setSimulationEngine(simRuntime);
 
-		return distributedSystemSimulationRunContext;
+		// Set up manager for the distributed autonomous agents (such as the JADE agents) on behalf
+		// of the client of this API, such as the CSF JADE Controller Agent
+		DistributedAutonomousAgentManager distributedAutonomousAgentManager = new DistributedAutonomousAgentManager(
+				distSysRunContext);
+		distSysRunContext.setDistributedAutonomousAgentManager(distributedAutonomousAgentManager);
+
+		return distSysRunContext;
 	}
 
 	/*
 	 * Reads the Common Simulation Framework Configuration File. Creates the AgentMapping objects,
 	 * with the actual mappings added in later.
 	 */
-	private DistributedSystemSimulationRunGroupConfiguration processFrameworkConfigurationProperties(
-			String frameworkConfigurationFileNameName,
-			DistributedSystemSimulationRunGroupContext distributedSystemSimulationRunGroupContext)
+	private DistSysRunGroupConfiguration processFrameworkConfigurationProperties(
+			String frameworkConfigurationFileNameName, DistSysRunGroupContext distSysRunGroupContext)
 			throws IOException {
 		/*
 		 * FileInputStream fstream = new FileInputStream("textfile.txt"); // Get the object of
@@ -104,14 +109,14 @@ public class DistributedSystemInitializationHelper {
 		 * System.out.println(strLine); }
 		 */
 
-		DistributedSystemSimulationRunGroupConfiguration config = new DistributedSystemSimulationRunGroupConfiguration();
+		DistSysRunGroupConfiguration config = new DistSysRunGroupConfiguration();
 
 		// TODO: Retrieve the Simulation Run Group level configuration and use those values here
 		// TODO: Comparison against actual simulation settings on the simulation side. Assume
 		// simulation starts first and that all values match.
 		SimulationRunGroup simulationRunGroup = new SimulationRunGroup("12345", "1.0", "1.0");
 		simulationRunGroup.setSimulationFrameworkOptions("MonteCarlo_TestGroupA", null, null);
-		distributedSystemSimulationRunGroupContext.setSimulationRunGroup(simulationRunGroup);
+		distSysRunGroupContext.setDistributedSystemSimulationRunGroup(simulationRunGroup);
 
 		return config;
 	}

@@ -7,7 +7,7 @@ import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToDistributedSystemImpl;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.sim.adapters.api.RepastS_SimulationRunContext;
+import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 import org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE;

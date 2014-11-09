@@ -52,7 +52,7 @@ public class SimulationAPI {
 	 */
 	// TODO: Add the UUID for the simulation run group instance.
 	/*
-	 * public DistributedSystemSimulationRunContext initializeAPI(String frameworkConfigurationFileName, String
+	 * public DistSysRunContext initializeAPI(String frameworkConfigurationFileName, String
 	 * simulationToolName, String fullyQualifiedClassNameForDistributedAgentManager) throws
 	 * IOException {
 	 */
@@ -62,7 +62,7 @@ public class SimulationAPI {
 
 		// Initialize the Simulation's Configuration Properties
 		/*
-		 * DistributedSystemSimulationRunContext simulationFrameworkContext = simulationInitializationHelper
+		 * DistSysRunContext simulationFrameworkContext = simulationInitializationHelper
 		 * .initializeAPI(frameworkConfigurationFileName,
 		 * fullyQualifiedClassNameForDistributedAgentManager);
 		 */

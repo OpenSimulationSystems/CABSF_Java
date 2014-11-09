@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.distsys.adapters.api;
+package org.simulationsystems.csf.sim.adapters.api.repastS;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,14 +14,14 @@ import repast.simphony.context.Context;
 
 /*
  * Provides the context for the Common Simulation Framework. This Simulation-Toolkit-specific
- * context mirrors the generic DistributedSystemSimulationRunContext provided by the Common Framework API. It enables
+ * context mirrors the generic DistSysRunContext provided by the Common Framework API. It enables
  * API users to get native Simulation-Toolkit objects instead of generic "Object"s. This aids the
  * API client at compile time. The simulation context is created for the entire simulation run
  * group, unlike in Repast where the simulation context exists per simulation run. Adapter
- * developers should first instantiate DistributedSystemSimulationRunContext, before instantiating a
+ * developers should first instantiate DistSysRunContext, before instantiating a
  * Simulation-Toolkit-specific Context such as this class.
  */
-public class JADE_DistributedSystemRunContext {
+public class RepastS_SimulationRunContext {
 	private SimulationRunContext simulationRunContext;
 	Context<Object> repastS_ContextForThisRun;
 	Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
@@ -34,15 +34,16 @@ public class JADE_DistributedSystemRunContext {
 	 * Use the other constructor
 	 */
 	@SuppressWarnings("unused")
-	private JADE_DistributedSystemRunContext() {
+	private RepastS_SimulationRunContext() {
 
 	}
 
-	public JADE_DistributedSystemRunContext(SimulationRunContext simulationRunContext) {
+	public RepastS_SimulationRunContext(SimulationRunContext simulationRunContext) {
 		this.simulationRunContext = simulationRunContext;
 
 		// TODO: Make initialized based on configuration. For now, hard code one distributed system.
 		// TODO: Handle multiple distributed systems
+		// TODO: Move this to the main API level?  Same for the distributed side?
 		SimulationDistributedSystemManager dam = simulationRunContext.getSimulationDistributedSystemManagers().iterator().next();
 		simulationDistributedSystemManagers.add(dam);
 	}
@@ -61,7 +62,7 @@ public class JADE_DistributedSystemRunContext {
 	/*
 	 * LOW: Add the ability to support many simultaneous "Context"s
 	 */
-	public void setRepastContextForThisRun(Context<Object> repastS_ContextForThisRun) {
+	protected void setRepastContextForThisRun(Context<Object> repastS_ContextForThisRun) {
 		this.repastS_ContextForThisRun = repastS_ContextForThisRun;
 
 	}

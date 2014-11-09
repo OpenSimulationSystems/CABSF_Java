@@ -1,58 +1,57 @@
-package org.simulationsystems.csf.sim.adapters.api;
+package org.simulationsystems.csf.distsys.adapters.api.jade;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.sim.api.SimulationRunContext;
-import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
-import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
+import org.simulationsystems.csf.distsys.api.DistSysRunContext;
+import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
 
 /*
  * Provides the context for the Common Simulation Framework. This Simulation-Toolkit-specific
- * context mirrors the generic DistributedSystemSimulationRunContext provided by the Common Framework API. It enables
+ * context mirrors the generic DistSysRunContext provided by the Common Framework API. It enables
  * API users to get native Simulation-Toolkit objects instead of generic "Object"s. This aids the
  * API client at compile time. The simulation context is created for the entire simulation run
  * group, unlike in Repast where the simulation context exists per simulation run. Adapter
- * developers should first instantiate DistributedSystemSimulationRunContext, before instantiating a
+ * developers should first instantiate DistSysRunContext, before instantiating a
  * Simulation-Toolkit-specific Context such as this class.
  */
-public class RepastS_SimulationRunContext {
-	private SimulationRunContext simulationRunContext;
-	Context<Object> repastS_ContextForThisRun;
+public class JADE_MAS_RunContext {
+	private DistSysRunContext distSysRunContext;
+	Context<Object> jade_ContextForThisRun;
 	Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
 
-	public SimulationRunContext getSimulationRunContext() {
-		return simulationRunContext;
+	public DistSysRunContext getDistSysRunContext() {
+		return distSysRunContext;
 	}
 
 	/*
 	 * Use the other constructor
 	 */
 	@SuppressWarnings("unused")
-	private RepastS_SimulationRunContext() {
+	private JADE_MAS_RunContext() {
 
 	}
 
-	public RepastS_SimulationRunContext(SimulationRunContext simulationRunContext) {
-		this.simulationRunContext = simulationRunContext;
+	public JADE_MAS_RunContext(DistSysRunContext distSysRunContext) {
+		this.distSysRunContext = distSysRunContext;
 
 		// TODO: Make initialized based on configuration. For now, hard code one distributed system.
 		// TODO: Handle multiple distributed systems
-		SimulationDistributedSystemManager dam = simulationRunContext.getSimulationDistributedSystemManagers().iterator().next();
+		SimulationDistributedSystemManager dam = distSysRunContext.getSimulationDistributedSystemManagers().iterator().next();
 		simulationDistributedSystemManagers.add(dam);
 	}
 
-	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
-		return simulationRunContext.getSimulationRunGroupConfiguration();
+	public DistSysRunGroupConfiguration getDistSysRunGroupConfiguration() {
+		return distSysRunContext.getDistSysRunGroupConfiguration();
 	}
 
 	public SimulationRunGroup getSimulationRunGroup() {
-		return simulationRunContext.getSimulationRunGroup();
+		return distSysRunContext.getSimulationRunGroup();
 	}
 
 	/*
@@ -61,13 +60,13 @@ public class RepastS_SimulationRunContext {
 	/*
 	 * LOW: Add the ability to support many simultaneous "Context"s
 	 */
-	public void setRepastContextForThisRun(Context<Object> repastS_ContextForThisRun) {
-		this.repastS_ContextForThisRun = repastS_ContextForThisRun;
+	public void setRepastContextForThisRun(Context<Object> jade_ContextForThisRun) {
+		this.jade_ContextForThisRun = jade_ContextForThisRun;
 
 	}
 
 	public Context<Object> getCurrentRepastContext() {
-		return repastS_ContextForThisRun;
+		return jade_ContextForThisRun;
 	}
 
 	/*
@@ -80,7 +79,7 @@ public class RepastS_SimulationRunContext {
 	}
 
 	public void messageDistributedSystems(FrameworkMessage frameworkMessage,
-			SimulationRunContext simulationRunContext) {
-		simulationRunContext.messageDistributedSystems(frameworkMessage);
+			DistSysRunContext distSysRunContext) {
+		distSysRunContext.messageDistributedSystems(frameworkMessage);
 	}
 }

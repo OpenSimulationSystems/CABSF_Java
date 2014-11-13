@@ -25,6 +25,8 @@ import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 public class SimulationDistributedSystemManager {
 	private SimulationRunContext simulationRunContext;
 	private DistributedSystem distributedSystem;
+	
+	//TODO:  Change the UUIDs to String
 	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
 	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
 	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
@@ -84,6 +86,7 @@ public class SimulationDistributedSystemManager {
 			e.printStackTrace();
 		}
 		
+		//TODO: Dynamically get the appropriate connection string based on the configured common interface
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, simulationRunContext.getSimulationRunConfiguration().getRedisConnectionString());
 		
@@ -150,22 +153,22 @@ public class SimulationDistributedSystemManager {
 	/*
 	 * Assigns a Simulation Agent to an AgentMapping
 	 */
-	public AgentMapping addSimulationAgentToAgentMapping(Object agent) {
+	public AgentMapping addSimulationAgentToAgentMapping(Object agentObj) {
 		// Add Validation to make sure mappings exist. / Throw exception
 
 		AgentMapping am = null;
 		try {
 			// Take first available
-			UUID agentMappingToAssign = agentsReadyForSimulationSideMapping.iterator().next();
-			am = agentMappings.get(agentMappingToAssign);
-			am.setSimulationAgent(agent);
-			agentsReadyForSimulationSideMapping.remove(agentMappingToAssign);
-			agentsReadyForDistributedAgentMapping.add(agentMappingToAssign);
-			System.out.println("Successfully mapped " + agentMappingToAssign.toString()
-					+ " class: " + am.getClass().getCanonicalName());
+			UUID agentMappingToAssignUUID = agentsReadyForSimulationSideMapping.iterator().next();
+			am = agentMappings.get(agentMappingToAssignUUID);
+			am.setSimulationAgent(agentObj);
+			agentsReadyForSimulationSideMapping.remove(agentMappingToAssignUUID);
+			agentsReadyForDistributedAgentMapping.add(agentMappingToAssignUUID);
+			System.out.println(this.getClass().getCanonicalName().toString() + ": Successfully mapped " + agentMappingToAssignUUID.toString()
+					+ " class: " + agentObj.getClass().getCanonicalName());
 		} catch (java.util.NoSuchElementException e) {
 			System.out.println("exception:" + e.getMessage() + "  class: "
-					+ agent.getClass().getCanonicalName());
+					+ agentObj.getClass().getCanonicalName());
 		}
 
 		return am;

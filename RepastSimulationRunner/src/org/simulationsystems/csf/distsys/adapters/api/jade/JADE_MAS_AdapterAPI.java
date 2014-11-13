@@ -101,10 +101,7 @@ public class JADE_MAS_AdapterAPI {
 				distSysRunContext);
 		jADE_MAS_RunContext.setRepastContextForThisRun(jadeContextForThisRun);
 
-		// LOW: Support multiple Simulation Run Groups. For now just assume that there's one.
-		// LOW: Handle multiple distributed systems
-		jADE_MAS_RunContext getSimulationDistributedSystemManagers().iterator().next()
-				.initializeAgentMappings();
+		jADE_MAS_RunContext.getDistributedAutonomousAgentManager()
 
 		// Find all of the individual Repast agents to be mapped in the framework to distributed
 		// agents

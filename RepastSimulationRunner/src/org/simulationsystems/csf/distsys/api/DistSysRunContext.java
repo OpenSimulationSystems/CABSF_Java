@@ -12,7 +12,7 @@ import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunConfiguration;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
-import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgentManager;
+import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.api.simulationruntime.SimulationEngineManager;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 
@@ -31,21 +31,21 @@ public class DistSysRunContext {
 	// Run-group-wide
 
 	private SimulationEngineManager simulationEngineManager;
-	private DistributedAutonomousAgentManager distributedAutonomousAgentManager;
+	private DistributedAutonomousAgent distributedAutonomousAgent;
 	private SimulationRunGroup simulationRunGroup;
 	private DistSysRunConfiguration distSysRunConfiguration;
 
-	public DistributedAutonomousAgentManager getDistributedAutonomousAgentManager() {
-		return distributedAutonomousAgentManager;
+	public DistributedAutonomousAgent getDistributedAutonomousAgentManager() {
+		return distributedAutonomousAgent;
 	}
 
 	protected void setDistributedAutonomousAgentManager(
-			DistributedAutonomousAgentManager distributedAutonomousAgentManager) {
-		this.distributedAutonomousAgentManager = distributedAutonomousAgentManager;
+			DistributedAutonomousAgent distributedAutonomousAgent) {
+		this.distributedAutonomousAgent = distributedAutonomousAgent;
 	}
 
 
-	public DistSysRunConfiguration getDistSysSimulationRunConfiguration() {
+	public DistSysRunConfiguration getDistSysRunConfiguration() {
 		return distSysRunConfiguration;
 	}
 
@@ -63,7 +63,7 @@ public class DistSysRunContext {
 		this.simulationRunGroup = simulationRunGroup;
 	}
 
-	public DistSysRunGroupConfiguration getDistributedSystemSimulationRunGroupConfiguration() {
+	public DistSysRunGroupConfiguration getDistributedSystemRunGroupConfiguration() {
 		return distSysRunGroupConfiguration;
 	}
 

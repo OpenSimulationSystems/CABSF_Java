@@ -7,6 +7,7 @@ import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
+import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgent;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
@@ -23,8 +24,7 @@ import repast.simphony.context.Context;
 public class JADE_MAS_RunContext {
 	private DistSysRunContext distSysRunContext;
 	Context<Object> jade_ContextForThisRun;
-	Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
-
+	
 	public DistSysRunContext getDistSysRunContext() {
 		return distSysRunContext;
 	}
@@ -41,9 +41,6 @@ public class JADE_MAS_RunContext {
 		this.distSysRunContext = distSysRunContext;
 
 		// TODO: Make initialized based on configuration. For now, hard code one distributed system.
-		// TODO: Handle multiple distributed systems
-		SimulationDistributedSystemManager dam = distSysRunContext.getSimulationDistributedSystemManagers().iterator().next();
-		simulationDistributedSystemManagers.add(dam);
 	}
 
 	public DistSysRunGroupConfiguration getDistSysRunGroupConfiguration() {
@@ -81,5 +78,10 @@ public class JADE_MAS_RunContext {
 	public void messageDistributedSystems(FrameworkMessage frameworkMessage,
 			DistSysRunContext distSysRunContext) {
 		distSysRunContext.messageDistributedSystems(frameworkMessage);
+	}
+	
+	public DistributedAutonomousAgent getDistributedAutonomousAgentManager() {
+		return distSysRunContext.getDistributedAutonomousAgentManager();
+		
 	}
 }

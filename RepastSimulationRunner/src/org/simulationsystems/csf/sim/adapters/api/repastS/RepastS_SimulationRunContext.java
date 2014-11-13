@@ -75,8 +75,6 @@ public class RepastS_SimulationRunContext {
 	 * Returns the Simulation Distributed Agent Managers.
 	 */
 	public Set<SimulationDistributedSystemManager> getSimulationDistributedSystemManagers() {
-
-		// TODO: Return the actual manager, for now assume there is only 1.
 		return simulationDistributedSystemManagers;
 	}
 

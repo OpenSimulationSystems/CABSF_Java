@@ -14,7 +14,7 @@ import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunConfiguration;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
-import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgentManager;
+import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.api.simulationruntime.SimulationEngineManager;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
@@ -87,9 +87,9 @@ public class DistSysInitializationHelper {
 
 		// Set up manager for the distributed autonomous agents (such as the JADE agents) on behalf
 		// of the client of this API, such as the CSF JADE Controller Agent
-		DistributedAutonomousAgentManager distributedAutonomousAgentManager = new DistributedAutonomousAgentManager(
+		DistributedAutonomousAgent distributedAutonomousAgent = new DistributedAutonomousAgent(
 				distSysRunContext);
-		distSysRunContext.setDistributedAutonomousAgentManager(distributedAutonomousAgentManager);
+		distSysRunContext.setDistributedAutonomousAgentManager(distributedAutonomousAgent);
 
 		return distSysRunContext;
 	}

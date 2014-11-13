@@ -30,7 +30,7 @@ public class SimulationEngineManager {
 		// Check which Bridge implementation we're going to use, based on what was specified in the
 		// configuration.
 		if (distSysRunContext
-				.getDistSysSimulationRunConfiguration()
+				.getDistSysRunConfiguration()
 				.getCommonMessagingConcreteImplStr()
 				.equals("org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation")) {
 		} else {
@@ -67,12 +67,12 @@ public class SimulationEngineManager {
 
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, distSysRunContext
-						.getDistSysSimulationRunConfiguration().getRedisConnectionString());
+						.getDistSysRunConfiguration().getRedisConnectionString());
 
 		// TODO: Move this configuration to the Simulation Run Group level?
 		commonMessagingAbstraction
 				.initializeSimulationFrameworkCommonMessagingInterface(distSysRunContext
-						.getDistSysSimulationRunConfiguration().getRedisConnectionString());
+						.getDistSysRunConfiguration().getRedisConnectionString());
 	}
 
 	public void sendMessage(FrameworkMessage frameworkMessage,

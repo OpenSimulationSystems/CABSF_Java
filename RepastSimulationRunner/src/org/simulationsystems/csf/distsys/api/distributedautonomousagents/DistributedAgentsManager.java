@@ -118,7 +118,7 @@ public class DistributedAgentsManager {
 	}
 
 	// TODO: Pull these from the configuration
-	public void initializeAgentModelMappings() {
+	public void initializeDistributedAutonomousAgents() {
 		// Create AgentMapping objects based on the configured type and number
 		// of agents.
 		// These objects will be populated with actual mapped simulation-side

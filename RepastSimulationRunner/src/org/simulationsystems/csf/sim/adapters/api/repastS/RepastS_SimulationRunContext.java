@@ -24,6 +24,7 @@ import repast.simphony.context.Context;
 public class RepastS_SimulationRunContext {
 	private SimulationRunContext simulationRunContext;
 	Context<Object> repastS_ContextForThisRun;
+	//TODO: Move this up to the main API level?
 	Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
 
 	public SimulationRunContext getSimulationRunContext() {

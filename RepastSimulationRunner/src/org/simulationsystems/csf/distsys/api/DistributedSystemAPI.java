@@ -3,6 +3,7 @@ package org.simulationsystems.csf.distsys.api;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 /**
@@ -98,5 +99,10 @@ public class DistributedSystemAPI {
 		return distSysInitializationHelper;
 	}
 
+	public void assignNativeDistributedAutonomousAgent(Object nativeDistributedAutonomousAgent,
+			DistSysRunContext distSysRunContext) {
+		distSysInitializationHelper.assignNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent,
+				distSysRunContext);
+	}
 
 }

@@ -53,7 +53,7 @@ public class DistSysInitializationHelper {
 	 * fullyQualifiedClassNameForDistributedAgentManager)
 	 */
 	protected DistSysRunGroupContext initializeAPI(String frameworkConfigurationFileNameName)
-	throws IOException {
+			throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
 		// DistSysRunContext simFrameworkContext = new
@@ -87,9 +87,9 @@ public class DistSysInitializationHelper {
 
 		// Set up manager for the distributed autonomous agents (such as the JADE agents) on behalf
 		// of the client of this API, such as the CSF JADE Controller Agent
-		//TODO: Add this distributed system's id
-		DistributedAgentsManager distributedAgentsManager = new DistributedAgentsManager(
-				null, null, distSysRunContext.getDistSysRunConfiguration());
+		// TODO: Add this distributed system's id
+		DistributedAgentsManager distributedAgentsManager = new DistributedAgentsManager(null,
+				null, distSysRunContext.getDistSysRunConfiguration());
 		distSysRunContext.setDistributedAgentsManager(distributedAgentsManager);
 
 		return distSysRunContext;
@@ -120,6 +120,17 @@ public class DistSysInitializationHelper {
 		distSysRunGroupContext.setDistributedSystemSimulationRunGroup(simulationRunGroup);
 
 		return config;
+	}
+
+	/*
+	 * This method is caused to assign an existing AgentMapping object (created at CSF
+	 * initialization) to a simulation-side agent.
+	 */
+	public void assignNativeDistributedAutonomousAgent(Object nativeDistributedAutonomousAgent,
+			DistSysRunContext distSysRunContext) {
+		// TODO: Handle multiple distributed systems
+		distSysRunContext.getDistributedAgentsManager().assignNativeDistributedAutonomousAgent(
+				nativeDistributedAutonomousAgent);
 	}
 
 }

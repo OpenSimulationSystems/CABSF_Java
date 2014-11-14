@@ -23,7 +23,7 @@ import repast.simphony.context.Context;
  */
 public class JADE_MAS_RunContext {
 	private DistSysRunContext distSysRunContext;
-	Context<Object> jade_ContextForThisRun;
+	Object jade_ContextForThisRun;
 	
 	public DistSysRunContext getDistSysRunContext() {
 		return distSysRunContext;
@@ -44,7 +44,7 @@ public class JADE_MAS_RunContext {
 	}
 
 	public DistSysRunGroupConfiguration getDistSysRunGroupConfiguration() {
-		return distSysRunContext.getDistSysRunGroupConfiguration();
+		return distSysRunContext.getDistributedSystemRunGroupConfiguration();
 	}
 
 	public SimulationRunGroup getSimulationRunGroup() {
@@ -57,31 +57,18 @@ public class JADE_MAS_RunContext {
 	/*
 	 * LOW: Add the ability to support many simultaneous "Context"s
 	 */
-	public void setRepastContextForThisRun(Context<Object> jade_ContextForThisRun) {
+	public void setJadeContextForThisRun(Object jade_ContextForThisRun) {
 		this.jade_ContextForThisRun = jade_ContextForThisRun;
 
 	}
 
-	public Context<Object> getCurrentRepastContext() {
+	public Object getCurrentRepastContext() {
 		return jade_ContextForThisRun;
 	}
 
-	/*
-	 * Returns the Simulation Distributed Agent Managers.
-	 */
-	public Set<SimulationDistributedSystemManager> getSimulationDistributedSystemManagers() {
-
-		// TODO: Return the actual manager, for now assume there is only 1.
-		return simulationDistributedSystemManagers;
-	}
 
 	public void messageDistributedSystems(FrameworkMessage frameworkMessage,
 			DistSysRunContext distSysRunContext) {
 		distSysRunContext.messageDistributedSystems(frameworkMessage);
-	}
-	
-	public DistributedAutonomousAgent getDistributedAutonomousAgentManager() {
-		return distSysRunContext.getDistributedAutonomousAgentManager();
-		
 	}
 }

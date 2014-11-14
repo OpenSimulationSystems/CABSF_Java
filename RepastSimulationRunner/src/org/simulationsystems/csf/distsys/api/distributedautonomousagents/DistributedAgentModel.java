@@ -21,9 +21,9 @@ public class DistributedAgentModel {
 			this.distributedAgentModelID = UUID.randomUUID().toString();
 	}
 	
-	public Object assignAgentModel(Object distributedNativeAgentModelObject) {
+	public void setDistributedNativeAgentModelObject(Object distributedNativeAgentModelObject) {
 		this.distributedNativeAgentModelObject = distributedNativeAgentModelObject;
 		
-		return distributedNativeAgentModelObject;
+		return;
 	}
 }

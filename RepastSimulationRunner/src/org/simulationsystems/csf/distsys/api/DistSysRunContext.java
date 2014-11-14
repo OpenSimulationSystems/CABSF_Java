@@ -12,6 +12,7 @@ import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunConfiguration;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
+import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAgentsManager;
 import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.api.simulationruntime.SimulationEngineManager;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
@@ -31,19 +32,17 @@ public class DistSysRunContext {
 	// Run-group-wide
 
 	private SimulationEngineManager simulationEngineManager;
-	private DistributedAutonomousAgent distributedAutonomousAgent;
 	private SimulationRunGroup simulationRunGroup;
 	private DistSysRunConfiguration distSysRunConfiguration;
+	private DistributedAgentsManager distributedAgentsManager;
 
-	public DistributedAutonomousAgent getDistributedAutonomousAgentManager() {
-		return distributedAutonomousAgent;
+	public DistributedAgentsManager getDistributedAgentsManager() {
+		return distributedAgentsManager;
 	}
 
-	protected void setDistributedAutonomousAgentManager(
-			DistributedAutonomousAgent distributedAutonomousAgent) {
-		this.distributedAutonomousAgent = distributedAutonomousAgent;
+	public void setDistributedAgentsManager(DistributedAgentsManager distributedAgentsManager) {
+		this.distributedAgentsManager = distributedAgentsManager;
 	}
-
 
 	public DistSysRunConfiguration getDistSysRunConfiguration() {
 		return distSysRunConfiguration;

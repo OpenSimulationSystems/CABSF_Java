@@ -47,7 +47,7 @@ public class DistributedAutonomousAgent {
 	 * Redis) and attach to that simulation run group instance.
 	 */
 	// TODO: Clean this up. We need a specific manager for the type of client (JADE system, etc)
-	public DistributedAutonomousAgent(DistSysRunContext distSysRunContext, String distributedAutonomousAgentID, String daaName, Double numberOfAgentModels) {
+	public DistributedAutonomousAgent(DistSysRunContext distSysRunContext, String distributedAutonomousAgentID, String daaName) {
 		// public DistributedAutonomousAgent(DistSysRunContext distSysRunContext,
 		// String getCommonMessagingConcreteImplStr) {
 		this.distSysRunContext = distSysRunContext;
@@ -92,6 +92,10 @@ public class DistributedAutonomousAgent {
 		return distributedAgentModel;
 	}
 
+	public void setNativeDistributedAutonomousAgent(Object nativeDistributedAutonomousAgent) {
+		this.nativeDistributedAutonomousAgent = nativeDistributedAutonomousAgent;
+	}
+	
 	public Object logHelper() {
 		return distributedAgentModelIDStoAgentModels;
 	}
@@ -103,9 +107,7 @@ public class DistributedAutonomousAgent {
 				distributedSystem, simulationRunContext);
 	}
 
-	public void setNativeDistributedAutonomousAgent(Object nativeDistributedAutonomousAgent) {
-		this.nativeDistributedAutonomousAgent = nativeDistributedAutonomousAgent;
-	}
+
 	
 
 }

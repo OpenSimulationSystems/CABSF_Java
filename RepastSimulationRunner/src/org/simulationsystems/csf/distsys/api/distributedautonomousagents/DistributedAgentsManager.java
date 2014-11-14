@@ -11,6 +11,7 @@ import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.api.DistSysRunGroupContext;
+import org.simulationsystems.csf.distsys.api.configuration.DistSysRunConfiguration;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 /*
@@ -21,6 +22,7 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
  */
 public class DistributedAgentsManager {
 	private String id;
+	private DistSysRunConfiguration distSysRunConfiguration;
 	
 	private DistSysRunContext distSysRunContext;
 	private CommonMessagingAbstraction commonMessagingAbstraction = null;
@@ -53,10 +55,11 @@ public class DistributedAgentsManager {
 	 * @param String id the id of this distributed system.
 	 */
 	// TODO: Clean this up. We need a specific manager for the type of client (JADE system, etc)
-	public DistributedAgentsManager(String id, DistSysRunContext distSysRunContext) {
+	public DistributedAgentsManager(String id, DistSysRunContext distSysRunContext, DistSysRunConfiguration distSysRunConfiguration) {
 		// public DistributedAutonomousAgent(DistSysRunContext distSysRunContext,
 		// String getCommonMessagingConcreteImplStr) {
 		this.id = id;
+		this.distSysRunConfiguration = distSysRunConfiguration;
 		
 		this.distSysRunContext = distSysRunContext;
 
@@ -100,14 +103,12 @@ public class DistributedAgentsManager {
 	// TODO: Add support for bulk mapping creation (array)
 	public DistributedAutonomousAgent createDistributedAutonomousAgent(
 			DistSysRunContext distSysRunContext, String distributedAutonomousAgentID,
-			String daaName, Double numberOfAgentModels) {
+			String daaName) {
 		if (distributedAutonomousAgentID == null)
 			distributedAutonomousAgentID = UUID.randomUUID().toString();
-		if (numberOfAgentModels == null)
-			numberOfAgentModels = 1.0;
 
 		DistributedAutonomousAgent distributedAutonomousAgent = new DistributedAutonomousAgent(
-				distSysRunContext, distributedAutonomousAgentID, daaName, numberOfAgentModels);
+				distSysRunContext, distributedAutonomousAgentID, daaName);
 
 		// TODO: Add validation
 		distributedAutonomousAgentIDStoDistributedAutonomousAgents.put(
@@ -128,29 +129,29 @@ public class DistributedAgentsManager {
 		// TODO: Pull from configuration (actual JADE objects) For now just assuming one model agent
 		// per distributed autonomous software agent.
 		DistributedAutonomousAgent distributedAutonomousAgent = createDistributedAutonomousAgent(
-				distSysRunContext, "1DistAgentModel", "Distributed Agent Model 1", null);
+				distSysRunContext, "1DistAgentModel", "Distributed Agent Model 1");
 		DistributedAgentModel distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(distSysRunContext, "1DistAgentModel", "Distributed Agent Model 1");
-		distributedAutonomousAgentModel.assignAgentModel(null);
+		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
 		
 		DistributedAutonomousAgent distributedAutonomousAgent2 = createDistributedAutonomousAgent(
-				distSysRunContext, "2Dist", "Distributed Software Agent 1", null);
+				distSysRunContext, "2Dist", "Distributed Software Agent 1");
 		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(distSysRunContext, "2DistAgentModel", "Distributed Agent Model 2");
-		distributedAutonomousAgentModel.assignAgentModel(null);
+		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
 		
 		DistributedAutonomousAgent distributedAutonomousAgent3 = createDistributedAutonomousAgent(
-				distSysRunContext, "3Dist", "Distributed Software Agent 1", null);
+				distSysRunContext, "3Dist", "Distributed Software Agent 1");
 		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(distSysRunContext, "3DistAgentModel", "Distributed Agent Model 3");
-		distributedAutonomousAgentModel.assignAgentModel(null);
+		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
 		
 		DistributedAutonomousAgent distributedAutonomousAgent4 = createDistributedAutonomousAgent(
-				distSysRunContext, "4Dist", "Distributed Software Agent 1", null);
+				distSysRunContext, "4Dist", "Distributed Software Agent 1");
 		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(distSysRunContext, "4DistAgentModel", "Distributed Agent Model 4");
-		distributedAutonomousAgentModel.assignAgentModel(null);
+		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
 		
 		DistributedAutonomousAgent distributedAutonomousAgent5 = createDistributedAutonomousAgent(
-				distSysRunContext, "5Dist", "Distributed Software Agent 1", null);
+				distSysRunContext, "5Dist", "Distributed Software Agent 1");
 		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(distSysRunContext, "5DistAgentModel", "Distributed Agent Model 5");
-		distributedAutonomousAgentModel.assignAgentModel(null);
+		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
 	}
 
 	/*
@@ -167,31 +168,8 @@ public class DistributedAgentsManager {
 			distributedAutonomousAgent = agentsReadyforNativeDistributedAgentMapping.iterator().next();
 			distributedAutonomousAgent
 					.setNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent);
-
 			agentsReadyforNativeDistributedAgentMapping.remove(nativeDistributedAutonomousAgent);
-			System.out.println(this.getClass().getCanonicalName().toString()
-					+ ": Successfully assigned native Distributed Autonomous Agent: "
-					+ distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
-					+ " native class: "
-					+ nativeDistributedAutonomousAgent.getClass().getCanonicalName());
-		} catch (java.util.NoSuchElementException e) {
-			System.out.println("exception:" + e.getMessage() + "  class: "
-					+ nativeDistributedAutonomousAgent.getClass().getCanonicalName());
-		}
-
-		return distributedAutonomousAgent;
-	}
-	
-	public DistributedAgentModel assignAgentModelToDistributedAutonomousAgent(DistributedAutonomousAgent distributedAutonomousAgent,
-			Object nativeAgentModel) {
-		// TODO: Add Validation to make sure mappings exist. / Throw exception
-		DistributedAgentModel distributedAgentModel = null;
-
-		try {
-			distributedAutonomousAgent
-					.setNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent);
-
-			agentsReadyforNativeDistributedAgentMapping.remove(nativeDistributedAutonomousAgent);
+			
 			System.out.println(this.getClass().getCanonicalName().toString()
 					+ ": Successfully assigned native Distributed Autonomous Agent: "
 					+ distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()

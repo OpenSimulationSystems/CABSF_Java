@@ -1,5 +1,6 @@
 package org.simulationsystems.csf.sim.adapters.api.repastS;
 
+import org.jdom2.Document;
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 
 public class RepastS_SimulationRunGroupContext {
@@ -13,4 +14,7 @@ public class RepastS_SimulationRunGroupContext {
 		this.simulationRunGroupContext = simulationRunGroupContext;
 	}
 
+	public Document getCachedMessageExchangeTemplate() {
+		return this.simulationRunGroupContext.getCachedMessageExchangeTemplate();
+	}
 }

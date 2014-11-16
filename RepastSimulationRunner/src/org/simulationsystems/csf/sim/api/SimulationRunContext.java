@@ -31,6 +31,7 @@ public class SimulationRunContext {
 	private SimulationRunGroup simulationRunGroup;
 	private Object simulationToolContext;
 	private SimulationRunConfiguration simulationRunConfiguration;
+	private SimulationRunGroupContext simulationRunGroupContext;
 
 	/*
 	 * Convenience method to return the context of the Simulation Software. For example, for Repast
@@ -56,8 +57,13 @@ public class SimulationRunContext {
 	 * Creates the context for the Common Simulation Framework.
 	 */
 	// protected DistSysRunContext(String fullyQualifiedClassNameForDistributedAgentManager) {
-	protected SimulationRunContext(SimulationRunGroup simulationRunGroup) {
+	protected SimulationRunContext(SimulationRunGroup simulationRunGroup, SimulationRunGroupContext simulationRunGroupContext) {
 		this.simulationRunGroup = simulationRunGroup;
+		this.simulationRunGroupContext = simulationRunGroupContext;
+	}
+
+	public SimulationRunGroupContext getSimulationRunGroupContext() {
+		return simulationRunGroupContext;
 	}
 
 	public Set<SimulationDistributedSystemManager> getSimulationDistributedSystemManagers() {

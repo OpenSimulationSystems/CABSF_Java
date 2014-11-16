@@ -32,7 +32,7 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 		// LOW: Make this configurable on the CSF side.
 		String csfPrefix = "csf.commands.";
 		// LOW: Make this configurable
-		return csfPrefix + "simToDistSystem." + distributedSystem.getDistributedSystemID();
+		return csfPrefix + "simToDistSystem:" + distributedSystem.getDistributedSystemID();
 	}
 	
 	

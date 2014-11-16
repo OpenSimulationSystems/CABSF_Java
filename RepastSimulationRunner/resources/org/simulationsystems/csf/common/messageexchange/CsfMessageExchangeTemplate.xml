@@ -32,13 +32,16 @@
 		<ID></ID>
 	</SendingEntity>
 	<ReceivingEntities>
-		<ControlMessages>
-			<!-- SIMULATION_STARTED or SIMULATION_ENDED for messaging a distributed 
-				system -->
-			<ControlMessage></ControlMessage>
-		</ControlMessages>
 		<!-- Message bound for the simulation runtime: true/false -->
 		<SimulationSystem>false</SimulationSystem>
+		
+		<MessageToAllDistributedSystems>
+			<ControlMessages>
+				<!-- SIMULATION_STARTED or SIMULATION_ENDED for messaging a distributed 
+					system -->
+				<ControlMessage></ControlMessage>
+			</ControlMessages>
+		</MessageToAllDistributedSystems>
 
 		<!-- Only one distributed system supported for now -->
 		<DistributedSystems>

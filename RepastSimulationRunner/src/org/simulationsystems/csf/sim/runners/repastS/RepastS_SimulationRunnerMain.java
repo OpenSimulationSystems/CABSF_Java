@@ -47,12 +47,12 @@ public class RepastS_SimulationRunnerMain {
 			;
 		RepastS_SimulationRunner repastS_SimulationRunner = new RepastS_SimulationRunner();
 
-		//try {
-			repastS_SimulationRunner.load(file, frameworkConfigurationFileName); // Load the Repast
-																					// Scenario
-/*		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+		// try {
+		repastS_SimulationRunner.load(file, frameworkConfigurationFileName); // Load the Repast
+																				// Scenario
+		/*
+		 * } catch (Exception e) { e.printStackTrace(); }
+		 */
 
 		// Run the simulation a few times to check for cleanup and init issues.
 		// TODO: Tie in the number of simulation runs from the configuration
@@ -63,9 +63,11 @@ public class RepastS_SimulationRunnerMain {
 			// Message the distributed systems that the simulation has started and is ready to
 			// accept messages from the distributed agents.
 			if (repastS_SimulationRunner.getSimulationRunnerType() == SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION) {
-				FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl();
+				FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl(
+						repastS_SimulationRunContext.getSimulationRunContext()
+								.getSimulationRunGroupContext().getCachedMessageExchangeTemplate());
+				
 				msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
-
 				repastS_SimulationRunContext.messageDistributedSystems(msg,
 						repastS_SimulationRunContext.getSimulationRunContext());
 

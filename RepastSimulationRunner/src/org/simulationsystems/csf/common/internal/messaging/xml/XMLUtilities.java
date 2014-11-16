@@ -56,14 +56,14 @@ public class XMLUtilities {
 
 	}
 
-	static public List<Element> executeXPath(Document document, String xpathStr, String namespace, Filter<Element> filter) {
+	static public List<? extends Content> executeXPath(Document document, String xpathStr, String namespace, Filter<? extends Content> filter) {
 		XPathFactory xpathFactory = XPathFactory.instance();
 		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
 
-		XPathExpression<Element> expr = xpathFactory.compile(xpathStr, filter, null,
+		XPathExpression<? extends Content> expr = xpathFactory.compile(xpathStr, filter, null,
 				Namespace.getNamespace("x", namespace));
 
-		List<Element> xPathSearchedNodes = expr.evaluate(document);
+		List<? extends Content> xPathSearchedNodes = expr.evaluate(document);
 		
 		return xPathSearchedNodes;
 /*		for (int i = 0; i < xPathSearchedNodes.size(); i++) {

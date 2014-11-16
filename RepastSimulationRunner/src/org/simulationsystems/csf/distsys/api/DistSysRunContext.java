@@ -37,6 +37,8 @@ public class DistSysRunContext {
 	private DistSysRunConfiguration distSysRunConfiguration;
 	private DistributedAgentsManager distributedAgentsManager;
 
+	private DistSysRunGroupContext distSysRunGroupContext;
+
 	public DistributedAgentsManager getDistributedAgentsManager() {
 		return distributedAgentsManager;
 	}
@@ -49,8 +51,11 @@ public class DistSysRunContext {
 		return distSysRunConfiguration;
 	}
 
-	protected void setDistSysRunConfiguration(
-			DistSysRunConfiguration distSysRunConfiguration) {
+	public DistSysRunGroupContext getDistSysRunGroupContext() {
+		return distSysRunGroupContext;
+	}
+
+	public void setDistSysRunConfiguration(DistSysRunConfiguration distSysRunConfiguration) {
 		this.distSysRunConfiguration = distSysRunConfiguration;
 	}
 
@@ -59,8 +64,9 @@ public class DistSysRunContext {
 	 */
 	// protected DistSysRunContext(String
 	// fullyQualifiedClassNameForDistributedAgentManager) {
-	protected DistSysRunContext(SimulationRunGroup simulationRunGroup) {
+	protected DistSysRunContext(SimulationRunGroup simulationRunGroup, DistSysRunGroupContext distSysRunGroupContext) {
 		this.simulationRunGroup = simulationRunGroup;
+		this.distSysRunGroupContext = distSysRunGroupContext;
 	}
 
 	public DistSysRunGroupConfiguration getDistributedSystemRunGroupConfiguration() {

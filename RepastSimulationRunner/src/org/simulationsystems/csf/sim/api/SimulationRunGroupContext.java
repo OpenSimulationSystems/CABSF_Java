@@ -9,10 +9,6 @@ public class SimulationRunGroupContext {
 	private SimulationRunGroupConfiguration simulationRunGroupConfiguration;
 	private Document cachedMessageExchangeTemplate;
 	
-	public Document getCachedMessageExchangeTemplate() {
-		return cachedMessageExchangeTemplate;
-	}
-
 	// LOW: Support Multiple simulation run groups/run contexts
 	private SimulationRunContext simulationRunContext;
 
@@ -40,7 +36,11 @@ public class SimulationRunGroupContext {
 		this.simulationRunContext = simulationRunContext;
 		
 	}
-
+	
+	public Document getCachedMessageExchangeTemplate() {
+		return cachedMessageExchangeTemplate;
+	}
+	
 	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
 		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;		
 	}

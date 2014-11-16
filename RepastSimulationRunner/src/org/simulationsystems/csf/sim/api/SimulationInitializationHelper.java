@@ -76,7 +76,7 @@ public class SimulationInitializationHelper {
 			SimulationRunGroupContext simulationRunGroupContext) {
 		// TODO: Hook in the configuration to get the actual values
 		SimulationRunContext simulationRunContext = new SimulationRunContext(
-				simulationRunGroupContext.getSimulationRunGroup());
+				simulationRunGroupContext.getSimulationRunGroup(), simulationRunGroupContext);
 		simulationRunGroupContext.setSimulationRunContext(simulationRunContext);
 
 		// Configuration
@@ -86,7 +86,7 @@ public class SimulationInitializationHelper {
 		// Distributed Agents
 		// LOW: Fix later to handle multiple distributed systems
 		// LOW: Read optional distributed system id from the configuration
-		DistributedSystem sys = new DistributedSystem(null);
+		DistributedSystem sys = new DistributedSystem("19def3fa-a1d4-4996-a1ac-22c3a041e6ff");
 		SimulationDistributedSystemManager simulationDistributedSystemManager = new SimulationDistributedSystemManager(
 				simulationRunContext,
 				simulationRunConfiguration.getCommonMessagingConcreteImplStr(), sys);

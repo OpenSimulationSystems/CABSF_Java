@@ -20,7 +20,7 @@ import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 
 
-public class CommonTests {
+public class XMLTests {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -43,7 +43,9 @@ public class CommonTests {
 		try {
 			Document doc = MessagingUtilities.createCachedMessageExchangeTemplate();
 			Filter<Element> filter = new org.jdom2.filter.ElementFilter();
-			List<Element> xPathSearchedNodes = XMLUtilities.executeXPath(doc, "/x:CsfMessageExchange/x:SendingEntity/x:Name","http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1",filter);
+			
+			@SuppressWarnings("unchecked")
+			List<Element> xPathSearchedNodes = (List<Element>) XMLUtilities.executeXPath(doc, "/x:CsfMessageExchange/x:SendingEntity/x:Name","http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1",filter);
 			System.out.println(xPathSearchedNodes.get(0).getValue());
 			
 			xPathSearchedNodes.get(0).setText("new");

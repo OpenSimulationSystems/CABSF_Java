@@ -82,7 +82,7 @@ public class DistSysInitializationHelper {
 			DistSysRunGroupContext distSysRunGroupContext) {
 		// TODO: Hook in the configuration to get the actual values
 		DistSysRunContext distSysRunContext = new DistSysRunContext(
-				distSysRunGroupContext.getSimulationRunGroup());
+				distSysRunGroupContext.getSimulationRunGroup(), distSysRunGroupContext);
 		distSysRunGroupContext.setDistSysRunContext(distSysRunContext);
 
 		// Configuration

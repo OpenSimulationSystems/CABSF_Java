@@ -3,6 +3,7 @@ package org.simulationsystems.csf.sim.adapters.api.repastS;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
@@ -56,7 +57,8 @@ public class RepastS_SimulationRunContext {
 	public SimulationRunGroup getSimulationRunGroup() {
 		return simulationRunContext.getSimulationRunGroup();
 	}
-
+	
+	
 	/*
 	 * 
 	 */

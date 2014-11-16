@@ -39,6 +39,10 @@ public class DistSysRunGroupContext {
 
 	}
 
+	public Document getCachedMessageExchangeTemplate() {
+		return cachedMessageExchangeTemplate;
+	}
+
 	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
 		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;		
 	}

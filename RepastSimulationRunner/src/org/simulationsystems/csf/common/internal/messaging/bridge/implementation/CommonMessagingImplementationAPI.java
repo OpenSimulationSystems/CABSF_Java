@@ -15,4 +15,5 @@ public interface CommonMessagingImplementationAPI {
 
 	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString);
 
+	public void closeInterface();
 }

@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.jdom2.JDOMException;
+import org.simulationsystems.csf.common.csfmodel.CsfSimulationInitializationException;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
+import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
@@ -43,8 +46,8 @@ public class SimulationInitializationHelper {
 	 * Throws exception for error reading the Common Simulation Framework configuration file.
 	 */
 	/*
-	 * protected DistSysRunContext initializeAPI( String
-	 * frameworkConfigurationFileNameName, String fullyQualifiedClassNameForDistributedAgentManager)
+	 * protected DistSysRunContext initializeAPI( String frameworkConfigurationFileNameName, String
+	 * fullyQualifiedClassNameForDistributedAgentManager)
 	 */
 	protected SimulationRunGroupContext initializeAPI(String frameworkConfigurationFileNameName)
 
@@ -57,7 +60,15 @@ public class SimulationInitializationHelper {
 		SimulationRunGroupConfiguration config = processFrameworkConfigurationProperties(
 				frameworkConfigurationFileNameName, simulationRunGroupContext);
 		simulationRunGroupContext.setSimulationConfiguration(config);
-
+		
+		//Cache the message exchange template from the file system
+		try {
+			simulationRunGroupContext.setCachedMessageExchangeTemplate(MessagingUtilities.createCachedMessageExchangeTemplate());
+		} catch (JDOMException e) {
+			throw new CsfSimulationInitializationException(
+					"Error reading the message exchange template from the file system", e);
+		}
+		
 		return simulationRunGroupContext;
 	}
 
@@ -103,6 +114,7 @@ public class SimulationInitializationHelper {
 
 		// TODO: Retrieve the Simulation Run Group level configuration and use those values here:
 		SimulationRunGroup simulationRunGroup = new SimulationRunGroup("12345", "1.0", "1.0");
+		// TODO: Organizae these two methods better.
 		simulationRunGroup.setSimulationFrameworkOptions("MonteCarlo_TestGroupA", null, null);
 		simulationRunGroupContext.setSimulationRunGroup(simulationRunGroup);
 

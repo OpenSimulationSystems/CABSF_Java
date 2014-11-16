@@ -83,4 +83,8 @@ public class RepastS_SimulationRunContext {
 			SimulationRunContext simulationRunContext) {
 		simulationRunContext.messageDistributedSystems(frameworkMessage);
 	}
+	
+	public void closeInterface(SimulationRunContext simulationRunContext) {
+		simulationRunContext.closeInterface();
+	}
 }

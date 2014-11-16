@@ -1,12 +1,18 @@
 package org.simulationsystems.csf.sim.api;
 
+import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
 
 public class SimulationRunGroupContext {
 	private SimulationRunGroup simulationRunGroup;
 	private SimulationRunGroupConfiguration simulationRunGroupConfiguration;
+	private Document cachedMessageExchangeTemplate;
 	
+	public Document getCachedMessageExchangeTemplate() {
+		return cachedMessageExchangeTemplate;
+	}
+
 	// LOW: Support Multiple simulation run groups/run contexts
 	private SimulationRunContext simulationRunContext;
 
@@ -33,6 +39,10 @@ public class SimulationRunGroupContext {
 	public void setSimulationRunContext(SimulationRunContext simulationRunContext) {
 		this.simulationRunContext = simulationRunContext;
 		
+	}
+
+	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
+		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;		
 	}
 
 }

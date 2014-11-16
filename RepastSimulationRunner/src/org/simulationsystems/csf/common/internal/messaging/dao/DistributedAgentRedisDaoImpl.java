@@ -66,4 +66,9 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 		
 	}
 
+	@Override
+	public void closeInterface() {
+		redisConnectionManager.closePool();
+	}
+
 }

@@ -8,6 +8,7 @@ import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
 import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgent;
+import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
@@ -70,5 +71,9 @@ public class JADE_MAS_RunContext {
 	public void messageDistributedSystems(FrameworkMessage frameworkMessage,
 			DistSysRunContext distSysRunContext) {
 		distSysRunContext.messageDistributedSystems(frameworkMessage);
+	}
+	
+	public void closeInterface(DistSysRunContext distSysRunContext) {
+		distSysRunContext.closeInterface();
 	}
 }

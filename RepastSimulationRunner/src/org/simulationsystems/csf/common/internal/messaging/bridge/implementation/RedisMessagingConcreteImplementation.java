@@ -36,4 +36,9 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 		
 	}
 
+	@Override
+	public void closeInterface() {
+		distributedAgentDao.closeInterface();
+	}
+
 }

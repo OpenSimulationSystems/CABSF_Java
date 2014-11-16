@@ -10,10 +10,14 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConnectionManager {
 	// private Jedis jedis=null;
 	private JedisPool jedisPool;
+	private String host;
 
 	public void initializeRedisConnection(final String host) {
 		// jedis = new Jedis(host);
 		jedisPool = new JedisPool(new JedisPoolConfig(), host);
+		// Hold on to the host to re-establish connection in the future, if
+		// necessary.
+		this.host = host;
 
 		// TODO: Throw exception is Jedis returns null?
 	}
@@ -23,12 +27,8 @@ public class RedisConnectionManager {
 		jedis.lpush(channel, message);
 
 		System.out.println("Set: " + message);
-		//System.out.println("lpop: " + jedis.lpop(channel));
-		//System.out.println("lpop: " + jedis.lpop(channel));
-		
-		// FIXME: Remove
-		// TODO: exception when cant connect to redis
-		closePool();
+		// System.out.println("lpop: " + jedis.lpop(channel));
+		// System.out.println("lpop: " + jedis.lpop(channel));
 	}
 
 	public void closePool() {

@@ -119,4 +119,8 @@ public class SimulationRunContext {
 		mgr.messageDistributedAgents(frameworkMessage, this);
 
 	}
+	
+	public void closeInterface() {
+		getSimulationDistributedSystemManagers().iterator().next().closeInterface();
+	}
 }

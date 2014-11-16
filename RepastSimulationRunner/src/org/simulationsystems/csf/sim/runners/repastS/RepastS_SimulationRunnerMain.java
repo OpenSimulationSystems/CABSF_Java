@@ -33,7 +33,7 @@ import repast.simphony.engine.environment.RunEnvironment;
  */
 public class RepastS_SimulationRunnerMain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// The Repast scenario Directory
 		File file = new File(args[0]);
 
@@ -47,12 +47,12 @@ public class RepastS_SimulationRunnerMain {
 			;
 		RepastS_SimulationRunner repastS_SimulationRunner = new RepastS_SimulationRunner();
 
-		try {
+		//try {
 			repastS_SimulationRunner.load(file, frameworkConfigurationFileName); // Load the Repast
 																					// Scenario
-		} catch (Exception e) {
+/*		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		// Run the simulation a few times to check for cleanup and init issues.
 		// TODO: Tie in the number of simulation runs from the configuration
@@ -68,6 +68,10 @@ public class RepastS_SimulationRunnerMain {
 
 				repastS_SimulationRunContext.messageDistributedSystems(msg,
 						repastS_SimulationRunContext.getSimulationRunContext());
+
+				// FIXME
+				repastS_SimulationRunContext.closeInterface(repastS_SimulationRunContext
+						.getSimulationRunContext());
 			}
 
 			// Hard Coded for now

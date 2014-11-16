@@ -1,5 +1,6 @@
 package org.simulationsystems.csf.distsys.api;
 
+import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
 
@@ -9,6 +10,7 @@ public class DistSysRunGroupContext {
 
 	// LOW: Support Multiple simulation run groups/run contexts
 	private DistSysRunContext distSysRunContext;
+	private Document cachedMessageExchangeTemplate;
 
 	public DistSysRunGroupContext() {
 	}
@@ -36,5 +38,10 @@ public class DistSysRunGroupContext {
 		this.distSysRunContext = distSysRunContext;
 
 	}
+
+	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
+		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;		
+	}
+
 
 }

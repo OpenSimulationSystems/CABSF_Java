@@ -10,4 +10,6 @@ public interface DistributedAgentDao {
 			DistributedSystem distributedSystem);
 	
 	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString);
+
+	public void closeInterface();
 }

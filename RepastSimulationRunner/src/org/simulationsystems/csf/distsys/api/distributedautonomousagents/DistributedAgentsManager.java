@@ -194,4 +194,7 @@ public class DistributedAgentsManager {
 				distributedSystem, simulationRunContext);
 	}
 
+	public void closeInterface() {
+		commonMessagingAbstraction.closeInterface();
+	}
 }

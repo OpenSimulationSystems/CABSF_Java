@@ -1,4 +1,4 @@
-package org.simulationsystems.csf.common.internal.messaging.transformers;
+package org.simulationsystems.csf.common.internal.messaging.xml.transformers;
 
 import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;

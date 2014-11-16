@@ -15,6 +15,7 @@ import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfig
 import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAgentsManager;
 import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.api.simulationruntime.SimulationEngineManager;
+import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 
 /*
@@ -93,5 +94,9 @@ public class DistSysRunContext {
 	public void messageSimulationEngine(FrameworkMessage frameworkMessage,
 			DistSysRunContext distSysRunContext) {
 		simulationEngineManager.sendMessage(frameworkMessage, this);
+	}
+	
+	public void closeInterface() {
+		distributedAgentsManager.closeInterface();
 	}
 }

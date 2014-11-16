@@ -184,5 +184,9 @@ public class SimulationDistributedSystemManager {
 		commonMessagingAbstraction.sendMessageToDistributedAgents(
 				frameworkMessage, distributedSystem, simulationRunContext);
 	}
+	
+	public void closeInterface() {
+		commonMessagingAbstraction.closeInterface();
+	}
 
 }

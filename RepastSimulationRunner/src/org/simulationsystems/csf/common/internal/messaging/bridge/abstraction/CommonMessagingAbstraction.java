@@ -24,4 +24,8 @@ public abstract class CommonMessagingAbstraction {
 		this.commonMessagingImplementationAPI = commonMessagingImplementationAPI;
 		this.messagingConnectionString = messagingConnectionString;
 	}
+	
+	public void closeInterface() {
+		commonMessagingImplementationAPI.closeInterface();
+	};
 }

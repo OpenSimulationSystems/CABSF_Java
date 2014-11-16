@@ -1,0 +1,25 @@
+<simphony.settings.SettingsRegistry serialization="custom">
+  <unserializable-parents/>
+  <hashtable>
+    <default>
+      <loadFactor>0.75</loadFactor>
+      <threshold>5</threshold>
+    </default>
+    <int>7</int>
+    <int>7</int>
+    <string>iReport.home</string>
+    <string>C:\Program Files (x86)\JasperSoft\iReport-5.1.0\bin\ireport.exe</string>
+    <string>SettingsRegistryId</string>
+    <string>Repast.registry</string>
+    <string>iReport.licenseAccepted</string>
+    <boolean>true</boolean>
+    <string>Spreadsheet.licenseAccepted</string>
+    <boolean>true</boolean>
+    <string>LastLoadedScenario</string>
+    <string>C:\Users\jorge\workspace\jzombies\jzombies.rs</string>
+    <string>Spreadsheet.home</string>
+    <string>C:\Program Files (x86)\Microsoft Office\Office14\Excel.exe</string>
+    <string>SettingsFileName</string>
+    <string>Repast.settings</string>
+  </hashtable>
+</simphony.settings.SettingsRegistry>

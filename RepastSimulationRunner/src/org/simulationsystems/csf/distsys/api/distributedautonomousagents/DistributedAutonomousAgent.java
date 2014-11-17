@@ -100,14 +100,12 @@ public class DistributedAutonomousAgent {
 		return distributedAgentModelIDStoAgentModels;
 	}
 
-	public void messageDistributedAgents(FrameworkMessage frameworkMessage,
+/*	public void messageDistributedAgents(FrameworkMessage frameworkMessage,
 			SimulationRunContext simulationRunContext) {
 		// TODO: Multiple Distributed systems
 		commonMessagingAbstraction.sendMessageToDistributedAgents(frameworkMessage,
 				distributedSystem, simulationRunContext);
-	}
-
-
+	}*/
 	
 
 }

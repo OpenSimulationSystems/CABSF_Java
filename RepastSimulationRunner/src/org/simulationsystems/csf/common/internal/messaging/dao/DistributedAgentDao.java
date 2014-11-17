@@ -5,11 +5,13 @@ import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 public interface DistributedAgentDao {
-
+	
 	public void sendMessagesToDistributedAgents(SimulationRunContext simulationRunContext, FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem);
 	
 	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString);
 
 	public void closeInterface();
+
+	public void listenForCommandsFromSimulationAdministrator(String clientID);
 }

@@ -14,8 +14,8 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
  */
 public class CommonMessagingRefinedAbstractionAPI extends CommonMessagingAbstraction {
 	public CommonMessagingRefinedAbstractionAPI(
-			CommonMessagingImplementationAPI commonMessagingImplementationAPI, String connectionStr) {
-		super(commonMessagingImplementationAPI, connectionStr);
+			CommonMessagingImplementationAPI commonMessagingImplementationAPI, String connectionStr, String commonMessagingClientId) {
+		super(commonMessagingImplementationAPI, connectionStr, commonMessagingClientId);
 		
 	}
 
@@ -33,4 +33,6 @@ public class CommonMessagingRefinedAbstractionAPI extends CommonMessagingAbstrac
 		commonMessagingImplementationAPI.sendMessagesToDistributedAgents(frameworkMessage,
 				distributedSystem, simulationRunContext);
 	}
+	
+	
 }

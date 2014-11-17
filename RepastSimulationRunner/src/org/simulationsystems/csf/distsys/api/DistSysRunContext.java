@@ -17,6 +17,7 @@ import org.simulationsystems.csf.distsys.api.distributedautonomousagents.Distrib
 import org.simulationsystems.csf.distsys.api.simulationruntime.SimulationEngineManager;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
+import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 /*
  * Provides the context for the Common Simulation Framework. Adapter developers may use this context
@@ -96,13 +97,17 @@ public class DistSysRunContext {
 			DistSysRunConfiguration distributedSystemSimulationRunConfigurationSimulationRunConfiguration) {
 		this.distSysRunConfiguration = distributedSystemSimulationRunConfigurationSimulationRunConfiguration;
 	}
-
-	public void messageSimulationEngine(FrameworkMessage frameworkMessage,
-			DistSysRunContext distSysRunContext) {
+	
+	public void messageSimulationEngine(FrameworkMessage frameworkMessage) {
 		simulationEngineManager.sendMessage(frameworkMessage, this);
 	}
 	
 	public void closeInterface() {
 		distributedAgentsManager.closeInterface();
+	}
+
+	public void listenForCommandsFromSimulationAdministrator() {
+		simulationEngineManager.listenForCommandsFromSimulationAdministrator();
+		
 	}
 }

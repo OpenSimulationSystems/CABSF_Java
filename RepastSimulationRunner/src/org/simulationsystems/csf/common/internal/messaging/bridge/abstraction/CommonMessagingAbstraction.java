@@ -14,18 +14,26 @@ public abstract class CommonMessagingAbstraction {
 	protected CommonMessagingImplementationAPI commonMessagingImplementationAPI;
 	// LOW: Generalize this, maybe make it an object.
 	protected String messagingConnectionString; //The messaging connection string, such as the Redis connection string.
-
+	 //ID of the client of this class (simulation engine or distributed system).  Used for routing purposes.
+	protected String commonMessagingClientId;
+	
 	abstract public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString);
 
 	abstract public void sendMessageToDistributedAgents(FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem, SimulationRunContext simulationRunContext);
 
-	protected CommonMessagingAbstraction(CommonMessagingImplementationAPI commonMessagingImplementationAPI, String messagingConnectionString) {
+	protected CommonMessagingAbstraction(CommonMessagingImplementationAPI commonMessagingImplementationAPI, String messagingConnectionString, String commonMessagingClientId) {
 		this.commonMessagingImplementationAPI = commonMessagingImplementationAPI;
 		this.messagingConnectionString = messagingConnectionString;
+		this.commonMessagingClientId = commonMessagingClientId;
 	}
 	
 	public void closeInterface() {
 		commonMessagingImplementationAPI.closeInterface();
+	}
+
+	public void listenForCommandsFromSimulationAdministrator(String clientID) {
+		commonMessagingImplementationAPI.listenForCommandsFromSimulationAdministrator(clientID);
+		
 	};
 }

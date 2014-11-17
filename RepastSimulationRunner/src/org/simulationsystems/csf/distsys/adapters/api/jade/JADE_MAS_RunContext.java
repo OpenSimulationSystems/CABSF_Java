@@ -68,9 +68,14 @@ public class JADE_MAS_RunContext {
 	}
 
 
-	public void messageDistributedSystems(FrameworkMessage frameworkMessage,
+	public void messageSimulationEngine(FrameworkMessage frameworkMessage,
 			DistSysRunContext distSysRunContext) {
-		distSysRunContext.messageDistributedSystems(frameworkMessage);
+		distSysRunContext.messageSimulationEngine(frameworkMessage);
+	}
+	
+	public void listenForCommandsFromSimulationAdministrator(
+			SimulationRunContext simulationRunContext) {
+		distSysRunContext.listenForCommandsFromSimulationAdministrator();
 	}
 	
 	public void closeInterface(DistSysRunContext distSysRunContext) {

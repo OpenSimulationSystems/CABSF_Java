@@ -139,10 +139,4 @@ public class JADE_MAS_AdapterAPI {
 		distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent, jADE_MAS_RunContext.getDistSysRunContext());
 	}
 
-	public void logHelper(JADE_MAS_RunContext jADE_MAS_RunContext) {
-		// TODO: handle multiple distributed systems
-		System.out.println(jADE_MAS_RunContext.getSimulationDistributedSystemManagers().iterator()
-				.next().logHelper());
-	}
-
 }

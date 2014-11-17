@@ -25,8 +25,8 @@ import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 public class SimulationDistributedSystemManager {
 	private SimulationRunContext simulationRunContext;
 	private DistributedSystem distributedSystem;
-	
-	//TODO:  Change the UUIDs to String
+
+	// TODO: Change the UUIDs to String
 	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
 	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
 	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
@@ -79,20 +79,23 @@ public class SimulationDistributedSystemManager {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-		}
-		 catch (SecurityException e) {
+		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		//TODO: Dynamically get the appropriate connection string based on the configured common interface
+
+		// TODO: Dynamically get the appropriate connection string based on the configured common
+		// interface
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
-				commonMessagingImplementationAPI, simulationRunContext.getSimulationRunConfiguration().getRedisConnectionString());
-		
+				commonMessagingImplementationAPI, simulationRunContext
+						.getSimulationRunConfiguration().getRedisConnectionString(),
+				simulationRunContext.getSimulationRunConfiguration().getSimulationEngineID());
+
 		// TODO: Move this configuration to the Simulation Run Group level?
 		commonMessagingAbstraction
-				.initializeSimulationFrameworkCommonMessagingInterface(simulationRunContext.getSimulationRunConfiguration().getRedisConnectionString());
+				.initializeSimulationFrameworkCommonMessagingInterface(simulationRunContext
+						.getSimulationRunConfiguration().getRedisConnectionString());
 	}
 
 	protected ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {
@@ -141,7 +144,7 @@ public class SimulationDistributedSystemManager {
 	 * Checks whether this agent belongs to a class that is expected to be distributed outside of
 	 * the simulation runtime environment.
 	 */
-	public boolean isAgentClassDistributedType(Class agentClass) {
+	public boolean isAgentClassDistributedType(Class<Object> agentClass) {
 		// TODO: Tie this to the simulation configuration
 		if (agentClass.getCanonicalName().equals("jzombies.Human"))
 			return true;
@@ -164,8 +167,9 @@ public class SimulationDistributedSystemManager {
 			am.setSimulationAgent(agentObj);
 			agentsReadyForSimulationSideMapping.remove(agentMappingToAssignUUID);
 			agentsReadyForDistributedAgentMapping.add(agentMappingToAssignUUID);
-			System.out.println(this.getClass().getCanonicalName().toString() + ": Successfully mapped " + agentMappingToAssignUUID.toString()
-					+ " class: " + agentObj.getClass().getCanonicalName());
+			System.out.println(this.getClass().getCanonicalName().toString()
+					+ ": Successfully mapped " + agentMappingToAssignUUID.toString() + " class: "
+					+ agentObj.getClass().getCanonicalName());
 		} catch (java.util.NoSuchElementException e) {
 			System.out.println("exception:" + e.getMessage() + "  class: "
 					+ agentObj.getClass().getCanonicalName());
@@ -181,12 +185,20 @@ public class SimulationDistributedSystemManager {
 	public void messageDistributedAgents(FrameworkMessage frameworkMessage,
 			SimulationRunContext simulationRunContext) {
 		// TODO: Multiple Distributed systems
-		commonMessagingAbstraction.sendMessageToDistributedAgents(
-				frameworkMessage, distributedSystem, simulationRunContext);
+		commonMessagingAbstraction.sendMessageToDistributedAgents(frameworkMessage,
+				distributedSystem, simulationRunContext);
 	}
-	
+
 	public void closeInterface() {
 		commonMessagingAbstraction.closeInterface();
+	}
+
+	public void listenForCommandsFromSimulationAdministrator() {
+		// The target is this side of the framework (simulation engine)
+		commonMessagingAbstraction
+				.listenForCommandsFromSimulationAdministrator(simulationRunContext
+						.getSimulationRunConfiguration().getSimulationEngineID());
+
 	}
 
 }

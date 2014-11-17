@@ -94,13 +94,14 @@ public class DistSysInitializationHelper {
 		// interface
 		// LOW: Read optional simulation runtime id from the configuration
 		SimulationEngineManager simRuntime = new SimulationEngineManager(distSysRunContext,
-				distSysRunConfiguration.getCommonMessagingConcreteImplStr());
+				distSysRunConfiguration.getCommonMessagingConcreteImplStr(), distSysRunContext
+						.getDistSysRunConfiguration().getDistributedSystemID());
 		distSysRunContext.setSimulationEngine(simRuntime);
 
 		// Set up manager for the distributed autonomous agents (such as the JADE agents) on behalf
 		// of the client of this API, such as the CSF JADE Controller Agent
 		// TODO: Add this distributed system's id
-		DistributedAgentsManager distributedAgentsManager = new DistributedAgentsManager(null,
+		DistributedAgentsManager distributedAgentsManager = new DistributedAgentsManager(distSysRunContext.getDistSysRunConfiguration().getDistributedSystemID(),
 				null, distSysRunContext.getDistSysRunConfiguration());
 		distSysRunContext.setDistributedAgentsManager(distributedAgentsManager);
 

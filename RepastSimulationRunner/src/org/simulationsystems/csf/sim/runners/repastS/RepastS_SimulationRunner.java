@@ -133,13 +133,13 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			// Do this manually now from the Redis command line.
 			// Message the distributed systems that the simulation has started and is ready to
 			// accept messages from the distributed agents.
-/*			FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl(
+			FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl(
 					repastS_SimulationRunContext.getSimulationRunContext()
 							.getSimulationRunGroupContext().getCachedMessageExchangeTemplate());
 
 			 msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
 			 repastS_SimulationRunContext.messageDistributedSystems(msg,
-			 repastS_SimulationRunContext.getSimulationRunContext());*/
+			 repastS_SimulationRunContext.getSimulationRunContext());
 
 			// FIXME
 			repastS_SimulationRunContext.closeInterface(repastS_SimulationRunContext

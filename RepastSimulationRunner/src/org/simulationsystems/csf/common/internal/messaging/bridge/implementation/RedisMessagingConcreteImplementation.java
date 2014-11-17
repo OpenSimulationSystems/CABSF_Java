@@ -41,4 +41,10 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 		distributedAgentDao.closeInterface();
 	}
 
+	@Override
+	public void listenForCommandsFromSimulationAdministrator(String clientID) {
+		distributedAgentDao.listenForCommandsFromSimulationAdministrator(clientID);
+		
+	}
+
 }

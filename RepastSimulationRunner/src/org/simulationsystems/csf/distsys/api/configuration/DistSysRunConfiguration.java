@@ -9,12 +9,18 @@ public class DistSysRunConfiguration {
 	private SimulationDistributedSystemManager agentManager;
 	private String commonMessagingConcreateImplStr=null;
 	private String redisConnectionString=null;
+	private String distributedSystemID=null;
 
 	// TODO: Read actual simulation-run-level properties
 	public DistSysRunConfiguration() {
 		// String to represent Redis or "WebServices"
 		commonMessagingConcreateImplStr = "org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation";
 		redisConnectionString="localhost";
+		distributedSystemID="DistSys1";
+	}
+
+	public String getDistributedSystemID() {
+		return distributedSystemID;
 	}
 
 	public String getCommonMessagingConcreteImplStr() {

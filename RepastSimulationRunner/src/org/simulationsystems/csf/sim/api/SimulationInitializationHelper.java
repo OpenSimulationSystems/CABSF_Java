@@ -86,7 +86,7 @@ public class SimulationInitializationHelper {
 		// Distributed Agents
 		// LOW: Fix later to handle multiple distributed systems
 		// LOW: Read optional distributed system id from the configuration
-		DistributedSystem sys = new DistributedSystem("19def3fa-a1d4-4996-a1ac-22c3a041e6ff");
+		DistributedSystem sys = new DistributedSystem(simulationRunContext.getSimulationRunConfiguration().getSimulationEngineID());
 		SimulationDistributedSystemManager simulationDistributedSystemManager = new SimulationDistributedSystemManager(
 				simulationRunContext,
 				simulationRunConfiguration.getCommonMessagingConcreteImplStr(), sys);

@@ -164,10 +164,5 @@ public class RepastS_SimulationAdapterAPI {
 		simulationAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
 
-	public void logHelper(RepastS_SimulationRunContext repastS_SimulationRunContext) {
-		// TODO: handle multiple distributed systems
-		System.out.println(repastS_SimulationRunContext.getSimulationDistributedSystemManagers()
-				.iterator().next().logHelper());
-	}
 
 }

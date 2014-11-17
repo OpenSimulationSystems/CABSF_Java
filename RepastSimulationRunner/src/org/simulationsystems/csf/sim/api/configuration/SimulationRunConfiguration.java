@@ -9,12 +9,18 @@ public class SimulationRunConfiguration {
 	private SimulationDistributedSystemManager agentManager;
 	private String commonMessagingConcreateImplStr=null;
 	private String redisConnectionString=null;
+	private String simulationEngineID=null;
+	
+	public String getSimulationEngineID() {
+		return simulationEngineID;
+	}
 
 	// TODO: Read actual simulation-run-level properties
 	public SimulationRunConfiguration() {
 		// String to represent Redis or "WebServices"
 		commonMessagingConcreateImplStr = "org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation";
 		redisConnectionString="localhost";
+		simulationEngineID="19def3fa-a1d4-4996-a1ac-22c3a041e6ff";
 	}
 
 	public String getCommonMessagingConcreteImplStr() {

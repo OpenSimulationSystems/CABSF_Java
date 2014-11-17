@@ -13,6 +13,7 @@ public class SimulationEngineManager {
 	private DistSysRunContext distSysRunContext;
 	private CommonMessagingAbstraction commonMessagingAbstraction = null;
 	private CommonMessagingImplementationAPI commonMessagingImplementationAPI;
+	private String thisDistributedSystemID=null;
 	
 	/*
 	 * @param simulationRuntimeID An optional ID to identify the simulation runtime instance for
@@ -24,8 +25,9 @@ public class SimulationEngineManager {
 
 	public SimulationEngineManager(
 			DistSysRunContext distSysRunContext,
-			String getCommonMessagingConcreteImplStr) {
+			String getCommonMessagingConcreteImplStr, String thisDistributedSystemID) {
 		this.distSysRunContext = distSysRunContext;
+		this.thisDistributedSystemID=thisDistributedSystemID; 
 
 		// Check which Bridge implementation we're going to use, based on what was specified in the
 		// configuration.
@@ -67,7 +69,7 @@ public class SimulationEngineManager {
 
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, distSysRunContext
-						.getDistSysRunConfiguration().getRedisConnectionString());
+						.getDistSysRunConfiguration().getRedisConnectionString(), distSysRunContext.getDistSysRunConfiguration().getDistributedSystemID());
 
 		// TODO: Move this configuration to the Simulation Run Group level?
 		commonMessagingAbstraction
@@ -78,6 +80,12 @@ public class SimulationEngineManager {
 	public void sendMessage(FrameworkMessage frameworkMessage,
 			DistSysRunContext distSysRunContext) {
 
+	}
+
+	public void listenForCommandsFromSimulationAdministrator() {
+		// The target is this side of the framework (distributed system)
+		commonMessagingAbstraction.listenForCommandsFromSimulationAdministrator(thisDistributedSystemID);
+		
 	}
 
 }

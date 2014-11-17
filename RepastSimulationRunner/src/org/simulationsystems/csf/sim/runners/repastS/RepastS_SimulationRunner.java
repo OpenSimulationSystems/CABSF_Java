@@ -2,6 +2,9 @@ package org.simulationsystems.csf.sim.runners.repastS;
 
 import java.io.File;
 
+import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
+import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToDistributedSystemImpl;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunGroupContext;
@@ -24,13 +27,14 @@ import repast.simphony.parameter.SweeperProducer;
 import simphony.util.messages.MessageCenter;
 
 /*
- *  The Repast AbstractRunner that programmatically runs a Repast Simulation.  This class is taken from the Repast FAQ and enhanced to allow incorporation of the common simulation framework.   
- *  
- *  Based on TestRunner_2.java from:
- * http://sourceforge.net/p/repast/repast-simphony-docs/ci/master/tree/docs/RepastFAQ/TestMain_2.java
+ * The Repast AbstractRunner that programmatically runs a Repast Simulation. This class is taken
+ * from the Repast FAQ and enhanced to allow incorporation of the common simulation framework.
  * 
- * @author 
-
+ * Based on TestRunner_2.java from:
+ * http://sourceforge.net/p/repast/repast-simphony-docs/ci/master/tree
+ * /docs/RepastFAQ/TestMain_2.java
+ * 
+ * @author
  */
 public class RepastS_SimulationRunner extends AbstractRunner {
 	private RepastS_SimulationAdapterAPI repastS_SimulationAdapterAPI;
@@ -55,7 +59,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	protected boolean pause = false;
 	protected Object monitor = new Object();
 	protected SweeperProducer producer;
-	private ISchedule schedule;																						// level
+	private ISchedule schedule; // level
 
 	public RepastS_SimulationRunner() {
 		runEnvironmentBuilder = new DefaultRunEnvironmentBuilder(this, true);
@@ -117,15 +121,32 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 		@SuppressWarnings("unchecked")
 		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
-		
-		RepastS_SimulationRunContext repastS_SimulationRunContext=null;
+
+		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION) {
-			repastS_SimulationRunContext = repastS_SimulationAdapterAPI.initializeSimulationRun(repastContextForThisRun,
-					repastS_SimulationRunGroupContext);
-			//Fix after expanding to support multiple distributed systems.
-			System.out.println(repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator().next().logHelper());
+			repastS_SimulationRunContext = repastS_SimulationAdapterAPI.initializeSimulationRun(
+					repastContextForThisRun, repastS_SimulationRunGroupContext);
+			// Fix after expanding to support multiple distributed systems.
+			System.out.println(repastS_SimulationRunContext
+					.getSimulationDistributedSystemManagers().iterator().next().logHelper());
+			
+			// Do this manually now from the Redis command line.
+			// Message the distributed systems that the simulation has started and is ready to
+			// accept messages from the distributed agents.
+/*			FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl(
+					repastS_SimulationRunContext.getSimulationRunContext()
+							.getSimulationRunGroupContext().getCachedMessageExchangeTemplate());
+
+			 msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
+			 repastS_SimulationRunContext.messageDistributedSystems(msg,
+			 repastS_SimulationRunContext.getSimulationRunContext());*/
+
+			// FIXME
+			repastS_SimulationRunContext.closeInterface(repastS_SimulationRunContext
+					.getSimulationRunContext());
+
 		}
-		
+
 		return repastS_SimulationRunContext;
 	}
 

@@ -60,21 +60,6 @@ public class RepastS_SimulationRunnerMain {
 		for (int i = 0; i < simulation_runs; i++) {
 			RepastS_SimulationRunContext repastS_SimulationRunContext = repastS_SimulationRunner
 					.runInitialize(); // initialize the run
-			// Message the distributed systems that the simulation has started and is ready to
-			// accept messages from the distributed agents.
-			if (repastS_SimulationRunner.getSimulationRunnerType() == SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION) {
-				FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl(
-						repastS_SimulationRunContext.getSimulationRunContext()
-								.getSimulationRunGroupContext().getCachedMessageExchangeTemplate());
-				
-				msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
-				repastS_SimulationRunContext.messageDistributedSystems(msg,
-						repastS_SimulationRunContext.getSimulationRunContext());
-
-				// FIXME
-				repastS_SimulationRunContext.closeInterface(repastS_SimulationRunContext
-						.getSimulationRunContext());
-			}
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the configuration

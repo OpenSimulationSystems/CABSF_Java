@@ -1,24 +1,41 @@
 package org.simulationsystems.csf.common.internal.messaging.messages;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.CsfSimulationCheckedException;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.transformers.FrameworkMessageToXMLTransformer;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 
-public class FrameworkMessageToDistributedSystemImpl implements FrameworkMessage {
+public class FrameworkMessageToPullImpl implements FrameworkMessage {
 	private FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND frameworkToDistributedSystemCommand;
 	private FrameworkMessageToXMLTransformer frameworkMessageTOXMLTransformer = new FrameworkMessageToXMLTransformer();
-	private Document csfMessageExchangeTemplateDocument;
+	private Document document;
+	private SYSTEM_TYPE sourceSystemType;
+	private SYSTEM_TYPE targetSystemType;
+	private FRAMEWORK_COMMAND frameworkCommand;
 	
 	@SuppressWarnings("unused")
-	private FrameworkMessageToDistributedSystemImpl() {
+	private FrameworkMessageToPullImpl() {
 		
 	}
 	
-	public FrameworkMessageToDistributedSystemImpl(Document csfMessageExchangeTemplateDocument) {
+	public FrameworkMessageToPullImpl(SYSTEM_TYPE sourceSystemType, SYSTEM_TYPE targetSystemType, String xmlString) throws CsfSimulationCheckedException {
 		super();
-		this.csfMessageExchangeTemplateDocument = csfMessageExchangeTemplateDocument;		
+		try {
+			this.document = MessagingUtilities.createDocumentFromString(xmlString);
+		} catch (JDOMException | IOException e) {
+			//TODO: Where to catch this?
+			throw new CsfSimulationCheckedException("Unable to parse the message XML",e);
+		}
+		
+		this.sourceSystemType = sourceSystemType;
+		this.targetSystemType = targetSystemType;
 	}
 	
 	@Override
@@ -39,7 +56,12 @@ public class FrameworkMessageToDistributedSystemImpl implements FrameworkMessage
 		//for (UUID distributedSystemAgentUUID : distributedSystem.getDistributedAgentUUIDs()) {
 		//}
 
-		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(this, csfMessageExchangeTemplateDocument);
+		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(this, document);
 
+	}
+
+	@Override
+	public FRAMEWORK_COMMAND getFrameworkCommand() {
+		return frameworkCommand;
 	}
 }

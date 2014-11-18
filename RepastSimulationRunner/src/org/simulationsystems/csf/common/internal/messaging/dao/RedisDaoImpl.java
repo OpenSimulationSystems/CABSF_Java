@@ -2,14 +2,19 @@ package org.simulationsystems.csf.common.internal.messaging.dao;
 
 import java.util.UUID;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.CsfSimulationMessagingRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.CsfSimulationCheckedException;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToPushImpl;
+import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToPullImpl;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
-public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
-	static private DistributedAgentDao instance = new DistributedAgentRedisDaoImpl();
+public class RedisDaoImpl implements CommonMessagingDao {
+	static private CommonMessagingDao instance = new RedisDaoImpl();
 	// We're using a connection pool in Redis so it's ok to use a singleton.
 	static private RedisConnectionManager redisConnectionManager = new RedisConnectionManager();
 
@@ -20,7 +25,7 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	private void DistributedAgentDAO() {
 	}
 
-	static public DistributedAgentDao getInstance() {
+	static public CommonMessagingDao getInstance() {
 		return instance;
 	}
 
@@ -43,11 +48,11 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 
 		String prefix3 = null;
 		if (targetSystemType == SYSTEM_TYPE.SYSTEM_ADMINISTRATOR)
-			prefix3 = "admin";
+			prefix3 = "Admin";
 		else if (targetSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
-			prefix3 = "distSys";
+			prefix3 = "DistSystem";
 		else
-			prefix3 = "sim";
+			prefix3 = "Sim";
 
 		String channel = prefix + prefix2 + prefix3 + ":" + ID;
 		// LOW: Make this configurable
@@ -60,7 +65,7 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.simulationsystems.csf.common.internal.messaging.dao.DistributedAgentDao
+	 * @see org.simulationsystems.csf.common.internal.messaging.dao.CommonMessagingDao
 	 * #sendMessagesToDistributedAgents(org.simulationsystems.csf.sim.api.
 	 * messaging.FrameworkMessage,
 	 * org.simulationsystems.csf.sim.api.messaging.DistributedSystemAgentSet,
@@ -91,10 +96,32 @@ public class DistributedAgentRedisDaoImpl implements DistributedAgentDao {
 
 	@Override
 	public void listenForCommandsFromSimulationAdministrator(String clientID) {
-		String redisChannelStr = createRedisChannelStr(SYSTEM_TYPE.SYSTEM_ADMINISTRATOR, SYSTEM_TYPE.SIMULATION_ENGINE, clientID);
-		
-		//LOW: Improve performance, use publish/subscribe
-		redisConnectionManager.redisSynchronousPolling(redisChannelStr, 1l, null);
-		
+		String redisChannelStr = createRedisChannelStr(SYSTEM_TYPE.SYSTEM_ADMINISTRATOR,
+				SYSTEM_TYPE.SIMULATION_ENGINE, clientID);
+
+		// LOW: Improve performance, use publish/subscribe
+		redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE,
+				redisChannelStr, 1l, null);
+
+	}
+
+	@Override
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(
+			SYSTEM_TYPE targetSystemType, String clientID) {
+		String redisChannelStr = createRedisChannelStr(SYSTEM_TYPE.SYSTEM_ADMINISTRATOR,
+				targetSystemType, clientID);
+
+		// LOW: Improve performance, use publish/subscribe
+		String messageXML = redisConnectionManager.redisSynchronousPolling(
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, redisChannelStr, 1l, null);
+		FrameworkMessage fm = null;
+		try {
+			fm = new FrameworkMessageToPullImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+					SYSTEM_TYPE.DISTRIBUTED_SYSTEM, messageXML);
+		} catch (CsfSimulationCheckedException e) {
+			throw new CsfSimulationMessagingRuntimeException(e);
+		}
+
+		return fm.getFrameworkCommand();
 	}
 }

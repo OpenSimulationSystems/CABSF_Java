@@ -1,5 +1,7 @@
 package org.simulationsystems.csf.common.internal.messaging.interfaces.redis;
 
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -9,18 +11,18 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class RedisConnectionManager {
 	// private Jedis jedis=null;
-	static private JedisPool jedisPool=null;
-	static private Jedis jedis=null;
+	static private JedisPool jedisPool = null;
+	static private Jedis jedis = null;
 	private String host;
 
 	public void initializeRedisConnection(final String host) {
 		// jedis = new Jedis(host);
-		
-		//LOW: Configure Jedis Pool options
-		//JedisPoolConfig poolConfig = new JedisPoolConfig();
-		//poolConfig.setMaxTotal(128);
-		//jedisPool = new JedisPool(poolConfig, RedisDBConfig.HOST, RedisDBConfig.PORT,
-		//		RedisDBConfig.TIMEOUT, RedisDBConfig.PASSWORD);
+
+		// LOW: Configure Jedis Pool options
+		// JedisPoolConfig poolConfig = new JedisPoolConfig();
+		// poolConfig.setMaxTotal(128);
+		// jedisPool = new JedisPool(poolConfig, RedisDBConfig.HOST, RedisDBConfig.PORT,
+		// RedisDBConfig.TIMEOUT, RedisDBConfig.PASSWORD);
 
 		jedisPool = new JedisPool(new JedisPoolConfig(), host);
 		jedis = jedisPool.getResource();
@@ -50,15 +52,17 @@ public class RedisConnectionManager {
 	 * 
 	 * @param sleepTime the number of second to sleep
 	 */
-	public String redisSynchronousPolling(String redisKey, Long sleepTime, Long maximumNumberOfPolls) {
+	public String redisSynchronousPolling(SYSTEM_TYPE requestingSystem, String redisKey,
+			Long sleepTime, Long maximumNumberOfPolls) {
 		String value = null;
 		int i = 0;
 		while (maximumNumberOfPolls == null || maximumNumberOfPolls > 0) {
-			//System.out.println("Attempting lpop on: " + redisKey + " attempt: " + i);
+			System.out.println("[Attempting from " + requestingSystem + "]"
+					+ "Attempting lpop on: " + redisKey + " attempt: " + i);
 			value = jedis.lpop(redisKey);
 			if (value == null) {
 				try {
-					//System.out.println("sleeping: " + sleepTime * 1000);
+					// System.out.println("sleeping: " + sleepTime * 1000);
 					Thread.sleep(sleepTime * 1000);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt(); // set interrupt flag
@@ -68,9 +72,9 @@ public class RedisConnectionManager {
 				}
 			} else {
 				System.out.println("Retrieved value: " + value);
-				break;
+				return value;
 			}
-			//System.out.println("Stopped sleeping");
+			// System.out.println("Stopped sleeping");
 			if (maximumNumberOfPolls != null)
 				maximumNumberOfPolls--;
 			i++;

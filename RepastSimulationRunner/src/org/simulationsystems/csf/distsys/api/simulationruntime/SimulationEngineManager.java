@@ -1,5 +1,7 @@
 package org.simulationsystems.csf.distsys.api.simulationruntime;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingAbstraction;
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
@@ -82,9 +84,9 @@ public class SimulationEngineManager {
 
 	}
 
-	public void listenForCommandsFromSimulationAdministrator() {
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine() {
 		// The target is this side of the framework (distributed system)
-		commonMessagingAbstraction.listenForCommandsFromSimulationAdministrator(thisDistributedSystemID);
+		return commonMessagingAbstraction.listenForCommandsFromSimulationEngine(SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
 		
 	}
 

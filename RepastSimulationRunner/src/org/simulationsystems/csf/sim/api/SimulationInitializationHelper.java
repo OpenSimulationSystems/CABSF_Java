@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jdom2.JDOMException;
-import org.simulationsystems.csf.common.csfmodel.CsfSimulationInitializationException;
+import org.simulationsystems.csf.common.csfmodel.CsfSimulationInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
@@ -65,7 +65,7 @@ public class SimulationInitializationHelper {
 		try {
 			simulationRunGroupContext.setCachedMessageExchangeTemplate(MessagingUtilities.createCachedMessageExchangeTemplate());
 		} catch (JDOMException e) {
-			throw new CsfSimulationInitializationException(
+			throw new CsfSimulationInitializationRuntimeException(
 					"Error reading the message exchange template from the file system", e);
 		}
 		

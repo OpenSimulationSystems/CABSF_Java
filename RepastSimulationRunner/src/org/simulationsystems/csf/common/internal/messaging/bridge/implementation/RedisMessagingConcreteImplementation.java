@@ -1,7 +1,9 @@
 package org.simulationsystems.csf.common.internal.messaging.bridge.implementation;
 
-import org.simulationsystems.csf.common.internal.messaging.dao.DistributedAgentDao;
-import org.simulationsystems.csf.common.internal.messaging.dao.DistributedAgentRedisDaoImpl;
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+import org.simulationsystems.csf.common.internal.messaging.dao.CommonMessagingDao;
+import org.simulationsystems.csf.common.internal.messaging.dao.RedisDaoImpl;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
@@ -12,7 +14,7 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
  * common data interfaces, in this case the in-memory database Redis.
  */
 public class RedisMessagingConcreteImplementation implements CommonMessagingImplementationAPI {
-	static private DistributedAgentDao distributedAgentDao = DistributedAgentRedisDaoImpl.getInstance();
+	static private CommonMessagingDao commonMessagingDao = RedisDaoImpl.getInstance();
 
 	/*
 	 * 
@@ -20,7 +22,7 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 	@Override
 	public void sendMessagesToDistributedAgents(FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem, SimulationRunContext simulationRunContext) {
-		distributedAgentDao.sendMessagesToDistributedAgents(simulationRunContext, frameworkMessage,
+		commonMessagingDao.sendMessagesToDistributedAgents(simulationRunContext, frameworkMessage,
 				distributedSystem);
 	}
 
@@ -32,19 +34,25 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 
 	@Override
 	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString) {
-		distributedAgentDao.initializeSimulationFrameworkCommonMessagingInterface(messagingConnectionString);
+		commonMessagingDao.initializeSimulationFrameworkCommonMessagingInterface(messagingConnectionString);
 		
 	}
 
 	@Override
 	public void closeInterface() {
-		distributedAgentDao.closeInterface();
+		commonMessagingDao.closeInterface();
 	}
 
 	@Override
 	public void listenForCommandsFromSimulationAdministrator(String clientID) {
-		distributedAgentDao.listenForCommandsFromSimulationAdministrator(clientID);
+		commonMessagingDao.listenForCommandsFromSimulationAdministrator(clientID);
 		
 	}
+	
+	@Override
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
+		return commonMessagingDao.listenForCommandsFromSimulationEngine(targetSystemType, clientID);
+		
+	};
 
 }

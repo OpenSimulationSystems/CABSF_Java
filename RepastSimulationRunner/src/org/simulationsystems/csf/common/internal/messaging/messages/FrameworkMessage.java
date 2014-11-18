@@ -1,5 +1,6 @@
 package org.simulationsystems.csf.common.internal.messaging.messages;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 
 /*
@@ -14,4 +15,5 @@ public interface FrameworkMessage {
 
 	FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND getFrameworkToDistributedSystemCommand();
 	
+	FRAMEWORK_COMMAND getFrameworkCommand();
 }

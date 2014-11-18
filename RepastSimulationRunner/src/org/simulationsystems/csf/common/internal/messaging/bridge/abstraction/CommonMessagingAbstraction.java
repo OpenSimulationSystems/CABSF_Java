@@ -1,5 +1,7 @@
 package org.simulationsystems.csf.common.internal.messaging.bridge.abstraction;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
@@ -36,4 +38,11 @@ public abstract class CommonMessagingAbstraction {
 		commonMessagingImplementationAPI.listenForCommandsFromSimulationAdministrator(clientID);
 		
 	};
+	
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
+		return commonMessagingImplementationAPI.listenForCommandsFromSimulationEngine(targetSystemType, clientID);
+		
+	};
+	
+	
 }

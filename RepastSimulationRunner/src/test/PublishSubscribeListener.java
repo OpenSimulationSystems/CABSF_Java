@@ -7,6 +7,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
 
 import redis.clients.jedis.Jedis;
@@ -61,8 +62,9 @@ public class PublishSubscribeListener extends JedisPubSub {
 		//PublishSubscribeListener l = new PublishSubscribeListener();
 		//jedis.subscribe(l, "csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff");
 		
+		//TODO: remove afte reading?
 		//Rely on Polling for now, keep everything Synchronous and simple.
-		redisConnectionManager.redisSynchronousPolling("csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff", 1l, null);
+		redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE, "csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff", 1l, null);
 		
 		//Test that connection works after 300 second timeout.
 /*		redisConnectionManager.redisSynchronousPolling("csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff", 1l, 1l);

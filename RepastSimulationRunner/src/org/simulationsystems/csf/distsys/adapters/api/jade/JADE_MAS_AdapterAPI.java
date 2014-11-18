@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import org.simulationsystems.csf.distsys.adapters.api.jade.mocks.MockJADEContext;
-import org.simulationsystems.csf.distsys.adapters.api.jade.mocks.MockJADE_Agent;
+import org.simulationsystems.csf.distsys.adapters.api.jade.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.api.DistSysRunGroupContext;
 import org.simulationsystems.csf.distsys.api.DistributedSystemAPI;
@@ -118,8 +118,8 @@ public class JADE_MAS_AdapterAPI {
 	 * @see mapSimulationSideAgent
 	 */
 	@SuppressWarnings("unused")
-	private void assignJadeAgentsToDistributedAutonomousAgents(Set<MockJADE_Agent> jadeAgents, JADE_MAS_RunContext jADE_MAS_RunContext) {
-		for (MockJADE_Agent jadeAgent : jadeAgents) {
+	private void assignJadeAgentsToDistributedAutonomousAgents(Set<MockHumanJADE_Agent> jadeAgents, JADE_MAS_RunContext jADE_MAS_RunContext) {
+		for (MockHumanJADE_Agent jadeAgent : jadeAgents) {
 			assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jADE_MAS_RunContext);
 		}
 	}
@@ -135,7 +135,7 @@ public class JADE_MAS_AdapterAPI {
 	 * 
 	 * @see mapSimulationSideAgents
 	 */
-	private void assignJadeAgentToDistributedAutonomousAgent(MockJADE_Agent jadeAgent, JADE_MAS_RunContext jADE_MAS_RunContext) {
+	private void assignJadeAgentToDistributedAutonomousAgent(MockHumanJADE_Agent jadeAgent, JADE_MAS_RunContext jADE_MAS_RunContext) {
 		distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent, jADE_MAS_RunContext.getDistSysRunContext());
 	}
 

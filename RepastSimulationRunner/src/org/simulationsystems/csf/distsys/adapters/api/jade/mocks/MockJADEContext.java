@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MockJADEContext {
-	private Set<MockJADE_Agent> mockJADE_Agents = new HashSet<MockJADE_Agent>();
+	private Set<MockHumanJADE_Agent> mockHumanJADE_Agents = new HashSet<MockHumanJADE_Agent>();
 	
-	public void addAgent(MockJADE_Agent mockJADE_Agent) {
-		mockJADE_Agents.add(mockJADE_Agent);
+	public void addAgent(MockHumanJADE_Agent mockHumanJADE_Agent) {
+		mockHumanJADE_Agents.add(mockHumanJADE_Agent);
 	}
-	public Set<MockJADE_Agent> getMockJADE_Agents() {
-		return mockJADE_Agents;
+	public Set<MockHumanJADE_Agent> getMockJADE_Agents() {
+		return mockHumanJADE_Agents;
 	}
 	
 	

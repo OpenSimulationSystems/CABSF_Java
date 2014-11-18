@@ -1,10 +1,12 @@
 package org.simulationsystems.csf.common.internal.messaging.dao;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
-public interface DistributedAgentDao {
+public interface CommonMessagingDao {
 	
 	public void sendMessagesToDistributedAgents(SimulationRunContext simulationRunContext, FrameworkMessage frameworkMessage,
 			DistributedSystem distributedSystem);
@@ -14,4 +16,6 @@ public interface DistributedAgentDao {
 	public void closeInterface();
 
 	public void listenForCommandsFromSimulationAdministrator(String clientID);
+
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID);
 }

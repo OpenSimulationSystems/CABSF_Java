@@ -3,6 +3,7 @@ package org.simulationsystems.csf.distsys.adapters.api.jade;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.api.DistSysRunContext;
@@ -73,9 +74,10 @@ public class JADE_MAS_RunContext {
 		distSysRunContext.messageSimulationEngine(frameworkMessage);
 	}
 	
-	public void listenForCommandsFromSimulationAdministrator(
-			SimulationRunContext simulationRunContext) {
-		distSysRunContext.listenForCommandsFromSimulationAdministrator();
+	
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(
+			) {
+		return getDistSysRunContext().listenForCommandsFromSimulationEngine();
 	}
 	
 	public void closeInterface(DistSysRunContext distSysRunContext) {

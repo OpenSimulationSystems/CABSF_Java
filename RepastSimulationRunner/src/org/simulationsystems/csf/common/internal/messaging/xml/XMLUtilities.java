@@ -20,6 +20,7 @@ import org.jdom2.xpath.XPathFactory;
 import org.xml.sax.InputSource;
 
 public class XMLUtilities {
+
 	/*
 	 * @throws IOException
 	 * 
@@ -56,7 +57,21 @@ public class XMLUtilities {
 
 	}
 
-	static public List<? extends Content> executeXPath(Document document, String xpathStr, String namespace, Filter<? extends Content> filter) {
+	/*
+	 * @throws IOException
+	 * 
+	 * @throws JDOMException
+	 */
+	static public org.jdom2.Document xmlStringTojdom2Document(String xmlString)
+			throws JDOMException, IOException {
+		SAXBuilder sb = new SAXBuilder();
+		Document document = sb.build(xmlString);
+		return document;
+
+	}
+
+	static public List<? extends Content> executeXPath(Document document, String xpathStr,
+			String namespace, Filter<? extends Content> filter) {
 		XPathFactory xpathFactory = XPathFactory.instance();
 		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
 
@@ -64,11 +79,12 @@ public class XMLUtilities {
 				Namespace.getNamespace("x", namespace));
 
 		List<? extends Content> xPathSearchedNodes = expr.evaluate(document);
-		
+
 		return xPathSearchedNodes;
-/*		for (int i = 0; i < xPathSearchedNodes.size(); i++) {
-			Content content = xPathSearchedNodes.get(i);
-			System.out.println("content: " + i + ": " + content.getValue());
-		}*/
+		/*
+		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content =
+		 * xPathSearchedNodes.get(i); System.out.println("content: " + i + ": " +
+		 * content.getValue()); }
+		 */
 	}
 }

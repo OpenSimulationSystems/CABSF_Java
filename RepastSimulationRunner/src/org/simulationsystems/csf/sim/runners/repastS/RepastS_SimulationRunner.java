@@ -2,9 +2,10 @@ package org.simulationsystems.csf.sim.runners.repastS;
 
 import java.io.File;
 
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToDistributedSystemImpl;
+import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToPushImpl;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunGroupContext;
@@ -129,17 +130,19 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			// Fix after expanding to support multiple distributed systems.
 			System.out.println(repastS_SimulationRunContext
 					.getSimulationDistributedSystemManagers().iterator().next().logHelper());
-			
-			// Do this manually now from the Redis command line.
+
+			// Wait for the command from the simulation administrator
+			repastS_SimulationRunContext
+					.listenForCommandsFromSimulationAdministrator();
+
 			// Message the distributed systems that the simulation has started and is ready to
 			// accept messages from the distributed agents.
-			FrameworkMessage msg = new FrameworkMessageToDistributedSystemImpl(
+			FrameworkMessage msg = new FrameworkMessageToPushImpl(SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 					repastS_SimulationRunContext.getSimulationRunContext()
 							.getSimulationRunGroupContext().getCachedMessageExchangeTemplate());
-
-			 msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
-			 repastS_SimulationRunContext.messageDistributedSystems(msg,
-			 repastS_SimulationRunContext.getSimulationRunContext());
+			msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
+			repastS_SimulationRunContext.messageDistributedSystems(msg,
+					repastS_SimulationRunContext.getSimulationRunContext());
 
 			// FIXME
 			repastS_SimulationRunContext.closeInterface(repastS_SimulationRunContext

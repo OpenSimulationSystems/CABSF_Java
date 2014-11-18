@@ -86,9 +86,8 @@ public class RepastS_SimulationRunContext {
 		simulationRunContext.messageDistributedSystems(frameworkMessage);
 	}
 	
-	public void listenForCommandsFromSimulationAdministrator(
-			SimulationRunContext simulationRunContext) {
-		simulationRunContext.listenForCommandsFromSimulationAdministrator();
+	public void listenForCommandsFromSimulationAdministrator() {
+		getSimulationRunContext().listenForCommandsFromSimulationAdministrator();
 	}
 	
 	public void closeInterface(SimulationRunContext simulationRunContext) {

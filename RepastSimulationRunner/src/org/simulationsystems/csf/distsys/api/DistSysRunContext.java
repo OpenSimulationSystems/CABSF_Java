@@ -8,6 +8,7 @@ package org.simulationsystems.csf.distsys.api;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunConfiguration;
@@ -106,8 +107,8 @@ public class DistSysRunContext {
 		distributedAgentsManager.closeInterface();
 	}
 
-	public void listenForCommandsFromSimulationAdministrator() {
-		simulationEngineManager.listenForCommandsFromSimulationAdministrator();
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine() {
+		return simulationEngineManager.listenForCommandsFromSimulationEngine();
 		
 	}
 }

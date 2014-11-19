@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
+
+</head><body>
+<h1><span style="font-weight: bold;">The Common
+Simulation Framework Installation Instructions</span></h1>
+Author: <a href="mailto:jcald1@gmail.com">Jorge Calderon</a><br>
+Release 0.1.TBD<br>
+11/18/2014<br>
+<h2>Requirements</h2>
+<ol>
+<li>JDK 1.7 recommended (TBD: determine minimum version
+supported)</li>
+<li><a href="http://repast.sourceforge.net/download.html">Repast
+Simphony (Java version)</a></li>
+<li>(Future, not needed with present version):<a href="http://jade.tilab.com/download/jade/"> JADE</a></li>
+<li><a href="http://redis.io/download">Redis</a></li>
+<li><a href="http://www.git-scm.com/downloads">git</a>
+to pull the code</li>
+</ol>
+<h2>Installation Instructions</h2>
+<ol>
+<li>Download and install Repast Simphony (Java Version), Redis,
+and
+git.<br>
+</li>
+<li>Download the Common Simulation Framework Code (To be moved
+to GitHub)</li>
+<ol>
+<li>Log on to code.seas.harvard.edu with your Harvard id.</li>
+<li>Clone this repository:
+git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
+<li>Go to the project page: <a href="https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis">https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis</a></li>
+<li>Copy the git URL and clone it on your local machine using
+this command: git clone
+git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
+</ol>
+<li>Install JZombies_Demo</li>
+<ol>
+<li>You can either install all of the sample simulations that
+come with Repast Simphony, or you can use the JZombies_Demo that is in
+the CSF repository. &nbsp;If using the CSF repository version,
+follow these steps.</li>
+<ol>
+<li>File-New-Repast Simphony Project, unselect "Use default
+location", and select the location of JZombies_Demo from the local repo.</li>
+<li>Click the down arrow next to the green "Run" button.
+&nbsp;Verify that Repast Simphony/Eclipse has created a run
+configuration for this simulation.</li>
+<li>Click the simulation in the drop down list
+for&nbsp;JZombies_Demo.</li>
+<li>If you see an error such as "WARNING: Could not
+open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002.
+Windows RegCreateKeyEx(...) returned error code 5." in the eclipse
+console window, you can implement the fix described <a href="http://stackoverflow.com/questions/16428098/groovy-shell-warning-could-not-open-create-prefs-root-node">here</a>,
+but is not necessary.&nbsp;</li>
+<li>Make sure that the simulation runs. &nbsp;The
+Repast "<a href="http://repast.sourceforge.net/docs.php">Getting
+Started guide</a>" is a great place to start for learning Repast.
+&nbsp;Even if you don't plan to create your own simulations, browse
+through the instructions so you learn&nbsp; the directory
+structure, parameters, and the GUI.</li>
+</ol>
+</ol>
+<li>Open Repast Simphony (Eclipse) and create a separate new
+Java
+Project for these projects under the cloned local repo (File-New-Java
+Project), unselect "Use default location", browse to each directory in
+the list below:</li>
+<ol>
+<li>RepastSimulationRunner</li>
+<li>CSF_JADE_Controller_Agent</li>
+<span style="text-decoration: underline;">NOTE</span>:
+&nbsp;The CSF_JADE_Controller_Agent will become a become a
+JADE agent in the future. For now, it is a standalone Java program that
+holds mock Human agents for teh simulation.<br>
+</ol>
+</ol>
+<h2>Simulation Execution</h2><ol><li>RepastSimulationRunner
+programmatically runs the Repast Simphony simulation. &nbsp;Select the
+down arrow by the run button and click on "Run Configurations"</li><li>Create a new Java Application configuration. &nbsp;Select &nbsp;the RepastSimulationRunner
+project, and
+"org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunnerMain"
+for the main class.</li><li>Click on arguments, and add the location of
+your JZombies.rs directory followed by a space and then any text. The
+text is a placeholder for the CSF configuration file to be read in the
+future. If this text isn't specified,&nbsp;RepastSimulationRunner will
+run the simulation programmatically without any of the CSF
+functionality. &nbsp;Click "Apply" and then close the window.</li><li>Right click on the RepastSimulationRunner project-Build Path-Projects, and select the JZombies project.&nbsp;</li><li>Click on the libraries tab, Add External JARs, and select the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins </span>directory.</li><li>Add all of the External JARS in the following directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Click "OK".</li><li>Run the&nbsp;RepastSimulationRunner
+run configuration . &nbsp;You should see that it is polling the Redis
+in-memory cache for &nbsp;commands from you, the simulation
+administrator.</li><li>Navigate to the launchers folder and double click on "startSimulation.bat". &nbsp;You should see that the RepastSimulationRunner, using the Simulation side of the CSF begins to process the simulation.</li></ol>
+</body></html>

@@ -63,6 +63,7 @@ public class RedisConnectionManager {
 			if (value == null) {
 				try {
 					// System.out.println("sleeping: " + sleepTime * 1000);
+					//TODO: make the time configurable?
 					Thread.sleep(sleepTime * 1000);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt(); // set interrupt flag

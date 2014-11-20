@@ -2,9 +2,9 @@ package org.simulationsystems.csf.common.internal.messaging.bridge.implementatio
 
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.dao.CommonMessagingDao;
 import org.simulationsystems.csf.common.internal.messaging.dao.RedisDaoImpl;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
@@ -33,9 +33,11 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 	}
 
 	@Override
-	public void initializeSimulationFrameworkCommonMessagingInterface(String messagingConnectionString) {
-		commonMessagingDao.initializeSimulationFrameworkCommonMessagingInterface(messagingConnectionString);
-		
+	public void initializeSimulationFrameworkCommonMessagingInterface(
+			String messagingConnectionString) {
+		commonMessagingDao
+				.initializeSimulationFrameworkCommonMessagingInterface(messagingConnectionString);
+
 	}
 
 	@Override
@@ -46,13 +48,14 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 	@Override
 	public void listenForCommandsFromSimulationAdministrator(String clientID) {
 		commonMessagingDao.listenForCommandsFromSimulationAdministrator(clientID);
-		
+
 	}
-	
+
 	@Override
-	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType,
+			String clientID) {
 		return commonMessagingDao.listenForCommandsFromSimulationEngine(targetSystemType, clientID);
-		
+
 	};
 
 }

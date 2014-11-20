@@ -15,6 +15,8 @@ import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 import org.xml.sax.InputSource;
@@ -86,5 +88,16 @@ public class XMLUtilities {
 		 * xPathSearchedNodes.get(i); System.out.println("content: " + i + ": " +
 		 * content.getValue()); }
 		 */
+	}
+	
+	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
+		XMLOutputter outputter=null;
+		if (prettyPrint)
+			outputter = new XMLOutputter(Format.getPrettyFormat());
+		else
+			outputter = new XMLOutputter();
+		String xmlString = outputter.outputString(document);
+        return xmlString;
+
 	}
 }

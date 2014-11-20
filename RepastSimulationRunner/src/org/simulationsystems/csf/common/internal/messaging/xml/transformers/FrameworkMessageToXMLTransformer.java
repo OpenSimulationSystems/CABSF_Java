@@ -6,9 +6,9 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filter;
 import org.jdom2.output.XMLOutputter;
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
-import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 
 /*
@@ -18,16 +18,19 @@ public class FrameworkMessageToXMLTransformer {
 	private Document newMessage;
 	
 	public String frameworkMessageToXMLString(FrameworkMessage frameworkMessage,
-			Document csfMessageExchangeTemplateDocument) {
+			Document csfMessageExchangeTemplateDocument, boolean prettyPrint) {
 		this.newMessage = csfMessageExchangeTemplateDocument.clone();
 		
 		//TODO: Add constructor argument?
 		setCommand(frameworkMessage.getFrameworkToDistributedSystemCommand());
 		
-		return new XMLOutputter().outputString(newMessage);
+		if (prettyPrint)
+			return new XMLOutputter().outputString(newMessage);
+		else
+			return frameworkMessage.toPrettyPrintedXMLString();
 	}
 	
-	private void setCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND command) {
+	private void setCommand(FRAMEWORK_COMMAND command) {
 		Filter<Element> filter = new org.jdom2.filter.ElementFilter();
 		
 		@SuppressWarnings("unchecked")

@@ -2,10 +2,10 @@ package org.simulationsystems.csf.sim.runners.repastS;
 
 import java.io.File;
 
+import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
-import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToPushImpl;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunGroupContext;
@@ -137,10 +137,10 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 			// Message the distributed systems that the simulation has started and is ready to
 			// accept messages from the distributed agents.
-			FrameworkMessage msg = new FrameworkMessageToPushImpl(SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+			FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 					repastS_SimulationRunContext.getSimulationRunContext()
 							.getSimulationRunGroupContext().getCachedMessageExchangeTemplate());
-			msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND.SIMULATION_RUN_STARTED);
+			msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
 			repastS_SimulationRunContext.messageDistributedSystems(msg,
 					repastS_SimulationRunContext.getSimulationRunContext());
 

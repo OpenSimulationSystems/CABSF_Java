@@ -3,9 +3,7 @@ package org.simulationsystems.csf.sim.runners.repastS;
 import java.io.File;
 import java.util.Set;
 
-import org.simulationsystems.csf.common.internal.messaging.messages.FRAMEWORK_TO_DISTRIBUTEDSYSTEM_COMMAND;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToPushImpl;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;

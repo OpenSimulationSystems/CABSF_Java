@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;

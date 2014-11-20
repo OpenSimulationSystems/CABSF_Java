@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jdom2.JDOMException;
-import org.simulationsystems.csf.common.csfmodel.CsfSimulationInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationInitializationRuntimeException;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunConfiguration;

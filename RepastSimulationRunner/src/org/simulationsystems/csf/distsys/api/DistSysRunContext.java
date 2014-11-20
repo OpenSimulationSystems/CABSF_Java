@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunConfiguration;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
 import org.simulationsystems.csf.distsys.api.distributedautonomousagents.DistributedAgentsManager;

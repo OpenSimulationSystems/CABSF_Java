@@ -3,13 +3,12 @@ package org.simulationsystems.csf.common.internal.messaging.dao;
 import java.util.UUID;
 
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
-import org.simulationsystems.csf.common.csfmodel.CsfSimulationMessagingRuntimeException;
-import org.simulationsystems.csf.common.csfmodel.CsfSimulationCheckedException;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationCheckedException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationMessagingRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToPushImpl;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessageToPullImpl;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
@@ -116,7 +115,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, redisChannelStr, 1l, null);
 		FrameworkMessage fm = null;
 		try {
-			fm = new FrameworkMessageToPullImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+			fm = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 					SYSTEM_TYPE.DISTRIBUTED_SYSTEM, messageXML);
 		} catch (CsfSimulationCheckedException e) {
 			throw new CsfSimulationMessagingRuntimeException(e);

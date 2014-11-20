@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
-import org.simulationsystems.csf.common.internal.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;

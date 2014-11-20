@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title></head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
+
+</head>
 <body>
 <h1><span style="font-weight: bold;">The Common
 Simulation Framework Installation Instructions</span></h1>
@@ -18,6 +20,12 @@ Simphony (Java version)</a></li>
 <li><a href="http://www.git-scm.com/downloads">git</a>
 to pull the code</li>
 </ol>
+It is possible run the Common Simulation Framework without the full
+Repast Simphony IDE, either using the command line or with a general
+Eclipse distribution. However, the instructions here assume that the
+Repast Simphony customization of the eclipse IDE will be used to run
+the Common Simulation framework, the distributed systems (Multi-agent
+systems) and distributed agent models.<br>
 <h2>Installation Instructions</h2>
 <ol>
 <li>Download and install Repast Simphony (Java Version), Redis,
@@ -38,16 +46,20 @@ git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
 <li>Install <span style="font-weight: bold;">JZombies_CSF_Demo</span></li>
 <ol>
 <li>While this simulation comes with the Repast samples
-(File-Import-Repast Simphony-Import Repast Example Models), the CSF version is needed as it includes code to connect to the CSF.
+(File-Import-Repast Simphony-Import Repast Example Models), the CSF
+version is needed as it includes code to connect to the CSF.
 &nbsp;The name of the project/directory is JZombies_CSF_Demo.</li>
 <ol>
-
-<li>File-Import-New-Java Project-Unselect Default location-Select the JZombies_CSF_Demo<span style="font-weight: bold;"> </span>project-Next-Finish</li>
-
+<li>File-Import-New-Java Project-Unselect Default
+location-Select the JZombies_CSF_Demo<span style="font-weight: bold;">
+</span>project-Next-Finish</li>
 <li>Click the down arrow next to the green "Run" button.
 &nbsp;Verify that Repast Simphony/Eclipse has created a run
-configuration for&nbsp; <span style="font-weight: bold;">JZombies_CSF_Demo </span>simulation.</li>
-<li>Right click on the project name on the left side, Repast Simphony, Add Repast Simphony Nature.</li><li>Click the simulation in the drop down list
+configuration for&nbsp; <span style="font-weight: bold;">JZombies_CSF_Demo
+</span>simulation.</li>
+<li>Right click on the project name on the left side,
+Repast Simphony, Add Repast Simphony Nature.</li>
+<li>Click the simulation in the drop down list
 for JZombies_CSF_Demo.</li>
 <li>If you see an error when using Windows, such as
 "WARNING: Could not
@@ -55,10 +67,11 @@ open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002.
 Windows RegCreateKeyEx(...) returned error code 5." in the eclipse
 console window, you can implement the fix described <a href="http://stackoverflow.com/questions/16428098/groovy-shell-warning-could-not-open-create-prefs-root-node">here</a>,
 but is not necessary.&nbsp;</li>
-<li>The Repast GUI should pop up after a few seconds.</li><li>Run the
-simulation by clicking on the blue run button. &nbsp;You should see the
-image on the right of zombies catching humans. &nbsp;The ticks should
-increment by 1s.</li><li>The
+<li>The Repast GUI should pop up after a few seconds.</li>
+<li>Run the simulation by clicking on the blue run button.
+&nbsp;You should see the image on the right of zombies catching
+humans. &nbsp;The ticks should increment by 1s.</li>
+<li>The
 Repast "<a href="http://repast.sourceforge.net/docs.php">Getting
 Started guide</a>" is a great place to start for learning Repast.
 &nbsp;Even if you don't plan to create your own simulations, browse
@@ -73,6 +86,9 @@ Project), unselect "Use default location", browse to each directory in
 the list below.&nbsp;</li>
 <ol>
 <li>RepastSimulationRunner</li>
+<ol>
+<li>Create a new Java Proejct for RepastSimulationRunner.</li>
+</ol>
 <li>CSF_JADE_Controller_Agent</li>
 <span style="text-decoration: underline;">NOTE</span>:
 &nbsp;The CSF_JADE_Controller_Agent will become a become a
@@ -80,44 +96,45 @@ JADE agent in the future. For now, it is a standalone Java program that
 holds mock Human agents for the simulation.
 <br>
 </ol>
-<li>test</li><ol>
-
+<li>Right click on the RepastSimulationRunner project-Build
+Path-Projects, and select the&nbsp;JZombies_CSF_Demo project.&nbsp;</li><li>Click on the libraries tab, Add External JARs, and select
+the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins
+</span>directory.</li><li>Add all of the External JARS in the following
+directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Click "OK".</li><li>Open
+the launchers folder, right click on RepastSimulationRunner -
+CSF.launch, right click on "Run As", click "RepastSimulationRunner -
+CSF.launch"
+. &nbsp;Next time you should see it in the drop down next to the run
+button.
+&nbsp;You should see an error message initially as Redis has not been
+started. &nbsp;The configuration in eclilpse is now complete.</li>
+<ol>
 </ol>
 </ol>
 <h2>Simulation Execution</h2>
-<ol>
-<li>RepastSimulationRunner
-programmatically runs the Repast Simphony simulation. &nbsp;Select
-the
-down arrow by the run button and click on "Run Configurations"</li>
-<li>Create a new Java Application configuration.
-&nbsp;Select &nbsp;the RepastSimulationRunner
-project, and
-"org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunnerMain"
-for the main class.</li>
-<li>Click on arguments, and add the location of
-your JZombies.rs directory followed by a space and then any text. The
-text is a placeholder for the CSF configuration file to be read in the
-future. If this text isn't specified,&nbsp;RepastSimulationRunner
-will
-run the simulation programmatically without any of the CSF
-functionality. &nbsp;Click "Apply" and then close the window.</li>
-<li>Right click on the RepastSimulationRunner project-Build
-Path-Projects, and select the JZombies project.&nbsp;</li>
-<li>Click on the libraries tab, Add External JARs, and select
-the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins
-</span>directory.</li>
-<li>Add all of the External JARS in the following
-directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li>
-<li>Click "OK".</li>
-<li>Run the&nbsp;RepastSimulationRunner
-run configuration . &nbsp;You should see that it is polling the
-Redis
-in-memory cache for &nbsp;commands from you, the simulation
-administrator.</li>
-<li>Navigate to the launchers folder and double click on
-"startSimulation.bat". &nbsp;You should see that the
+<ol><li><span style="font-weight: bold;">Start up all of the Processes</span></li><ol><li>Start the Redis server by opening the launcher folder and double clicking on "redis-server". &nbsp; If
+it opens as a text file, right click it, open with, default editor.
+&nbsp; (TODO: Create another version for Linux/MacOS for each of these
+files).&nbsp;Keep a separate
+terminal window open for Redis and watch for error messages.
+&nbsp;Alternatively, in Windows, Redis can be installed as a service. </li><li>Optionally,
+run a separate terminal window for the redis command line "redis-cli".
+&nbsp;This allows you to inspect messages. &nbsp;For example, if you
+shut down or pause the distributed system(s), you can checkto see what message the simulation engine (Repast) is trying to send those systems. </li><ol><li>Useful
+commands include "KEYS *" to see all messages, "lpop thechannelname" to
+pop a value from the list. &nbsp;Note, that these messaging structures
+may be changed in the future to apublish/subscribe model, which would require a different command to read the messages. </li></ol><li>Navigate to the launchers folder and double click on
+"startSimulation.bat". &nbsp; You should see that the
 RepastSimulationRunner, using the Simulation side of the CSF begins to
-process the simulation.</li>
+process the simulation.</li><li>Click on the drop down next to the run button and select RepastSimulationRunner - CSF. &nbsp;You should see in the console that the Common Simulation Framework is polling the
+Redis
+in-memory cache for commands from you, the simulation administrator.</li><li>Start up the distributed system(s)</li></ol>
+<li style="font-weight: bold;">Kick off the Simulation</li><ol><li>All
+of the processes are running now. &nbsp;The distributed system(s) are
+waiting on the simulation engine and as mentioned already, the
+simulation engine is waiting on you, the simulation administrator.</li><li>Start
+the simulation run(s) by ipassing a START_SIMULATION command to the
+simulation engine. &nbsp;Double click on startSimulationRuns.bat to do
+so.</li><li>If you terminate the simulation early, make sure to flush the Redis cache by clicking on flushRedisCache.bat. &nbsp;</li></ol>
 </ol>
 </body></html>

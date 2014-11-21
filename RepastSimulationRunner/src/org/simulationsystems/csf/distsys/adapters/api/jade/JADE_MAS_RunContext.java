@@ -3,6 +3,7 @@ package org.simulationsystems.csf.distsys.adapters.api.jade;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
@@ -26,7 +27,7 @@ import repast.simphony.context.Context;
 public class JADE_MAS_RunContext {
 	private DistSysRunContext distSysRunContext;
 	Object jade_ContextForThisRun;
-	
+
 	public DistSysRunContext getDistSysRunContext() {
 		return distSysRunContext;
 	}
@@ -68,18 +69,23 @@ public class JADE_MAS_RunContext {
 		return jade_ContextForThisRun;
 	}
 
+	/*
+	 * Convenience method to get the cached messgae exchange template
+	 */
+	public Document getCachedMessageExchangeTemplate() {
+		return this.getDistSysRunContext().getDistSysRunGroupContext()
+				.getCachedMessageExchangeTemplate();
+	}
 
 	public void messageSimulationEngine(FrameworkMessage frameworkMessage,
 			DistSysRunContext distSysRunContext) {
 		distSysRunContext.messageSimulationEngine(frameworkMessage);
 	}
-	
-	
-	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(
-			) {
+
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine() {
 		return getDistSysRunContext().listenForCommandsFromSimulationEngine();
 	}
-	
+
 	public void closeInterface(DistSysRunContext distSysRunContext) {
 		distSysRunContext.closeInterface();
 	}

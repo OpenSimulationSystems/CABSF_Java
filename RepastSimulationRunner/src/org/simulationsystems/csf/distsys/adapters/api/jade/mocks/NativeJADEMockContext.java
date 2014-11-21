@@ -3,7 +3,7 @@ package org.simulationsystems.csf.distsys.adapters.api.jade.mocks;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MockJADEContext {
+public class NativeJADEMockContext {
 	private Set<MockHumanJADE_Agent> mockHumanJADE_Agents = new HashSet<MockHumanJADE_Agent>();
 	
 	public void addAgent(MockHumanJADE_Agent mockHumanJADE_Agent) {

@@ -1,16 +1,15 @@
 package org.simulationsystems.csf.common.csfmodel.messaging.messages;
 
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
-import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 
 /*
  * A message from the framework or to the framework.
  */
 public interface FrameworkMessage {
 	
-	public String transformToCommonMessagingXMLString(DistributedSystem distributedSystem);
+	public String transformToCommonMessagingXMLString(boolean prettyPrint);
 
-	void setFrameworkToDistributedSystemCommand(
+	void setFrameworkCommandToDistSysInDocument(
 			FRAMEWORK_COMMAND frameworkToDistributedSystemCommand);
 
 	FRAMEWORK_COMMAND getFrameworkToDistributedSystemCommand();
@@ -18,4 +17,6 @@ public interface FrameworkMessage {
 	FRAMEWORK_COMMAND getFrameworkCommand();
 
 	String toPrettyPrintedXMLString();
+
+	public void setStatus(STATUS readyToStartSimulation);
 }

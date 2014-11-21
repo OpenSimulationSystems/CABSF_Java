@@ -31,6 +31,14 @@ public class RepastS_SimulationRunContext {
 	public SimulationRunContext getSimulationRunContext() {
 		return simulationRunContext;
 	}
+	
+	/*
+	 * Convenience method to get the cached messgae exchange template
+	 */
+	public Document getCachedMessageExchangeTemplate() {
+		return this.getSimulationRunContext()
+		.getSimulationRunGroupContext().getCachedMessageExchangeTemplate();
+	}
 
 	/*
 	 * Use the other constructor

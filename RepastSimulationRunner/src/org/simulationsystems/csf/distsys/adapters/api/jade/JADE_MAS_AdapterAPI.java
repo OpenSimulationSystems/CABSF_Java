@@ -3,7 +3,7 @@ package org.simulationsystems.csf.distsys.adapters.api.jade;
 import java.io.IOException;
 import java.util.Set;
 
-import org.simulationsystems.csf.distsys.adapters.api.jade.mocks.MockJADEContext;
+import org.simulationsystems.csf.distsys.adapters.api.jade.mocks.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.adapters.api.jade.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.api.DistSysRunGroupContext;
@@ -92,7 +92,7 @@ public class JADE_MAS_AdapterAPI {
 	 */
 	// TODO: Wait for all distributed agents to join. For now, all need to be running by the time
 	// that this agent receives the message that the simulation has started.
-	public JADE_MAS_RunContext initializeSimulationRun(MockJADEContext jadeContextForThisRun,
+	public JADE_MAS_RunContext initializeSimulationRun(NativeJADEMockContext jadeContextForThisRun,
 			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext) {
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI.initializeSimulationRun(

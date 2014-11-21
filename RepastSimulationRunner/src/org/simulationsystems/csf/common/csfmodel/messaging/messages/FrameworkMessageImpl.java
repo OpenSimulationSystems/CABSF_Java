@@ -10,7 +10,6 @@ import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationCheckedException;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.transformers.FrameworkMessageToXMLTransformer;
-import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 
 public class FrameworkMessageImpl implements FrameworkMessage {
 	private FRAMEWORK_COMMAND frameworkToDistributedSystemCommand;
@@ -19,6 +18,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	private SYSTEM_TYPE sourceSystemType;
 	private SYSTEM_TYPE targetSystemType;
 	private FRAMEWORK_COMMAND frameworkCommand;
+	private STATUS status;
 
 	@SuppressWarnings("unused")
 	private FrameworkMessageImpl() {
@@ -47,7 +47,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 */
 	public FrameworkMessageImpl(SYSTEM_TYPE sourceSystemType, SYSTEM_TYPE targetSystemType,
 			Document csfMessageExchangeTemplateDocument) {
-		this.document = csfMessageExchangeTemplateDocument;
+		this.document = csfMessageExchangeTemplateDocument.clone();
 
 		this.sourceSystemType = sourceSystemType;
 		this.targetSystemType = targetSystemType;
@@ -58,21 +58,17 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 * representation will not always be the version to be sent to the common messaging interface.
 	 * All transformations must be performed before this String representation reflects the version
 	 * to be sent to the common messaging interface.
-
 	 */
 	@Override
 	public String toPrettyPrintedXMLString() {
-		return MessagingUtilities.convertDocumentToXMLString(document, true);
+		return transformToCommonMessagingXMLString(true);
 
-	}
-	
-	public String toString() {
-		return MessagingUtilities.convertDocumentToXMLString(document, false);
 	}
 
 	@Override
-	public void setFrameworkToDistributedSystemCommand(
+	public void setFrameworkCommandToDistSysInDocument(
 			FRAMEWORK_COMMAND frameworkToDistributedSystemCommand) {
+		frameworkMessageTOXMLTransformer.setFrameworkCommandToDistSysInDocument(frameworkToDistributedSystemCommand);
 		this.frameworkToDistributedSystemCommand = frameworkToDistributedSystemCommand;
 	}
 
@@ -85,16 +81,23 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	public FRAMEWORK_COMMAND getFrameworkCommand() {
 		return frameworkCommand;
 	}
-	
+
 	@Override
-	public String transformToCommonMessagingXMLString(DistributedSystem distributedSystem) {
+	public String transformToCommonMessagingXMLString(boolean prettyPrint) {
 		// TODO: Mapping between agent IDs and UUIDs in this class?
 		// Message all of the agents in each each target distributed system
 		// for (UUID distributedSystemAgentUUID : distributedSystem.getDistributedAgentUUIDs()) {
 		// }
-		
-		//LOW: Drive the pretty print parameter from the configuration
-		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(this, document, true);
+
+		// LOW: Drive the pretty print parameter from the configuration
+		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(this, document,
+				prettyPrint);
 	}
-	
+
+	@Override
+	public void setStatus(STATUS status) {
+		this.status = status;
+		
+	}
+
 }

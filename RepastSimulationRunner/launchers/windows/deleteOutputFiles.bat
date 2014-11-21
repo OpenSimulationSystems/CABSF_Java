@@ -1,1 +1,1 @@
-rm ../ModelOutput*.*
+rm ./../ModelOutput*.*

@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
-
-</head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title></head>
 <body>
 <h1><span style="font-weight: bold;">The Common
 Simulation Framework Installation Instructions</span></h1>
@@ -12,19 +10,15 @@ Release 0.1.TBD<br>
 <h2>Requirements</h2>
 <ol>
 <li>JDK 1.7 recommended (TBD: determine minimum version
-supported)</li>
-<li><a href="http://repast.sourceforge.net/download.html">Repast
-Simphony (Java version)</a></li>
-<li>(Future, not needed with present version):<a href="http://jade.tilab.com/download/jade/"> JADE</a></li>
-<li><a href="http://redis.io/download">Redis</a></li>
-<li><a href="http://www.git-scm.com/downloads">git</a>
-to pull the code</li>
-</ol>
-It is possible run the Common Simulation Framework without the full
-Repast Simphony IDE, either using the command line or with a general
-Eclipse distribution. However, the instructions here assume that the
-Repast Simphony customization of the eclipse IDE will be used to run
-the Common Simulation framework, the distributed systems (Multi-agent
+supported)</li><li>Windows, MacOSX, or *nix (The instructions assume Windows for now)</li></ol>
+<h2>Third Party Software Downloads<br></h2>Download and install the following software<ol><li><a href="http://repast.sourceforge.net/download.html">Repast
+Simphony (Java version)</a></li><li>(Future, not needed with present version):<a href="http://jade.tilab.com/download/jade/"> JADE</a></li><li><a href="http://redis.io/download">Redis</a></li><li><a href="http://www.git-scm.com/downloads">git</a>
+to pull the code</li></ol>Add redis-server, redis-cli, and git to your environment path variable.<br><br>It
+is possible run the Common Simulation Framework without the full Repast
+Simphony IDE, either using the command line or with a general Eclipse
+distribution. However, the instructions here assume that the Repast
+Simphony customization of the eclipse IDE will be used to run the
+Common Simulation framework, the distributed systems (Multi-agent
 systems) and distributed agent models.<br>
 <h2>Installation Instructions</h2>
 <ol>
@@ -97,10 +91,10 @@ holds mock Human agents for the simulation.
 <br>
 </ol>
 <li>Right click on the RepastSimulationRunner project-Build
-Path-Projects, and select the&nbsp;JZombies_CSF_Demo project.&nbsp;</li><li>Click on the libraries tab, Add External JARs, and select
+Path-Projects, and select the&nbsp;JZombies_CSF_Demo project.</li><li>Click on the libraries tab, select add JARs, and select all of the JARs in the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Click on the libraries tab, Add External JARs, and select
 the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins
-</span>directory.</li><li>Add all of the External JARS in the following
-directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Click "OK".</li><li>Open
+</span>directory.</li><li>While still in the External JARs directory, select all of the JARs in the RepastSimulationRunner/lib directory.</li><li>Add all of the External JARS in the following
+directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Click "OK".</li><li>Right click on&nbsp;CSF_JADE_Controller_Agent, click on project-Build Path-Libraries. &nbsp;Select add External JARs, and select all of the JARs in the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Open
 the launchers folder, right click on RepastSimulationRunner -
 CSF.launch, right click on "Run As", click "RepastSimulationRunner -
 CSF.launch"
@@ -112,21 +106,28 @@ started. &nbsp;The configuration in eclilpse is now complete.</li>
 </ol>
 </ol>
 <h2>Simulation Execution</h2>
-<ol><li><span style="font-weight: bold;">Start up all of the Processes</span></li><ol><li>Start the Redis server by opening the launcher folder and double clicking on "redis-server". &nbsp; If
-it opens as a text file, right click it, open with, default editor.
-&nbsp; (TODO: Create another version for Linux/MacOS for each of these
-files).&nbsp;Keep a separate
+<ol><li><span style="font-weight: bold;">Start up all of the Processes</span></li><ol><li>Start
+the Redis server by opening the launcher folder, selecting the
+appropriate subfolder for your operating system, and double clicking on
+"redis-server". &nbsp; If it opens as a text file, right click it, open
+with, default editor. &nbsp; (TODO: Create another version for
+Linux/MacOS for each of these files).&nbsp;Keep a separate
 terminal window open for Redis and watch for error messages.
 &nbsp;Alternatively, in Windows, Redis can be installed as a service. </li><li>Optionally,
 run a separate terminal window for the redis command line "redis-cli".
 &nbsp;This allows you to inspect messages. &nbsp;For example, if you
-shut down or pause the distributed system(s), you can checkto see what message the simulation engine (Repast) is trying to send those systems. </li><ol><li>Useful
+shut down or pause the distributed system(s), you can checkto see what
+message the simulation engine (Repast) is trying to send those systems.
+</li><ol><li>Useful
 commands include "KEYS *" to see all messages, "lpop thechannelname" to
 pop a value from the list. &nbsp;Note, that these messaging structures
 may be changed in the future to apublish/subscribe model, which would require a different command to read the messages. </li></ol><li>Navigate to the launchers folder and double click on
 "startSimulation.bat". &nbsp; You should see that the
 RepastSimulationRunner, using the Simulation side of the CSF begins to
-process the simulation.</li><li>Click on the drop down next to the run button and select RepastSimulationRunner - CSF. &nbsp;You should see in the console that the Common Simulation Framework is polling the
+process the simulation.</li><li>Click
+on the drop down next to the run button and select
+RepastSimulationRunner - CSF. &nbsp;You should see in the console that
+the Common Simulation Framework is polling the
 Redis
 in-memory cache for commands from you, the simulation administrator.</li><li>Start up the distributed system(s)</li></ol>
 <li style="font-weight: bold;">Kick off the Simulation</li><ol><li>All

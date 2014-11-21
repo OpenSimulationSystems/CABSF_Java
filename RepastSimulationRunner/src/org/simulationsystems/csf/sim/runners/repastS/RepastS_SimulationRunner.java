@@ -132,24 +132,21 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 					.getSimulationDistributedSystemManagers().iterator().next().logHelper());
 
 			// Wait for the command from the simulation administrator
-			repastS_SimulationRunContext
-					.listenForCommandsFromSimulationAdministrator();
+			repastS_SimulationRunContext.listenForCommandsFromSimulationAdministrator();
 
 			// Message the distributed systems that the simulation has started and is ready to
 			// accept messages from the distributed agents.
-			FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-					repastS_SimulationRunContext.getSimulationRunContext()
-							.getSimulationRunGroupContext().getCachedMessageExchangeTemplate());
-			msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
+			FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+					SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+					repastS_SimulationRunContext.getCachedMessageExchangeTemplate());
+			msg.setFrameworkCommandToDistSysInDocument(FRAMEWORK_COMMAND.START_SIMULATION);
 			repastS_SimulationRunContext.messageDistributedSystems(msg,
 					repastS_SimulationRunContext.getSimulationRunContext());
 
 			// FIXME
 			repastS_SimulationRunContext.closeInterface(repastS_SimulationRunContext
 					.getSimulationRunContext());
-
 		}
-
 		return repastS_SimulationRunContext;
 	}
 

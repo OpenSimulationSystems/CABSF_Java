@@ -77,7 +77,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 		String redisChannelStr = createRedisChannelStr(SYSTEM_TYPE.SIMULATION_ENGINE,
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, distributedSystem.getDistributedSystemID());
 		redisConnectionManager.postMessage(redisChannelStr,
-				frameworkMessage.transformToCommonMessagingXMLString(distributedSystem));
+				frameworkMessage.transformToCommonMessagingXMLString(true));
 
 	}
 
@@ -105,8 +105,8 @@ public class RedisDaoImpl implements CommonMessagingDao {
 	}
 
 	@Override
-	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(
-			SYSTEM_TYPE targetSystemType, String clientID) {
+	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType,
+			String clientID) {
 		String redisChannelStr = createRedisChannelStr(SYSTEM_TYPE.SYSTEM_ADMINISTRATOR,
 				targetSystemType, clientID);
 

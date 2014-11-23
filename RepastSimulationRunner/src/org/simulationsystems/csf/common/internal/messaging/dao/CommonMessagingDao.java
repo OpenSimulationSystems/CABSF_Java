@@ -18,4 +18,6 @@ public interface CommonMessagingDao {
 	public void listenForCommandsFromSimulationAdministrator(String clientID);
 
 	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID);
+
+	void listenForCommandsFromDistributedSystem(String clientID);
 }

@@ -138,4 +138,22 @@ public class SimulationRunContext {
 		mgr.listenForCommandsFromSimulationAdministrator();
 		
 	}
+	
+	public void listenForCommandsFromDistributedSystem() {
+		// LOW: Fix for handling multiple distributed systems, Loop through all systems
+		SimulationDistributedSystemManager mgr = getSimulationDistributedSystemManagers()
+				.iterator().next();
+
+		mgr.listenForCommandsFromDistributedSystem();
+		
+	}
+	
+	public void listenForCommandsFromDistributedSystems() {
+		// LOW: Fix for handling multiple distributed systems, Loop through all systems
+		SimulationDistributedSystemManager mgr = getSimulationDistributedSystemManagers()
+				.iterator().next();
+
+		mgr.listenForCommandsFromDistributedSystem();
+		
+	}
 }

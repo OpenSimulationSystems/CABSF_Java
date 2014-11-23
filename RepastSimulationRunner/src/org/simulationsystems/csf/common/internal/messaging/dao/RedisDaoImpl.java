@@ -8,6 +8,7 @@ import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationChec
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationMessagingRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
+import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
@@ -94,12 +95,25 @@ public class RedisDaoImpl implements CommonMessagingDao {
 	}
 
 	@Override
+	//FIXME: Pass back the actual value and handle it upstream
 	public void listenForCommandsFromSimulationAdministrator(String clientID) {
 		String redisChannelStr = createRedisChannelStr(SYSTEM_TYPE.SYSTEM_ADMINISTRATOR,
 				SYSTEM_TYPE.SIMULATION_ENGINE, clientID);
 
 		// LOW: Improve performance, use publish/subscribe
 		redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE,
+				redisChannelStr, 1l, null);
+
+	}
+	
+	@Override
+	//FIXME: Pass back the actual value and handle it upstream
+	public void listenForCommandsFromDistributedSystem(String clientID) {
+		String redisChannelStr = createRedisChannelStr(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+				SYSTEM_TYPE.SIMULATION_ENGINE, clientID);
+
+		// LOW: Improve performance, use publish/subscribe
+		String xmlString = redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE,
 				redisChannelStr, 1l, null);
 
 	}

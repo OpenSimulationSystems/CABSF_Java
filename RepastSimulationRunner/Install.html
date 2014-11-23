@@ -44,10 +44,8 @@ git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
 version is needed as it includes code to connect to the CSF.
 &nbsp;The name of the project/directory is JZombies_CSF_Demo.</li>
 <ol>
-<li>File-Import-New-Java Project-Unselect Default
-location-Select the JZombies_CSF_Demo<span style="font-weight: bold;">
-</span>project-Next-Finish</li>
-<li>Click the down arrow next to the green "Run" button.
+<li>Temporarily rename the JZombies_CSF_Demo directory.</li><li>File-Import-New-Repast Simphony-Select your workspace folder-Add the JZombies_CSF_Demo<span style="font-weight: bold;"> </span>folder to the path and make it the project name-Next-Finish</li>
+<li>Copy the contents of your renamed  JZombies_CSF_Demo directory into the new directory</li><li>Delete the jZombies_CSF_Demo package directory, leaving only the "jzombies" package.</li><li>Right click on the project on the left side (package explorer) and click Refresh.</li><li>Click the down arrow next to the green "Run" button.
 &nbsp;Verify that Repast Simphony/Eclipse has created a run
 configuration for&nbsp; <span style="font-weight: bold;">JZombies_CSF_Demo
 </span>simulation.</li>
@@ -64,7 +62,7 @@ but is not necessary.&nbsp;</li>
 <li>The Repast GUI should pop up after a few seconds.</li>
 <li>Run the simulation by clicking on the blue run button.
 &nbsp;You should see the image on the right of zombies catching
-humans. &nbsp;The ticks should increment by 1s.</li>
+humans. &nbsp;The ticks should increment by 1s. &nbsp;You should be able to step one tick at a time.</li>
 <li>The
 Repast "<a href="http://repast.sourceforge.net/docs.php">Getting
 Started guide</a>" is a great place to start for learning Repast.
@@ -81,7 +79,7 @@ the list below.&nbsp;</li>
 <ol>
 <li>RepastSimulationRunner</li>
 <ol>
-<li>Create a new Java Proejct for RepastSimulationRunner.</li>
+<li>Create a new Java Project for RepastSimulationRunner.</li>
 </ol>
 <li>CSF_JADE_Controller_Agent</li>
 <span style="text-decoration: underline;">NOTE</span>:
@@ -91,17 +89,30 @@ holds mock Human agents for the simulation.
 <br>
 </ol>
 <li>Right click on the RepastSimulationRunner project-Build
-Path-Projects, and select the&nbsp;JZombies_CSF_Demo project.</li><li>Click on the libraries tab, select add JARs, and select all of the JARs in the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Click on the libraries tab, Add External JARs, and select
-the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins
-</span>directory.</li><li>While still in the External JARs directory, select all of the JARs in the RepastSimulationRunner/lib directory.</li><li>Add all of the External JARS in the following
-directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Click "OK".</li><li>Right click on&nbsp;CSF_JADE_Controller_Agent, click on project-Build Path-Libraries. &nbsp;Select add External JARs, and select all of the JARs in the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Open
+Path-Projects, and select the&nbsp;JZombies_CSF_Demo project.</li><li>Click
+on the libraries tab, select add JARs, and select all of the JARs in
+the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Click on the libraries tab, Add External JARs, and select
+the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.bin_and_src_2.1.0
+</span>directory.</li><li>Add all of the External JARS in the following
+directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Click "OK".</li><li>Click "Add JARs", select all of the JARs in the RepastSimulationRunner/lib directory.</li><li>Right
+click on&nbsp;CSF_JADE_Controller_Agent, click on project-Build
+Path-Libraries. &nbsp;Select add External JARs, and select all of the
+JARs in the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Open
 the launchers folder, right click on RepastSimulationRunner -
-CSF.launch, right click on "Run As", click "RepastSimulationRunner -
+CSF.launch, right click, open with Editor. &nbsp;Change the path to the simulation in simulation to your JZombies_Demo path.</li><li>Right click on the launcher file again,&nbsp;"Run As", click "RepastSimulationRunner -
 CSF.launch"
-. &nbsp;Next time you should see it in the drop down next to the run
-button.
-&nbsp;You should see an error message initially as Redis has not been
-started. &nbsp;The configuration in eclilpse is now complete.</li>
+. &nbsp;The simulation runner is executing now. &nbsp;Next time you should see it in the drop down next to the run
+button.</li><li>You should see an error message initially as Redis has not been
+started. &nbsp;The configuration in eclilpse is now complete.</li><li>Click on that drop down next to the green run, Run Configurations, select the "RepastSimulationRunner -
+CSF.launch button", select the Arguments tab. &nbsp;You should see the path to your JZombies_Demo diurectory.</li><li>The
+project will show some errors &nbsp;in the Junit tests (Java unit
+tests) due to missing Eclipse plugins/software. &nbsp;It is recommended
+that the following software be added to Eclipse to get rid of these
+errors and to make it easier to find your own errors:
+&nbsp;Help-Install New Software. &nbsp;In the "Work with" drop down,
+select Kepler (this is the verion of Eclipse), Select "Web, XML, Java
+EE, and OSGI Enterprise Development". &nbsp;Alternatively, you can look
+for just the individual missing components.</li><li>You are ready to start the simulation now.</li>
 <ol>
 </ol>
 </ol>
@@ -130,7 +141,7 @@ RepastSimulationRunner - CSF. &nbsp;You should see in the console that
 the Common Simulation Framework is polling the
 Redis
 in-memory cache for commands from you, the simulation administrator.</li><li>Start up the distributed system(s)</li></ol>
-<li style="font-weight: bold;">Kick off the Simulation</li><ol><li>All
+<li style="font-weight: bold;">Kick off the Simulation Run(s)</li><ol><li>All
 of the processes are running now. &nbsp;The distributed system(s) are
 waiting on the simulation engine and as mentioned already, the
 simulation engine is waiting on you, the simulation administrator.</li><li>Start

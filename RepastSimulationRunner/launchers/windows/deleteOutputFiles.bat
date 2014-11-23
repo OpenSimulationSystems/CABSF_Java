@@ -1,1 +1,3 @@
-rm ./../ModelOutput*.*
+cd %~dp0
+
+rm ../../ModelOutput*.*

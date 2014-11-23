@@ -98,6 +98,10 @@ public class RepastS_SimulationRunContext {
 		getSimulationRunContext().listenForCommandsFromSimulationAdministrator();
 	}
 	
+	public void listenForCommandsFromDistributedSystem() {
+		getSimulationRunContext().listenForCommandsFromDistributedSystem();
+	}
+	
 	public void closeInterface(SimulationRunContext simulationRunContext) {
 		simulationRunContext.closeInterface();
 	}

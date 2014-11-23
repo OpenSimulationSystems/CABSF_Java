@@ -50,7 +50,13 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 		commonMessagingDao.listenForCommandsFromSimulationAdministrator(clientID);
 
 	}
+	
+	@Override
+	public void listenForCommandsFromDistributedSystem(String clientID) {
+		commonMessagingDao.listenForCommandsFromDistributedSystem(clientID);
 
+	}
+	
 	@Override
 	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType,
 			String clientID) {

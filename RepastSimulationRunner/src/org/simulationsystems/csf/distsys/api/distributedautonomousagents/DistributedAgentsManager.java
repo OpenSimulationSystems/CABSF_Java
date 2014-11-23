@@ -201,6 +201,12 @@ public class DistributedAgentsManager {
 
 	}
 
+	public void listenForCommandsFromDistributedSystem(String clientID) {
+		commonMessagingAbstraction
+				.listenForCommandsFromDistributedSystem(clientID);
+
+	}
+	
 	public void closeInterface() {
 		commonMessagingAbstraction.closeInterface();
 	}

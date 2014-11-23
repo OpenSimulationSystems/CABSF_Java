@@ -39,6 +39,10 @@ public abstract class CommonMessagingAbstraction {
 		
 	};
 	
+	public void listenForCommandsFromDistributedSystem(String clientID) {
+		commonMessagingImplementationAPI.listenForCommandsFromDistributedSystem(clientID);
+		
+	};
 	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
 		return commonMessagingImplementationAPI.listenForCommandsFromSimulationEngine(targetSystemType, clientID);
 		

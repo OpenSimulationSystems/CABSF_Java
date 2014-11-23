@@ -22,4 +22,6 @@ public interface CommonMessagingImplementationAPI {
 	public void listenForCommandsFromSimulationAdministrator(String clientID);
 
 	FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID);
+
+	void listenForCommandsFromDistributedSystem(String clientID);
 }

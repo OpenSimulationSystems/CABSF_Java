@@ -200,5 +200,12 @@ public class SimulationDistributedSystemManager {
 						.getSimulationRunConfiguration().getSimulationEngineID());
 
 	}
+	
+	public void listenForCommandsFromDistributedSystem() {
+		// The target is this side of the framework (simulation engine)
+		commonMessagingAbstraction.listenForCommandsFromDistributedSystem(simulationRunContext
+						.getSimulationRunConfiguration().getSimulationEngineID());
+
+	}
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationAdapterAPI;
@@ -39,10 +40,21 @@ import simphony.util.messages.MessageCenter;
  */
 public class RepastS_SimulationRunner extends AbstractRunner {
 	private RepastS_SimulationAdapterAPI repastS_SimulationAdapterAPI;
-	private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
 
-	// NON_CSF_SIMULATION Run RepastS Programmatically without the Common Simulation Framework
-	// CSF_SIMULATION Run RepastS programmatically with the Common Simulation Framework
+	private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
+	private RepastS_SimulationRunContext lastRepastS_SimulationRunContext;
+
+	/*
+	 * The run group context is set upon the return of the load() function
+	 */
+	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
+		return repastS_SimulationRunGroupContext;
+	}
+
+	// NON_CSF_SIMULATION Run RepastS Programmatically without the Common
+	// Simulation Framework
+	// CSF_SIMULATION Run RepastS programmatically with the Common Simulation
+	// Framework
 	public enum SIMULATION_RUNNER_RUN_TYPE {
 		NON_CSF_SIMULATION, CSF_SIMULATION
 	}
@@ -68,32 +80,41 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		controller.setScheduleRunner(this);
 	}
 
-	public void load(File scenarioDir, String frameworkConfigurationFileName) throws Exception {
+	public void load(File scenarioDir, String frameworkConfigurationFileName)
+			throws Exception {
 		if (scenarioDir.exists()) {
 			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
 			controller.setControllerRegistry(registry);
 		} else {
-			msgCenter.error("Scenario not found", new IllegalArgumentException("Invalid scenario "
-					+ scenarioDir.getAbsolutePath()));
-			return;
+			msgCenter.error("Scenario not found", new IllegalArgumentException(
+					"Invalid scenario " + scenarioDir.getAbsolutePath()));
+			throw new CsfSimulationInitializationRuntimeException(
+					"Unable to initialize the simulation run.  Are you pointed to the right simulation configuration directory?  In Repast Simphony, it ends in .rs.  Tried using:  "
+							+ scenarioDir);
+			// return;
 		}
-
 		controller.batchInitialize();
 
 		// Set the Parameters across all simulation runs of this simulation
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters from the RunState?
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter("human_count", "Human Count", Number.class, 5, true);
-		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5, true);
+		defaultParameters.addParameter("human_count", "Human Count",
+				Number.class, 5, true);
+		defaultParameters.addParameter("zombie_count", "Zombie Count",
+				Number.class, 5, true);
 		controller.runParameterSetters(defaultParameters);
 
-		// If Common Framework configuration file is provided, initialize Common Framework
-		// otherwise run the simulation as a regular Repast simulation (programmatically).
+		// If Common Framework configuration file is provided, initialize Common
+		// Framework
+		// otherwise run the simulation as a regular Repast simulation
+		// (programmatically).
 		if (frameworkConfigurationFileName != null) {
-			// Call the concrete Adapter as this Adapter is only for Repast Simphony
-			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
+			// Call the concrete Adapter as this Adapter is only for Repast
+			// Simphony
+			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI
+					.getInstance();
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(frameworkConfigurationFileName);
 			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION;
@@ -106,53 +127,73 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	}
 
 	/*
-	 * Initializes a single simulation run. Called after the simulation and (if configured) Common
-	 * Simulation Framework are initialized.
+	 * Initializes a single simulation run. Called after the simulation and (if
+	 * configured) Common Simulation Framework are initialized.
 	 */
 	public RepastS_SimulationRunContext runInitialize() {
 		// Set the Seed Parameter for this simulation run
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
-				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1, true);
+		defaultParameters.addParameter(
+				ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
+				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME,
+				Number.class, 1, true);
 
 		controller.runInitialize(defaultParameters);
-		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
+		schedule = RunState.getInstance().getScheduleRegistry()
+				.getModelSchedule();
 
 		@SuppressWarnings("unchecked")
-		Context<Object> repastContextForThisRun = RunState.getInstance().getMasterContext();
+		Context<Object> repastContextForThisRun = RunState.getInstance()
+				.getMasterContext();
 
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION) {
-			repastS_SimulationRunContext = repastS_SimulationAdapterAPI.initializeSimulationRun(
-					repastContextForThisRun, repastS_SimulationRunGroupContext);
+			repastS_SimulationRunContext = repastS_SimulationAdapterAPI
+					.initializeSimulationRun(repastContextForThisRun,
+							repastS_SimulationRunGroupContext);
 			// Fix after expanding to support multiple distributed systems.
 			System.out.println(repastS_SimulationRunContext
-					.getSimulationDistributedSystemManagers().iterator().next().logHelper());
+					.getSimulationDistributedSystemManagers().iterator().next()
+					.logHelper());
 
 			// Wait for the command from the simulation administrator
-			repastS_SimulationRunContext.listenForCommandsFromSimulationAdministrator();
+			repastS_SimulationRunContext
+					.listenForCommandsFromSimulationAdministrator();
 
-			// Message the distributed systems that the simulation has started and is ready to
+			// Message the distributed systems that the simulation has started
+			// and is ready to
 			// accept messages from the distributed agents.
-			FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+			FrameworkMessage msg = new FrameworkMessageImpl(
+					SYSTEM_TYPE.SIMULATION_ENGINE,
 					SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-					repastS_SimulationRunContext.getCachedMessageExchangeTemplate());
+					repastS_SimulationRunContext
+							.getCachedMessageExchangeTemplate());
 			msg.setFrameworkCommandToDistSysInDocument(FRAMEWORK_COMMAND.START_SIMULATION);
 			repastS_SimulationRunContext.messageDistributedSystems(msg,
 					repastS_SimulationRunContext.getSimulationRunContext());
 
-			// FIXME
-			repastS_SimulationRunContext.closeInterface(repastS_SimulationRunContext
-					.getSimulationRunContext());
+			// Wait for distributed system to confirm that simulation is ready
+			// to begin
+			repastS_SimulationRunContext
+					.listenForCommandsFromDistributedSystem();
+
 		}
+		// TODO: Better handling for future multithreading. Set the interface at
+		// the run group
+		// level, close after all runs have executed.
+		lastRepastS_SimulationRunContext = repastS_SimulationRunContext;
 		return repastS_SimulationRunContext;
 	}
 
 	public void cleanUpRun() {
 		controller.runCleanup();
-		isStopped = false;
+		isStopped = false; // Clear this flag for the next simulation run
+		if (lastRepastS_SimulationRunContext != null) // if CSF run
+			lastRepastS_SimulationRunContext
+					.closeInterface(lastRepastS_SimulationRunContext
+							.getSimulationRunContext());
 	}
 
 	public void cleanUpBatch() {
@@ -161,8 +202,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	// returns the tick count of the next scheduled item
 	public double getNextScheduledTime() {
-		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule()).peekNextAction()
-				.getNextTime();
+		return ((Schedule) RunEnvironment.getInstance().getCurrentSchedule())
+				.peekNextAction().getNextTime();
 	}
 
 	// returns the number of model actions on the schedule

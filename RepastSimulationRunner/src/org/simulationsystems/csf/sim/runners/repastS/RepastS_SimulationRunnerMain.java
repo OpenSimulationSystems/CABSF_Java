@@ -85,7 +85,6 @@ public class RepastS_SimulationRunnerMain {
 				// Call stop() after the last step. One "end" action is left, so two extra
 				// iterations of this loop will occur instead of one extra one when the end is
 				// specified from within the Repast model.
-
 				if (max_ticks - tick == 0.0 && !repastS_SimulationRunner.getIsStopped()) {
 					repastS_SimulationRunner.stop();
 					System.out.println("Stopping");
@@ -102,6 +101,7 @@ public class RepastS_SimulationRunnerMain {
 			repastS_SimulationRunner.cleanUpRun();
 		}
 		repastS_SimulationRunner.cleanUpBatch(); // run after all runs complete
+
 	}
 
 	/*

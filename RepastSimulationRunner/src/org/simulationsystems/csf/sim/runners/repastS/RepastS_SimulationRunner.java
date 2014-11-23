@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
-import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationInitializationRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationAdapterAPI;
@@ -89,7 +89,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		} else {
 			msgCenter.error("Scenario not found", new IllegalArgumentException(
 					"Invalid scenario " + scenarioDir.getAbsolutePath()));
-			throw new CsfSimulationInitializationRuntimeException(
+			throw new CsfInitializationRuntimeException(
 					"Unable to initialize the simulation run.  Are you pointed to the right simulation configuration directory?  In Repast Simphony, it ends in .rs.  Tried using:  "
 							+ scenarioDir);
 			// return;

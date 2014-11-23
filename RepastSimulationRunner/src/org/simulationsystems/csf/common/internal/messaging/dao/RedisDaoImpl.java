@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
-import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationCheckedException;
-import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationMessagingRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfCheckedException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfMessagingRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
@@ -131,8 +131,8 @@ public class RedisDaoImpl implements CommonMessagingDao {
 		try {
 			fm = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 					SYSTEM_TYPE.DISTRIBUTED_SYSTEM, messageXML);
-		} catch (CsfSimulationCheckedException e) {
-			throw new CsfSimulationMessagingRuntimeException(e);
+		} catch (CsfCheckedException e) {
+			throw new CsfMessagingRuntimeException(e);
 		}
 
 		return fm.getFrameworkCommand();

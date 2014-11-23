@@ -7,19 +7,24 @@ import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
-import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfSimulationCheckedException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfCheckedException;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.transformers.FrameworkMessageToXMLTransformer;
 
 public class FrameworkMessageImpl implements FrameworkMessage {
 	private FRAMEWORK_COMMAND frameworkToDistributedSystemCommand;
-	private FrameworkMessageToXMLTransformer frameworkMessageTOXMLTransformer = new FrameworkMessageToXMLTransformer();
+	private FrameworkMessageToXMLTransformer frameworkMessageTOXMLTransformer = new FrameworkMessageToXMLTransformer(this);
 	private Document document;
 	private SYSTEM_TYPE sourceSystemType;
 	private SYSTEM_TYPE targetSystemType;
 	private FRAMEWORK_COMMAND frameworkCommand;
 	private STATUS status;
-
+	
+	@Override
+	public Document getDocument() {
+		return document;
+	}
+	
 	@SuppressWarnings("unused")
 	private FrameworkMessageImpl() {
 
@@ -29,13 +34,13 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 * Used for incoming messages. Pass in the XML String from the framework
 	 */
 	public FrameworkMessageImpl(SYSTEM_TYPE sourceSystemType, SYSTEM_TYPE targetSystemType,
-			String xmlString) throws CsfSimulationCheckedException {
+			String xmlString) throws CsfCheckedException {
 		super();
 		try {
 			this.document = MessagingUtilities.createDocumentFromString(xmlString);
 		} catch (JDOMException | IOException e) {
 			// TODO: Where to catch this?
-			throw new CsfSimulationCheckedException("Unable to parse the message XML", e);
+			throw new CsfCheckedException("Unable to parse the message XML", e);
 		}
 
 		this.sourceSystemType = sourceSystemType;
@@ -90,7 +95,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 		// }
 
 		// LOW: Drive the pretty print parameter from the configuration
-		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(this, document,
+		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(document,
 				prettyPrint);
 	}
 

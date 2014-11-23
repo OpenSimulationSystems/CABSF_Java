@@ -19,6 +19,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfRuntimeException;
 import org.xml.sax.InputSource;
 
 public class XMLUtilities {
@@ -47,7 +48,8 @@ public class XMLUtilities {
 			document = saxBuilder.build(inputStream);
 
 			Element root = document.getRootElement();
-			System.out.println("Succesfully loaded template file: " + root.getName());
+			System.out.println("Succesfully loaded template file: "
+					+ root.getName());
 		} finally {
 			if (inputStream != null)
 				inputStream.close();
@@ -72,32 +74,40 @@ public class XMLUtilities {
 
 	}
 
-	static public List<? extends Content> executeXPath(Document document, String xpathStr,
-			String namespace, Filter<? extends Content> filter) {
+	static public List<? extends Content> executeXPath(Document document,
+			String xpathStr, String namespace, Filter<? extends Content> filter) {
 		XPathFactory xpathFactory = XPathFactory.instance();
 		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
 
-		XPathExpression<? extends Content> expr = xpathFactory.compile(xpathStr, filter, null,
-				Namespace.getNamespace("x", namespace));
+		XPathExpression<? extends Content> expr = xpathFactory.compile(
+				xpathStr, filter, null, Namespace.getNamespace("x", namespace));
 
-		List<? extends Content> xPathSearchedNodes = expr.evaluate(document);
-
+		List<? extends Content> xPathSearchedNodes = null;
+		try {
+			xPathSearchedNodes = expr.evaluate(document);
+		}
+		// TODO: Add better handling for these kinds of exceptions
+		catch (Exception e) {
+			throw new CsfRuntimeException(
+					"Error in querying the message", e);
+		}
 		return xPathSearchedNodes;
 		/*
-		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content =
-		 * xPathSearchedNodes.get(i); System.out.println("content: " + i + ": " +
-		 * content.getValue()); }
+		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content
+		 * = xPathSearchedNodes.get(i); System.out.println("content: " + i +
+		 * ": " + content.getValue()); }
 		 */
 	}
-	
-	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
-		XMLOutputter outputter=null;
+
+	static public String convertDocumentToXMLString(Document document,
+			boolean prettyPrint) {
+		XMLOutputter outputter = null;
 		if (prettyPrint)
 			outputter = new XMLOutputter(Format.getPrettyFormat());
 		else
 			outputter = new XMLOutputter();
 		String xmlString = outputter.outputString(document);
-        return xmlString;
+		return xmlString;
 
 	}
 }

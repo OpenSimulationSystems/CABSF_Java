@@ -1,5 +1,6 @@
 package org.simulationsystems.csf.common.csfmodel.messaging.messages;
 
+import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 
 /*
@@ -19,4 +20,6 @@ public interface FrameworkMessage {
 	String toPrettyPrintedXMLString();
 
 	public void setStatus(STATUS readyToStartSimulation);
+
+	Document getDocument();
 }

@@ -92,15 +92,15 @@ public class JADE_MAS_AdapterAPI {
 	 */
 	// TODO: Wait for all distributed agents to join. For now, all need to be running by the time
 	// that this agent receives the message that the simulation has started.
-	public JADE_MAS_RunContext initializeSimulationRun(NativeJADEMockContext jadeContextForThisRun,
+	public JADE_MAS_RunContext initializeSimulationRun(NativeJADEMockContext nativeJadeContextForThisRun,
 			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext) {
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI.initializeSimulationRun(
-				jadeContextForThisRun, jade_MAS_RunGroupContext.getDistSysRunGroupContext());
+				nativeJadeContextForThisRun, jade_MAS_RunGroupContext.getDistSysRunGroupContext());
 
 		// User Decorator Pattern for JADE_DistSysRunContext
 		JADE_MAS_RunContext jADE_MAS_RunContext = new JADE_MAS_RunContext(distSysRunContext);
-		jADE_MAS_RunContext.setJadeContextForThisRun(jadeContextForThisRun);
+		jADE_MAS_RunContext.setJadeContextForThisRun(nativeJadeContextForThisRun);
 
 		// LOW: Support multiple Simulation Run Groups. For now just assume that there's one.
 		// LOW: Handle multiple distributed systems
@@ -109,7 +109,7 @@ public class JADE_MAS_AdapterAPI {
 
 
 
-		assignJadeAgentsToDistributedAutonomousAgents(jadeContextForThisRun.getMockJADE_Agents(), jADE_MAS_RunContext);
+		assignJadeAgentsToDistributedAutonomousAgents(nativeJadeContextForThisRun.getMockJADE_Agents(), jADE_MAS_RunContext);
 
 		return jADE_MAS_RunContext;
 	}

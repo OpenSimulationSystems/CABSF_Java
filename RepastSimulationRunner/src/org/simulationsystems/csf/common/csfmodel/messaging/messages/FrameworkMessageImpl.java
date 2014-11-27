@@ -13,18 +13,19 @@ import org.simulationsystems.csf.common.internal.messaging.xml.transformers.Fram
 
 public class FrameworkMessageImpl implements FrameworkMessage {
 	private FRAMEWORK_COMMAND frameworkToDistributedSystemCommand;
-	private FrameworkMessageToXMLTransformer frameworkMessageTOXMLTransformer = new FrameworkMessageToXMLTransformer(this);
+	private FrameworkMessageToXMLTransformer frameworkMessageTOXMLTransformer = new FrameworkMessageToXMLTransformer(
+			this);
 	private Document document;
 	private SYSTEM_TYPE sourceSystemType;
 	private SYSTEM_TYPE targetSystemType;
 	private FRAMEWORK_COMMAND frameworkCommand;
 	private STATUS status;
-	
+
 	@Override
 	public Document getDocument() {
 		return document;
 	}
-	
+
 	@SuppressWarnings("unused")
 	private FrameworkMessageImpl() {
 
@@ -33,11 +34,13 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	/*
 	 * Used for incoming messages. Pass in the XML String from the framework
 	 */
-	public FrameworkMessageImpl(SYSTEM_TYPE sourceSystemType, SYSTEM_TYPE targetSystemType,
-			String xmlString) throws CsfCheckedException {
+	public FrameworkMessageImpl(SYSTEM_TYPE sourceSystemType,
+			SYSTEM_TYPE targetSystemType, String xmlString)
+			throws CsfCheckedException {
 		super();
 		try {
-			this.document = MessagingUtilities.createDocumentFromString(xmlString);
+			this.document = MessagingUtilities
+					.createDocumentFromString(xmlString);
 		} catch (JDOMException | IOException e) {
 			// TODO: Where to catch this?
 			throw new CsfCheckedException("Unable to parse the message XML", e);
@@ -48,21 +51,28 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	/*
-	 * Used for outgoing messages. Pass in the framework message Document template
+	 * Used for outgoing messages. Pass in the framework message Document
+	 * template
+	 * 
+	 * @param cloneTheDocument set this to true if if the provided document must
+	 * be cloned (always clone the Document template!)
 	 */
-	public FrameworkMessageImpl(SYSTEM_TYPE sourceSystemType, SYSTEM_TYPE targetSystemType,
-			Document csfMessageExchangeTemplateDocument) {
-		this.document = csfMessageExchangeTemplateDocument.clone();
+	public FrameworkMessageImpl(SYSTEM_TYPE sourceSystemType,
+			SYSTEM_TYPE targetSystemType, Document document
+		) {
+
+			this.document = document;
 
 		this.sourceSystemType = sourceSystemType;
 		this.targetSystemType = targetSystemType;
 	}
 
 	/*
-	 * Returns the String representation of the message. For outgoing messages, this String
-	 * representation will not always be the version to be sent to the common messaging interface.
-	 * All transformations must be performed before this String representation reflects the version
-	 * to be sent to the common messaging interface.
+	 * Returns the String representation of the message. For outgoing messages,
+	 * this String representation will not always be the version to be sent to
+	 * the common messaging interface. All transformations must be performed
+	 * before this String representation reflects the version to be sent to the
+	 * common messaging interface.
 	 */
 	@Override
 	public String toPrettyPrintedXMLString() {
@@ -73,7 +83,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	@Override
 	public void setFrameworkCommandToDistSysInDocument(
 			FRAMEWORK_COMMAND frameworkToDistributedSystemCommand) {
-		frameworkMessageTOXMLTransformer.setFrameworkCommandToDistSysInDocument(frameworkToDistributedSystemCommand);
+		frameworkMessageTOXMLTransformer
+				.setFrameworkCommandToDistSysInDocument(frameworkToDistributedSystemCommand);
 		this.frameworkToDistributedSystemCommand = frameworkToDistributedSystemCommand;
 	}
 
@@ -91,18 +102,19 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	public String transformToCommonMessagingXMLString(boolean prettyPrint) {
 		// TODO: Mapping between agent IDs and UUIDs in this class?
 		// Message all of the agents in each each target distributed system
-		// for (UUID distributedSystemAgentUUID : distributedSystem.getDistributedAgentUUIDs()) {
+		// for (UUID distributedSystemAgentUUID :
+		// distributedSystem.getDistributedAgentUUIDs()) {
 		// }
 
 		// LOW: Drive the pretty print parameter from the configuration
-		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(document,
-				prettyPrint);
+		return frameworkMessageTOXMLTransformer.frameworkMessageToXMLString(
+				document, prettyPrint);
 	}
 
 	@Override
 	public void setStatus(STATUS status) {
 		this.status = status;
-		
+
 	}
 
 }

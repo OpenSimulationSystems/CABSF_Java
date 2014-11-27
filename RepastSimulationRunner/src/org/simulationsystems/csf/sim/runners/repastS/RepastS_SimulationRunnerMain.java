@@ -3,6 +3,7 @@ package org.simulationsystems.csf.sim.runners.repastS;
 import java.io.File;
 import java.util.Set;
 
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
@@ -32,9 +33,6 @@ import repast.simphony.engine.environment.RunEnvironment;
 public class RepastS_SimulationRunnerMain {
 
 	public static void main(String[] args) throws Exception {
-		// The Repast scenario Directory
-		File file = new File(args[0]);
-
 		String frameworkConfigurationFileName = null;
 		if (args.length >= 2)
 			// Read the directory to the Common Simulation Framework configuration file (second
@@ -42,7 +40,10 @@ public class RepastS_SimulationRunnerMain {
 			frameworkConfigurationFileName = args[1];
 		// TODO: Add Validation of CSF configuration file
 		if (frameworkConfigurationFileName != null)
-			;
+			throw new CsfInitializationRuntimeException("The Repast scenario directory must be provided");
+		
+		// The Repast scenario Directory
+		File file = new File(args[0]);
 		RepastS_SimulationRunner repastS_SimulationRunner = new RepastS_SimulationRunner();
 
 		// try {

@@ -89,5 +89,14 @@ public class SimulationEngineManager {
 		return commonMessagingAbstraction.listenForCommandsFromSimulationEngine(SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
 		
 	}
+	
+	public FrameworkMessage listenForMessageFromSimulationEngine() {
+		return commonMessagingAbstraction.listenForMessageFromSimulationEngine(SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
+		
+	}
+
+	public FrameworkMessage requestEnvironmentInformation() {
+		return commonMessagingAbstraction.requestEnvironmentInformation(SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
+	}
 
 }

@@ -46,6 +46,16 @@ public abstract class CommonMessagingAbstraction {
 	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
 		return commonMessagingImplementationAPI.listenForCommandsFromSimulationEngine(targetSystemType, clientID);
 		
+	}
+	
+	public FrameworkMessage listenForMessageFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
+		return commonMessagingImplementationAPI.listenForMessageFromSimulationEngine(targetSystemType, clientID);
+		
+	}
+	
+	public FrameworkMessage requestEnvironmentInformation(
+			SYSTEM_TYPE targetSystemType, String clientID) {
+		return commonMessagingImplementationAPI.requestEnvironmentInformation(targetSystemType, clientID);
 	};
 	
 	

@@ -62,6 +62,18 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 			String clientID) {
 		return commonMessagingDao.listenForCommandsFromSimulationEngine(targetSystemType, clientID);
 
+	}
+	
+	@Override
+	public FrameworkMessage listenForMessageFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
+		return commonMessagingDao.listenForMessageFromSimulationEngine(targetSystemType, clientID);
+		
+	}
+
+	@Override
+	public FrameworkMessage requestEnvironmentInformation(
+			SYSTEM_TYPE targetSystemType, String clientID) {
+		return commonMessagingDao.requestEnvironmentInformation(targetSystemType, clientID);
 	};
 
 }

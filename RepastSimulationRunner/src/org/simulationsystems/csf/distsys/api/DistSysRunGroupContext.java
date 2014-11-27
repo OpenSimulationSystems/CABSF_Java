@@ -40,7 +40,7 @@ public class DistSysRunGroupContext {
 	}
 
 	public Document getCachedMessageExchangeTemplate() {
-		return cachedMessageExchangeTemplate;
+		return cachedMessageExchangeTemplate.clone();
 	}
 
 	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {

@@ -28,6 +28,7 @@ public class JZombiesBuilder implements ContextBuilder<Object> {
 	 * repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context
 	 * .Context)
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Context build(Context<Object> context) {
 /*		double MAX_ITERATIONS = 30;

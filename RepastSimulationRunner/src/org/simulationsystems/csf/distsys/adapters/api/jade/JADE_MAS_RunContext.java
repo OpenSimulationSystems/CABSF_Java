@@ -39,7 +39,10 @@ public class JADE_MAS_RunContext {
 	private JADE_MAS_RunContext() {
 
 	}
-
+	
+	/*
+	 * Uses the decorator pattern to set up a custom JADE MAS RunContext using the general DistSystRunContext object.
+	 */
 	public JADE_MAS_RunContext(DistSysRunContext distSysRunContext) {
 		this.distSysRunContext = distSysRunContext;
 
@@ -86,7 +89,18 @@ public class JADE_MAS_RunContext {
 		return getDistSysRunContext().listenForCommandsFromSimulationEngine();
 	}
 
+	public FrameworkMessage listenForMessageFromSimulationEngine() {
+		return getDistSysRunContext().listenForMessageFromSimulationEngine();
+
+	}
+	
 	public void closeInterface(DistSysRunContext distSysRunContext) {
 		distSysRunContext.closeInterface();
+	}
+	
+	public FrameworkMessage requestEnvironmentInformation() {
+		 getDistSysRunContext().requestEnvironmentInformation();
+		return null;
+		
 	}
 }

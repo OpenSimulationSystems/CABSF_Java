@@ -19,9 +19,9 @@ public class JADE_Controller_Agent {
 	public static void main(String[] args) {
 		String frameworkConfigurationFileName = null;
 		if (args.length >= 1)
-			frameworkConfigurationFileName = args[1];
+			frameworkConfigurationFileName = args[0];
 		// TODO: Add Validation of CSF configuration file
-		if (frameworkConfigurationFileName != null)
+		if (frameworkConfigurationFileName == null)
 			throw new CsfInitializationRuntimeException(
 					"The configuration directory must be provided");
 

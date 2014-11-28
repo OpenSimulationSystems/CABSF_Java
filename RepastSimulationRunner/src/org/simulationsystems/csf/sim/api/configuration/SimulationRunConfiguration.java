@@ -10,7 +10,13 @@ public class SimulationRunConfiguration {
 	private String commonMessagingConcreateImplStr=null;
 	private String redisConnectionString=null;
 	private String simulationEngineID=null;
+	//TODO: Read from the configuration
+	private String distributedSystemID="DistSys1";
 	
+	public String getDistributedSystemID() {
+		return distributedSystemID;
+	}
+
 	public String getSimulationEngineID() {
 		return simulationEngineID;
 	}

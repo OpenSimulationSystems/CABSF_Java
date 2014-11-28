@@ -66,9 +66,6 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	/*
 	 * Used for outgoing messages. Pass in the framework message Document
 	 * template
-	 * 
-	 * @param cloneTheDocument set this to true if if the provided document must
-	 * be cloned (always clone the Document template!)
 	 */
 	public FrameworkMessageImpl(SYSTEM_TYPE sourceSystemType,
 			SYSTEM_TYPE targetSystemType, Document document

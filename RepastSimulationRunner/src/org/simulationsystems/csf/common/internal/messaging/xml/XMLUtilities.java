@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.List;
 
 import org.jdom2.Content;
@@ -48,8 +49,7 @@ public class XMLUtilities {
 			document = saxBuilder.build(inputStream);
 
 			Element root = document.getRootElement();
-			System.out.println("Succesfully loaded template file: "
-					+ root.getName());
+			System.out.println("Succesfully loaded template file: " + root.getName());
 		} finally {
 			if (inputStream != null)
 				inputStream.close();
@@ -68,8 +68,25 @@ public class XMLUtilities {
 	 */
 	static public org.jdom2.Document xmlStringTojdom2Document(String xmlString)
 			throws JDOMException, IOException {
-		SAXBuilder sb = new SAXBuilder();
-		Document document = sb.build(xmlString);
+		StringReader sr = null;
+		InputSource inputSource = null;
+		Document document = null;
+
+		try {
+			sr = new StringReader(xmlString);
+			inputSource = new InputSource(sr);
+
+			SAXBuilder saxBuilder = new SAXBuilder();
+			// begin of try - catch block
+			document = saxBuilder.build(inputSource);
+
+			Element root = document.getRootElement();
+			System.out.println("Succesfully loaded template file: " + root.getName());
+		} finally {
+			if (sr != null)
+				sr.close();
+		}
+
 		return document;
 
 	}
@@ -79,8 +96,8 @@ public class XMLUtilities {
 		XPathFactory xpathFactory = XPathFactory.instance();
 		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
 
-		XPathExpression<? extends Content> expr = xpathFactory.compile(
-				xpathStr, filter, null, Namespace.getNamespace("x", namespace));
+		XPathExpression<? extends Content> expr = xpathFactory.compile(xpathStr, filter,
+				null, Namespace.getNamespace("x", namespace));
 
 		List<? extends Content> xPathSearchedNodes = null;
 		try {
@@ -88,19 +105,17 @@ public class XMLUtilities {
 		}
 		// TODO: Add better handling for these kinds of exceptions
 		catch (Exception e) {
-			throw new CsfRuntimeException(
-					"Error in querying the message", e);
+			throw new CsfRuntimeException("Error in querying the message", e);
 		}
 		return xPathSearchedNodes;
 		/*
-		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content
-		 * = xPathSearchedNodes.get(i); System.out.println("content: " + i +
-		 * ": " + content.getValue()); }
+		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content =
+		 * xPathSearchedNodes.get(i); System.out.println("content: " + i + ": " +
+		 * content.getValue()); }
 		 */
 	}
 
-	static public String convertDocumentToXMLString(Document document,
-			boolean prettyPrint) {
+	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
 		XMLOutputter outputter = null;
 		if (prettyPrint)
 			outputter = new XMLOutputter(Format.getPrettyFormat());

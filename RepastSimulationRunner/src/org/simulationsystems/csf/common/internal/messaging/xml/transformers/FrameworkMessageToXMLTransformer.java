@@ -50,7 +50,7 @@ public class FrameworkMessageToXMLTransformer {
 		System.out.println(xPathSearchedNodes.get(0).getValue());
 
 		xPathSearchedNodes.get(0).setText(command.toString());
-		System.out.println("New Document: "
+		System.out.println("Set framework to distributed system command: " + command.toString()
 				+ MessagingUtilities.convertDocumentToXMLString(
 						frameworkMessage.getDocument(), true));
 	}
@@ -97,7 +97,7 @@ public class FrameworkMessageToXMLTransformer {
 	
 	private FRAMEWORK_COMMAND convertStringToFrameworkCommand(String str) {
 		for (FRAMEWORK_COMMAND cmd : FRAMEWORK_COMMAND.values()) {
-			if (cmd.toString() == str)
+			if (cmd.toString().equalsIgnoreCase(str))
 				return cmd;
 		}
 		return null;
@@ -118,7 +118,7 @@ public class FrameworkMessageToXMLTransformer {
 		System.out.println(xPathSearchedNodes.get(0).getValue());
 
 		xPathSearchedNodes.get(0).setText(status.toString());
-		System.out.println("New Document: "
+		System.out.println("Set Status: "+ status.toString()
 				+ new XMLOutputter().outputString(frameworkMessage
 						.getDocument()));
 	}
@@ -139,7 +139,7 @@ public class FrameworkMessageToXMLTransformer {
 		System.out.println(xPathSearchedNodes.get(0).getValue());
 
 		xPathSearchedNodes.get(0).setText(command.toString());
-		System.out.println("New Document: "
+		System.out.println("Set framework to simulation engine command: "+command.toString()
 				+ MessagingUtilities.convertDocumentToXMLString(
 						frameworkMessage.getDocument(), true));
 	}
@@ -167,7 +167,7 @@ public class FrameworkMessageToXMLTransformer {
 	
 	private STATUS convertStringToStatus(String str) {
 		for (STATUS st : STATUS.values()) {
-			if (st.toString() == str)
+			if (st.toString().equals(str))
 				return st;
 		}
 		return null;
@@ -189,7 +189,7 @@ public class FrameworkMessageToXMLTransformer {
 		System.out.println(xPathSearchedNodes.get(0).getValue());
 
 		xPathSearchedNodes.get(0).setText(status.toString());
-		System.out.println("New Document: "
+		System.out.println("Set Status: "+status.toString()
 				+ MessagingUtilities.convertDocumentToXMLString(
 						frameworkMessage.getDocument(), true));
 	}

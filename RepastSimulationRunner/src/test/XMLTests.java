@@ -50,7 +50,9 @@ public class XMLTests {
 			
 			xPathSearchedNodes.get(0).setText("new");
 			System.out.println("New Document: " + new XMLOutputter().outputString(doc));
-		} catch (JDOMException | IOException e) {
+		} catch (JDOMException e) {
+			
+		} catch (IOException e) {
 			
 		}
 	}

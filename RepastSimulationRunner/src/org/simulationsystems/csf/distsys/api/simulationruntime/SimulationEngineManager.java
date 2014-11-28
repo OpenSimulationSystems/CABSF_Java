@@ -80,7 +80,9 @@ public class SimulationEngineManager {
 	}
 
 	public void sendMessage(FrameworkMessage frameworkMessage,
-			DistSysRunContext distSysRunContext) {
+			DistSysRunContext distSysRunContext, String simulationEngineID) {
+		commonMessagingAbstraction.sendMessageToSimulationEngine(frameworkMessage,
+				distSysRunContext, simulationEngineID);
 
 	}
 

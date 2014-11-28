@@ -6,6 +6,7 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.internal.messaging.dao.CommonMessagingDao;
 import org.simulationsystems.csf.common.internal.messaging.dao.RedisDaoImpl;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
+import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 /*
@@ -67,6 +68,13 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 	public FrameworkMessage requestEnvironmentInformation(
 			SYSTEM_TYPE targetSystemType, String clientID) {
 		return commonMessagingDao.requestEnvironmentInformation(targetSystemType, clientID);
+	}
+
+	@Override
+	public void sendMessageToSimulationEngine(FrameworkMessage frameworkMessage,
+			DistSysRunContext distSysRunContext, String simulationEngineID) {
+		commonMessagingDao.sendMessageToSimulationEngine(distSysRunContext, frameworkMessage, simulationEngineID);
+		
 	};
 
 }

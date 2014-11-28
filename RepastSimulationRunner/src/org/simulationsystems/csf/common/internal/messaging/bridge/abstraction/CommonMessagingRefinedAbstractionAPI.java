@@ -3,6 +3,7 @@ package org.simulationsystems.csf.common.internal.messaging.bridge.abstraction;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
+import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 /*
@@ -32,6 +33,16 @@ public class CommonMessagingRefinedAbstractionAPI extends CommonMessagingAbstrac
 
 		commonMessagingImplementationAPI.sendMessagesToDistributedAgents(frameworkMessage,
 				distributedSystem, simulationRunContext);
+	}
+	
+	@Override
+	public void sendMessageToSimulationEngine(FrameworkMessage frameworkMessage,
+			DistSysRunContext distSysRunContext, String simulationEngineID) {
+		// commonMessagingImplementationAPI set in the RunGroup initialization using reflection, as
+		// specified in the common framework configuration.
+
+		commonMessagingImplementationAPI.sendMessageToSimulationEngine(frameworkMessage,
+				distSysRunContext, simulationEngineID);
 	}
 	
 	

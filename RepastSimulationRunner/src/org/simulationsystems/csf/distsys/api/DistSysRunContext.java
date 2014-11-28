@@ -101,7 +101,7 @@ public class DistSysRunContext {
 	}
 	
 	public void messageSimulationEngine(FrameworkMessage frameworkMessage) {
-		simulationEngineManager.sendMessage(frameworkMessage, this);
+		simulationEngineManager.sendMessage(frameworkMessage, this, distSysRunConfiguration.getSimulationEngineID());
 	}
 	
 	public void closeInterface() {

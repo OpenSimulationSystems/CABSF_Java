@@ -64,27 +64,7 @@ public class DistributedAgentsManager {
 
 		this.distSysRunContext = distSysRunContext;
 
-		// Check which Bridge implementation we're going to use, based on what was specified in the
-		// configuration.
-		if (distSysRunContext
-				.getDistSysRunConfiguration()
-				.getCommonMessagingConcreteImplStr()
-				.equals("org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation")) {
-		} else {
-			// TODO: Handle this better
-			throw new IllegalStateException(
-					"Error: Redis not properly configured in the CSF configuration file.");
-		}
-
-		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
-				commonMessagingImplementationAPI, distSysRunContext.getDistSysRunConfiguration()
-						.getRedisConnectionString(), distSysRunContext.getDistSysRunConfiguration()
-						.getDistributedSystemID());
-
-		// TODO: Move this configuration to the Simulation Run Group level?
-		commonMessagingAbstraction
-				.initializeSimulationFrameworkCommonMessagingInterface(distSysRunContext
-						.getDistSysRunConfiguration().getRedisConnectionString());
+		//Initialization specific to the distirbuted system
 	}
 
 	protected ConcurrentHashMap<String, DistributedAutonomousAgent> getAgentModelsToDistributedAutonomousAgentManagersMappings() {

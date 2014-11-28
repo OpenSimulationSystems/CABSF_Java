@@ -12,7 +12,7 @@ echo Sending the CSF Simulation Engine a message to start the simulation. The si
 echo ****************************************************
 echo.
 @echo on
-redis-cli -x LPUSH csf.commands.adminToSim:19def3fa-a1d4-4996-a1ac-22c3a041e6ff <C:\Users\jorge\workspace\jcalderon-thesis\RepastSimulationRunner\resources\org\simulationsystems\csf\common\messageexchange\startSimulationl.xml
+redis-cli -x LPUSH csf.commands.adminToSim:19def3fa-a1d4-4996-a1ac-22c3a041e6ff <C:\Users\jorge\workspace\jcalderon-thesis\RepastSimulationRunner\bin\org\simulationsystems\csf\common\resources\messageexchange\startSimulation.xml
 @echo.
 @echo off
 pause

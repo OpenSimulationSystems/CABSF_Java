@@ -42,7 +42,7 @@ public class RedisConnectionManager {
 		// Redis subscribe listener.
 		// jedis.publish(channel, message);
 
-		System.out.println("Set: " + message);
+		System.out.println("Posted message to channel: " +channel + " Message: "+ message);
 		// System.out.println("lpop: " + jedis.lpop(channel));
 	}
 

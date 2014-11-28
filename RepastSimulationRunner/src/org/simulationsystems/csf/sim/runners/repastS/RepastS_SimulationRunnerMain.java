@@ -39,7 +39,7 @@ public class RepastS_SimulationRunnerMain {
 			// argument)
 			frameworkConfigurationFileName = args[1];
 		// TODO: Add Validation of CSF configuration file
-		if (frameworkConfigurationFileName != null)
+		if (frameworkConfigurationFileName == null)
 			throw new CsfInitializationRuntimeException("The Repast scenario directory must be provided");
 		
 		// The Repast scenario Directory
@@ -79,7 +79,9 @@ public class RepastS_SimulationRunnerMain {
 					System.out.println("Setting Finishing");
 				}
 				System.out.println("Stepping");
+				
 				repastS_SimulationRunner.step(); // execute all scheduled actions at next tick
+
 				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 				System.out.println("Finished Stepping.  New Tick: " + tick);
 

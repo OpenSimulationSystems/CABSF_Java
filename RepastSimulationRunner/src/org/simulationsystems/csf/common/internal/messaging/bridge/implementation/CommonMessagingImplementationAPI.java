@@ -4,6 +4,7 @@ import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
+import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 /*
@@ -28,4 +29,8 @@ public interface CommonMessagingImplementationAPI {
 
 	FrameworkMessage listenForMessageFromSimulationEngine(
 			SYSTEM_TYPE targetSystemType, String clientID);
+
+	public void sendMessageToSimulationEngine(FrameworkMessage frameworkMessage,
+			DistSysRunContext distSysRunContext, String simulationEngineID);
+
 }

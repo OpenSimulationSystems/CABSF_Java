@@ -156,34 +156,16 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			System.out.println(repastS_SimulationRunContext
 					.getSimulationDistributedSystemManagers().iterator().next()
 					.logHelper());
-
-			// Wait for the command from the simulation administrator to start the
-			// simulation
-			FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
-					.readFrameworkMessageFromSimulationAdministrator()
-					.getFrameworkToSimulationEngineCommand();
-			if (fc != FRAMEWORK_COMMAND.START_SIMULATION)
-				throw new CsfMessagingRuntimeException(
-						"Did not understand the message from the simulation administrator");
-
-			// Message the distributed systems that the simulation has started
-			// and is ready to accept messages from the distributed agents.
-			FrameworkMessage msg = new FrameworkMessageImpl(
-					SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-					repastS_SimulationRunContext.getCachedMessageExchangeTemplate());
-			msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
-			repastS_SimulationRunContext.messageDistributedSystems(msg,
-					repastS_SimulationRunContext.getSimulationRunContext());
-
-			// Wait for distributed system to confirm that simulation is ready
-			// to begin
-			STATUS st = repastS_SimulationRunContext.readFrameworkMessageFromDistributedSystem().getStatus();
-
+			
+			// TODO: Better handling for future multithreading. Set the interface at
+			// the run group
+			// level, close after all runs have executed.
+			
+			lastRepastS_SimulationRunContext = repastS_SimulationRunContext;
+			
+			//Now we're ready to start sending the tick information
 		}
-		// TODO: Better handling for future multithreading. Set the interface at
-		// the run group
-		// level, close after all runs have executed.
-		lastRepastS_SimulationRunContext = repastS_SimulationRunContext;
+		
 		return repastS_SimulationRunContext;
 	}
 

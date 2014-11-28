@@ -5,6 +5,7 @@ import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
+import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 /*
@@ -53,7 +54,10 @@ public abstract class CommonMessagingAbstraction {
 	public FrameworkMessage requestEnvironmentInformation(
 			SYSTEM_TYPE targetSystemType, String clientID) {
 		return commonMessagingImplementationAPI.requestEnvironmentInformation(targetSystemType, clientID);
-	};
+	}
+
+	public abstract void sendMessageToSimulationEngine(FrameworkMessage frameworkMessage,
+			DistSysRunContext distSysRunContext, String simulationEngineID);
 	
 	
 }

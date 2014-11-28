@@ -10,7 +10,7 @@ public class MessagingUtilities {
 	static public org.jdom2.Document createCachedMessageExchangeTemplate() throws JDOMException,
 			IOException {
 		return XMLUtilities
-				.filenameStrTojdom2Document("resources/org/simulationsystems/csf/common/messageexchange/CsfMessageExchangeTemplate.xml");
+				.filenameStrTojdom2Document("../RepastSimulationRunner/bin/org/simulationsystems/csf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
 	}
 
 	static public org.jdom2.Document createDocumentFromString(String xmlString) throws JDOMException, IOException {

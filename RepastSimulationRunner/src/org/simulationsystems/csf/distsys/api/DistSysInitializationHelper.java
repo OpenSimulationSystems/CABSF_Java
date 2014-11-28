@@ -102,7 +102,7 @@ public class DistSysInitializationHelper {
 		// of the client of this API, such as the CSF JADE Controller Agent
 		// TODO: Add this distributed system's id
 		DistributedAgentsManager distributedAgentsManager = new DistributedAgentsManager(distSysRunContext.getDistSysRunConfiguration().getDistributedSystemID(),
-				null, distSysRunContext.getDistSysRunConfiguration());
+				distSysRunContext, distSysRunContext.getDistSysRunConfiguration());
 		distSysRunContext.setDistributedAgentsManager(distributedAgentsManager);
 
 		return distSysRunContext;

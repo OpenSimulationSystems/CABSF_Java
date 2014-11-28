@@ -38,7 +38,7 @@ public class SimulationRunGroupContext {
 	}
 	
 	public Document getCachedMessageExchangeTemplate() {
-		return cachedMessageExchangeTemplate;
+		return cachedMessageExchangeTemplate.clone();
 	}
 	
 	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {

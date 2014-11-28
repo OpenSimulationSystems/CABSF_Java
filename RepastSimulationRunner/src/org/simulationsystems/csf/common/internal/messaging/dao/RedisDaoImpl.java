@@ -15,6 +15,7 @@ import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
+import org.simulationsystems.csf.distsys.api.DistSysRunContext;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
 
 public class RedisDaoImpl implements CommonMessagingDao {
@@ -141,11 +142,11 @@ public class RedisDaoImpl implements CommonMessagingDao {
 			// like the system IDs.
 			throw new CsfMessagingRuntimeException(
 					"Failed to understand message from the simulation engine to the distributed system: "
-							+ clientID);
+							+ clientID, e);
 		} catch (IOException e) {
 			throw new CsfMessagingRuntimeException(
 					"Failed to understand message from the simulation engine to the distributed system: "
-							+ clientID);
+							+ clientID+ "Message: "+ xmlString,e );
 		}
 		//TODO: Maybe remove the boolean and use null on the doc to determine whether cloning is required or not.
 		FrameworkMessage fm = new FrameworkMessageImpl(
@@ -174,5 +175,17 @@ public class RedisDaoImpl implements CommonMessagingDao {
 		}
 
 		return fm;
+	}
+
+	@Override
+	public void sendMessageToSimulationEngine(DistSysRunContext distSysRunContext,
+			FrameworkMessage frameworkMessage, String simulationEngineID) {
+		String redisChannelStr = createRedisChannelStr(
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_ENGINE,
+				simulationEngineID);
+		redisConnectionManager.postMessage(redisChannelStr,
+				frameworkMessage.transformToCommonMessagingXMLString(true));
+
+		
 	}
 }

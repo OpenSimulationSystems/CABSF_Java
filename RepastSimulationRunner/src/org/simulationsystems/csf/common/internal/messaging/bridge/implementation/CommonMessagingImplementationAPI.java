@@ -19,11 +19,9 @@ public interface CommonMessagingImplementationAPI {
 
 	public void closeInterface();
 
-	public void listenForCommandsFromSimulationAdministrator(String clientID);
+	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator(String clientID);
 
-	FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID);
-
-	void listenForCommandsFromDistributedSystem(String clientID);
+	public FrameworkMessage readFrameworkMessageFromDistributedSystem(String clientID);
 
 	public FrameworkMessage requestEnvironmentInformation(
 			SYSTEM_TYPE targetSystemType, String clientID);

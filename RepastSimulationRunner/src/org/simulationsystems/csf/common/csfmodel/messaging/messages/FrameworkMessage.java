@@ -10,16 +10,22 @@ public interface FrameworkMessage {
 	
 	public String transformToCommonMessagingXMLString(boolean prettyPrint);
 
-	void setFrameworkCommandToDistSysInDocument(
+	void setFrameworkToDistributedSystemCommand(
 			FRAMEWORK_COMMAND frameworkToDistributedSystemCommand);
 
 	FRAMEWORK_COMMAND getFrameworkToDistributedSystemCommand();
-	
-	FRAMEWORK_COMMAND getFrameworkCommand();
 
 	String toPrettyPrintedXMLString();
 
 	public void setStatus(STATUS readyToStartSimulation);
 
 	Document getDocument();
+
+	void setFrameworkToSimulationEngineCommand(
+			FRAMEWORK_COMMAND frameworkToDistributedSystemCommand);
+
+	FRAMEWORK_COMMAND getFrameworkToSimulationEngineCommand();
+
+	STATUS getStatus();
+
 }

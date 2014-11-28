@@ -130,30 +130,21 @@ public class SimulationRunContext {
 		getSimulationDistributedSystemManagers().iterator().next().closeInterface();
 	}
 
-	public void listenForCommandsFromSimulationAdministrator() {
+	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {
 		// LOW: Fix for handling multiple distributed systems, Loop through all systems
 		SimulationDistributedSystemManager mgr = getSimulationDistributedSystemManagers()
 				.iterator().next();
 
-		mgr.listenForCommandsFromSimulationAdministrator();
+		return mgr.readFrameworkMessageFromSimulationAdministrator();
 		
 	}
 	
-	public void listenForCommandsFromDistributedSystem() {
+	public FrameworkMessage readFrameworkMessageFromDistributedSystem() {
 		// LOW: Fix for handling multiple distributed systems, Loop through all systems
 		SimulationDistributedSystemManager mgr = getSimulationDistributedSystemManagers()
 				.iterator().next();
 
-		mgr.listenForCommandsFromDistributedSystem();
-		
-	}
-	
-	public void listenForCommandsFromDistributedSystems() {
-		// LOW: Fix for handling multiple distributed systems, Loop through all systems
-		SimulationDistributedSystemManager mgr = getSimulationDistributedSystemManagers()
-				.iterator().next();
-
-		mgr.listenForCommandsFromDistributedSystem();
+		return mgr.readFrameworkMessageFromDistributedSystem();
 		
 	}
 }

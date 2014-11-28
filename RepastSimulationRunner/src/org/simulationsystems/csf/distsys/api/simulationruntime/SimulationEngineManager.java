@@ -84,11 +84,7 @@ public class SimulationEngineManager {
 
 	}
 
-	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine() {
-		// The target is this side of the framework (distributed system)
-		return commonMessagingAbstraction.listenForCommandsFromSimulationEngine(SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
-		
-	}
+
 	
 	public FrameworkMessage listenForMessageFromSimulationEngine() {
 		return commonMessagingAbstraction.listenForMessageFromSimulationEngine(SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);

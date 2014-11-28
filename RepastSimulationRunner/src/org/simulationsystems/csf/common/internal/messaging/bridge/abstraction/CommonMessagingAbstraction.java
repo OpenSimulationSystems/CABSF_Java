@@ -34,19 +34,16 @@ public abstract class CommonMessagingAbstraction {
 		commonMessagingImplementationAPI.closeInterface();
 	}
 
-	public void listenForCommandsFromSimulationAdministrator(String clientID) {
-		commonMessagingImplementationAPI.listenForCommandsFromSimulationAdministrator(clientID);
+	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator(String clientID) {
+		return commonMessagingImplementationAPI.readFrameworkMessageFromSimulationAdministrator(clientID);
 		
 	};
 	
-	public void listenForCommandsFromDistributedSystem(String clientID) {
-		commonMessagingImplementationAPI.listenForCommandsFromDistributedSystem(clientID);
+	public FrameworkMessage readFrameworkMessageFromDistributedSystem(String clientID) {
+		return commonMessagingImplementationAPI.readFrameworkMessageFromDistributedSystem(clientID);
 		
 	};
-	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
-		return commonMessagingImplementationAPI.listenForCommandsFromSimulationEngine(targetSystemType, clientID);
-		
-	}
+
 	
 	public FrameworkMessage listenForMessageFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
 		return commonMessagingImplementationAPI.listenForMessageFromSimulationEngine(targetSystemType, clientID);

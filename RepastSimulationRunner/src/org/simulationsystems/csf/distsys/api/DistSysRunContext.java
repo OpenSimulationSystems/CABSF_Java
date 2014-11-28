@@ -108,10 +108,6 @@ public class DistSysRunContext {
 		distributedAgentsManager.closeInterface();
 	}
 
-	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine() {
-		return simulationEngineManager.listenForCommandsFromSimulationEngine();
-		
-	}
 	
 	public FrameworkMessage listenForMessageFromSimulationEngine() {
 		return simulationEngineManager.listenForMessageFromSimulationEngine();

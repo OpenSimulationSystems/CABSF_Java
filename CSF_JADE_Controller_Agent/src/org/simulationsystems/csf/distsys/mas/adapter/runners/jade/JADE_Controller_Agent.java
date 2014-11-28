@@ -44,9 +44,9 @@ public class JADE_Controller_Agent {
 						jade_MAS_RunGroupContext);
 
 		// Listen for START_SIMULATION command from the simulation engine
-		FRAMEWORK_COMMAND fc = jade_MAS_RunContext
-				.listenForCommandsFromSimulationEngine();
-		// TODO: Better error handling
+		FRAMEWORK_COMMAND fc = jade_MAS_RunContext.listenForMessageFromSimulationEngine().getFrameworkToDistributedSystemCommand();
+		// TODO: Better error handling.  Send a message back to the simulation engine that this distributed system is terminating
+		
 		if (fc == null || !fc.equals(FRAMEWORK_COMMAND.START_SIMULATION))
 			throw new CsfInitializationRuntimeException(
 					"The JADE Controller Agent tried to read message from the simulation engine, but did not understand the command: "
@@ -62,7 +62,7 @@ public class JADE_Controller_Agent {
 		jade_MAS_RunContext.messageSimulationEngine(fm, jade_MAS_RunContext.getDistSysRunContext());
 
 		// Expect the tick information
-		fc = jade_MAS_RunContext.listenForCommandsFromSimulationEngine();
+		fc = jade_MAS_RunContext.listenForMessageFromSimulationEngine().getFrameworkToDistributedSystemCommand();
 		// TODO: Better error handling
 		if (fc == null || !fc.equals(FRAMEWORK_COMMAND.START_SIMULATION))
 			throw new CsfInitializationRuntimeException(

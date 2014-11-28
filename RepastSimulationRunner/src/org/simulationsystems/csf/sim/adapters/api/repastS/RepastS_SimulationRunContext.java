@@ -94,12 +94,12 @@ public class RepastS_SimulationRunContext {
 		simulationRunContext.messageDistributedSystems(frameworkMessage);
 	}
 	
-	public void listenForCommandsFromSimulationAdministrator() {
-		getSimulationRunContext().listenForCommandsFromSimulationAdministrator();
+	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {
+		return getSimulationRunContext().readFrameworkMessageFromSimulationAdministrator();
 	}
 	
-	public void listenForCommandsFromDistributedSystem() {
-		getSimulationRunContext().listenForCommandsFromDistributedSystem();
+	public FrameworkMessage readFrameworkMessageFromDistributedSystem() {
+		return getSimulationRunContext().readFrameworkMessageFromDistributedSystem();
 	}
 	
 	public void closeInterface(SimulationRunContext simulationRunContext) {

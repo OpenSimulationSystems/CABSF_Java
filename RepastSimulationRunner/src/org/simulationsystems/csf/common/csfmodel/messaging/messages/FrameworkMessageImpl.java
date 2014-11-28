@@ -12,14 +12,27 @@ import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.transformers.FrameworkMessageToXMLTransformer;
 
 public class FrameworkMessageImpl implements FrameworkMessage {
-	private FRAMEWORK_COMMAND frameworkToDistributedSystemCommand;
 	private FrameworkMessageToXMLTransformer frameworkMessageTOXMLTransformer = new FrameworkMessageToXMLTransformer(
 			this);
 	private Document document;
 	private SYSTEM_TYPE sourceSystemType;
 	private SYSTEM_TYPE targetSystemType;
-	private FRAMEWORK_COMMAND frameworkCommand;
-	private STATUS status;
+	
+	@Override
+	public FRAMEWORK_COMMAND getFrameworkToSimulationEngineCommand() {
+		return frameworkMessageTOXMLTransformer.getFrameworkToSimulationEngineCommand();
+	}
+	
+	@Override
+	public void setFrameworkToSimulationEngineCommand(
+			FRAMEWORK_COMMAND frameworkToSimulationEngineCommand) {
+		frameworkMessageTOXMLTransformer.setFrameworkToSimulationEngineCommnad(frameworkToSimulationEngineCommand);
+	}
+
+	@Override
+	public STATUS getStatus() {
+		return frameworkMessageTOXMLTransformer.getStatus();
+	}
 
 	@Override
 	public Document getDocument() {
@@ -81,22 +94,17 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public void setFrameworkCommandToDistSysInDocument(
+	public void setFrameworkToDistributedSystemCommand(
 			FRAMEWORK_COMMAND frameworkToDistributedSystemCommand) {
 		frameworkMessageTOXMLTransformer
-				.setFrameworkCommandToDistSysInDocument(frameworkToDistributedSystemCommand);
-		this.frameworkToDistributedSystemCommand = frameworkToDistributedSystemCommand;
+				.setFrameworkToDistributedSystemCommand(frameworkToDistributedSystemCommand);
 	}
-
+	
 	@Override
 	public FRAMEWORK_COMMAND getFrameworkToDistributedSystemCommand() {
-		return frameworkToDistributedSystemCommand;
+		return frameworkMessageTOXMLTransformer.getFrameworkToDistributedSystemCommand();
 	}
 
-	@Override
-	public FRAMEWORK_COMMAND getFrameworkCommand() {
-		return frameworkCommand;
-	}
 
 	@Override
 	public String transformToCommonMessagingXMLString(boolean prettyPrint) {
@@ -113,8 +121,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 
 	@Override
 	public void setStatus(STATUS status) {
-		this.status = status;
-
+		frameworkMessageTOXMLTransformer
+		.setStatus(status);
 	}
 
 }

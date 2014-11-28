@@ -195,15 +195,15 @@ public class DistributedAgentsManager {
 		return distributedAutonomousAgentIDStoDistributedAutonomousAgents;
 	}
 
-	public void listenForCommandsFromSimulationAdministrator() {
-		commonMessagingAbstraction
-				.listenForCommandsFromSimulationAdministrator(distributedSystemID);
+	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {
+		return commonMessagingAbstraction
+				.readFrameworkMessageFromSimulationAdministrator(distributedSystemID);
 
 	}
 
-	public void listenForCommandsFromDistributedSystem(String clientID) {
-		commonMessagingAbstraction
-				.listenForCommandsFromDistributedSystem(clientID);
+	public FrameworkMessage readFrameworkMessageFromDistributedSystem(String clientID) {
+		return commonMessagingAbstraction
+				.readFrameworkMessageFromDistributedSystem(clientID);
 
 	}
 	

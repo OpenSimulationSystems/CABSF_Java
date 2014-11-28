@@ -5,8 +5,10 @@ import java.io.File;
 import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfMessagingRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
 import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunGroupContext;
@@ -100,10 +102,10 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters from the RunState?
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter("human_count", "Human Count",
-				Number.class, 5, true);
-		defaultParameters.addParameter("zombie_count", "Zombie Count",
-				Number.class, 5, true);
+		defaultParameters.addParameter("human_count", "Human Count", Number.class, 5,
+				true);
+		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5,
+				true);
 		controller.runParameterSetters(defaultParameters);
 
 		// If Common Framework configuration file is provided, initialize Common
@@ -113,8 +115,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		if (frameworkConfigurationFileName != null) {
 			// Call the concrete Adapter as this Adapter is only for Repast
 			// Simphony
-			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI
-					.getInstance();
+			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(frameworkConfigurationFileName);
 			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION;
@@ -135,14 +136,12 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter(
-				ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
-				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME,
-				Number.class, 1, true);
+		defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
+				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1,
+				true);
 
 		controller.runInitialize(defaultParameters);
-		schedule = RunState.getInstance().getScheduleRegistry()
-				.getModelSchedule();
+		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 
 		@SuppressWarnings("unchecked")
 		Context<Object> repastContextForThisRun = RunState.getInstance()
@@ -158,26 +157,27 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 					.getSimulationDistributedSystemManagers().iterator().next()
 					.logHelper());
 
-			// Wait for the command from the simulation administrator
-			repastS_SimulationRunContext
-					.listenForCommandsFromSimulationAdministrator();
+			// Wait for the command from the simulation administrator to start the
+			// simulation
+			FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
+					.readFrameworkMessageFromSimulationAdministrator()
+					.getFrameworkToSimulationEngineCommand();
+			if (fc != FRAMEWORK_COMMAND.START_SIMULATION)
+				throw new CsfMessagingRuntimeException(
+						"Did not understand the message from the simulation administrator");
 
 			// Message the distributed systems that the simulation has started
-			// and is ready to
-			// accept messages from the distributed agents.
+			// and is ready to accept messages from the distributed agents.
 			FrameworkMessage msg = new FrameworkMessageImpl(
-					SYSTEM_TYPE.SIMULATION_ENGINE,
-					SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-					repastS_SimulationRunContext
-							.getCachedMessageExchangeTemplate());
-			msg.setFrameworkCommandToDistSysInDocument(FRAMEWORK_COMMAND.START_SIMULATION);
+					SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+					repastS_SimulationRunContext.getCachedMessageExchangeTemplate());
+			msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
 			repastS_SimulationRunContext.messageDistributedSystems(msg,
 					repastS_SimulationRunContext.getSimulationRunContext());
 
 			// Wait for distributed system to confirm that simulation is ready
 			// to begin
-			repastS_SimulationRunContext
-					.listenForCommandsFromDistributedSystem();
+			STATUS st = repastS_SimulationRunContext.readFrameworkMessageFromDistributedSystem().getStatus();
 
 		}
 		// TODO: Better handling for future multithreading. Set the interface at

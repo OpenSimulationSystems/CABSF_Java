@@ -193,17 +193,17 @@ public class SimulationDistributedSystemManager {
 		commonMessagingAbstraction.closeInterface();
 	}
 
-	public void listenForCommandsFromSimulationAdministrator() {
+	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {
 		// The target is this side of the framework (simulation engine)
-		commonMessagingAbstraction
-				.listenForCommandsFromSimulationAdministrator(simulationRunContext
+		return commonMessagingAbstraction
+				.readFrameworkMessageFromSimulationAdministrator(simulationRunContext
 						.getSimulationRunConfiguration().getSimulationEngineID());
 
 	}
 	
-	public void listenForCommandsFromDistributedSystem() {
+	public FrameworkMessage readFrameworkMessageFromDistributedSystem() {
 		// The target is this side of the framework (simulation engine)
-		commonMessagingAbstraction.listenForCommandsFromDistributedSystem(simulationRunContext
+		return commonMessagingAbstraction.readFrameworkMessageFromDistributedSystem(simulationRunContext
 						.getSimulationRunConfiguration().getSimulationEngineID());
 
 	}

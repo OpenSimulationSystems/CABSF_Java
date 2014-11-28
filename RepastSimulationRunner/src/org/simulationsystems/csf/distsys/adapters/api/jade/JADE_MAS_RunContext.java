@@ -85,9 +85,6 @@ public class JADE_MAS_RunContext {
 		distSysRunContext.messageSimulationEngine(frameworkMessage);
 	}
 
-	public FRAMEWORK_COMMAND listenForCommandsFromSimulationEngine() {
-		return getDistSysRunContext().listenForCommandsFromSimulationEngine();
-	}
 
 	public FrameworkMessage listenForMessageFromSimulationEngine() {
 		return getDistSysRunContext().listenForMessageFromSimulationEngine();

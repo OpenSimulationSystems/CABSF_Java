@@ -100,4 +100,9 @@ public class JADE_MAS_RunContext {
 		return null;
 		
 	}
+
+	public void initializeAgentMappings() {
+		// TODO Auto-generated method stub
+		
+	}
 }

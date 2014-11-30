@@ -13,9 +13,9 @@ public class DistributedAgentModel {
 
 
 	public DistributedAgentModel(DistSysRunContext distSysRunContext,
-			String distributedAgentModelID, String damName) {
+			String distributedAgentModelID, String distributedAgentModelName) {
 		this.distributedAgentModelID = distributedAgentModelID;
-		this.name = damName;
+		this.name = distributedAgentModelName;
 
 		if (distributedAgentModelID == null)
 			this.distributedAgentModelID = UUID.randomUUID().toString();

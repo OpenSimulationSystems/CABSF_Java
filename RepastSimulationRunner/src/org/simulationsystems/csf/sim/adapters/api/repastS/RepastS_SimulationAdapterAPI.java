@@ -109,7 +109,7 @@ public class RepastS_SimulationAdapterAPI {
 				.initializeSimulationRun(repastContextForThisRun,
 						repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
 
-		// User Decorator Pattern for JADE_DistSysRunContext
+		// User Decorator Pattern for RepastS_SimulationRunContext
 		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
 				simulationRunContext);
 		repastS_SimulationRunContext.setRepastContextForThisRun(repastContextForThisRun);
@@ -117,6 +117,8 @@ public class RepastS_SimulationAdapterAPI {
 		// LOW: Support multiple Simulation Run Groups. For now just assume that there's
 		// one.
 		// LOW: Handle multiple distributed systems
+		// TODO: Move distributed system manager to main level? same for on the
+		// distributed side (simulation engine manager)
 		repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
 				.next().initializeAgentMappings();
 
@@ -151,6 +153,7 @@ public class RepastS_SimulationAdapterAPI {
 				continue; // Not an agent we need to map.
 		}
 
+		// TODO: Move this whole section to the main simulation API?
 		// 1 - Wait for the command from the simulation administrator to start the
 		// simulation
 		FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
@@ -174,9 +177,12 @@ public class RepastS_SimulationAdapterAPI {
 		STATUS st = repastS_SimulationRunContext
 				.readFrameworkMessageFromDistributedSystem().getStatus();
 		// TODO: Identify which distributed system caused the error.
+		// TODO: Set these up as checked exceptions?
 		if (st != STATUS.READY_TO_START_SIMULATION)
 			throw new CsfMessagingRuntimeException(
 					"Did not understand the message from the simulation distributed system.");
+
+		// The distributed agent (models) have already been mapped.
 
 		return repastS_SimulationRunContext;
 	}

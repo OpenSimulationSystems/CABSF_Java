@@ -12,6 +12,8 @@ import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.Co
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation;
+import org.simulationsystems.csf.common.internal.systems.AgentMapping;
+import org.simulationsystems.csf.common.internal.systems.AgentMappingHelper;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.sim.api.SimulationAPI;
 import org.simulationsystems.csf.sim.api.SimulationRunContext;
@@ -27,9 +29,9 @@ public class SimulationDistributedSystemManager {
 	private DistributedSystem distributedSystem;
 
 	// TODO: Change the UUIDs to String
-	private ConcurrentHashMap<UUID, AgentMapping> agentMappings = new ConcurrentHashMap<UUID, AgentMapping>();
-	private HashSet<UUID> agentsReadyForSimulationSideMapping = new HashSet<UUID>();
-	private HashSet<UUID> agentsReadyForDistributedAgentMapping = new HashSet<UUID>();
+	private HashSet<AgentMapping> agentsReadyForSimulationSideMapping = new HashSet<AgentMapping>();
+	private HashSet<AgentMapping> fullyInitializedAgentMappings = new HashSet<AgentMapping>();
+
 	private CommonMessagingImplementationAPI commonMessagingImplementationAPI;
 
 	private CommonMessagingAbstraction commonMessagingAbstraction = null;
@@ -47,7 +49,8 @@ public class SimulationDistributedSystemManager {
 		this.simulationRunContext = simulationRunContext;
 		this.distributedSystem = distributedSystem;
 
-		// Check which Bridge implementation we're going to use, based on what was specified in the
+		// Check which Bridge implementation we're going to use, based on what was
+		// specified in the
 		// configuration.
 		if (simulationRunContext
 				.getSimulationRunConfiguration()
@@ -63,7 +66,8 @@ public class SimulationDistributedSystemManager {
 		// simulationRunContext.getSimulationRunConfiguration()
 		// = new CommonMessagingRefinedAbstractionAPI(null);
 
-		// Instantiate the correct manager for the common messaging interface (e.g., Redis or web
+		// Instantiate the correct manager for the common messaging interface (e.g., Redis
+		// or web
 		// services) using reflection.
 		// TODO: Handle exception when unable to instantiate class
 		// TODO: ?Handle configuration/reflection for Bridge Refined Abstraction?
@@ -72,7 +76,8 @@ public class SimulationDistributedSystemManager {
 			// Constructor<?> cons = cl.getConstructor(cl.getClass());
 			// commonMessagingImplementationAPI =
 			// (commonMessagingImplementationAPI) cons.newInstance();
-			commonMessagingImplementationAPI = (CommonMessagingImplementationAPI) cl.newInstance();
+			commonMessagingImplementationAPI = (CommonMessagingImplementationAPI) cl
+					.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -85,43 +90,19 @@ public class SimulationDistributedSystemManager {
 			e.printStackTrace();
 		}
 
-		// TODO: Dynamically get the appropriate connection string based on the configured common
+		// TODO: Dynamically get the appropriate connection string based on the configured
+		// common
 		// interface
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, simulationRunContext
 						.getSimulationRunConfiguration().getRedisConnectionString(),
-				simulationRunContext.getSimulationRunConfiguration().getSimulationEngineID());
+				simulationRunContext.getSimulationRunConfiguration()
+						.getSimulationEngineID());
 
 		// TODO: Move this configuration to the Simulation Run Group level?
 		commonMessagingAbstraction
 				.initializeSimulationFrameworkCommonMessagingInterface(simulationRunContext
 						.getSimulationRunConfiguration().getRedisConnectionString());
-	}
-
-	protected ConcurrentHashMap<UUID, AgentMapping> getAgentMappings() {
-		return agentMappings;
-	}
-
-	/*
-	 * Creates objects to hold Agent Mappings between the simulation-side and distributed-agent-side
-	 * agents. The actual setting of mapped objects occurs later on. See
-	 * org.simulationsystems.simulationframework
-	 * .simulation.adapters.simulationapps.api.distributedagents
-	 * .RepastSimphonySimulationDistributedAgentManager for reference; <br/><br/>
-	 * 
-	 * It is preferred for Adapter authors to create a Simulation-Toolkit-specific class inheriting
-	 * form this class. Its purpose is to convert generic "Object"s back to native
-	 * Simulation-Toolkit-specific objects, which aids the API clients at compile time.
-	 */
-	public AgentMapping createAgentMapping(String fullyQualifiedSimulationAgentName,
-			String fullyQualifiedDistributedAgentName) {
-		UUID uuid = UUID.randomUUID();
-		AgentMapping am = new AgentMapping(uuid, fullyQualifiedSimulationAgentName,
-				fullyQualifiedDistributedAgentName);
-		agentMappings.put(uuid, am);
-		agentsReadyForSimulationSideMapping.add(uuid);
-
-		return am;
 	}
 
 	// TODO: Pull these from the configuration
@@ -133,16 +114,31 @@ public class SimulationDistributedSystemManager {
 		// distributed-agent-side data.
 		// Mocking data for now;
 		// TODO: Pull from configuration
-		createAgentMapping("jzombies.Human", "jade.Agent");
-		createAgentMapping("jzombies.Human", "jade.Agent");
-		createAgentMapping("jzombies.Human", "jade.Agent");
-		createAgentMapping("jzombies.Human", "jade.Agent");
-		createAgentMapping("jzombies.Human", "jade.Agent");
+		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+				distributedSystem.getDistributedSystemID(),
+				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1",
+				"jzombies.Human");
+		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+				distributedSystem.getDistributedSystemID(),
+				"DistributedSystemAutonomousAgent2", "DistributedAgentModel2",
+				"jzombies.Human");
+		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+				distributedSystem.getDistributedSystemID(),
+				"DistributedSystemAutonomousAgent3", "DistributedAgentModel3",
+				"jzombies.Human");
+		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+				distributedSystem.getDistributedSystemID(),
+				"DistributedSystemAutonomousAgent4", "DistributedAgentModel4",
+				"jzombies.Human");
+		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+				distributedSystem.getDistributedSystemID(),
+				"DistributedSystemAutonomousAgent5", "DistributedAgentModel5",
+				"jzombies.Human");
 	}
 
 	/*
-	 * Checks whether this agent belongs to a class that is expected to be distributed outside of
-	 * the simulation runtime environment.
+	 * Checks whether this agent belongs to a class that is expected to be distributed
+	 * outside of the simulation runtime environment.
 	 */
 	public boolean isAgentClassDistributedType(Class<Object> agentClass) {
 		// TODO: Tie this to the simulation configuration
@@ -159,27 +155,13 @@ public class SimulationDistributedSystemManager {
 	public AgentMapping addSimulationAgentToAgentMapping(Object agentObj) {
 		// Add Validation to make sure mappings exist. / Throw exception
 
-		AgentMapping am = null;
-		try {
-			// Take first available
-			UUID agentMappingToAssignUUID = agentsReadyForSimulationSideMapping.iterator().next();
-			am = agentMappings.get(agentMappingToAssignUUID);
-			am.setSimulationAgent(agentObj);
-			agentsReadyForSimulationSideMapping.remove(agentMappingToAssignUUID);
-			agentsReadyForDistributedAgentMapping.add(agentMappingToAssignUUID);
-			System.out.println(this.getClass().getCanonicalName().toString()
-					+ ": Successfully mapped " + agentMappingToAssignUUID.toString() + " class: "
-					+ agentObj.getClass().getCanonicalName());
-		} catch (java.util.NoSuchElementException e) {
-			System.out.println("exception:" + e.getMessage() + "  class: "
-					+ agentObj.getClass().getCanonicalName());
-		}
-
-		return am;
+		return AgentMappingHelper.addNativeSimulationToDistributedAutononmousAgentToAgentMapping(this.getClass()
+				.getCanonicalName().toString(), agentsReadyForSimulationSideMapping,
+				fullyInitializedAgentMappings, agentObj);
 	}
 
 	public Object logHelper() {
-		return agentMappings;
+		return fullyInitializedAgentMappings;
 	}
 
 	public void messageDistributedAgents(FrameworkMessage frameworkMessage,
@@ -200,10 +182,11 @@ public class SimulationDistributedSystemManager {
 						.getSimulationRunConfiguration().getSimulationEngineID());
 
 	}
-	
+
 	public FrameworkMessage readFrameworkMessageFromDistributedSystem() {
 		// The target is this side of the framework (simulation engine)
-		return commonMessagingAbstraction.readFrameworkMessageFromDistributedSystem(simulationRunContext
+		return commonMessagingAbstraction
+				.readFrameworkMessageFromDistributedSystem(simulationRunContext
 						.getSimulationRunConfiguration().getSimulationEngineID());
 
 	}

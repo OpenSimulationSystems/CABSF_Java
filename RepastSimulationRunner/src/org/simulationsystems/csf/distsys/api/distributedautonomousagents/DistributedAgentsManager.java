@@ -1,6 +1,7 @@
 package org.simulationsystems.csf.distsys.api.distributedautonomousagents;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,8 +26,6 @@ public class DistributedAgentsManager {
 	private DistSysRunConfiguration distSysRunConfiguration;
 
 	private DistSysRunContext distSysRunContext;
-	private CommonMessagingAbstraction commonMessagingAbstraction = null;
-	private CommonMessagingImplementationAPI commonMessagingImplementationAPI;
 
 	private ConcurrentHashMap<String, DistributedAutonomousAgent> distributedAutonomousAgentIDStoDistributedAutonomousAgents = new ConcurrentHashMap<String, DistributedAutonomousAgent>();
 	private HashSet<DistributedAutonomousAgent> agentsReadyforNativeDistributedAgentMapping = new HashSet<DistributedAutonomousAgent>();
@@ -40,23 +39,26 @@ public class DistributedAgentsManager {
 	}
 
 	/*
-	 * The manager for a single distributed autonomous software agent (such as a JADE agent). This
-	 * class manages the agent model mappings for that software agent. In most cases, software
-	 * agents in a programming game will represent a single agent model. In distributed ABM
-	 * simulations, the software agent will often be set to contain multiple agent models, for
-	 * performance reasons.
+	 * The manager for a single distributed autonomous software agent (such as a JADE
+	 * agent). This class manages the agent model mappings for that software agent. In
+	 * most cases, software agents in a programming game will represent a single agent
+	 * model. In distributed ABM simulations, the software agent will often be set to
+	 * contain multiple agent models, for performance reasons.
 	 * 
-	 * @param simulationRuntimeID An optional ID to identify the simulation runtime instance for
-	 * this distributed system to connect to. If it is to be used, it should be provided by the
-	 * configuration on the distributed system side. If it is not provided, the Common Simulation
-	 * Framework Distributed System API will look for the first simulation run group (when using
-	 * Redis) and attach to that simulation run group instance.
+	 * @param simulationRuntimeID An optional ID to identify the simulation runtime
+	 * instance for this distributed system to connect to. If it is to be used, it should
+	 * be provided by the configuration on the distributed system side. If it is not
+	 * provided, the Common Simulation Framework Distributed System API will look for the
+	 * first simulation run group (when using Redis) and attach to that simulation run
+	 * group instance.
 	 * 
 	 * @param String id the id of this distributed system.
 	 */
-	// TODO: Clean this up. We need a specific manager for the type of client (JADE system, etc)
+	// TODO: Clean this up. We need a specific manager for the type of client (JADE
+	// system, etc)
 	public DistributedAgentsManager(String distributedSystemID,
-			DistSysRunContext distSysRunContext, DistSysRunConfiguration distSysRunConfiguration) {
+			DistSysRunContext distSysRunContext,
+			DistSysRunConfiguration distSysRunConfiguration) {
 		// public DistributedAutonomousAgent(DistSysRunContext distSysRunContext,
 		// String getCommonMessagingConcreteImplStr) {
 		this.distributedSystemID = distributedSystemID;
@@ -64,7 +66,7 @@ public class DistributedAgentsManager {
 
 		this.distSysRunContext = distSysRunContext;
 
-		//Initialization specific to the distirbuted system
+		// Initialization specific to the distirbuted system
 	}
 
 	protected ConcurrentHashMap<String, DistributedAutonomousAgent> getAgentModelsToDistributedAutonomousAgentManagersMappings() {
@@ -72,24 +74,28 @@ public class DistributedAgentsManager {
 	}
 
 	/*
-	 * Creates objects to hold Agent Mappings between the simulation-side and distributed-agent-side
-	 * agents. The actual setting of mapped objects occurs later on. See
-	 * org.simulationsystems.simulationframework
+	 * Creates objects to hold Agent Mappings between the simulation-side and
+	 * distributed-agent-side agents. The actual setting of mapped objects occurs later
+	 * on. See org.simulationsystems.simulationframework
 	 * .simulation.adapters.simulationapps.api.distributedagents
 	 * .RepastSimphonySimulationDistributedAgentManager for reference; <br/><br/>
 	 * 
-	 * It is preferred for Adapter authors to create a Simulation-Toolkit-specific class inheriting
-	 * form this class. Its purpose is to convert generic "Object"s back to native
-	 * Simulation-Toolkit-specific objects, which aids the API clients at compile time.
+	 * It is preferred for Adapter authors to create a Simulation-Toolkit-specific class
+	 * inheriting form this class. Its purpose is to convert generic "Object"s back to
+	 * native Simulation-Toolkit-specific objects, which aids the API clients at compile
+	 * time.
 	 */
 	// TODO: Add support for bulk mapping creation (array)
 	public DistributedAutonomousAgent createDistributedAutonomousAgent(
-			DistSysRunContext distSysRunContext, String distributedAutonomousAgentID, String daaName) {
+			DistSysRunContext distSysRunContext, String distributedAutonomousAgentID,
+			Set<String> distributedAgentModelIDs, String distributedAgentModelName) {
 		if (distributedAutonomousAgentID == null)
 			distributedAutonomousAgentID = UUID.randomUUID().toString();
 
+		// TODO: Add support for multiple agent models
 		DistributedAutonomousAgent distributedAutonomousAgent = new DistributedAutonomousAgent(
-				distSysRunContext, distributedAutonomousAgentID, daaName);
+				distSysRunContext, distributedAutonomousAgentID,
+				distributedAgentModelIDs, distributedAgentModelName);
 
 		// TODO: Add validation
 		distributedAutonomousAgentIDStoDistributedAutonomousAgents.put(
@@ -107,38 +113,41 @@ public class DistributedAgentsManager {
 		// distributed-agent-side data.
 		// Mocking data for now;
 
-		// TODO: Pull from configuration (actual JADE objects) For now just assuming one model agent
+		// TODO: Pull from configuration (actual JADE objects) For now just assuming one
+		// model agent
 		// per distributed autonomous software agent.
+		HashSet<String> hs = new HashSet<String>();
+		hs.add("DistributedAgentModel1");
 		DistributedAutonomousAgent distributedAutonomousAgent = createDistributedAutonomousAgent(
-				distSysRunContext, "1DistAgentModel", "Distributed Agent Model 1");
-		DistributedAgentModel distributedAutonomousAgentModel = distributedAutonomousAgent
-				.createDistributedAgentModel(distSysRunContext, "1DistAgentModel",
-						"Distributed Agent Model 1");
-		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
+				distSysRunContext, "DistributedSystemAutonomousAgent1", hs, "Human");
+		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
+				.get("DistributedAgentModel1").setDistributedNativeAgentModelObject(null);
 
+		hs = new HashSet<String>();
+		hs.add("DistributedAgentModel2");
 		DistributedAutonomousAgent distributedAutonomousAgent2 = createDistributedAutonomousAgent(
-				distSysRunContext, "2Dist", "Distributed Software Agent 1");
-		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(
-				distSysRunContext, "2DistAgentModel", "Distributed Agent Model 2");
-		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
+				distSysRunContext, "DistributedSystemAutonomousAgent2", hs, "Human");
+		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
+				.get("DistributedAgentModel2").setDistributedNativeAgentModelObject(null);
 
+		hs = new HashSet<String>();
+		hs.add("DistributedAgentModel3");
 		DistributedAutonomousAgent distributedAutonomousAgent3 = createDistributedAutonomousAgent(
-				distSysRunContext, "3Dist", "Distributed Software Agent 1");
-		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(
-				distSysRunContext, "3DistAgentModel", "Distributed Agent Model 3");
-		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
+				distSysRunContext, "DistributedSystemAutonomousAgent3", hs, "Human");
+		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
+				.get("DistributedAgentModel3").setDistributedNativeAgentModelObject(null);
 
+		hs = new HashSet<String>();
+		hs.add("DistributedAgentModel4");
 		DistributedAutonomousAgent distributedAutonomousAgent4 = createDistributedAutonomousAgent(
-				distSysRunContext, "4Dist", "Distributed Software Agent 1");
-		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(
-				distSysRunContext, "4DistAgentModel", "Distributed Agent Model 4");
-		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
+				distSysRunContext, "DistributedSystemAutonomousAgent4", hs, "Human");
+		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
+				.get("DistributedAgentModel4").setDistributedNativeAgentModelObject(null);
 
 		DistributedAutonomousAgent distributedAutonomousAgent5 = createDistributedAutonomousAgent(
-				distSysRunContext, "5Dist", "Distributed Software Agent 1");
-		distributedAutonomousAgentModel = distributedAutonomousAgent.createDistributedAgentModel(
-				distSysRunContext, "5DistAgentModel", "Distributed Agent Model 5");
-		distributedAutonomousAgentModel.setDistributedNativeAgentModelObject(null);
+				distSysRunContext, "DistributedSystemAutonomousAgent5", hs, "Human");
+		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
+				.get("DistributedAgentModel5").setDistributedNativeAgentModelObject(null);
 	}
 
 	/*
@@ -147,20 +156,23 @@ public class DistributedAgentsManager {
 	public DistributedAutonomousAgent assignNativeDistributedAutonomousAgent(
 			Object nativeDistributedAutonomousAgent) {
 		// TODO: Add Validation to make sure mappings exist. / Throw exception
-		// LOW: Support for matching distributed agent by id and/or changing status to "Ready"
+		// LOW: Support for matching distributed agent by id and/or changing status to
+		// "Ready"
 		DistributedAutonomousAgent distributedAutonomousAgent = null;
 
 		try {
 			// Take first available
-			distributedAutonomousAgent = agentsReadyforNativeDistributedAgentMapping.iterator()
-					.next();
+			distributedAutonomousAgent = agentsReadyforNativeDistributedAgentMapping
+					.iterator().next();
 			distributedAutonomousAgent
 					.setNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent);
-			agentsReadyforNativeDistributedAgentMapping.remove(nativeDistributedAutonomousAgent);
+			agentsReadyforNativeDistributedAgentMapping
+					.remove(nativeDistributedAutonomousAgent);
 
 			System.out.println(this.getClass().getCanonicalName().toString()
 					+ ": Successfully assigned native Distributed Autonomous Agent: "
-					+ distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
+					+ distributedAutonomousAgent
+							.getDistributedAgentModelIDStoAgentModels()
 					+ " native class: "
 					+ nativeDistributedAutonomousAgent.getClass().getCanonicalName());
 		} catch (java.util.NoSuchElementException e) {
@@ -175,19 +187,4 @@ public class DistributedAgentsManager {
 		return distributedAutonomousAgentIDStoDistributedAutonomousAgents;
 	}
 
-	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {
-		return commonMessagingAbstraction
-				.readFrameworkMessageFromSimulationAdministrator(distributedSystemID);
-
-	}
-
-	public FrameworkMessage readFrameworkMessageFromDistributedSystem(String clientID) {
-		return commonMessagingAbstraction
-				.readFrameworkMessageFromDistributedSystem(clientID);
-
-	}
-	
-	public void closeInterface() {
-		commonMessagingAbstraction.closeInterface();
-	}
 }

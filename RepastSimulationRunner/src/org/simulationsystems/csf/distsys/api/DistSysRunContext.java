@@ -90,6 +90,10 @@ public class DistSysRunContext {
 
 	}
 
+	public SimulationEngineManager getSimulationEngineManager() {
+		return simulationEngineManager;
+	}
+
 	protected void setSimulationEngine(SimulationEngineManager simulationEngineManager) {
 		this.simulationEngineManager = simulationEngineManager;
 
@@ -105,7 +109,7 @@ public class DistSysRunContext {
 	}
 	
 	public void closeInterface() {
-		distributedAgentsManager.closeInterface();
+		simulationEngineManager.closeInterface();
 	}
 
 	
@@ -118,4 +122,5 @@ public class DistSysRunContext {
 		return simulationEngineManager.requestEnvironmentInformation();
 		
 	}
+
 }

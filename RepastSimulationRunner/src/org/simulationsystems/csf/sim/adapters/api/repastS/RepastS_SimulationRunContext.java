@@ -1,7 +1,10 @@
 package org.simulationsystems.csf.sim.adapters.api.repastS;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import jzombies.Zombie;
 
 import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
@@ -12,6 +15,17 @@ import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfigu
 import org.simulationsystems.csf.sim.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
+import repast.simphony.context.space.grid.GridFactory;
+import repast.simphony.context.space.grid.GridFactoryFinder;
+import repast.simphony.query.space.grid.GridCell;
+import repast.simphony.query.space.grid.GridCellNgh;
+import repast.simphony.random.RandomHelper;
+import repast.simphony.space.grid.Grid;
+import repast.simphony.space.grid.GridBuilderParameters;
+import repast.simphony.space.grid.GridPoint;
+import repast.simphony.space.grid.SimpleGridAdder;
+import repast.simphony.space.grid.WrapAroundBorders;
+import repast.simphony.util.SimUtilities;
 
 /*
  * Provides the context for the Common Simulation Framework. This Simulation-Toolkit-specific
@@ -25,19 +39,19 @@ import repast.simphony.context.Context;
 public class RepastS_SimulationRunContext {
 	private SimulationRunContext simulationRunContext;
 	Context<Object> repastS_ContextForThisRun;
-	//TODO: Move this up to the main API level?
+	// TODO: Move this up to the main API level?
 	Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
 
 	public SimulationRunContext getSimulationRunContext() {
 		return simulationRunContext;
 	}
-	
+
 	/*
 	 * Convenience method to get the cached messgae exchange template
 	 */
 	public Document getCachedMessageExchangeTemplate() {
-		return this.getSimulationRunContext()
-		.getSimulationRunGroupContext().getCachedMessageExchangeTemplate();
+		return this.getSimulationRunContext().getSimulationRunGroupContext()
+				.getCachedMessageExchangeTemplate();
 	}
 
 	/*
@@ -51,10 +65,12 @@ public class RepastS_SimulationRunContext {
 	public RepastS_SimulationRunContext(SimulationRunContext simulationRunContext) {
 		this.simulationRunContext = simulationRunContext;
 
-		// TODO: Make initialized based on configuration. For now, hard code one distributed system.
+		// TODO: Make initialized based on configuration. For now, hard code one
+		// distributed system.
 		// TODO: Handle multiple distributed systems
-		// TODO: Move this to the main API level?  Same for the distributed side?
-		SimulationDistributedSystemManager dam = simulationRunContext.getSimulationDistributedSystemManagers().iterator().next();
+		// TODO: Move this to the main API level? Same for the distributed side?
+		SimulationDistributedSystemManager dam = simulationRunContext
+				.getSimulationDistributedSystemManagers().iterator().next();
 		simulationDistributedSystemManagers.add(dam);
 	}
 
@@ -65,8 +81,7 @@ public class RepastS_SimulationRunContext {
 	public SimulationRunGroup getSimulationRunGroup() {
 		return simulationRunContext.getSimulationRunGroup();
 	}
-	
-	
+
 	/*
 	 * 
 	 */
@@ -93,16 +108,48 @@ public class RepastS_SimulationRunContext {
 			SimulationRunContext simulationRunContext) {
 		simulationRunContext.messageDistributedSystems(frameworkMessage);
 	}
-	
+
 	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {
-		return getSimulationRunContext().readFrameworkMessageFromSimulationAdministrator();
+		return getSimulationRunContext()
+				.readFrameworkMessageFromSimulationAdministrator();
 	}
-	
+
 	public FrameworkMessage readFrameworkMessageFromDistributedSystem() {
 		return getSimulationRunContext().readFrameworkMessageFromDistributedSystem();
 	}
-	
+
 	public void closeInterface(SimulationRunContext simulationRunContext) {
 		simulationRunContext.closeInterface();
+	}
+
+	public void perceiveGlobalEnvironment() {
+		Context<Object> context = this.getCurrentRepastContext();
+
+		// TODO: Pull all of this from the builder file
+		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+		Grid<Object> grid = gridFactory.createGrid("grid", context,
+				new GridBuilderParameters<Object>(new WrapAroundBorders(),
+						new SimpleGridAdder<Object>(), true, 50, 50));
+		// get the grid location of this Human
+		GridPoint pt = grid.getLocation(this);
+		// use the GridCellNgh class to create GridCells for
+		// the surrounding neighborhood.
+		
+		
+		GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid, pt, Zombie.class,
+				1, 1);
+		List<GridCell<Zombie>> gridCells = nghCreator.getNeighborhood(true);
+		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
+
+		GridPoint pointWithLeastZombies = null;
+		int minCount = Integer.MAX_VALUE;
+		for (GridCell<Zombie> cell : gridCells) {
+			if (cell.size() < minCount) {
+				pointWithLeastZombies = cell.getPoint();
+				minCount = cell.size();
+			}
+		}
+		System.out.println(pointWithLeastZombies);
+
 	}
 }

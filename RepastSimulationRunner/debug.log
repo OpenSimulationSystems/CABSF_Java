@@ -1,0 +1,32 @@
+ERROR [main] 2014-12-03 03:00:01,466 repast.simphony.context.DefaultContext - Projection 'grid' has already been added
+Note that projection factories automatically add the projection to the context.
+java.lang.IllegalArgumentException: Duplicate projections added.
+	at repast.simphony.context.AbstractContext.addProjection(AbstractContext.java:360)
+	at repast.simphony.context.space.grid.DefaultGridFactory.createGrid(DefaultGridFactory.java:26)
+	at org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext.perceiveGlobalEnvironment(RepastS_SimulationRunContext.java:130)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunner.csfPreStep(RepastS_SimulationRunner.java:224)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunnerMain.main(RepastS_SimulationRunnerMain.java:76)
+ERROR [main] 2014-12-03 03:01:11,304 repast.simphony.context.DefaultContext - Projection 'grid' has already been added
+Note that projection factories automatically add the projection to the context.
+java.lang.IllegalArgumentException: Duplicate projections added.
+	at repast.simphony.context.AbstractContext.addProjection(AbstractContext.java:360)
+	at repast.simphony.context.space.grid.DefaultGridFactory.createGrid(DefaultGridFactory.java:26)
+	at org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext.perceiveGlobalEnvironment(RepastS_SimulationRunContext.java:130)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunner.csfPreStep(RepastS_SimulationRunner.java:224)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunnerMain.main(RepastS_SimulationRunnerMain.java:76)
+ERROR [main] 2014-12-03 03:03:30,310 repast.simphony.context.DefaultContext - Projection 'grid' has already been added
+Note that projection factories automatically add the projection to the context.
+java.lang.IllegalArgumentException: Duplicate projections added.
+	at repast.simphony.context.AbstractContext.addProjection(AbstractContext.java:360)
+	at repast.simphony.context.space.grid.DefaultGridFactory.createGrid(DefaultGridFactory.java:26)
+	at org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext.perceiveGlobalEnvironment(RepastS_SimulationRunContext.java:130)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunner.csfPreStep(RepastS_SimulationRunner.java:224)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunnerMain.main(RepastS_SimulationRunnerMain.java:78)
+ERROR [main] 2014-12-03 03:04:37,061 repast.simphony.context.DefaultContext - Projection 'grid' has already been added
+Note that projection factories automatically add the projection to the context.
+java.lang.IllegalArgumentException: Duplicate projections added.
+	at repast.simphony.context.AbstractContext.addProjection(AbstractContext.java:360)
+	at repast.simphony.context.space.grid.DefaultGridFactory.createGrid(DefaultGridFactory.java:26)
+	at org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext.perceiveGlobalEnvironment(RepastS_SimulationRunContext.java:130)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunner.csfPreStep(RepastS_SimulationRunner.java:224)
+	at org.simulationsystems.csf.sim.runners.repastS.RepastS_SimulationRunnerMain.main(RepastS_SimulationRunnerMain.java:78)

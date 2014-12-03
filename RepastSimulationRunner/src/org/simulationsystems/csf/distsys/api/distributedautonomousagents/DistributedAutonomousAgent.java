@@ -21,9 +21,6 @@ import org.simulationsystems.csf.sim.api.SimulationRunContext;
  * simulation side), this class does not perform any message brokering.
  */
 public class DistributedAutonomousAgent {
-	private String id;
-	private String name;
-	private Object distributedAgentModel;
 	private DistSysRunContext distSysRunContext;
 	private Object nativeDistributedAutonomousAgent;
 
@@ -52,15 +49,14 @@ public class DistributedAutonomousAgent {
 	// TODO: Clean this up. We need a specific manager for the type of client (JADE
 	// system, etc)
 	public DistributedAutonomousAgent(DistSysRunContext distSysRunContext,
-			String distributedAutonomousAgentID, Set<String> distributedAgentModelIDs, String distributedAgentModelName) {
+			String distributedAutonomousAgentID, Set<String> distributedAgentModelIDs,
+			String distributedAgentModelName) {
 		// public DistributedAutonomousAgent(DistSysRunContext distSysRunContext,
 		// String getCommonMessagingConcreteImplStr) {
 		this.distSysRunContext = distSysRunContext;
 		this.distributedAutonomousAgentID = distributedAutonomousAgentID;
-		
-		createDistributedAgentModels(
-				distributedAgentModelIDs,
-				distributedAgentModelName);
+
+		createDistributedAgentModels(distributedAgentModelIDs, distributedAgentModelName);
 	}
 
 	public String getDistributedAutonomousAgentID() {
@@ -84,8 +80,7 @@ public class DistributedAutonomousAgent {
 	 * time.
 	 */
 	public ConcurrentHashMap<String, DistributedAgentModel> createDistributedAgentModels(
-			Set<String> distributedAgentModelIDs,
-			String distributedAgentModelName) {
+			Set<String> distributedAgentModelIDs, String distributedAgentModelName) {
 		if (distributedAgentModelIDs.size() == 0) {
 			distributedAgentModelIDs.add(UUID.randomUUID().toString());
 		}
@@ -106,6 +101,14 @@ public class DistributedAutonomousAgent {
 	public void setNativeDistributedAutonomousAgent(
 			Object nativeDistributedAutonomousAgent) {
 		this.nativeDistributedAutonomousAgent = nativeDistributedAutonomousAgent;
+		// TODO: Throw exception if null native object?
+
+		if (nativeDistributedAutonomousAgent == null)
+			nativeDistributedAutonomousAgent = new String("null");
+
+		System.out.println("Successfully mapped Distributed Autonomous Agent: "
+				+ distributedAutonomousAgentID + " to native autonomous agent "
+				+ nativeDistributedAutonomousAgent.hashCode());
 	}
 
 	public Object logHelper() {

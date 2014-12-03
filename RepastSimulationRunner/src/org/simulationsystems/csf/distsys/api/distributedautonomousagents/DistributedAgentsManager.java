@@ -120,34 +120,31 @@ public class DistributedAgentsManager {
 		hs.add("DistributedAgentModel1");
 		DistributedAutonomousAgent distributedAutonomousAgent = createDistributedAutonomousAgent(
 				distSysRunContext, "DistributedSystemAutonomousAgent1", hs, "Human");
-		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
-				.get("DistributedAgentModel1").setDistributedNativeAgentModelObject(null);
+		distributedAutonomousAgent.setNativeDistributedAutonomousAgent(null);
 
 		hs = new HashSet<String>();
 		hs.add("DistributedAgentModel2");
 		DistributedAutonomousAgent distributedAutonomousAgent2 = createDistributedAutonomousAgent(
 				distSysRunContext, "DistributedSystemAutonomousAgent2", hs, "Human");
-		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
-				.get("DistributedAgentModel2").setDistributedNativeAgentModelObject(null);
+		distributedAutonomousAgent2.setNativeDistributedAutonomousAgent(null);
 
 		hs = new HashSet<String>();
 		hs.add("DistributedAgentModel3");
 		DistributedAutonomousAgent distributedAutonomousAgent3 = createDistributedAutonomousAgent(
 				distSysRunContext, "DistributedSystemAutonomousAgent3", hs, "Human");
-		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
-				.get("DistributedAgentModel3").setDistributedNativeAgentModelObject(null);
+		distributedAutonomousAgent3.setNativeDistributedAutonomousAgent(null);
 
 		hs = new HashSet<String>();
 		hs.add("DistributedAgentModel4");
 		DistributedAutonomousAgent distributedAutonomousAgent4 = createDistributedAutonomousAgent(
 				distSysRunContext, "DistributedSystemAutonomousAgent4", hs, "Human");
-		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
-				.get("DistributedAgentModel4").setDistributedNativeAgentModelObject(null);
-
+		distributedAutonomousAgent4.setNativeDistributedAutonomousAgent(null);
+		
+		hs.add("DistributedAgentModel5");
 		DistributedAutonomousAgent distributedAutonomousAgent5 = createDistributedAutonomousAgent(
 				distSysRunContext, "DistributedSystemAutonomousAgent5", hs, "Human");
-		distributedAutonomousAgent.getDistributedAgentModelIDStoAgentModels()
-				.get("DistributedAgentModel5").setDistributedNativeAgentModelObject(null);
+		distributedAutonomousAgent5.setNativeDistributedAutonomousAgent(null);
+
 	}
 
 	/*

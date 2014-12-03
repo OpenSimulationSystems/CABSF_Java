@@ -94,7 +94,10 @@ on the libraries tab, select add JARs, and select all of the JARs in
 the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Click on the libraries tab, Add External JARs, and select
 the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.bin_and_src_2.1.0
 </span>directory.</li><li>Add all of the External JARS in the following
-directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Click "OK".</li><li>Click "Add JARs", select all of the JARs in the RepastSimulationRunner/lib directory.</li><li>Right
+directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Add<span style="font-weight: bold;"> {Repast_Installation}/eclipse/plugins/repast.simphony.core_2.1.0/lib/colt-1.2.0-no_hep.jar</span></li><li>Click "OK".</li><li>Click "Add JARs", select all of the JARs in the RepastSimulationRunner/lib directory.&nbsp;</li><li>Right click on the JZombies_CSF_Demo project and add the RepastSimmulationRunner project.</li><li>The
+stop above created a circular dependency. &nbsp;To be able to compile,
+go to Windows -&gt; Prefereneces -&gt; Java-&gt; Compiler -&gt;
+Buliding -&gt; Circular Depencies and set it to Warning.</li><li>Right
 click on&nbsp;CSF_JADE_Controller_Agent, click on project-Build
 Path-Libraries. &nbsp;Select add External JARs, and select all of the
 JARs in the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Open
@@ -116,7 +119,7 @@ you can look
 for just the individual missing components. &nbsp;In order to get
 passed the Junit errors, right click on the "test" folder, right click
 New-Create a new JUnit test, give it a name, Next, select "Add Junit to
-the build path". &nbsp;The errors on the Junit tests should go away.</li><li>You are ready to start the simulation now.</li>
+the build path". &nbsp;The errors on the Junit tests should go away.</li><li></li><li>You are ready to start the simulation now.</li>
 <ol>
 </ol>
 </ol>
@@ -136,10 +139,18 @@ message the simulation engine (Repast) is trying to send those systems.
 </li><ol><li>Useful
 commands include "KEYS *" to see all messages, "lpop thechannelname" to
 pop a value from the list. &nbsp;Note, that these messaging structures
-may be changed in the future to apublish/subscribe model, which would require a different command to read the messages. </li></ol><li>Navigate to the launchers folder and double click on
-"startSimulation.bat". &nbsp; You should see that the
-RepastSimulationRunner, using the Simulation side of the CSF begins to
-process the simulation.</li><li>Click
+may be changed in the future to apublish/subscribe model, which would require a different command to read the messages. </li></ol><li>Navigate
+to the launchers folder and right click on "RepastSimulationRunner -
+CSF.launch". &nbsp; You should see that the
+RepastSimulationRunner, running the Simulation side of the CSF begins
+to execute. &nbsp;After right clicking this .launch file, you should
+now see this entry as a run configuration in the drop down next to the
+green run button at the top. &nbsp;In the future, you can execute this
+run from there. &nbsp;If any changes are needed such as a changed
+program argument (such as a new location of the CSF configuration
+file), changes directly to the run configuration will not change the
+.launch file. It would be best to change the .launch file, delete the
+run configuration, and right click again.</li><li>Click
 on the drop down next to the run button and select
 RepastSimulationRunner - CSF. &nbsp;You should see in the console that
 the Common Simulation Framework is polling the
@@ -149,8 +160,8 @@ in-memory cache for commands from you, the simulation administrator.</li><li>Sta
 of the processes are running now. &nbsp;The distributed system(s) are
 waiting on the simulation engine and as mentioned already, the
 simulation engine is waiting on you, the simulation administrator.</li><li>Start
-the simulation run(s) by ipassing a START_SIMULATION command to the
-simulation engine. &nbsp;Double click on startSimulationRuns.bat to do
+the simulation run(s) by&nbsp;passing a START_SIMULATION command to the
+simulation engine. &nbsp;Double click on"sendStartSimulationCommandFromAdmin.bat"t to do
 so.</li><li>If you terminate the simulation early, make sure to flush the Redis cache by clicking on flushRedisCache.bat. &nbsp;</li></ol>
 </ol>
 </body></html>

@@ -147,4 +147,5 @@ public class SimulationRunContext {
 		return mgr.readFrameworkMessageFromDistributedSystem();
 		
 	}
+
 }

@@ -5,6 +5,10 @@ package jzombies;
 
 import java.util.List;
 
+import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
+
+import repast.simphony.context.Context;
+import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 import repast.simphony.query.space.grid.GridCell;
@@ -36,9 +40,17 @@ public class Human {
 	@Watch(watcheeClassName = "jzombies.Zombie", watcheeFieldNames = "moved", 
 			query = "within_vn 1", whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void run() {
+		@SuppressWarnings("unchecked")
+		Context<Object> repastContext = RunState.getInstance()
+				.getMasterContext();
+		Iterable<Class> simulationAgentsClasses = repastContext.getAgentTypes();
+		//for (Class clazz : simulationAgentsClasses )
+		Iterable<Object> csfRepastContextIterable = RunState.getInstance()
+		.getMasterContext().getAgentLayer(RepastS_SimulationRunContext.class);
+		RepastS_SimulationRunContext repastS_SimulationRunContext = (RepastS_SimulationRunContext) csfRepastContextIterable.iterator().next();
+
 		// get the grid location of this Human
 		GridPoint pt = grid.getLocation(this);
-
 		// use the GridCellNgh class to create GridCells for
 		// the surrounding neighborhood.
 		GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid, pt,

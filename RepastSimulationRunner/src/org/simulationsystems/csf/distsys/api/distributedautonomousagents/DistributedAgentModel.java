@@ -9,9 +9,6 @@ public class DistributedAgentModel {
 	String distributedAgentModelID;
 	String name;
 	
-	private Object distributedNativeAgentModelObject = new Object();
-
-
 	public DistributedAgentModel(DistSysRunContext distSysRunContext,
 			String distributedAgentModelID, String distributedAgentModelName) {
 		this.distributedAgentModelID = distributedAgentModelID;
@@ -21,9 +18,5 @@ public class DistributedAgentModel {
 			this.distributedAgentModelID = UUID.randomUUID().toString();
 	}
 	
-	public void setDistributedNativeAgentModelObject(Object distributedNativeAgentModelObject) {
-		this.distributedNativeAgentModelObject = distributedNativeAgentModelObject;
-		
-		return;
-	}
+
 }

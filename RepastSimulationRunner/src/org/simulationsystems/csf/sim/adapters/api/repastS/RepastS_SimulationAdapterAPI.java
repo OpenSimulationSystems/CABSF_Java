@@ -113,7 +113,8 @@ public class RepastS_SimulationAdapterAPI {
 		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
 				simulationRunContext);
 		repastS_SimulationRunContext.setRepastContextForThisRun(repastContextForThisRun);
-
+		repastContextForThisRun.add(repastS_SimulationRunContext);
+		
 		// LOW: Support multiple Simulation Run Groups. For now just assume that there's
 		// one.
 		// LOW: Handle multiple distributed systems
@@ -182,8 +183,9 @@ public class RepastS_SimulationAdapterAPI {
 			throw new CsfMessagingRuntimeException(
 					"Did not understand the message from the simulation distributed system.");
 
-		// The distributed agent (models) have already been mapped.
-
+		// The distributed agent (models) have previously been mapped.  
+		// Now we're ready to perform the steps in the simulation.
+		
 		return repastS_SimulationRunContext;
 	}
 

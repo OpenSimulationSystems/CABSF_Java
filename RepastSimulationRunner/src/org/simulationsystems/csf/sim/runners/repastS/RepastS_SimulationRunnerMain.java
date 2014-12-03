@@ -55,7 +55,7 @@ public class RepastS_SimulationRunnerMain {
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the configuration
-			double max_ticks = 3;
+			Double max_ticks = null; //= 3d;
 			double tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 
 			System.out
@@ -73,15 +73,17 @@ public class RepastS_SimulationRunnerMain {
 				}
 				System.out.println("Stepping");
 				
-				repastS_SimulationRunner.step(); // execute all scheduled actions at next tick
 
+				repastS_SimulationRunner.step(); // execute all scheduled actions at next tick
+				repastS_SimulationRunner.csfPreStep(repastS_SimulationRunContext);
+				
 				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 				System.out.println("Finished Stepping.  New Tick: " + tick);
 
 				// Call stop() after the last step. One "end" action is left, so two extra
 				// iterations of this loop will occur instead of one extra one when the end is
 				// specified from within the Repast model.
-				if (max_ticks - tick == 0.0 && !repastS_SimulationRunner.getIsStopped()) {
+				if (max_ticks != null && max_ticks - tick == 0.0 && !repastS_SimulationRunner.getIsStopped()) {
 					repastS_SimulationRunner.stop();
 					System.out.println("Stopping");
 				}

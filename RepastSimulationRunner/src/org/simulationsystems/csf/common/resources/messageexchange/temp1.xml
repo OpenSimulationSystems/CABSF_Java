@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CsfMessageExchange
-	xmlns="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0"
+
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Identifiers>
 		<Simulation>
@@ -54,8 +54,8 @@
 						</Command>
 					</ControlMessages>
 				</AllDistributedAutonomousAgents>
-				<!-- To a specific Distributed Autonomous Agent -->
 				<DistributedAutonomousAgent>
+					<!-- To a specific Distributed Autonomous Agent -->
 					<Name />
 					<ID />
 					<AgentModels>
@@ -67,41 +67,10 @@
 								</Command>
 							</ControlMessages>
 						</AllAgentModels>
-						<!-- Message submitted to this one agent model -->
-						<AgentModel>
+						<AgentModel> <!-- Message submitted to this one agent model -->
 							<Actor>
 								<!-- RE: Self or another agent model -->
 								<ID />
-								<!-- EnvironmentChanges Could be used to communicate all local environment 
-									information if desired, not just changes since the last tick -->
-								<EnvironmentChanges>
-									<CommonEnvironmentChanges>
-										<EnvironmentChange>
-											<!-- self = the actor above. Initial location or change -->
-											<Location id="self">
-												<GridPointX />
-												<GridPointY />
-												<GridPointZ />
-											</Location>
-											<!-- Example of an environment change other than for self -->
-											<!-- -->
-											<!-- <Location id="" category="neighborhood" includecenter="true" 
-												entitytype="Zombie"> <GridPointX /> <GridPointY /> <GridPointZ /> </Location> -->
-										</EnvironmentChange>
-										<EnvironmentChange>
-										</EnvironmentChange>
-									</CommonEnvironmentChanges>
-									<SimulationDefinedEnvironmentChanges>
-										<EnvironmentChange>
-											<!-- key/value pair suggested, format is open -->
-										</EnvironmentChange>
-									</SimulationDefinedEnvironmentChanges>
-								</EnvironmentChanges>
-								<!-- These are changes in state that are not observable by other 
-									agents. Only for use by this agent or to populate the global environment 
-									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
-									for changes that are at least in theory observable by other agents/agent 
-									models in the simulation model. -->
 								<Actions>
 									<!-- Common CSF Actions -->
 									<CommonActions>
@@ -132,21 +101,53 @@
 										</Message>
 									</SimulationDefinedMessages>
 								</MessageExchange>
-								<InternalStateChanges>
-									<CommonInternalStateChanges>
-										<InternalStateChange>
+								<!-- Could be used to communicate all local environment information, 
+									not just changes since the last tick -->
+								<EnvironmentChanges>
+									<CommonEnvironmentChanges>
+										<EnvironmentChange>
+											<!-- self = the actor above. Initial location or change -->
+											<Location id="self">
+												<GridPointX />
+												<GridPointY />
+												<GridPointZ />
+											</Location>
+											<Location type="neighborhood" includecenter="true"
+												entitytype="Zombie">
+												<GridPointX />
+												<GridPointY />
+												<GridPointZ />
+											</Location>
+										</EnvironmentChange>
+										<EnvironmentChange>
+										</EnvironmentChange>
+									</CommonEnvironmentChanges>
+									<SimulationDefinedEnvironmentChanges>
+										<EnvironmentChange>
+											<!-- key/value pair suggested, format is open -->
+										</EnvironmentChange>
+									</SimulationDefinedEnvironmentChanges>
+								</EnvironmentChanges>
+								<!-- These are changes in state that are not observable by other 
+									agents. Only for use by this agent or to populate the global environment 
+									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
+									for changes that are at least in theory observable by other agents/agent 
+									models in the simulation model. -->
+								<StateChanges>
+									<CommonStateChanges>
+										<StateChange>
 											<!-- Key value pair -->
-										</InternalStateChange>
-										<InternalStateUpdate />
-									</CommonInternalStateChanges>
+										</StateChange>
+										<StateUpdate />
+									</CommonStateChanges>
 									<!-- User/simulation defined common states -->
 									<!-- Children may contain any format -->
-									<SimulationDefinedInternalStateChanges>
-										<InternalStateChange>
+									<SimulationDefinedStateChanges>
+										<StateChange>
 											<!-- key/value pair suggested, format is open -->
-										</InternalStateChange>
-									</SimulationDefinedInternalStateChanges>
-								</InternalStateChanges>
+										</StateChange>
+									</SimulationDefinedStateChanges>
+								</StateChanges>
 							</Actor>
 						</AgentModel>
 					</AgentModels>

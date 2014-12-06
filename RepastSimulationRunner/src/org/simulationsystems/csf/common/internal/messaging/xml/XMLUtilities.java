@@ -91,13 +91,17 @@ public class XMLUtilities {
 
 	}
 
-	static public List<? extends Content> executeXPath(Document document,
-			String xpathStr, String namespace, Filter<? extends Content> filter) {
+	static public List<? extends Content> executeXPath(Object document, String xpathStr,
+			String namespaceStr, Filter<? extends Content> filter) {
 		XPathFactory xpathFactory = XPathFactory.instance();
 		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
 
-		XPathExpression<? extends Content> expr = xpathFactory.compile(xpathStr, filter,
-				null, Namespace.getNamespace("x", namespace));
+		XPathExpression<? extends Content> expr = null;
+		if (namespaceStr != null)
+			expr = xpathFactory.compile(xpathStr, filter, null,
+					Namespace.getNamespace("x", namespaceStr));
+		else
+			expr = xpathFactory.compile(xpathStr, filter);
 
 		List<? extends Content> xPathSearchedNodes = null;
 		try {
@@ -123,6 +127,15 @@ public class XMLUtilities {
 			outputter = new XMLOutputter();
 		String xmlString = outputter.outputString(document);
 		return xmlString;
-
+	}
+	
+	static public String convertElementToXMLString(Element document, boolean prettyPrint) {
+		XMLOutputter outputter = null;
+		if (prettyPrint)
+			outputter = new XMLOutputter(Format.getPrettyFormat());
+		else
+			outputter = new XMLOutputter();
+		String xmlString = outputter.outputString(document);
+		return xmlString;
 	}
 }

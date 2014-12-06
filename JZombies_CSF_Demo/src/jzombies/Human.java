@@ -66,6 +66,9 @@ public class Human {
 				minCount = cell.size();
 			}
 		}
+		//We now have the environment information needed to the distributed agent
+		//pt
+		//pointWithLeastZombies
 		
 		if (energy > 0) {
 			moveTowards(pointWithLeastZombies);

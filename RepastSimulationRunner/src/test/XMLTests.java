@@ -9,26 +9,69 @@ import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
+import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 
-
 public class XMLTests {
+	static private Document documentTemplateInstance = null;
+	static private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
+	static private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
+	static private Element agentModelTemplate = null;
+	static private Element locationTemplate;
+	static private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
+
+	static Document getDocument() {
+		return documentTemplateInstance.clone();
+	}
+
+	static private void setupElementTemplates(Document doc) {
+		//Agent Model Template
+		List<Element> agentModel = (List<Element>) XMLUtilities
+				.executeXPath(
+						doc,
+						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel[1]",
+						namespaceStr, elementFilter);
+		agentModelTemplate = agentModel.get(0);
+		
+		//Location Template
+		@SuppressWarnings("unchecked")
+		// TODO: Support multiple actors
+		List<Element> agentLocation = (List<Element>) XMLUtilities
+				.executeXPath(
+						doc,
+						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel/x:Actor/x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location",
+						namespaceStr, elementFilter);
+		locationTemplate = agentLocation.get(0).clone();
+		locationTemplate.setAttribute("id", "");
+	}
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		try {
+			documentTemplateInstance = MessagingUtilities.createCachedMessageExchangeTemplate();
+			setupElementTemplates(documentTemplateInstance);
+		} catch (JDOMException e) {
+
+		} catch (IOException e) {
+
+		}
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
+
+	private boolean firstAgentModelPopulated;
 
 	@Before
 	public void setUp() throws Exception {
@@ -39,22 +82,114 @@ public class XMLTests {
 	}
 
 	@Test
-	public void test() {
-		try {
-			Document doc = MessagingUtilities.createCachedMessageExchangeTemplate();
-			Filter<Element> filter = new org.jdom2.filter.ElementFilter();
-			
-			@SuppressWarnings("unchecked")
-			List<Element> xPathSearchedNodes = (List<Element>) XMLUtilities.executeXPath(doc, "/x:CsfMessageExchange/x:SendingEntity/x:Name","http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1",filter);
-			System.out.println(xPathSearchedNodes.get(0).getValue());
-			
-			xPathSearchedNodes.get(0).setText("new");
-			System.out.println("New Document: " + new XMLOutputter().outputString(doc));
-		} catch (JDOMException e) {
-			
-		} catch (IOException e) {
-			
+	@Ignore
+	public void testCachedMessageExchangeTemplate() {
+		Document doc = getDocument();
+
+		@SuppressWarnings("unchecked")
+		List<Element> xPathSearchedNodes = (List<Element>) XMLUtilities.executeXPath(doc,
+				"/x:CsfMessageExchange/x:SendingEntity/x:Name", namespaceStr,
+				elementFilter);
+		System.out.println(xPathSearchedNodes.get(0).getValue());
+
+		xPathSearchedNodes.get(0).setText("new");
+		System.out.println("New Document: " + new XMLOutputter().outputString(doc));
+	}
+
+	// TODO: Extents/multiple dimensions
+	public Element populateThisActorLocationInAgentModel(Element actor, String gridPointX,
+			String gridPointY) {
+		@SuppressWarnings("unchecked")
+		// TODO: Support multiple actors
+		List<Element> thisAgentLocation = (List<Element>) XMLUtilities
+				.executeXPath(
+						actor,
+						"./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location[@id='self']",
+						namespaceStr, elementFilter);
+
+		thisAgentLocation.get(0).getChild("GridPointX", namespace).setText(gridPointX);
+		thisAgentLocation.get(0).getChild("GridPointY", namespace).setText(gridPointY);
+		XMLUtilities.convertElementToXMLString(thisAgentLocation.get(0), true);
+		return actor;
+	}
+
+	public void setIDForActorInAgentModel(Content actor, String ID) {
+		// TODO: Support multiple actors
+		List<Element> agentModelID = (List<Element>) XMLUtilities.executeXPath(
+				actor, "./x:ID", namespaceStr, elementFilter);
+		Element e = agentModelID.get(0);
+		e.setText(ID);
+
+	}
+
+	private Element getNextAgentModelActor(Object doc) {
+		@SuppressWarnings("unchecked")
+		List<Element> agentModels = (List<Element>) XMLUtilities
+				.executeXPath(
+						doc,
+						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel",
+						namespaceStr, elementFilter);
+		Element agentModel = null;
+		if (!firstAgentModelPopulated) {
+			firstAgentModelPopulated = true;
+			agentModel = agentModels.get(0).getChild("Actor", namespace);
+			return agentModel;
+		} else {
+			agentModel = agentModelTemplate.clone();
+			agentModels.get(0).addContent(agentModel);
+			return agentModel;
 		}
+	}
+
+	private Element getNextNonSelfLocationForActor(Element actor) {
+		@SuppressWarnings("unchecked")
+		List<Element> environmentChange = (List<Element>) XMLUtilities.executeXPath(
+				actor,
+				"./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange",
+				namespaceStr, elementFilter);
+		Element newLocation = locationTemplate.clone();
+		environmentChange.get(0).addContent(newLocation);
+		return newLocation;
+	}
+
+	/*
+	 * Returns an
+	 */
+	public Element processActorForAgentModel(Element actor, String ID, String gridPointX,
+			String gridPointY) {
+		// Select Agent Model
+
+		// Go ahead and populate the already created agent model from the Document
+		// template
+		setIDForActorInAgentModel(actor, ID);
+		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY);
+	}
+
+	private Element populatePointWithLeastZombies(Element agentModelActor, String GridPointX,
+			String GridPointY) {
+		Element location = getNextNonSelfLocationForActor(agentModelActor);
+		location.getChild("GridPointX",namespace).setText(GridPointX);
+		location.getChild("GridPointY",namespace).setText(GridPointY);
+		return location;
+	}
+
+
+	@Test
+	public void testSetInitialLocationOfLocalZombies() {
+		Document doc = getDocument();
+		
+		@SuppressWarnings("unchecked")
+
+		//TODO: Support for other actors
+		Element agentModelActor = getNextAgentModelActor(doc);
+		
+		// For each agent model/actor
+		Element actor = processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
+		populatePointWithLeastZombies(agentModelActor, "5", "6");
+
+		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+		String xmlString = outputter.outputString(doc);
+		System.out.println(xmlString);
 	}
 
 }

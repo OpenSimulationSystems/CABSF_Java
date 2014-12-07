@@ -5,10 +5,10 @@ import java.util.UUID;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
-import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfCheckedException;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfMessagingRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;

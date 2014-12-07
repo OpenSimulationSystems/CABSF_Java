@@ -2,9 +2,10 @@ package org.simulationsystems.csf.distsys.api;
 
 import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
+import org.simulationsystems.csf.common.csfmodel.api.CsfRunGroupContext;
 import org.simulationsystems.csf.distsys.api.configuration.DistSysRunGroupConfiguration;
 
-public class DistSysRunGroupContext {
+public class DistSysRunGroupContext extends CsfRunGroupContext  {
 	private SimulationRunGroup simulationRunGroup;
 	private DistSysRunGroupConfiguration distSysRunGroupConfiguration;
 
@@ -44,7 +45,8 @@ public class DistSysRunGroupContext {
 	}
 
 	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
-		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;		
+		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;	
+		setupElementTemplates(cachedMessageExchangeTemplate);
 	}
 
 

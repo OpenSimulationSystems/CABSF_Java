@@ -19,11 +19,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
+import org.simulationsystems.csf.sim.api.SimulationAPI;
+import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
 
 public class XMLTests {
-	static private Document documentTemplateInstance = null;
+/*	static private Document documentTemplateInstance = null;
 	static private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	static private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 	static private Element agentModelTemplate = null;
@@ -35,15 +41,15 @@ public class XMLTests {
 	}
 
 	static private void setupElementTemplates(Document doc) {
-		//Agent Model Template
+		// Agent Model Template
 		List<Element> agentModel = (List<Element>) XMLUtilities
 				.executeXPath(
 						doc,
 						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel[1]",
 						namespaceStr, elementFilter);
 		agentModelTemplate = agentModel.get(0);
-		
-		//Location Template
+
+		// Location Template
 		@SuppressWarnings("unchecked")
 		// TODO: Support multiple actors
 		List<Element> agentLocation = (List<Element>) XMLUtilities
@@ -58,7 +64,8 @@ public class XMLTests {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
-			documentTemplateInstance = MessagingUtilities.createCachedMessageExchangeTemplate();
+			documentTemplateInstance = MessagingUtilities
+					.createCachedMessageExchangeTemplate();
 			setupElementTemplates(documentTemplateInstance);
 		} catch (JDOMException e) {
 
@@ -71,7 +78,7 @@ public class XMLTests {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	private boolean firstAgentModelPopulated;
+	private boolean firstAgentModelActorPopulated;
 
 	@Before
 	public void setUp() throws Exception {
@@ -97,8 +104,8 @@ public class XMLTests {
 	}
 
 	// TODO: Extents/multiple dimensions
-	public Element populateThisActorLocationInAgentModel(Element actor, String gridPointX,
-			String gridPointY) {
+	public Element populateThisActorLocationInAgentModel(Element actor,
+			String gridPointX, String gridPointY) {
 		@SuppressWarnings("unchecked")
 		// TODO: Support multiple actors
 		List<Element> thisAgentLocation = (List<Element>) XMLUtilities
@@ -115,8 +122,8 @@ public class XMLTests {
 
 	public void setIDForActorInAgentModel(Content actor, String ID) {
 		// TODO: Support multiple actors
-		List<Element> agentModelID = (List<Element>) XMLUtilities.executeXPath(
-				actor, "./x:ID", namespaceStr, elementFilter);
+		List<Element> agentModelID = (List<Element>) XMLUtilities.executeXPath(actor,
+				"./x:ID", namespaceStr, elementFilter);
 		Element e = agentModelID.get(0);
 		e.setText(ID);
 
@@ -130,8 +137,8 @@ public class XMLTests {
 						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel",
 						namespaceStr, elementFilter);
 		Element agentModel = null;
-		if (!firstAgentModelPopulated) {
-			firstAgentModelPopulated = true;
+		if (!firstAgentModelActorPopulated) {
+			firstAgentModelActorPopulated = true;
 			agentModel = agentModels.get(0).getChild("Actor", namespace);
 			return agentModel;
 		} else {
@@ -152,9 +159,9 @@ public class XMLTests {
 		return newLocation;
 	}
 
-	/*
+	
 	 * Returns an
-	 */
+	 
 	public Element processActorForAgentModel(Element actor, String ID, String gridPointX,
 			String gridPointY) {
 		// Select Agent Model
@@ -165,30 +172,53 @@ public class XMLTests {
 		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY);
 	}
 
-	private Element populatePointWithLeastZombies(Element agentModelActor, String GridPointX,
-			String GridPointY) {
+	private Element populatePointWithLeastZombies(Element agentModelActor,
+			String GridPointX, String GridPointY) {
 		Element location = getNextNonSelfLocationForActor(agentModelActor);
-		location.getChild("GridPointX",namespace).setText(GridPointX);
-		location.getChild("GridPointY",namespace).setText(GridPointY);
+		location.getChild("GridPointX", namespace).setText(GridPointX);
+		location.getChild("GridPointY", namespace).setText(GridPointY);
 		return location;
-	}
-
+	}*/
 
 	@Test
 	public void testSetInitialLocationOfLocalZombies() {
-		Document doc = getDocument();
-		
-		@SuppressWarnings("unchecked")
+		/*
+		 * Document doc = getDocument();
+		 * 
+		 * @SuppressWarnings("unchecked")
+		 * 
+		 * //TODO: Support for other actors Element agentModelActor =
+		 * getNextAgentModelActor(doc);
+		 * 
+		 * // For each agent model/actor Element actor =
+		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
+		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
+		 */
+		SimulationAPI simulationAPI = SimulationAPI.getInstance();
+		String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
+		SimulationRunGroupContext simulationRunGroupContext = null;
+		try {
+			simulationRunGroupContext = simulationAPI.initializeAPI("TEMP",
+					simToolNameToSetInSimulationAPI);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		//TODO: Support for other actors
-		Element agentModelActor = getNextAgentModelActor(doc);
+		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+				simulationRunGroupContext.getCachedMessageExchangeTemplate());
+		Element agentModelActor = msg.getNextAgentModelActor(msg.getDocument(), simulationRunGroupContext.getCachedAgentModelActorTemplate());
+		msg.processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
+		msg.populatePointWithLeastZombies(agentModelActor, "3", "4",simulationRunGroupContext.getCachedLocationTemplate());
 		
-		// For each agent model/actor
-		Element actor = processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
-		populatePointWithLeastZombies(agentModelActor, "5", "6");
+		Element agentModelActor2 = msg.getNextAgentModelActor(msg.getDocument(), simulationRunGroupContext.getCachedAgentModelActorTemplate());
+		msg.processActorForAgentModel(agentModelActor2, "teststring2", "5", "6");
+		msg.populatePointWithLeastZombies(agentModelActor2, "7", "8",simulationRunGroupContext.getCachedLocationTemplate());
 
+		
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-		String xmlString = outputter.outputString(doc);
+		String xmlString = outputter.outputString(msg.getDocument());
 		System.out.println(xmlString);
 	}
 

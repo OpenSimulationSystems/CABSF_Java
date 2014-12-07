@@ -1,7 +1,7 @@
 package org.simulationsystems.csf.common.csfmodel.messaging.messages;
 
 import org.jdom2.Document;
-import org.simulationsystems.csf.common.csfmodel.FRAMEWORK_COMMAND;
+import org.jdom2.Element;
 
 /*
  * A message from the framework or to the framework.
@@ -27,5 +27,14 @@ public interface FrameworkMessage {
 	FRAMEWORK_COMMAND getFrameworkToSimulationEngineCommand();
 
 	STATUS getStatus();
+
+	Element processActorForAgentModel(Element actor, String ID, String gridPointX,
+			String gridPointY);
+
+	Element populatePointWithLeastZombies(Element agentModelActor, String GridPointX,
+			String GridPointY, Element cachedLocationTemplate);
+
+	Element getNextAgentModelActor(Object doc, Element cachedAgentModelTemplate);
+
 
 }

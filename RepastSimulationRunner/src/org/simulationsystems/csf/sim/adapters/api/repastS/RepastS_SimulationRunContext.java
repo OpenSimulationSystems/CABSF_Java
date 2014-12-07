@@ -122,7 +122,7 @@ public class RepastS_SimulationRunContext {
 		simulationRunContext.closeInterface();
 	}
 
-	public void perceiveGlobalEnvironment() {
+/*	public void perceiveGlobalEnvironment() {
 		Context<Object> context = this.getCurrentRepastContext();
 
 		// TODO: Pull all of this from the builder file
@@ -151,5 +151,5 @@ public class RepastS_SimulationRunContext {
 		}
 		System.out.println(pointWithLeastZombies);
 
-	}
+	}*/
 }

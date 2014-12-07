@@ -73,10 +73,9 @@ public class RepastS_SimulationRunnerMain {
 				}
 				System.out.println("Stepping");
 				
-
+				//repastS_SimulationRunner.csfPreStep(repastS_SimulationRunContext);
 				repastS_SimulationRunner.step(); // execute all scheduled actions at next tick
-				repastS_SimulationRunner.csfPreStep(repastS_SimulationRunContext);
-				
+
 				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 				System.out.println("Finished Stepping.  New Tick: " + tick);
 

@@ -1,10 +1,15 @@
 package org.simulationsystems.csf.sim.api;
 
+import java.util.List;
+
 import org.jdom2.Document;
+import org.jdom2.Element;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
+import org.simulationsystems.csf.common.csfmodel.api.CsfRunGroupContext;
+import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.sim.api.configuration.SimulationRunGroupConfiguration;
 
-public class SimulationRunGroupContext {
+public class SimulationRunGroupContext extends CsfRunGroupContext {
 	private SimulationRunGroup simulationRunGroup;
 	private SimulationRunGroupConfiguration simulationRunGroupConfiguration;
 	private Document cachedMessageExchangeTemplate;
@@ -42,7 +47,7 @@ public class SimulationRunGroupContext {
 	}
 	
 	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
-		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;		
+		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;
+		setupElementTemplates(cachedMessageExchangeTemplate);
 	}
-
 }

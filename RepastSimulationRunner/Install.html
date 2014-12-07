@@ -94,8 +94,10 @@ on the libraries tab, select add JARs, and select all of the JARs in
 the&nbsp;RepastSimulationRunner/lib folder and its subfolders.</li><li>Click on the libraries tab, Add External JARs, and select
 the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.bin_and_src_2.1.0
 </span>directory.</li><li>Add all of the External JARS in the following
-directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Add<span style="font-weight: bold;"> {Repast_Installation}/eclipse/plugins/repast.simphony.core_2.1.0/lib/colt-1.2.0-no_hep.jar</span></li><li>Click "OK".</li><li>Click "Add JARs", select all of the JARs in the RepastSimulationRunner/lib directory.&nbsp;</li><li>Right click on the JZombies_CSF_Demo project and add the RepastSimmulationRunner project.</li><li>The
-stop above created a circular dependency. &nbsp;To be able to compile,
+directory:&nbsp;<span style="font-weight: bold;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li><li>Add<span style="font-weight: bold;"> {Repast_Installation}/eclipse/plugins/repast.simphony.core_2.1.0/lib/colt-1.2.0-no_hep.jar</span></li><li>Click "OK".</li><li>Click "Add JARs", select all of the JARs in the RepastSimulationRunner/lib directory.&nbsp;</li><li>Right click on the JZombies_CSF_Demo project and add the RepastSimmulationRunner project.</li><li>Right
+click on&nbsp;JZombies_CSF_Demo, click on project-Build
+Path-Libraries. &nbsp;Select add External JARs, and select the JDOM jar in the&nbsp;RepastSimulationRunner/lib/jdom2.05 folder.</li><li>The
+stop above created a circular dependency (JZombies on the runner and vice versa). &nbsp;To be able to compile,
 go to Windows -&gt; Prefereneces -&gt; Java-&gt; Compiler -&gt;
 Buliding -&gt; Circular Depencies and set it to Warning.</li><li>Right
 click on&nbsp;CSF_JADE_Controller_Agent, click on project-Build

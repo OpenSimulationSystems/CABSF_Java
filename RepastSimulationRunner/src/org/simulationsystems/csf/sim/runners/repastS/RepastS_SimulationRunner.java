@@ -220,9 +220,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		return isStopped;
 	}
 
-	public void csfPreStep(RepastS_SimulationRunContext repastS_SimulationRunContext) {
+/*	public void csfPreStep(RepastS_SimulationRunContext repastS_SimulationRunContext) {
 		repastS_SimulationRunContext.perceiveGlobalEnvironment();
 		
-	}
+	}*/
 
 }

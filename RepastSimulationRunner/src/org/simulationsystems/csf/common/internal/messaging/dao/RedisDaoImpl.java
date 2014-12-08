@@ -15,8 +15,8 @@ import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.distsys.api.DistSysRunContext;
-import org.simulationsystems.csf.sim.api.SimulationRunContext;
+import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
+import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 
 public class RedisDaoImpl implements CommonMessagingDao {
 	static private CommonMessagingDao instance = new RedisDaoImpl();
@@ -74,10 +74,10 @@ public class RedisDaoImpl implements CommonMessagingDao {
 	 * 
 	 * @see
 	 * org.simulationsystems.csf.common.internal.messaging.dao.CommonMessagingDao
-	 * #sendMessagesToDistributedAgents(org.simulationsystems.csf.sim.api.
+	 * #sendMessagesToDistributedAgents(org.simulationsystems.csf.sim.core.api.
 	 * messaging.FrameworkMessage,
-	 * org.simulationsystems.csf.sim.api.messaging.DistributedSystemAgentSet,
-	 * org.simulationsystems.csf.sim.api.SimulationRunContext)
+	 * org.simulationsystems.csf.sim.core.api.messaging.DistributedSystemAgentSet,
+	 * org.simulationsystems.csf.sim.core.api.SimulationRunContext)
 	 */
 	@Override
 	public void sendMessagesToDistributedAgents(

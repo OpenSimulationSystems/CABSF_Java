@@ -8,10 +8,10 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_CO
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
-import org.simulationsystems.csf.distsys.adapters.api.jade.JADE_MAS_AdapterAPI;
-import org.simulationsystems.csf.distsys.adapters.api.jade.JADE_MAS_RunContext;
-import org.simulationsystems.csf.distsys.adapters.api.jade.JADE_MAS_RunGroupContext;
-import org.simulationsystems.csf.distsys.adapters.api.jade.mocks.NativeJADEMockContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunGroupContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.NativeJADEMockContext;
 
 public class JADE_Controller_Agent {
 	JADE_MAS_AdapterAPI jade_MAS_AdapterAPI;

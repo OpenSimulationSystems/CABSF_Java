@@ -238,16 +238,11 @@ public class FrameworkMessageDocumentHelper {
 		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY);
 	}
 
-	public Element populatePointWithLeastZombies(Element agentModelActor,
-			String GridPointX, String GridPointY, Element cachedLocationTemplate) {
-		Element location = getNextNonSelfLocationForActor(agentModelActor,
-				cachedLocationTemplate);
-		location.getChild("GridPointX", namespace).setText(GridPointX);
-		location.getChild("GridPointY", namespace).setText(GridPointY);
-		location.setAttribute("category","neighborhood");
-		location.setAttribute("includecenter","true");
-		location.setAttribute("entitytype","Zombie");
-		return location;
+	public Element processDistributedAutonomousAgent(String ID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
 
 }

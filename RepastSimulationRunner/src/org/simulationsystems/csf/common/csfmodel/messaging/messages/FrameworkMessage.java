@@ -31,10 +31,11 @@ public interface FrameworkMessage {
 	Element processActorForAgentModel(Element actor, String ID, String gridPointX,
 			String gridPointY);
 
-	Element populatePointWithLeastZombies(Element agentModelActor, String GridPointX,
-			String GridPointY, Element cachedLocationTemplate);
-
+	Element processDistributedAutonomousAgent(String ID);
+	
 	Element getNextAgentModelActor(Object doc, Element cachedAgentModelTemplate);
+
+	Element getNextNonSelfLocationForActor(Element actor, Element cachedLocationTemplate);
 
 
 }

@@ -25,8 +25,9 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
-import org.simulationsystems.csf.sim.api.SimulationAPI;
-import org.simulationsystems.csf.sim.api.SimulationRunGroupContext;
+import org.simulationsystems.csf.sim.core.api.SimulationAPI;
+import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
+import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
 
 public class XMLTests {
 /*	static private Document documentTemplateInstance = null;
@@ -196,10 +197,10 @@ public class XMLTests {
 		 */
 		SimulationAPI simulationAPI = SimulationAPI.getInstance();
 		String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
-		SimulationRunGroupContext simulationRunGroupContext = null;
+		SimulationRunGroupContext simulationRunGroupContext=null;
+		SimulationRunContext simulationRunContext = null;
 		try {
-			simulationRunGroupContext = simulationAPI.initializeAPI("TEMP",
-					simToolNameToSetInSimulationAPI);
+			simulationRunGroupContext = simulationAPI.initializeAPI("TEMP", simToolNameToSetInSimulationAPI);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -210,11 +211,11 @@ public class XMLTests {
 				simulationRunGroupContext.getCachedMessageExchangeTemplate());
 		Element agentModelActor = msg.getNextAgentModelActor(msg.getDocument(), simulationRunGroupContext.getCachedAgentModelActorTemplate());
 		msg.processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
-		msg.populatePointWithLeastZombies(agentModelActor, "3", "4",simulationRunGroupContext.getCachedLocationTemplate());
+		//msg.populatePointWithLeastZombies(agentModelActor, "3", "4",simulationRunGroupContext.getCachedLocationTemplate());
 		
 		Element agentModelActor2 = msg.getNextAgentModelActor(msg.getDocument(), simulationRunGroupContext.getCachedAgentModelActorTemplate());
 		msg.processActorForAgentModel(agentModelActor2, "teststring2", "5", "6");
-		msg.populatePointWithLeastZombies(agentModelActor2, "7", "8",simulationRunGroupContext.getCachedLocationTemplate());
+		//msg.populatePointWithLeastZombies(agentModelActor2, "7", "8",simulationRunGroupContext.getCachedLocationTemplate());
 
 		
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());

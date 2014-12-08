@@ -125,16 +125,21 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element populatePointWithLeastZombies(Element agentModelActor,
-			String GridPointX, String GridPointY, Element cachedLocationTemplate) {
-		return frameworkMessageDocumentHelper.populatePointWithLeastZombies(
-				agentModelActor, GridPointX, GridPointY, cachedLocationTemplate);
-	}
-
-	@Override
 	public Element getNextAgentModelActor(Object doc, Element cachedAgentModelTemplate) {
 		return frameworkMessageDocumentHelper.getNextAgentModelActor(doc,
 				cachedAgentModelTemplate);
 	}
+	
+	@Override
+	public Element getNextNonSelfLocationForActor(Element actor,
+			Element cachedLocationTemplate) {
+		return frameworkMessageDocumentHelper.getNextAgentModelActor(actor,
+				cachedLocationTemplate);
+	}
+
+	@Override
+	public Element processDistributedAutonomousAgent(String ID) {
+		return frameworkMessageDocumentHelper.processDistributedAutonomousAgent(ID);
+	}		
 
 }

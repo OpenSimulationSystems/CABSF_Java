@@ -5,8 +5,8 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_CO
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.distsys.api.DistSysRunContext;
-import org.simulationsystems.csf.sim.api.SimulationRunContext;
+import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
+import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 
 /*
  * The abstract class in the Bridge pattern that specifies the Common Simulation Framework. This

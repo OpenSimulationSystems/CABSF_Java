@@ -73,7 +73,7 @@ public class JZombiesBuilder implements ContextBuilder<Object> {
 /*		if (RunEnvironment.getInstance().isBatch()) {
 			RunEnvironment.getInstance().endAt(20);
 		}*/
-
+		
 		return context;
 	}
 }

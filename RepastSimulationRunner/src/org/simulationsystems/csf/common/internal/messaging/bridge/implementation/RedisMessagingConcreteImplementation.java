@@ -6,8 +6,8 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.internal.messaging.dao.CommonMessagingDao;
 import org.simulationsystems.csf.common.internal.messaging.dao.RedisDaoImpl;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.distsys.api.DistSysRunContext;
-import org.simulationsystems.csf.sim.api.SimulationRunContext;
+import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
+import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 
 /*
  * The concrete implementor in the Bridge pattern for use of the Redis in-memory cache. <br/> Also

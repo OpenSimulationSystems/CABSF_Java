@@ -10,7 +10,9 @@ import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
-import org.simulationsystems.csf.sim.adapters.api.repastS.RepastS_SimulationRunContext;
+import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentAdapterAPI;
+import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
+import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunContext;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunState;
@@ -36,6 +38,16 @@ public class Human {
 	private Grid<Object> grid;
 	private int energy, startingEnergy;
 
+	// /////////////////
+	// CSF-Specific
+	private RepastS_AgentAdapterAPI repastS_AgentAdapterAPI = RepastS_AgentAdapterAPI
+			.getInstance();
+	private RepastS_AgentContext repastS_AgentContext = repastS_AgentAdapterAPI.getAgentContext();
+	private JZombies_Csf jZombies_Csf = new JZombies_Csf(repastS_AgentContext); // Specific to this simulation
+															// using CSF
+
+	// /////////////////
+
 	public Human(ContinuousSpace<Object> space, Grid<Object> grid, int energy) {
 		this.space = space;
 		this.grid = grid;
@@ -44,16 +56,15 @@ public class Human {
 
 	@Watch(watcheeClassName = "jzombies.Zombie", watcheeFieldNames = "moved", query = "within_vn 1", whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void run() {
-		@SuppressWarnings("unchecked")
-		Context<Object> repastContext = RunState.getInstance().getMasterContext();
-		Iterable<Class> simulationAgentsClasses = repastContext.getAgentTypes();
-		// for (Class clazz : simulationAgentsClasses )
-		Iterable<Object> csfRepastContextIterable = RunState.getInstance()
-				.getMasterContext().getAgentLayer(RepastS_SimulationRunContext.class);
-		RepastS_SimulationRunContext repastS_SimulationRunContext = (RepastS_SimulationRunContext) csfRepastContextIterable
-				.iterator().next();
-
-		// get the grid location of this Human
+		///////////////////
+		// CSF-Specific
+		//FIXME: Make this transparent (do this from the Adapter so the agent doesn't have to
+		repastS_AgentContext.initializeCsfAgent();
+		///////////////////
+		
+		//////////////////////////////////
+		// Common Repast Code for all all agent instances
+		// get the local environment inforamtion (this agent location and nearby Zombies
 		GridPoint pt = grid.getLocation(this);
 		// use the GridCellNgh class to create GridCells for
 		// the surrounding neighborhood.
@@ -70,21 +81,21 @@ public class Human {
 				minCount = cell.size();
 			}
 		}
-		// We now have the environment information needed to the distributed agent
-		// pt
-		// pointWithLeastZombies
-		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
-				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				repastS_SimulationRunContext.getCachedMessageExchangeTemplate());
-		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
-		repastS_SimulationRunContext.messageDistributedSystems(msg,
-				repastS_SimulationRunContext.getSimulationRunContext());
+		///////////////////////////////////////////////
+		
+		///////////////////////////////////////////////
+		// Communicate the local environment information for this agent to the distributed agent (agent model)
+		jZombies_Csf.sendDistributedAgentThisAgentLocationAndZombieLocations(this,pt, pointWithLeastZombies);
+		///////////////////////////////////////////////
 
+		///////////////////////////////////////////////
+		// Back to common code for Repast
 		if (energy > 0) {
 			moveTowards(pointWithLeastZombies);
 		} else {
 			energy = startingEnergy;
 		}
+		///////////////////////////////////////////////
 	}
 
 	public void moveTowards(GridPoint pt) {

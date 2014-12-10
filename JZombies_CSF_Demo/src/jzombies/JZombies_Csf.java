@@ -1,6 +1,7 @@
 package jzombies;
 
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
@@ -14,6 +15,9 @@ import repast.simphony.space.grid.GridPoint;
 public class JZombies_Csf {
 
 	private RepastS_AgentContext repastS_AgentContext;
+	//TODO: Get this from the configuration
+	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
+	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
 	@SuppressWarnings("unused")
 	private JZombies_Csf() {
@@ -24,9 +28,9 @@ public class JZombies_Csf {
 		this.repastS_AgentContext = repastS_AgentContext;
 	}
 
-	public Element populatePointWithLeastZombies(Element agentModelActor,
+	public Element populatePointWithLeastZombies(FrameworkMessage msg, Element agentModelActor,
 			String GridPointX, String GridPointY, Element cachedLocationTemplate) {
-		Element location = getNextNonSelfLocationForActor(agentModelActor,
+		Element location = msg.getNextNonSelfLocationForActor(agentModelActor,
 				cachedLocationTemplate);
 		location.getChild("GridPointX", namespace).setText(GridPointX);
 		location.getChild("GridPointY", namespace).setText(GridPointY);
@@ -42,9 +46,7 @@ public class JZombies_Csf {
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, repastS_AgentContext
 						.getRepastS_SimulationRunContext()
 						.getCachedMessageExchangeTemplate());
-		Element agentModelActor = msg.getNextAgentModelActor(msg.getDocument(),
-				repastS_AgentContext.getRepastS_SimulationRunContext()
-						.getCachedAgentModelActorTemplate());
+
 		// TODO: Add support for multiple distributed systems
 		SimulationDistributedSystemManager dsm = repastS_AgentContext
 				.getRepastS_SimulationRunContext()
@@ -53,8 +55,18 @@ public class JZombies_Csf {
 		// TODO: Add validation here
 		assert (am != null);
 
-		msg.processActorForAgentModel(agentModelActor, "teststring1",
+		Element agentModelActor = msg.getNextAgentModelActor(msg.getDocument(),
+				repastS_AgentContext.getRepastS_SimulationRunContext()
+						.getCachedAgentModelActorTemplate());
+		// TODO: First get the distributed system manager section.
+		// TODO: Add validation here
+		assert (am.getDistributedAgentModelID() != null);
+		msg.processActorForAgentModel(agentModelActor, am.getDistributedAgentModelID(),
 				String.valueOf(pt.getX()), String.valueOf(pt.getY()));
+		repastS_AgentContext.getRepastS_SimulationRunContext().messageDistributedSystems(
+				msg,
+				repastS_AgentContext.getRepastS_SimulationRunContext()
+						.getSimulationRunContext());
 
 	}
 }

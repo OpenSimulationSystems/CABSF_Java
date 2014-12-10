@@ -133,8 +133,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	@Override
 	public Element getNextNonSelfLocationForActor(Element actor,
 			Element cachedLocationTemplate) {
-		return frameworkMessageDocumentHelper.getNextAgentModelActor(actor,
-				cachedLocationTemplate);
+		return frameworkMessageDocumentHelper.getNextNonSelfLocationForActor(actor, cachedLocationTemplate);
 	}
 
 	@Override

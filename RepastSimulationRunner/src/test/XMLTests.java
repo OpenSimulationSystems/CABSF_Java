@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.List;
 
+import jzombies.JZombies_Csf;
+
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -28,6 +30,7 @@ import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.sim.core.api.SimulationAPI;
 import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
+import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
 
 public class XMLTests {
 /*	static private Document documentTemplateInstance = null;
@@ -195,6 +198,9 @@ public class XMLTests {
 		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
 		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
 		 */
+		RepastS_AgentContext repastS_AgentContext = new RepastS_AgentContext();
+		JZombies_Csf jZombies_Csf = new JZombies_Csf(repastS_AgentContext);
+		
 		SimulationAPI simulationAPI = SimulationAPI.getInstance();
 		String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
 		SimulationRunGroupContext simulationRunGroupContext=null;
@@ -211,12 +217,12 @@ public class XMLTests {
 				simulationRunGroupContext.getCachedMessageExchangeTemplate());
 		Element agentModelActor = msg.getNextAgentModelActor(msg.getDocument(), simulationRunGroupContext.getCachedAgentModelActorTemplate());
 		msg.processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
-		//msg.populatePointWithLeastZombies(agentModelActor, "3", "4",simulationRunGroupContext.getCachedLocationTemplate());
+		jZombies_Csf.populatePointWithLeastZombies(msg, agentModelActor, "3", "4", simulationRunGroupContext.getCachedLocationTemplate());
 		
 		Element agentModelActor2 = msg.getNextAgentModelActor(msg.getDocument(), simulationRunGroupContext.getCachedAgentModelActorTemplate());
-		msg.processActorForAgentModel(agentModelActor2, "teststring2", "5", "6");
-		//msg.populatePointWithLeastZombies(agentModelActor2, "7", "8",simulationRunGroupContext.getCachedLocationTemplate());
-
+		msg.processActorForAgentModel(agentModelActor2, "teststring2", "3", "4");
+		jZombies_Csf.populatePointWithLeastZombies(msg, agentModelActor2, "5", "6", simulationRunGroupContext.getCachedLocationTemplate());
+		
 		
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
 		String xmlString = outputter.outputString(msg.getDocument());

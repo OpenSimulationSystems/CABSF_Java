@@ -25,7 +25,8 @@ public class FrameworkMessageDocumentHelper {
 	final private String frameworkToDistributedSystemCommand_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:AllDistributedAutonomousAgents/x:ControlMessages/x:Command";
 	final private String frameworkToSimulationEngineCommnad_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:SimulationSystem/x:ControlMessages/x:Command";
 	final private String frameworkStatus_XPath = "/x:CsfMessageExchange/x:Status";
-
+	
+	//TODO: Get this from the configuration
 	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 	private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
@@ -216,9 +217,10 @@ public class FrameworkMessageDocumentHelper {
 	public Element getNextNonSelfLocationForActor(Element actor,
 			Element cachedLocationTemplate) {
 		@SuppressWarnings("unchecked")
+		//TODO: Rename methods to differentiate Common environment changes from simulation-specific.
 		List<Element> environmentChange = (List<Element>) XMLUtilities.executeXPath(
 				actor,
-				"./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange",
+				"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges/x:EnvironmentChange",
 				namespaceStr, elementFilter);
 		Element newLocation = cachedLocationTemplate;
 		environmentChange.get(0).addContent(newLocation);

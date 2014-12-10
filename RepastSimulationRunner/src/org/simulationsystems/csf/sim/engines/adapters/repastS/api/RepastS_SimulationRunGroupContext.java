@@ -18,7 +18,7 @@ public class RepastS_SimulationRunGroupContext {
 		return this.simulationRunGroupContext.getCachedMessageExchangeTemplate();
 	}
 	
-	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
-		return this.simulationRunGroupContext.getCache
-	}
+/*	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
+		this.simulationRunGroupContext = cachedMessageExchangeTemplate;
+	}*/
 }

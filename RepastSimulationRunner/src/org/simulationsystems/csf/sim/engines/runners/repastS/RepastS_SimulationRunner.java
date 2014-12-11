@@ -2,6 +2,7 @@ package org.simulationsystems.csf.sim.engines.runners.repastS;
 
 import java.io.File;
 
+import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationAdapterAPI;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunContext;
@@ -47,15 +48,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		return repastS_SimulationRunGroupContext;
 	}
 
-	// NON_CSF_SIMULATION Run RepastS Programmatically without the Common
-	// Simulation Framework
-	// CSF_SIMULATION Run RepastS programmatically with the Common Simulation
-	// Framework
-	public enum SIMULATION_RUNNER_RUN_TYPE {
-		NON_CSF_SIMULATION, CSF_SIMULATION
-	}
-
-	private SIMULATION_RUNNER_RUN_TYPE simulationRunnerType;
+	private SIMULATION_TYPE simulationRunnerType;
 
 	private boolean isStopped;
 
@@ -112,12 +105,12 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(frameworkConfigurationFileName);
-			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION;
+			simulationRunnerType = SIMULATION_TYPE.CSF_SIMULATION;
 		} else
-			simulationRunnerType = RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.NON_CSF_SIMULATION;
+			simulationRunnerType = SIMULATION_TYPE.NON_CSF_SIMULATION;
 	}
 
-	public SIMULATION_RUNNER_RUN_TYPE getSimulationRunnerType() {
+	public SIMULATION_TYPE getSimulationRunnerType() {
 		return simulationRunnerType;
 	}
 
@@ -142,7 +135,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 				.getMasterContext();
 
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
-		if (simulationRunnerType == RepastS_SimulationRunner.SIMULATION_RUNNER_RUN_TYPE.CSF_SIMULATION) {
+		if (simulationRunnerType == SIMULATION_TYPE.CSF_SIMULATION) {
 			repastS_SimulationRunContext = repastS_SimulationAdapterAPI
 					.initializeSimulationRun(repastContextForThisRun,
 							repastS_SimulationRunGroupContext);

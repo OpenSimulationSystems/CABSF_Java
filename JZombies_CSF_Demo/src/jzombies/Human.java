@@ -6,10 +6,9 @@ package jzombies;
 import java.util.List;
 
 import org.jdom2.Document;
+import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
-import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentAdapterAPI;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunContext;
@@ -40,11 +39,10 @@ public class Human {
 
 	// /////////////////
 	// CSF-Specific
-	private RepastS_AgentAdapterAPI repastS_AgentAdapterAPI = RepastS_AgentAdapterAPI
-			.getInstance();
-	private RepastS_AgentContext repastS_AgentContext = repastS_AgentAdapterAPI.getAgentContext();
-	private JZombies_Csf jZombies_Csf = new JZombies_Csf(repastS_AgentContext); // Specific to this simulation
-															// using CSF
+	private RepastS_AgentContext repastS_AgentContext = RepastS_AgentAdapterAPI
+			.getInstance().getAgentContext();
+	private SIMULATION_TYPE simulationType;
+	private JZombies_Csf jZombies_Csf = new JZombies_Csf(repastS_AgentContext);
 
 	// /////////////////
 
@@ -56,13 +54,14 @@ public class Human {
 
 	@Watch(watcheeClassName = "jzombies.Zombie", watcheeFieldNames = "moved", query = "within_vn 1", whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void run() {
-		///////////////////
+		// /////////////////
 		// CSF-Specific
-		//FIXME: Make this transparent (do this from the Adapter so the agent doesn't have to
-		repastS_AgentContext.initializeCsfAgent();
-		///////////////////
-		
-		//////////////////////////////////
+		// FIXME: Make this transparent (do this from the Adapter so the agent doesn't
+		// have to
+		simulationType = repastS_AgentContext.initializeCsfAgent();
+		// /////////////////
+
+		// ////////////////////////////////
 		// Common Repast Code for all all agent instances
 		// get the local environment inforamtion (this agent location and nearby Zombies
 		GridPoint pt = grid.getLocation(this);
@@ -81,21 +80,30 @@ public class Human {
 				minCount = cell.size();
 			}
 		}
-		///////////////////////////////////////////////
-		
-		///////////////////////////////////////////////
-		// Communicate the local environment information for this agent to the distributed agent (agent model)
-		jZombies_Csf.sendDistributedAgentThisAgentLocationAndZombieLocations(this,pt, pointWithLeastZombies);
-		///////////////////////////////////////////////
+		// /////////////////////////////////////////////
 
-		///////////////////////////////////////////////
+		// //////////////////////////
+		// CSF-specific
+		// If it is part of a CSF simulation, move the decision-making to the distributed
+		// agent/model
+		if (simulationType == SIMULATION_TYPE.CSF_SIMULATION)
+			// Communicate the local environment information for this agent to the
+			// distributed agent (agent model)
+			jZombies_Csf.sendDistributedAgentThisAgentLocationAndZombieLocations(this,
+					pt, pointWithLeastZombies);
+		
+			//Now read the decision from the distributed agent and process it;
+			System.exit(0);
+		//////////////////////////////////////////////
+
+		// /////////////////////////////////////////////
 		// Back to common code for Repast
 		if (energy > 0) {
 			moveTowards(pointWithLeastZombies);
 		} else {
 			energy = startingEnergy;
 		}
-		///////////////////////////////////////////////
+		// /////////////////////////////////////////////
 	}
 
 	public void moveTowards(GridPoint pt) {

@@ -28,13 +28,15 @@ public interface FrameworkMessage {
 
 	STATUS getStatus();
 
-	Element processActorForAgentModel(Element actor, String ID, String gridPointX,
+	Element populateThisActorLocationInAgentModel(Element actor, String ID, String gridPointX,
 			String gridPointY);
 
-	Element processDistributedAutonomousAgent(String ID);
+	Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent, String ID);
 	
-	Element getNextAgentModelActor(Object doc, Element cachedAgentModelTemplate);
+	Element getNextAgentModelActor(Object distributedAutononomousAgent, Element cachedAgentModelTemplate);
 
+	Element getNextDistributedAutonomousAgent(Object doc, Element cacheDistributedAutonomousAgentTemplate);
+ 
 	Element getNextNonSelfLocationForActor(Element actor, Element cachedLocationTemplate);
 
 

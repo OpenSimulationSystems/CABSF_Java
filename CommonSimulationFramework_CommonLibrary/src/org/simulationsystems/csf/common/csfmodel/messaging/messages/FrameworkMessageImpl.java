@@ -118,15 +118,15 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element processActorForAgentModel(Element actor, String ID, String gridPointX,
+	public Element populateThisActorLocationInAgentModel(Element actor, String ID, String gridPointX,
 			String gridPointY) {
-		return frameworkMessageDocumentHelper.processActorForAgentModel(actor, ID,
+		return frameworkMessageDocumentHelper.populateThisActorLocationInAgentModel(actor, ID,
 				gridPointX, gridPointY);
 	}
 
 	@Override
-	public Element getNextAgentModelActor(Object doc, Element cachedAgentModelTemplate) {
-		return frameworkMessageDocumentHelper.getNextAgentModelActor(doc,
+	public Element getNextAgentModelActor(Object distributedAutononomousAgent, Element cachedAgentModelTemplate) {
+		return frameworkMessageDocumentHelper.getNextAgentModelActor(distributedAutononomousAgent,
 				cachedAgentModelTemplate);
 	}
 	
@@ -137,8 +137,15 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element processDistributedAutonomousAgent(String ID) {
-		return frameworkMessageDocumentHelper.processDistributedAutonomousAgent(ID);
+	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent, String ID) {
+		return frameworkMessageDocumentHelper.populateDistributedAutonomousAgent(distributedAutonomousAgent, ID);
+	}
+
+	@Override
+	public Element getNextDistributedAutonomousAgent(Object doc,
+			Element cacheDistributedAutonomousAgentTemplate) {
+		return frameworkMessageDocumentHelper.getNextDistributedAutonomousAgent(doc,
+				cacheDistributedAutonomousAgentTemplate);
 	}		
 
 }

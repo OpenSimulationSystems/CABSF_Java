@@ -171,6 +171,7 @@ public class RepastS_SimulationAdapterAPI {
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 				repastS_SimulationRunContext.getCachedMessageExchangeTemplate());
 		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
+		//TODO: Loop through the multiple distributed systems
 		repastS_SimulationRunContext.messageDistributedSystems(msg,
 				repastS_SimulationRunContext.getSimulationRunContext());
 

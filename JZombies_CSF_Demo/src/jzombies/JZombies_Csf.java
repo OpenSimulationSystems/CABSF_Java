@@ -14,7 +14,7 @@ import repast.simphony.space.grid.GridPoint;
 public class JZombies_Csf {
 
 	private RepastS_AgentContext repastS_AgentContext;
-	//TODO: Get this from the configuration
+	// TODO: Get this from the configuration
 	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
@@ -27,8 +27,9 @@ public class JZombies_Csf {
 		this.repastS_AgentContext = repastS_AgentContext;
 	}
 
-	public Element populatePointWithLeastZombies(FrameworkMessage msg, Element agentModelActor,
-			String GridPointX, String GridPointY, Element cachedLocationTemplate) {
+	public Element populatePointWithLeastZombies(FrameworkMessage msg,
+			Element agentModelActor, String GridPointX, String GridPointY,
+			Element cachedLocationTemplate) {
 		Element location = msg.getNextNonSelfLocationForActor(agentModelActor,
 				cachedLocationTemplate);
 		location.getChild("GridPointX", namespace).setText(GridPointX);
@@ -39,13 +40,8 @@ public class JZombies_Csf {
 		return location;
 	}
 
-	public void sendDistributedAgentThisAgentLocationAndZombieLocations(Object obj,
-			GridPoint pt, GridPoint pointWithLeastZombies) {
-		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
-				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, repastS_AgentContext
-						.getRepastS_SimulationRunContext()
-						.getCachedMessageExchangeTemplate());
-
+	public void sendCorrespondingDistributedAgentModelThisAgentLocationAndZombieLocations(
+			Object obj, GridPoint pt, GridPoint pointWithLeastZombies) {
 		// TODO: Add support for multiple distributed systems
 		SimulationDistributedSystemManager dsm = repastS_AgentContext
 				.getRepastS_SimulationRunContext()
@@ -54,14 +50,33 @@ public class JZombies_Csf {
 		// TODO: Add validation here
 		assert (am != null);
 
-		Element agentModelActor = msg.getNextAgentModelActor(msg.getDocument(),
+		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, repastS_AgentContext
+						.getRepastS_SimulationRunContext()
+						.getCachedMessageExchangeTemplate());
+		assert (repastS_AgentContext.getRepastS_SimulationRunContext()
+				.getCachedDistributedAutonomousAgentTemplate() != null);
+		Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(msg
+				.getDocument(), repastS_AgentContext.getRepastS_SimulationRunContext()
+				.getCachedDistributedAutonomousAgentTemplate());
+
+		Element agentModelActor = msg.getNextAgentModelActor(distributedAutonomousAgent,
 				repastS_AgentContext.getRepastS_SimulationRunContext()
 						.getCachedAgentModelActorTemplate());
 		// TODO: First get the distributed system manager section.
 		// TODO: Add validation here
 		assert (am.getDistributedAgentModelID() != null);
-		msg.processActorForAgentModel(agentModelActor, am.getDistributedAgentModelID(),
-				String.valueOf(pt.getX()), String.valueOf(pt.getY()));
+		msg.populateThisActorLocationInAgentModel(agentModelActor,
+				am.getDistributedAgentModelID(), String.valueOf(pt.getX()),
+				String.valueOf(pt.getY()));
+		
+		msg.populateDistributedAutonomousAgent(distributedAutonomousAgent, am.getDistributedAutonomousAgentID());
+		populatePointWithLeastZombies(msg, agentModelActor,
+				String.valueOf(pointWithLeastZombies.getX()),
+				String.valueOf(pointWithLeastZombies.getY()), repastS_AgentContext
+						.getRepastS_SimulationRunContext().getCachedLocationTemplate());
+
+		// The message has been constructed, now send it over the wire
 		repastS_AgentContext.getRepastS_SimulationRunContext().messageDistributedSystems(
 				msg,
 				repastS_AgentContext.getRepastS_SimulationRunContext()

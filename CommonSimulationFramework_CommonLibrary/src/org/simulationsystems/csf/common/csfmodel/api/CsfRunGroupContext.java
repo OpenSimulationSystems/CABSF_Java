@@ -15,12 +15,17 @@ public class CsfRunGroupContext {
 	private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
 	protected Element cachedAgentModelActorTemplate = null;
 	protected Element cachedLocationTemplate = null;
+	private Element distributedAutonomousAgentTemplate;
+
+	public Element getDistributedAutonomousAgentTemplate() {
+		return distributedAutonomousAgentTemplate;
+	}
 
 	public Element getCachedAgentModelActorTemplate() {
 		return cachedAgentModelActorTemplate.clone();
 	}
 
-	public Element  getCachedLocationTemplate() {
+	public Element getCachedLocationTemplate() {
 		return cachedLocationTemplate.clone();
 	}
 
@@ -43,5 +48,15 @@ public class CsfRunGroupContext {
 						namespaceStr, elementFilter);
 		cachedLocationTemplate = agentLocation.get(0).clone();
 		cachedLocationTemplate.setAttribute("id", "");
+
+		@SuppressWarnings("unchecked")
+		List<Element> distributedAutonomousAgentElements = (List<Element>) XMLUtilities
+				.executeXPath(
+						doc,
+						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent",
+						namespaceStr, elementFilter);
+		distributedAutonomousAgentTemplate = distributedAutonomousAgentElements.get(0)
+				.clone();
+
 	}
 }

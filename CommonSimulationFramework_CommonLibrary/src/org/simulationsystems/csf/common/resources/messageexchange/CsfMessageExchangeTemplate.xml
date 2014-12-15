@@ -83,12 +83,6 @@
 												<GridPointY />
 												<GridPointZ />
 											</Location>
-											<!-- Example of an environment change other than for self -->
-											<!-- -->
-											<!-- <Location id="" category="neighborhood" includecenter="true" 
-												entitytype="Zombie"> <GridPointX /> <GridPointY /> <GridPointZ /> </Location> -->
-										</EnvironmentChange>
-										<EnvironmentChange>
 										</EnvironmentChange>
 									</CommonEnvironmentChanges>
 									<SimulationDefinedEnvironmentChanges>

@@ -24,8 +24,8 @@ public class FrameworkMessageDocumentHelper {
 	final private String frameworkToDistributedSystemCommand_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:AllDistributedAutonomousAgents/x:ControlMessages/x:Command";
 	final private String frameworkToSimulationEngineCommnad_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:SimulationSystem/x:ControlMessages/x:Command";
 	final private String frameworkStatus_XPath = "/x:CsfMessageExchange/x:Status";
-	
-	//TODO: Get this from the configuration
+
+	// TODO: Get this from the configuration
 	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 	private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
@@ -33,6 +33,8 @@ public class FrameworkMessageDocumentHelper {
 	// Used to determine
 	// FIXME: Need a better way to determine whether the actor has already been used
 	private boolean firstAgentModelActorPopulated;
+
+	private boolean firstDistributedAutonomousAgentPopulated;
 
 	public FrameworkMessageDocumentHelper(FrameworkMessage frameworkMessage) {
 		this.frameworkMessage = frameworkMessage;
@@ -164,7 +166,7 @@ public class FrameworkMessageDocumentHelper {
 	}
 
 	// TODO: Extents/multiple dimensions
-	public Element populateThisActorLocationInAgentModel(Element actor,
+	private Element populateThisActorLocationInAgentModel(Element actor,
 			String gridPointX, String gridPointY) {
 		@SuppressWarnings("unchecked")
 		// TODO: Support multiple actors
@@ -191,36 +193,70 @@ public class FrameworkMessageDocumentHelper {
 			Element newElement = new Element("ID");
 			actor.addContent(newElement);
 		}
+	}
+
+	public void setIDinDistributedAutononomousAgent(Element distributedAutonomousAgent,
+			String ID) {
+		// TODO: Support multiple actors
+		List<Element> distributedAutonomousAgentID = (List<Element>) XMLUtilities
+				.executeXPath(distributedAutonomousAgent, "./x:ID", namespaceStr,
+						elementFilter);
+		if (distributedAutonomousAgentID.size() > 0) {
+			Element e = distributedAutonomousAgentID.get(0);
+			e.setText(ID);
+		} else {
+			Element newElement = new Element("ID");
+			distributedAutonomousAgent.addContent(newElement);
+		}
 
 	}
 
-	public Element getNextAgentModelActor(Object doc, Element cachedAgentModelTemplate) {
+	public Element getNextAgentModelActor(Object distributedAutononomousAgent,
+			Element cachedAgentModelTemplate) {
 		@SuppressWarnings("unchecked")
-		List<Element> agentModels = (List<Element>) XMLUtilities
-				.executeXPath(
-						doc,
-						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel",
-						namespaceStr, elementFilter);
-		Element agentModelActor = null;
+		List<Element> agentModelElements = (List<Element>) XMLUtilities.executeXPath(
+				distributedAutononomousAgent, "./x:AgentModels/x:AgentModel",
+				namespaceStr, elementFilter);
 		if (!firstAgentModelActorPopulated) {
 			firstAgentModelActorPopulated = true;
-			agentModelActor = agentModels.get(0).getChild("Actor", namespace);
-			return agentModelActor;
+			return agentModelElements.get(0).getChild("Actor", namespace);
 		} else {
-			agentModelActor = cachedAgentModelTemplate;
-			agentModels.get(0).addContent(agentModelActor);
+			Element agentModelActor = cachedAgentModelTemplate;
+			agentModelElements.get(0).addContent(agentModelActor);
 			return agentModelActor;
+		}
+	}
+
+	public Element getNextDistributedAutonomousAgent(Object doc,
+			Element cachedDistributedAutonomousAgentTemplate) {
+		@SuppressWarnings("unchecked")
+		List<Element> distributedAutonomousAgentsElements = (List<Element>) XMLUtilities
+				.executeXPath(
+						doc,
+						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents",
+						namespaceStr, elementFilter);
+		if (!firstDistributedAutonomousAgentPopulated) {
+			firstDistributedAutonomousAgentPopulated = true;
+			return distributedAutonomousAgentsElements.get(0).getChild(
+					"DistributedAutonomousAgent", namespace);
+		} else {
+			Element distributedAutononomousAgent = cachedDistributedAutonomousAgentTemplate;
+			distributedAutonomousAgentsElements.get(0).addContent(
+					distributedAutononomousAgent);
+			return distributedAutononomousAgent;
 		}
 	}
 
 	public Element getNextNonSelfLocationForActor(Element actor,
 			Element cachedLocationTemplate) {
 		@SuppressWarnings("unchecked")
-		//TODO: Rename methods to differentiate Common environment changes from simulation-specific.
-		List<Element> environmentChange = (List<Element>) XMLUtilities.executeXPath(
-				actor,
-				"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges/x:EnvironmentChange",
-				namespaceStr, elementFilter);
+		// TODO: Rename methods to differentiate Common environment changes from
+		// simulation-specific.
+		List<Element> environmentChange = (List<Element>) XMLUtilities
+				.executeXPath(
+						actor,
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges/x:EnvironmentChange",
+						namespaceStr, elementFilter);
 		Element newLocation = cachedLocationTemplate;
 		environmentChange.get(0).addContent(newLocation);
 		return newLocation;
@@ -229,8 +265,8 @@ public class FrameworkMessageDocumentHelper {
 	/*
 	 * Returns an
 	 */
-	public Element processActorForAgentModel(Element actor, String ID, String gridPointX,
-			String gridPointY) {
+	public Element populateThisActorLocationInAgentModel(Element actor, String ID,
+			String gridPointX, String gridPointY) {
 		// Select Agent Model
 
 		// Go ahead and populate the already created agent model from the Document
@@ -239,11 +275,8 @@ public class FrameworkMessageDocumentHelper {
 		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY);
 	}
 
-	public Element processDistributedAutonomousAgent(String ID) {
-		// TODO Auto-generated method stub
-		return null;
+	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent, String ID) {
+		setIDinDistributedAutononomousAgent(distributedAutonomousAgent, ID);
+		return distributedAutonomousAgent;
 	}
-
-
-
 }

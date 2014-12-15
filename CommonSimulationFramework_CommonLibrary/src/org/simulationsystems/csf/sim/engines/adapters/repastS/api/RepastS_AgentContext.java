@@ -1,5 +1,7 @@
 package org.simulationsystems.csf.sim.engines.adapters.repastS.api;
 
+import java.util.NoSuchElementException;
+
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 
 import repast.simphony.context.Context;
@@ -7,6 +9,7 @@ import repast.simphony.engine.environment.RunState;
 
 public class RepastS_AgentContext {
 	private RepastS_SimulationRunContext repastS_SimulationRunContext = null;
+	private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
 
 	public RepastS_SimulationRunContext getRepastS_SimulationRunContext() {
 		return repastS_SimulationRunContext;
@@ -38,13 +41,20 @@ public class RepastS_AgentContext {
 
 			// Look to see if the Repast Simulation Context has been created
 			// If not that means that this is not a CSF simulation run
-			if (csfRepastContextIterable != null)
+			try {
 				repastS_SimulationRunContext = (RepastS_SimulationRunContext) csfRepastContextIterable
 						.iterator().next();
-			else
+			}
+			catch (NoSuchElementException e ) {
 				return SIMULATION_TYPE.NON_CSF_SIMULATION;
+			}
 			this.repastS_SimulationRunContext = repastS_SimulationRunContext;
+			this.repastS_SimulationRunGroupContext = repastS_SimulationRunContext.getRepastS_SimulationRunGroupContext();
 		}
 		return SIMULATION_TYPE.CSF_SIMULATION;
+	}
+
+	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
+		return repastS_SimulationRunGroupContext;
 	}
 }

@@ -13,6 +13,8 @@ import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistr
 import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistributedSystemManager.CONFIGURATION_KEYS;
 
 public class SimulationRunGroupConfiguration {
+	//TODO set all of these in the configuration file
+	private String simulationEngineID = "REPAST_SIMPHONY";
 	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 	private Element locationTemplate=null;
@@ -32,6 +34,10 @@ public class SimulationRunGroupConfiguration {
 		// configuration values.
 
 
+	}
+	
+	public String getSimulationEngineID() {
+		return simulationEngineID;
 	}
 	
 	// LOW: see above

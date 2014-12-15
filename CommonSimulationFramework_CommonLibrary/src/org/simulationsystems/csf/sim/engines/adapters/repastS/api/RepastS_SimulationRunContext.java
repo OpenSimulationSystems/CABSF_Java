@@ -58,7 +58,18 @@ public class RepastS_SimulationRunContext {
 		return this.getSimulationRunContext().getSimulationRunGroupContext()
 				.getCachedAgentModelActorTemplate();
 	}
+	
 
+	public Element getCachedDistributedAutonomousAgentTemplate() {
+		return this.getSimulationRunContext().getSimulationRunGroupContext()
+				.getCachedAgentModelActorTemplate();
+	}
+	
+	public Element getCachedLocationTemplate() {
+		return this.getSimulationRunContext().getSimulationRunGroupContext()
+				.getCachedLocationTemplate();
+	}
+	
 	/*
 	 * Use the other constructor
 	 */

@@ -89,7 +89,8 @@ public class Human {
 		if (simulationType == SIMULATION_TYPE.CSF_SIMULATION)
 			// Communicate the local environment information for this agent to the
 			// distributed agent (agent model)
-			jZombies_Csf.sendDistributedAgentThisAgentLocationAndZombieLocations(this,
+			// LOW: Add support for merging multiple messages bound for different agents 
+			jZombies_Csf.sendCorrespondingDistributedAgentModelThisAgentLocationAndZombieLocations(this,
 					pt, pointWithLeastZombies);
 		
 			//Now read the decision from the distributed agent and process it;

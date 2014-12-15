@@ -9,9 +9,15 @@ import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistr
 
 public class DistSysRunGroupConfiguration {
 	// LOW: Support Multiple Simulation Run Configurations
+	//TODO: Get these from the configuration file
 	ArrayList<DistSysRunConfiguration> distSysRunConfigurations;
 
 	private SimulationRunGroupContext simulationRunGroupContext;
+	private String simulationEngineID= "REPAST_SIMPHONY";
+	
+	public String getSimulationEngineID() {
+		return simulationEngineID;
+	}
 
 	/*
 	 * DistributedSystemSimulationRunGroup Level.

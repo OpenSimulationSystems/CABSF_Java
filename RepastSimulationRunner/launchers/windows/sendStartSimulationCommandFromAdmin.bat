@@ -1,3 +1,5 @@
+cd %~dp0
+
 @echo off
 echo *****************************************************
 echo    COMMON SIMULATION FRAMEWORK - Simulation Start Script
@@ -12,7 +14,7 @@ echo Sending the CSF Simulation Engine a message to start the simulation. The si
 echo ****************************************************
 echo.
 @echo on
-redis-cli -x LPUSH csf.commands.adminToSim:19def3fa-a1d4-4996-a1ac-22c3a041e6ff <C:\Users\jorge\workspace\jcalderon-thesis\RepastSimulationRunner\bin\org\simulationsystems\csf\common\resources\messageexchange\startSimulation.xml
+redis-cli -x LPUSH csf.commands.adminToSim:19def3fa-a1d4-4996-a1ac-22c3a041e6ff <..\..\..\CommonSimulationFramework_CommonLibrary\bin\org\simulationsystems\csf\common\resources\messageexchange\startSimulation.xml
 @echo.
 @echo off
 pause

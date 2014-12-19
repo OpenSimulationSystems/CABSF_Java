@@ -175,4 +175,10 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 		return frameworkMessageDocumentHelper.getAgentModelID(agentModel);
 	}
 
+	@Override
+	public Document addDistributedAutonomousAgent(Document doc, Element distributedAutononomousAgentElement, String ID, boolean removeChildren) {
+		return frameworkMessageDocumentHelper.addDistributedAutonomousAgent(doc,
+				distributedAutononomousAgentElement, ID,removeChildren);
+	}
+
 }

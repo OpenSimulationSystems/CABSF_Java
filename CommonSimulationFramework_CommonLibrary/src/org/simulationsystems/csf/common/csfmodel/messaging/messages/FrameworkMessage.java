@@ -50,4 +50,6 @@ public interface FrameworkMessage {
 
 	String getAgentModelID(Element agentModel);
 
+	public Document addDistributedAutonomousAgent(Document doc, Element rootElement, String iD, boolean removeChildren);
+
 }

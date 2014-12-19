@@ -11,7 +11,7 @@ import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentC
 
 import repast.simphony.space.grid.GridPoint;
 
-public class JZombies_Csf {
+public class JZombies_Repast_Csf {
 
 	private RepastS_AgentContext repastS_AgentContext;
 	// TODO: Get this from the configuration
@@ -19,11 +19,11 @@ public class JZombies_Csf {
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
 	@SuppressWarnings("unused")
-	private JZombies_Csf() {
+	private JZombies_Repast_Csf() {
 		super();
 	}
 
-	public JZombies_Csf(RepastS_AgentContext repastS_AgentContext) {
+	public JZombies_Repast_Csf(RepastS_AgentContext repastS_AgentContext) {
 		this.repastS_AgentContext = repastS_AgentContext;
 	}
 

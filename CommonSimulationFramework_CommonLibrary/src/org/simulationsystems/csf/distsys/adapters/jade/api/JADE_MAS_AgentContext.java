@@ -14,6 +14,14 @@ import org.simulationsystems.csf.distsys.core.api.DistSysRunGroupContext;
 import org.simulationsystems.csf.distsys.core.api.DistributedSystemAPI;
 
 public class JADE_MAS_AgentContext {
+	public JADE_MAS_RunGroupContext getJade_MAS_RunGroupContext() {
+		return jade_MAS_RunGroupContext;
+	}
+
+	public JADE_MAS_RunContext getJade_MAS_RunContext() {
+		return jade_MAS_RunContext;
+	}
+
 	JADE_MAS_AdapterAPI jade_MAS_AdapterAPI;
 	JADE_MAS_RunGroupContext jade_MAS_RunGroupContext;
 	JADE_MAS_RunContext jade_MAS_RunContext;
@@ -44,12 +52,15 @@ public class JADE_MAS_AgentContext {
 	 * the XML
 	 */
 	// TODO: Move this one high level in API?
-	public FrameworkMessage convertDocumentToDistributedAutonomousAgentToFrameworkMessage(Document distributedAutonomusAgentDocument, String ID) {
+	public FrameworkMessage convertDocumentToDistributedAutonomousAgentToFrameworkMessage(Document distributedAutononomousAgent, String ID) {
 		
 		FrameworkMessage fm = new FrameworkMessageImpl(
 				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 				jade_MAS_RunContext.getCachedMessageExchangeTemplate());
-		fm.populateDistributedAutonomousAgent(distributedAutonomusAgentDocument.getRootElement(), ID);
+		//FIXME: Need a better name if all we're doing is setting the ID.
+		//populateDistributedAutonomousAgent
+		fm.addDistributedAutonomousAgent(fm.getDocument(), distributedAutononomousAgent.getRootElement(), ID, true);
+
 		return fm;
 	}
 }

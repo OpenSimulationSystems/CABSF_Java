@@ -210,7 +210,8 @@ public class FrameworkMessageDocumentHelper {
 		}
 
 	}
-
+	
+	//FIXME: Check with an id?
 	public Element getNextAgentModelActor(Object distributedAutononomousAgent,
 			Element cachedAgentModelTemplate) {
 		@SuppressWarnings("unchecked")
@@ -307,5 +308,21 @@ public class FrameworkMessageDocumentHelper {
 
 	public String getAgentModelID(Element agentModel) {
 		return agentModel.getChild("ID").getValue();
+	}
+
+	public Document addDistributedAutonomousAgent(Document doc,
+			Element distributedAutononomousAgentElement, String iD, boolean removeChildren) {
+		@SuppressWarnings("unchecked")
+		// TODO: Rename methods to differentiate Common environment changes from
+		// simulation-specific.
+		List<Element> distributedAutonomousAgents = (List<Element>) XMLUtilities
+				.executeXPath(
+						doc,
+						distributedAutonomousAgentsXpath,
+						namespaceStr, elementFilter);
+		if (removeChildren)
+			distributedAutonomousAgents.get(0).removeContent();
+		distributedAutonomousAgents.get(0).addContent(distributedAutononomousAgentElement);
+		return doc;
 	}
 }

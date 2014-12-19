@@ -42,7 +42,7 @@ public class Human {
 	private RepastS_AgentContext repastS_AgentContext = RepastS_AgentAdapterAPI
 			.getInstance().getAgentContext();
 	private SIMULATION_TYPE simulationType;
-	private JZombies_Csf jZombies_Csf = new JZombies_Csf(repastS_AgentContext);
+	private JZombies_Repast_Csf jZombies_Repast_Csf = new JZombies_Repast_Csf(repastS_AgentContext);
 
 	// /////////////////
 
@@ -90,7 +90,7 @@ public class Human {
 			// Communicate the local environment information for this agent to the
 			// distributed agent (agent model)
 			// LOW: Add support for merging multiple messages bound for different agents 
-			jZombies_Csf.sendCorrespondingDistributedAgentModelThisAgentLocationAndZombieLocations(this,
+			jZombies_Repast_Csf.sendCorrespondingDistributedAgentModelThisAgentLocationAndZombieLocations(this,
 					pt, pointWithLeastZombies);
 		
 			//Now read the decision from the distributed agent and process it;

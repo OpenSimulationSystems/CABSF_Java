@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jdom2.Document;
+import org.jdom2.Element;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
@@ -32,6 +33,17 @@ public class JADE_MAS_RunContext {
 		return distSysRunContext;
 	}
 
+	
+	public Element getCachedAgentModelActorTemplate() {
+		return this.getDistSysRunContext().getDistSysRunGroupContext()
+				.getCachedAgentModelActorTemplate();
+	}
+	
+	public Element getCachedLocationTemplate() {
+		return this.getDistSysRunContext().getDistSysRunGroupContext()
+				.getCachedLocationTemplate();
+	}
+	
 	/*
 	 * Use the other constructor
 	 */

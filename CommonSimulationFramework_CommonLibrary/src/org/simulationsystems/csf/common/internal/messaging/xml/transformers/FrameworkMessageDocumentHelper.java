@@ -24,7 +24,7 @@ public class FrameworkMessageDocumentHelper {
 	final private String frameworkToDistributedSystemCommand_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:AllDistributedAutonomousAgents/x:ControlMessages/x:Command";
 	final private String frameworkToSimulationEngineCommnad_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:SimulationSystem/x:ControlMessages/x:Command";
 	final private String frameworkStatus_XPath = "/x:CsfMessageExchange/x:Status";
-
+	final private String distributedAutonomousAgentsXpath = "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents";
 	// TODO: Get this from the configuration
 	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
@@ -233,7 +233,7 @@ public class FrameworkMessageDocumentHelper {
 		List<Element> distributedAutonomousAgentsElements = (List<Element>) XMLUtilities
 				.executeXPath(
 						doc,
-						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents",
+						distributedAutonomousAgentsXpath,
 						namespaceStr, elementFilter);
 		if (!firstDistributedAutonomousAgentPopulated) {
 			firstDistributedAutonomousAgentPopulated = true;
@@ -278,5 +278,34 @@ public class FrameworkMessageDocumentHelper {
 	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent, String ID) {
 		setIDinDistributedAutononomousAgent(distributedAutonomousAgent, ID);
 		return distributedAutonomousAgent;
+	}
+
+	public List<Element> getDistributedAutonomousAgents(Object doc) {
+		@SuppressWarnings("unchecked")
+		// TODO: Rename methods to differentiate Common environment changes from
+		// simulation-specific.
+		List<Element> distributedAutonomousAgentsElements = (List<Element>) XMLUtilities
+				.executeXPath(
+						doc,
+						distributedAutonomousAgentsXpath,
+						namespaceStr, elementFilter);
+		
+		return distributedAutonomousAgentsElements.get(0).getChildren("DistributedAutonomousAgent");
+	}
+
+	public String getDistributedAutonomousAgentElementID(
+			Element distributedAutononomousAgentElement) {
+		
+		return distributedAutononomousAgentElement.getChild("ID").getValue();
+
+	}
+
+	public List<Element> getAgentModels(Element distributedAutonomousAgentElement) {
+		return distributedAutonomousAgentElement.getChildren("AgentModel");
+
+	}
+
+	public String getAgentModelID(Element agentModel) {
+		return agentModel.getChild("ID").getValue();
 	}
 }

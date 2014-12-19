@@ -63,7 +63,7 @@ public class DistributedAutonomousAgent {
 		return distributedAutonomousAgentID;
 	}
 
-	protected ConcurrentHashMap<String, DistributedAgentModel> getDistributedAgentModelIDStoAgentModels() {
+	public ConcurrentHashMap<String, DistributedAgentModel> getDistributedAgentModelIDStoAgentModels() {
 		return distributedAgentModelIDStoAgentModels;
 	}
 
@@ -109,6 +109,10 @@ public class DistributedAutonomousAgent {
 		System.out.println("Successfully mapped Distributed Autonomous Agent: "
 				+ distributedAutonomousAgentID + " to native autonomous agent "
 				+ nativeDistributedAutonomousAgent.hashCode());
+	}
+
+	public Object getNativeDistributedAutonomousAgent() {
+		return nativeDistributedAutonomousAgent;
 	}
 
 	public Object logHelper() {

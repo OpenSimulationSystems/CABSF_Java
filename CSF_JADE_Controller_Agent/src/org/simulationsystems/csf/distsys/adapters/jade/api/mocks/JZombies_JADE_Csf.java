@@ -1,6 +1,5 @@
 package org.simulationsystems.csf.distsys.adapters.jade.api.mocks;
 
-
-public class MockHumanJADE_Agent {
+public class JZombies_JADE_Csf {
 
 }

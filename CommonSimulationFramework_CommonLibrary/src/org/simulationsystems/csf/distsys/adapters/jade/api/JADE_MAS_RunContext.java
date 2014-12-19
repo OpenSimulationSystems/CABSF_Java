@@ -68,7 +68,7 @@ public class JADE_MAS_RunContext {
 
 	}
 
-	public Object getCurrentRepastContext() {
+	public Object getCurrentJADE_Context() {
 		return jade_ContextForThisRun;
 	}
 
@@ -95,6 +95,7 @@ public class JADE_MAS_RunContext {
 		distSysRunContext.closeInterface();
 	}
 	
+	//FIXME: Need this?
 	public FrameworkMessage requestEnvironmentInformation() {
 		 getDistSysRunContext().requestEnvironmentInformation();
 		return null;

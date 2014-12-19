@@ -7,6 +7,14 @@ import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 
 public class DistributedAgentModel {
 	String distributedAgentModelID;
+	public String getDistributedAgentModelID() {
+		return distributedAgentModelID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	String name;
 	
 	public DistributedAgentModel(DistSysRunContext distSysRunContext,

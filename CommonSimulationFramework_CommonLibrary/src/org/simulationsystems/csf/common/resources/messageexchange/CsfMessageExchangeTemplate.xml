@@ -67,8 +67,9 @@
 								</Command>
 							</ControlMessages>
 						</AllAgentModels>
-						<!-- Message submitted to this one agent model -->
+						<!-- Message submitted to this one agent model in the parent distributed autonomous agent -->
 						<AgentModel>
+							<!-- Message about this one actor to this one agent model (parent element) under the parent distributed autonomous agent -->
 							<Actor>
 								<!-- RE: Self or another agent model -->
 								<ID />

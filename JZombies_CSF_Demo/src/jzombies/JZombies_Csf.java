@@ -49,7 +49,8 @@ public class JZombies_Csf {
 		AgentMapping am = dsm.getAgentMappingForObject(obj);
 		// TODO: Add validation here
 		assert (am != null);
-
+		
+		//Construct FrameworkMessage to send to the distributed agent
 		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, repastS_AgentContext
 						.getRepastS_SimulationRunContext()

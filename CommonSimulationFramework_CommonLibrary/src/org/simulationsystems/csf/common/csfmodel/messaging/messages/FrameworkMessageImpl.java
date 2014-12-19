@@ -1,6 +1,7 @@
 package org.simulationsystems.csf.common.csfmodel.messaging.messages;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.jdom2.Document;
@@ -118,34 +119,60 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element populateThisActorLocationInAgentModel(Element actor, String ID, String gridPointX,
-			String gridPointY) {
-		return frameworkMessageDocumentHelper.populateThisActorLocationInAgentModel(actor, ID,
-				gridPointX, gridPointY);
+	public Element populateThisActorLocationInAgentModel(Element actor, String ID,
+			String gridPointX, String gridPointY) {
+		return frameworkMessageDocumentHelper.populateThisActorLocationInAgentModel(
+				actor, ID, gridPointX, gridPointY);
 	}
 
 	@Override
-	public Element getNextAgentModelActor(Object distributedAutononomousAgent, Element cachedAgentModelTemplate) {
-		return frameworkMessageDocumentHelper.getNextAgentModelActor(distributedAutononomousAgent,
-				cachedAgentModelTemplate);
+	public Element getNextAgentModelActor(Object distributedAutononomousAgent,
+			Element cachedAgentModelTemplate) {
+		return frameworkMessageDocumentHelper.getNextAgentModelActor(
+				distributedAutononomousAgent, cachedAgentModelTemplate);
 	}
-	
+
 	@Override
 	public Element getNextNonSelfLocationForActor(Element actor,
 			Element cachedLocationTemplate) {
-		return frameworkMessageDocumentHelper.getNextNonSelfLocationForActor(actor, cachedLocationTemplate);
+		return frameworkMessageDocumentHelper.getNextNonSelfLocationForActor(actor,
+				cachedLocationTemplate);
 	}
 
 	@Override
-	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent, String ID) {
-		return frameworkMessageDocumentHelper.populateDistributedAutonomousAgent(distributedAutonomousAgent, ID);
+	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent,
+			String ID) {
+		return frameworkMessageDocumentHelper.populateDistributedAutonomousAgent(
+				distributedAutonomousAgent, ID);
 	}
 
+	// FIXME: Need to to rename these two getNext Function so it's obvious they are only
+	// used for writing messages
 	@Override
 	public Element getNextDistributedAutonomousAgent(Object doc,
 			Element cacheDistributedAutonomousAgentTemplate) {
 		return frameworkMessageDocumentHelper.getNextDistributedAutonomousAgent(doc,
 				cacheDistributedAutonomousAgentTemplate);
-	}		
+	}
+
+	@Override
+	public List<Element> getDistributedAutonomousAgents(Object doc) {
+		return frameworkMessageDocumentHelper.getDistributedAutonomousAgents(doc);
+	}
+
+	@Override
+	public String getDistributedAutonomousAgentElementID(Element distributedAutononomousAgentElement) {
+		return frameworkMessageDocumentHelper.getDistributedAutonomousAgentElementID(distributedAutononomousAgentElement);
+	}
+
+	@Override
+	public List<Element> getAgentModels(Element distributedAutonomousAgentElement) {
+		return frameworkMessageDocumentHelper.getAgentModels(distributedAutonomousAgentElement);
+	}
+
+	@Override
+	public String getAgentModelID(Element agentModel) {
+		return frameworkMessageDocumentHelper.getAgentModelID(agentModel);
+	}
 
 }

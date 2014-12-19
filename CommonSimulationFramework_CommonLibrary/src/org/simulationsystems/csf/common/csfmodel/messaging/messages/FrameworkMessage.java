@@ -1,5 +1,7 @@
 package org.simulationsystems.csf.common.csfmodel.messaging.messages;
 
+import java.util.List;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -39,5 +41,13 @@ public interface FrameworkMessage {
  
 	Element getNextNonSelfLocationForActor(Element actor, Element cachedLocationTemplate);
 
+	List<Element> getDistributedAutonomousAgents(Object doc);
+
+	String getDistributedAutonomousAgentElementID(
+			Element distributedAutononomousAgentElement);
+
+	List<Element> getAgentModels(Element distributedAutonomousAgentElement);
+
+	String getAgentModelID(Element agentModel);
 
 }

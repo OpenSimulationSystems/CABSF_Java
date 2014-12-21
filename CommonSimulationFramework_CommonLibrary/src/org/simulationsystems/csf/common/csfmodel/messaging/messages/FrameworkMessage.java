@@ -37,11 +37,11 @@ public interface FrameworkMessage {
 	
 	Element getNextAgentModelActor(Object distributedAutononomousAgent, Element cachedAgentModelTemplate);
 
-	Element getNextDistributedAutonomousAgent(Object doc, Element cacheDistributedAutonomousAgentTemplate);
+	Element getNextDistributedAutonomousAgent(Object csfMessageExchangeDoc, Element cacheDistributedAutonomousAgentTemplate);
  
 	Element getNextNonSelfLocationForActor(Element actor, Element cachedLocationTemplate);
 
-	List<Element> getDistributedAutonomousAgents(Object doc);
+	List<Element> getDistributedAutonomousAgents(Object csfMessageExchangeDoc);
 
 	String getDistributedAutonomousAgentElementID(
 			Element distributedAutononomousAgentElement);
@@ -50,6 +50,7 @@ public interface FrameworkMessage {
 
 	String getAgentModelID(Element agentModel);
 
-	public Document addDistributedAutonomousAgent(Document doc, Element rootElement, String iD, boolean removeChildren);
+	public Document addDistributedAutonomousAgent(Document csfMessageExchangeDoc, Element distributedAutononomousAgentElement, boolean removeChildren);
 
+	public void removeDistributedAutonomousAgents(Document csfMessageExchangeDoc);
 }

@@ -162,11 +162,11 @@ public class JADE_MAS_AdapterAPI {
 				.getDistributedAgentsManager();
 
 		fm = jade_MAS_RunContext.listenForMessageFromSimulationEngine();
-		List<Element> distributedAutonomousAgentElements = fm
+		List<Element> distributedAutonomousAgentsElement = fm
 				.getDistributedAutonomousAgents(fm.getDocument());
 		// TODO: better validation
-		assert (distributedAutonomousAgentElements.size() != 0);
-		for (Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
+		assert (distributedAutonomousAgentsElement.size() != 0);
+		for (Element distributedAutonomousAgentElement : distributedAutonomousAgentsElement) {
 			String daaID = fm
 					.getDistributedAutonomousAgentElementID(distributedAutonomousAgentElement);
 			DistributedAutonomousAgent distAutAgent = dam

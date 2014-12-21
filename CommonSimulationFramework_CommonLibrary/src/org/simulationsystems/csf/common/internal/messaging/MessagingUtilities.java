@@ -18,6 +18,6 @@ public class MessagingUtilities {
 	}
 	
 	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
-		return XMLUtilities.convertDocumentToXMLString(document, prettyPrint);
+		return XMLUtilities.convertDocumentToXMLString(document.getRootElement(), prettyPrint);
 	}
 }

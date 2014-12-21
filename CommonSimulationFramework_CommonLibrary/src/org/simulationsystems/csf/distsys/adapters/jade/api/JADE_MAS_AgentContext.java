@@ -52,14 +52,17 @@ public class JADE_MAS_AgentContext {
 	 * the XML
 	 */
 	// TODO: Move this one high level in API?
-	public FrameworkMessage convertDocumentToDistributedAutonomousAgentToFrameworkMessage(Document distributedAutononomousAgent, String ID) {
-		
-		FrameworkMessage fm = new FrameworkMessageImpl(
-				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+	// TODO: Remove the ID from the method signature?
+	public FrameworkMessage convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage(
+			Document distributedAutononomousAgent, String ID) {
+
+		FrameworkMessage fm = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 				jade_MAS_RunContext.getCachedMessageExchangeTemplate());
-		//FIXME: Need a better name if all we're doing is setting the ID.
-		//populateDistributedAutonomousAgent
-		fm.addDistributedAutonomousAgent(fm.getDocument(), distributedAutononomousAgent.getRootElement(), ID, true);
+		// FIXME: Need a better name if all we're doing is setting the ID.
+		// populateDistributedAutonomousAgent
+		fm.addDistributedAutonomousAgent(fm.getDocument(),
+				distributedAutononomousAgent.getRootElement(), true);
 
 		return fm;
 	}

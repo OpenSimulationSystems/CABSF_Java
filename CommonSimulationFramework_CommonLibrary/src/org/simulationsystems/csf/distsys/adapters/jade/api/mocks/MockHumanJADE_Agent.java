@@ -26,8 +26,8 @@ public class MockHumanJADE_Agent {
 		//All of the other information not meant for this distributed autonomous agent is not present either in the original or converted XML
 		jade_MAS_AgentContext.initializeCsfAgent("TESTconfigFile");
 		
-		FrameworkMessage fm = jade_MAS_AgentContext.convertDocumentToDistributedAutonomousAgentToFrameworkMessage(distributedAutononomousAgent,ID);
-		jzombies_JADE_Csf.getPointWithLeastZombies(distributedAutononomousAgent, fm);
+		FrameworkMessage fm = jade_MAS_AgentContext.convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage(distributedAutononomousAgent,ID);
+		jzombies_JADE_Csf.getPointWithLeastZombies(distributedAutononomousAgent.getRootElement(), fm);
 		
 		System.out.println("[MockHumanJADE_Agent] Received message: ");
 	}

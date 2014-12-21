@@ -32,7 +32,7 @@ public class FrameworkMessageDocumentHelper {
 
 	// Used to determine
 	// FIXME: Need a better way to determine whether the actor has already been used
-	private boolean firstAgentModelActorPopulated;
+	private boolean firstAgentModelActorPopulated = false;
 
 	private boolean firstDistributedAutonomousAgentPopulated;
 
@@ -210,8 +210,8 @@ public class FrameworkMessageDocumentHelper {
 		}
 
 	}
-	
-	//FIXME: Check with an id?
+
+	// FIXME: Check with an id?
 	public Element getNextAgentModelActor(Object distributedAutononomousAgent,
 			Element cachedAgentModelTemplate) {
 		@SuppressWarnings("unchecked")
@@ -221,29 +221,51 @@ public class FrameworkMessageDocumentHelper {
 		if (!firstAgentModelActorPopulated) {
 			firstAgentModelActorPopulated = true;
 			return agentModelElements.get(0).getChild("Actor", namespace);
-		} else {
-			Element agentModelActor = cachedAgentModelTemplate;
-			agentModelElements.get(0).addContent(agentModelActor);
+		} /*
+		 * else {XMLUtilities.convertDocumentToXMLString(this.getDocument(), true);
+		 * Element agentModelActor = cachedAgentModelTemplate;
+		 * agentModelElements.get(0).addContent(agentModelActor); return agentModelActor;
+		 * }
+		 */
+
+		else {// XMLUtilities.executeXPath(((Document)distributedAutononomousAgent).getRootElement(),
+				// "./x:AgentModels/x:AgentModel",namespaceStr, elementFilter);
+				// XMLUtilities.executeXPath(distributedAutononomousAgent,
+				// "./x:AgentModels/x:AgentModel",namespaceStr, elementFilter);
+
+			Element agentModelActor = null;
+			if (cachedAgentModelTemplate != null) {
+				agentModelActor = cachedAgentModelTemplate;
+				agentModelElements.get(0).addContent(agentModelActor);
+				return agentModelActor;
+			} else
+				agentModelActor = agentModelElements.get(0).getChild("Actor", namespace);
 			return agentModelActor;
 		}
 	}
 
+	/*
+	 * iuf cachedDistributedAutonomousAgentTemplate is blank, don't add the element
+	 */
 	public Element getNextDistributedAutonomousAgent(Object doc,
 			Element cachedDistributedAutonomousAgentTemplate) {
 		@SuppressWarnings("unchecked")
-		List<Element> distributedAutonomousAgentsElements = (List<Element>) XMLUtilities
-				.executeXPath(
-						doc,
-						distributedAutonomousAgentsXpath,
-						namespaceStr, elementFilter);
+		Element distributedAutonomousAgentsElement = getDistributedAutonomousAgentsElement(doc);
+		List<Element> distributedAutonomousAgentElements = getDistributedAutonomousAgentElements(doc);
+
 		if (!firstDistributedAutonomousAgentPopulated) {
 			firstDistributedAutonomousAgentPopulated = true;
-			return distributedAutonomousAgentsElements.get(0).getChild(
-					"DistributedAutonomousAgent", namespace);
+			return distributedAutonomousAgentElements.get(0);
 		} else {
-			Element distributedAutononomousAgent = cachedDistributedAutonomousAgentTemplate;
-			distributedAutonomousAgentsElements.get(0).addContent(
-					distributedAutononomousAgent);
+			Element distributedAutononomousAgent = null;
+			if (cachedDistributedAutonomousAgentTemplate != null) {
+				distributedAutononomousAgent = cachedDistributedAutonomousAgentTemplate;
+				distributedAutonomousAgentsElement
+						.addContent(distributedAutononomousAgent);
+				return distributedAutononomousAgent;
+			} else
+				distributedAutononomousAgent = distributedAutonomousAgentsElement
+						.getChild("DistributedAutonomousAgent", namespace);
 			return distributedAutononomousAgent;
 		}
 	}
@@ -276,53 +298,73 @@ public class FrameworkMessageDocumentHelper {
 		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY);
 	}
 
-	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent, String ID) {
+	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent,
+			String ID) {
 		setIDinDistributedAutononomousAgent(distributedAutonomousAgent, ID);
 		return distributedAutonomousAgent;
 	}
 
-	public List<Element> getDistributedAutonomousAgents(Object doc) {
+	public Element getDistributedAutonomousAgentsElement(Object doc) {
 		@SuppressWarnings("unchecked")
 		// TODO: Rename methods to differentiate Common environment changes from
 		// simulation-specific.
 		List<Element> distributedAutonomousAgentsElements = (List<Element>) XMLUtilities
-				.executeXPath(
-						doc,
-						distributedAutonomousAgentsXpath,
-						namespaceStr, elementFilter);
-		
-		return distributedAutonomousAgentsElements.get(0).getChildren("DistributedAutonomousAgent");
+				.executeXPath(doc, distributedAutonomousAgentsXpath, namespaceStr,
+						elementFilter);
+
+		return distributedAutonomousAgentsElements.get(0);
+	}
+
+	public List<Element> getDistributedAutonomousAgentElements(Object doc) {
+		@SuppressWarnings("unchecked")
+		// TODO: Rename methods to differentiate Common environment changes from
+		// simulation-specific.
+		List<Element> distributedAutonomousAgentsElements = (List<Element>) XMLUtilities
+				.executeXPath(doc, distributedAutonomousAgentsXpath, namespaceStr,
+						elementFilter);
+
+		return distributedAutonomousAgentsElements.get(0).getChildren(
+				"DistributedAutonomousAgent", namespace);
 	}
 
 	public String getDistributedAutonomousAgentElementID(
 			Element distributedAutononomousAgentElement) {
-		
-		return distributedAutononomousAgentElement.getChild("ID").getValue();
+
+		return distributedAutononomousAgentElement.getChild("ID", namespace).getValue();
 
 	}
 
 	public List<Element> getAgentModels(Element distributedAutonomousAgentElement) {
-		return distributedAutonomousAgentElement.getChildren("AgentModel");
+		return distributedAutonomousAgentElement.getChildren("AgentModel", namespace);
 
 	}
 
 	public String getAgentModelID(Element agentModel) {
-		return agentModel.getChild("ID").getValue();
+		return agentModel.getChild("ID", namespace).getValue();
 	}
-
+	
+	/*
+	 * Side effect includes removing the distributedAutononomousAgentElement from the current Document
+	 */
 	public Document addDistributedAutonomousAgent(Document doc,
-			Element distributedAutononomousAgentElement, String iD, boolean removeChildren) {
+			Element distributedAutononomousAgentElement, boolean removeChildren) {
 		@SuppressWarnings("unchecked")
 		// TODO: Rename methods to differentiate Common environment changes from
 		// simulation-specific.
 		List<Element> distributedAutonomousAgents = (List<Element>) XMLUtilities
-				.executeXPath(
-						doc,
-						distributedAutonomousAgentsXpath,
-						namespaceStr, elementFilter);
+				.executeXPath(doc, distributedAutonomousAgentsXpath, namespaceStr,
+						elementFilter);
 		if (removeChildren)
 			distributedAutonomousAgents.get(0).removeContent();
-		distributedAutonomousAgents.get(0).addContent(distributedAutononomousAgentElement);
+		distributedAutonomousAgents.get(0)
+				.addContent(distributedAutononomousAgentElement.detach());
 		return doc;
+	}
+
+	public void removeDistributedAutonomousAgents(Document doc) {
+		List<Element> distributedAutonomousAgents = (List<Element>) XMLUtilities
+				.executeXPath(doc, distributedAutonomousAgentsXpath, namespaceStr,
+						elementFilter);
+		distributedAutonomousAgents.get(0).removeContent();
 	}
 }

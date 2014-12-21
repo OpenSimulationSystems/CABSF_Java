@@ -149,15 +149,15 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	// FIXME: Need to to rename these two getNext Function so it's obvious they are only
 	// used for writing messages
 	@Override
-	public Element getNextDistributedAutonomousAgent(Object doc,
+	public Element getNextDistributedAutonomousAgent(Object csfMessageExchangeDoc,
 			Element cacheDistributedAutonomousAgentTemplate) {
-		return frameworkMessageDocumentHelper.getNextDistributedAutonomousAgent(doc,
+		return frameworkMessageDocumentHelper.getNextDistributedAutonomousAgent(csfMessageExchangeDoc,
 				cacheDistributedAutonomousAgentTemplate);
 	}
-
+	
 	@Override
 	public List<Element> getDistributedAutonomousAgents(Object doc) {
-		return frameworkMessageDocumentHelper.getDistributedAutonomousAgents(doc);
+		return frameworkMessageDocumentHelper.getDistributedAutonomousAgentElements(doc);
 	}
 
 	@Override
@@ -176,9 +176,15 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Document addDistributedAutonomousAgent(Document doc, Element distributedAutononomousAgentElement, String ID, boolean removeChildren) {
-		return frameworkMessageDocumentHelper.addDistributedAutonomousAgent(doc,
-				distributedAutononomousAgentElement, ID,removeChildren);
+	public Document addDistributedAutonomousAgent(Document csfMessageExchangeDoc, Element distributedAutononomousAgentElement, boolean removeChildren) {
+		return frameworkMessageDocumentHelper.addDistributedAutonomousAgent(csfMessageExchangeDoc,
+				distributedAutononomousAgentElement, removeChildren);
+	}
+
+	@Override
+	public void removeDistributedAutonomousAgents(Document csfMessageExchangeDoc) {
+		frameworkMessageDocumentHelper.removeDistributedAutonomousAgents(csfMessageExchangeDoc);
+		
 	}
 
 }

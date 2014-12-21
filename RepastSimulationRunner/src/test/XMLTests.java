@@ -169,9 +169,8 @@ public class XMLTests {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
-	@Ignore
 	public void testSetInitialLocationOfLocalZombies() {
 		/*
 		 * Document doc = getDocument();
@@ -185,138 +184,152 @@ public class XMLTests {
 		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
 		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
 		 */
-		
+
 		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 				simulationRunGroupContext.getCachedMessageExchangeTemplate());
-		populateZombiesMessage(msg, "distAutAgent1","distAutAgentMode1", "1","2","3","4");
-		populateZombiesMessage(msg, "distAutAgent2","distAutAgentMode2", "5","6","7","8");
+		populateZombiesMessage(msg, "distAutAgent1", "distAutAgentMode1", "1", "2", "3",
+				"4");
+		populateZombiesMessage(msg, "distAutAgent2", "distAutAgentMode2", "5", "6", "7",
+				"8");
 
 	}
-	
-	private FrameworkMessage populateZombiesMessage(FrameworkMessage msg, String distributedAutononmousAgentID, String agentModelID, String thisAgentPositionX, String thisAgentPositionY, String leastZombiesX, String leastZombiesY) {
 
-		Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(msg.getDocument(), simulationRunGroupContext.getDistributedAutonomousAgentTemplate());
-		msg.populateDistributedAutonomousAgent(distributedAutonomousAgent, distributedAutononmousAgentID);
+	private FrameworkMessage populateZombiesMessage(FrameworkMessage msg,
+			String distributedAutononmousAgentID, String agentModelID,
+			String thisAgentPositionX, String thisAgentPositionY, String leastZombiesX,
+			String leastZombiesY) {
+
+		Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(
+				msg.getDocument(),
+				simulationRunGroupContext.getDistributedAutonomousAgentTemplate());
+		msg.populateDistributedAutonomousAgent(distributedAutonomousAgent,
+				distributedAutononmousAgentID);
 		Element agentModelActor = msg.getNextAgentModelActor(distributedAutonomousAgent,
 				simulationRunGroupContext.getCachedAgentModelActorTemplate());
-		msg.populateThisActorLocationInAgentModel(agentModelActor, agentModelID, thisAgentPositionX,
-				thisAgentPositionY);
-		jZombies_Repast_Csf.populatePointWithLeastZombies(msg, agentModelActor, leastZombiesX, leastZombiesY,
+		msg.populateThisActorLocationInAgentModel(agentModelActor, agentModelID,
+				thisAgentPositionX, thisAgentPositionY);
+		jZombies_Repast_Csf.populatePointWithLeastZombies(msg, agentModelActor,
+				leastZombiesX, leastZombiesY,
 				simulationRunGroupContext.getCachedLocationTemplate());
-		
+
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
 		String xmlString = outputter.outputString(msg.getDocument());
 		System.out.println(xmlString);
-		return msg;
+
+		/*
+		 * JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
+		 * JZombies_JADE_Csf jzombies_JADE_Csf = new
+		 * JZombies_JADE_Csf(jade_MAS_AgentContext);
+		 * jzombies_JADE_Csf.getPointWithLeastZombies(distributedAutonomousAgent, msg,
+		 * simulationRunGroupContext.getCachedAgentModelActorTemplate());
+		 */return msg;
 	}
-	
+
 	@Test
+	@Ignore
 	public void testReadZombiesLocation() {
-		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
-				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				simulationRunGroupContext.getCachedMessageExchangeTemplate());
-		msg = populateZombiesMessage(msg, "distAutAgent1","distAutAgentMode1", "1","2","3","4");
-		
-		String xmlString = "        <DistributedAutonomousAgent>\r\n" + 
-				"          <Name />\r\n" + 
-				"          <ID>distAutAgent2</ID>\r\n" + 
-				"          <AgentModels>\r\n" + 
-				"            <AllAgentModels>\r\n" + 
-				"              <!-- To all Agent Models in this Distributed System -->\r\n" + 
-				"              <ControlMessages>\r\n" + 
-				"                <!-- START_SIMULATION or END_SIMULATION -->\r\n" + 
-				"                <Command />\r\n" + 
-				"              </ControlMessages>\r\n" + 
-				"            </AllAgentModels>\r\n" + 
-				"            <!-- Message submitted to this one agent model in the parent distributed autonomous agent -->\r\n" + 
-				"            <AgentModel>\r\n" + 
-				"              <!-- Message about this one actor to this one agent model (parent element) under the parent distributed autonomous agent -->\r\n" + 
-				"              <Actor>\r\n" + 
-				"                <!-- RE: Self or another agent model -->\r\n" + 
-				"                <ID>distAutAgentMode2</ID>\r\n" + 
-				"                <!-- EnvironmentChanges Could be used to communicate all local environment \r\n" + 
-				"									information if desired, not just changes since the last tick -->\r\n" + 
-				"                <EnvironmentChanges>\r\n" + 
-				"                  <CommonEnvironmentChanges>\r\n" + 
-				"                    <EnvironmentChange>\r\n" + 
-				"                      <!-- self = the actor above. Initial location or change -->\r\n" + 
-				"                      <Location id=\"self\">\r\n" + 
-				"                        <GridPointX>5</GridPointX>\r\n" + 
-				"                        <GridPointY>6</GridPointY>\r\n" + 
-				"                        <GridPointZ />\r\n" + 
-				"                      </Location>\r\n" + 
-				"                    </EnvironmentChange>\r\n" + 
-				"                  </CommonEnvironmentChanges>\r\n" + 
-				"                  <SimulationDefinedEnvironmentChanges>\r\n" + 
-				"                    <EnvironmentChange>\r\n" + 
-				"                      <!-- key/value pair suggested, format is open -->\r\n" + 
-				"                      <Location id=\"\" category=\"neighborhood\" includecenter=\"true\" entitytype=\"Zombie\">\r\n" + 
-				"                        <GridPointX>7</GridPointX>\r\n" + 
-				"                        <GridPointY>8</GridPointY>\r\n" + 
-				"                        <GridPointZ />\r\n" + 
-				"                      </Location>\r\n" + 
-				"                    </EnvironmentChange>\r\n" + 
-				"                  </SimulationDefinedEnvironmentChanges>\r\n" + 
-				"                </EnvironmentChanges>\r\n" + 
-				"                <!-- These are changes in state that are not observable by other \r\n" + 
-				"									agents. Only for use by this agent or to populate the global environment \r\n" + 
-				"									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges \r\n" + 
-				"									for changes that are at least in theory observable by other agents/agent \r\n" + 
-				"									models in the simulation model. -->\r\n" + 
-				"                <Actions>\r\n" + 
-				"                  <!-- Common CSF Actions -->\r\n" + 
-				"                  <CommonActions>\r\n" + 
-				"                    <Action>\r\n" + 
-				"                      <Move>\r\n" + 
-				"                        <GridPointX />\r\n" + 
-				"                        <GridPointY />\r\n" + 
-				"                        <GridPointZ />\r\n" + 
-				"                      </Move>\r\n" + 
-				"                    </Action>\r\n" + 
-				"                  </CommonActions>\r\n" + 
-				"                  <!-- Optional, based on the simulation -->\r\n" + 
-				"                  <SimulationDefinedActions>\r\n" + 
-				"                    <!-- key/value pair suggested, format is open -->\r\n" + 
-				"                  </SimulationDefinedActions>\r\n" + 
-				"                </Actions>\r\n" + 
-				"                <MessageExchange>\r\n" + 
-				"                  <CommonMessages>\r\n" + 
-				"                    <!-- To this agent model, regarding actor above -->\r\n" + 
-				"                    <Message>\r\n" + 
-				"                      <From />\r\n" + 
-				"                      <!-- key/value pair here -->\r\n" + 
-				"                    </Message>\r\n" + 
-				"                  </CommonMessages>\r\n" + 
-				"                  <SimulationDefinedMessages>\r\n" + 
-				"                    <Message>\r\n" + 
-				"                      <!-- key/value pair suggested, format is open -->\r\n" + 
-				"                    </Message>\r\n" + 
-				"                  </SimulationDefinedMessages>\r\n" + 
-				"                </MessageExchange>\r\n" + 
-				"                <InternalStateChanges>\r\n" + 
-				"                  <CommonInternalStateChanges>\r\n" + 
-				"                    <InternalStateChange>\r\n" + 
-				"                      <!-- Key value pair -->\r\n" + 
-				"                    </InternalStateChange>\r\n" + 
-				"                    <InternalStateUpdate />\r\n" + 
-				"                  </CommonInternalStateChanges>\r\n" + 
-				"                  <!-- User/simulation defined common states -->\r\n" + 
-				"                  <!-- Children may contain any format -->\r\n" + 
-				"                  <SimulationDefinedInternalStateChanges>\r\n" + 
-				"                    <InternalStateChange>\r\n" + 
-				"                      <!-- key/value pair suggested, format is open -->\r\n" + 
-				"                    </InternalStateChange>\r\n" + 
-				"                  </SimulationDefinedInternalStateChanges>\r\n" + 
-				"                </InternalStateChanges>\r\n" + 
-				"              </Actor>\r\n" + 
-				"            </AgentModel>\r\n" + 
-				"          </AgentModels>\r\n" + 
-				"        </DistributedAutonomousAgent>\r\n" + 
-				"";
-		Document distributedAutononomousAgent=null;
+
+		String xmlString = "        <DistributedAutonomousAgent xmlns=\"http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0\"\r\n"
+				+ "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n"
+				+ "          <Name />\r\n"
+				+ "          <ID>distAutAgent2</ID>\r\n"
+				+ "          <AgentModels>\r\n"
+				+ "            <AllAgentModels>\r\n"
+				+ "              <!-- To all Agent Models in this Distributed System -->\r\n"
+				+ "              <ControlMessages>\r\n"
+				+ "                <!-- START_SIMULATION or END_SIMULATION -->\r\n"
+				+ "                <Command />\r\n"
+				+ "              </ControlMessages>\r\n"
+				+ "            </AllAgentModels>\r\n"
+				+ "            <!-- Message submitted to this one agent model in the parent distributed autonomous agent -->\r\n"
+				+ "            <AgentModel>\r\n"
+				+ "              <!-- Message about this one actor to this one agent model (parent element) under the parent distributed autonomous agent -->\r\n"
+				+ "              <Actor>\r\n"
+				+ "                <!-- RE: Self or another agent model -->\r\n"
+				+ "                <ID>distAutAgentMode2</ID>\r\n"
+				+ "                <!-- EnvironmentChanges Could be used to communicate all local environment \r\n"
+				+ "									information if desired, not just changes since the last tick -->\r\n"
+				+ "                <EnvironmentChanges>\r\n"
+				+ "                  <CommonEnvironmentChanges>\r\n"
+				+ "                    <EnvironmentChange>\r\n"
+				+ "                      <!-- self = the actor above. Initial location or change -->\r\n"
+				+ "                      <Location id=\"self\">\r\n"
+				+ "                        <GridPointX>5</GridPointX>\r\n"
+				+ "                        <GridPointY>6</GridPointY>\r\n"
+				+ "                        <GridPointZ />\r\n"
+				+ "                      </Location>\r\n"
+				+ "                    </EnvironmentChange>\r\n"
+				+ "                  </CommonEnvironmentChanges>\r\n"
+				+ "                  <SimulationDefinedEnvironmentChanges>\r\n"
+				+ "                    <EnvironmentChange>\r\n"
+				+ "                      <!-- key/value pair suggested, format is open -->\r\n"
+				+ "                      <Location id=\"\" category=\"neighborhood\" includecenter=\"true\" entitytype=\"Zombie\">\r\n"
+				+ "                        <GridPointX>7</GridPointX>\r\n"
+				+ "                        <GridPointY>8</GridPointY>\r\n"
+				+ "                        <GridPointZ />\r\n"
+				+ "                      </Location>\r\n"
+				+ "                    </EnvironmentChange>\r\n"
+				+ "                  </SimulationDefinedEnvironmentChanges>\r\n"
+				+ "                </EnvironmentChanges>\r\n"
+				+ "                <!-- These are changes in state that are not observable by other \r\n"
+				+ "									agents. Only for use by this agent or to populate the global environment \r\n"
+				+ "									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges \r\n"
+				+ "									for changes that are at least in theory observable by other agents/agent \r\n"
+				+ "									models in the simulation model. -->\r\n"
+				+ "                <Actions>\r\n"
+				+ "                  <!-- Common CSF Actions -->\r\n"
+				+ "                  <CommonActions>\r\n"
+				+ "                    <Action>\r\n"
+				+ "                      <Move>\r\n"
+				+ "                        <GridPointX />\r\n"
+				+ "                        <GridPointY />\r\n"
+				+ "                        <GridPointZ />\r\n"
+				+ "                      </Move>\r\n"
+				+ "                    </Action>\r\n"
+				+ "                  </CommonActions>\r\n"
+				+ "                  <!-- Optional, based on the simulation -->\r\n"
+				+ "                  <SimulationDefinedActions>\r\n"
+				+ "                    <!-- key/value pair suggested, format is open -->\r\n"
+				+ "                  </SimulationDefinedActions>\r\n"
+				+ "                </Actions>\r\n"
+				+ "                <MessageExchange>\r\n"
+				+ "                  <CommonMessages>\r\n"
+				+ "                    <!-- To this agent model, regarding actor above -->\r\n"
+				+ "                    <Message>\r\n"
+				+ "                      <From />\r\n"
+				+ "                      <!-- key/value pair here -->\r\n"
+				+ "                    </Message>\r\n"
+				+ "                  </CommonMessages>\r\n"
+				+ "                  <SimulationDefinedMessages>\r\n"
+				+ "                    <Message>\r\n"
+				+ "                      <!-- key/value pair suggested, format is open -->\r\n"
+				+ "                    </Message>\r\n"
+				+ "                  </SimulationDefinedMessages>\r\n"
+				+ "                </MessageExchange>\r\n"
+				+ "                <InternalStateChanges>\r\n"
+				+ "                  <CommonInternalStateChanges>\r\n"
+				+ "                    <InternalStateChange>\r\n"
+				+ "                      <!-- Key value pair -->\r\n"
+				+ "                    </InternalStateChange>\r\n"
+				+ "                    <InternalStateUpdate />\r\n"
+				+ "                  </CommonInternalStateChanges>\r\n"
+				+ "                  <!-- User/simulation defined common states -->\r\n"
+				+ "                  <!-- Children may contain any format -->\r\n"
+				+ "                  <SimulationDefinedInternalStateChanges>\r\n"
+				+ "                    <InternalStateChange>\r\n"
+				+ "                      <!-- key/value pair suggested, format is open -->\r\n"
+				+ "                    </InternalStateChange>\r\n"
+				+ "                  </SimulationDefinedInternalStateChanges>\r\n"
+				+ "                </InternalStateChanges>\r\n"
+				+ "              </Actor>\r\n"
+				+ "            </AgentModel>\r\n"
+				+ "          </AgentModels>\r\n"
+				+ "        </DistributedAutonomousAgent>\r\n" + "";
+		Element distributedAutonomousAgentElement = null;
 		try {
-			distributedAutononomousAgent = XMLUtilities.xmlStringTojdom2Document(xmlString);
+			distributedAutonomousAgentElement = XMLUtilities.xmlStringTojdom2Document(
+					xmlString).getRootElement();
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -324,12 +337,20 @@ public class XMLTests {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+		FrameworkMessage msg = null;
+		msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+				simulationRunGroupContext.getCachedMessageExchangeTemplate());
+
+		msg.addDistributedAutonomousAgent(msg.getDocument(),
+				distributedAutonomousAgentElement, true);
+
 		JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
-		jade_MAS_AgentContext.initializeCsfAgent("TESTconfigFile");
-		
 		JZombies_JADE_Csf jzombies_JADE_Csf = new JZombies_JADE_Csf(jade_MAS_AgentContext);
-		jzombies_JADE_Csf.getPointWithLeastZombies(distributedAutononomousAgent, msg);
+
+		jzombies_JADE_Csf.getPointWithLeastZombies(distributedAutonomousAgentElement,
+				msg, simulationRunGroupContext.getCachedAgentModelActorTemplate());
 
 	}
 

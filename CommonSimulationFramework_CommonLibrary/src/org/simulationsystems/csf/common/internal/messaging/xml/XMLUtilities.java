@@ -119,7 +119,7 @@ public class XMLUtilities {
 		 */
 	}
 
-	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
+	static public String convertDocumentToXMLString(Element document, boolean prettyPrint) {
 		XMLOutputter outputter = null;
 		if (prettyPrint)
 			outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -128,7 +128,7 @@ public class XMLUtilities {
 		String xmlString = outputter.outputString(document);
 		return xmlString;
 	}
-	
+
 	static public String convertElementToXMLString(Element document, boolean prettyPrint) {
 		XMLOutputter outputter = null;
 		if (prettyPrint)

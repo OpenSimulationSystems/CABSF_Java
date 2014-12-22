@@ -29,10 +29,10 @@ public class JZombies_JADE_Csf {
 
 	public List<String> getPointWithLeastZombies(
 			Element distributedAutononomousAgentElement, FrameworkMessage msg,
-			Element cachedAgentModeTemplate) {
+			JADE_MAS_AgentContext jade_MAS_AgentContext ) {
 		// FIXME: Why does this have to be an element, and not Document?
 		Element agentModelActor = msg.getNextAgentModelActor(
-				distributedAutononomousAgentElement, cachedAgentModeTemplate);
+				distributedAutononomousAgentElement, null);
 		List<Element> environmentChangeElements = (List<Element>) XMLUtilities
 				.executeXPath(
 						agentModelActor,
@@ -43,7 +43,7 @@ public class JZombies_JADE_Csf {
 		List<Element> locations = (List<Element>) XMLUtilities.executeXPath(
 				environmentChangeElements.get(0),
 				"./x:Location[@category='neighborhood' and @entitytype='Zombie']",
-				namespaceStr, elementFilter);
+				namespaceStr, elementFilter);XMLUtilities.convertElementToXMLString(distributedAutononomousAgentElement,true);
 		Element location = locations.get(0);
 
 		XMLUtilities.convertDocumentToXMLString(
@@ -52,6 +52,49 @@ public class JZombies_JADE_Csf {
 		 * XMLUtilities.convertDocumentToXMLString(distributedAutononomousAgentElement,
 		 * true);
 		 */
+
+		String xValue = location.getChild("GridPointX", namespace).getText();
+		String yValue = location.getChild("GridPointY", namespace).getText();
+		System.out.println("Grid Point X: " + xValue);
+		System.out.println("Grid Point Y: " + yValue);
+		List<String> coordinate = new ArrayList<String>();
+		coordinate.add(xValue);
+		coordinate.add(yValue);
+
+		/*
+		 * location.setAttribute("category", "neighborhood");
+		 * location.setAttribute("includecenter", "true");
+		 * location.setAttribute("entitytype", "Zombie");
+		 */
+		return coordinate;
+	}
+	
+	//FIXME: Don't really need the context any longer, same with get zombies
+	public List<String> getSelfLocation(
+			Element distributedAutononomousAgentElement, FrameworkMessage msg,
+			JADE_MAS_AgentContext jade_MAS_AgentContext ) {
+		// FIXME: Why does this have to be an element, and not Document?
+		Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutononomousAgentElement, null);
+		List<Element> environmentChangeElements = (List<Element>) XMLUtilities
+				.executeXPath(
+						agentModelActor,
+						"./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange",
+						namespaceStr, elementFilter);
+		
+		// FIXME: check the attributes
+		List<Element> locations = (List<Element>) XMLUtilities.executeXPath(
+				environmentChangeElements.get(0),
+				"./x:Location[@id='self']",
+				namespaceStr, elementFilter);
+		Element location = locations.get(0);
+
+		XMLUtilities.convertDocumentToXMLString(
+				agentModelActor, true);
+		
+		 XMLUtilities.convertDocumentToXMLString(agentModelActor,
+		 true);
+		 
 
 		String xValue = location.getChild("GridPointX", namespace).getText();
 		String yValue = location.getChild("GridPointY", namespace).getText();

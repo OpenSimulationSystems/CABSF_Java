@@ -27,7 +27,7 @@ public class JADE_MAS_AgentContext {
 	JADE_MAS_RunContext jade_MAS_RunContext;
 
 	// FIXME: Change
-	public void initializeCsfAgent(String frameworkConfigurationFileName) {
+	public void initializeCsfAgent(String frameworkConfigurationFileName, boolean isJADE_ControllerAgent) {
 
 		JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
 
@@ -42,7 +42,7 @@ public class JADE_MAS_AgentContext {
 		// Initialize simulation run
 		// FIXME: Remove mock native JADE Context
 		jade_MAS_RunContext = jade_MAS_AdapterAPI.initializeSimulationRun(
-				new NativeJADEMockContext(), jade_MAS_RunGroupContext);
+				new NativeJADEMockContext(), jade_MAS_RunGroupContext, isJADE_ControllerAgent);
 	}
 
 	/*
@@ -63,7 +63,7 @@ public class JADE_MAS_AgentContext {
 		// populateDistributedAutonomousAgent
 		fm.addDistributedAutonomousAgent(fm.getDocument(),
 				distributedAutononomousAgent.getRootElement(), true);
-
+		
 		return fm;
 	}
 }

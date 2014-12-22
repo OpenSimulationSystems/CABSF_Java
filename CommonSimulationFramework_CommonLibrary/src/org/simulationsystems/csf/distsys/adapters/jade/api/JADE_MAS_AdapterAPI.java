@@ -113,7 +113,7 @@ public class JADE_MAS_AdapterAPI {
 	// that this agent receives the message that the simulation has started.
 	public JADE_MAS_RunContext initializeSimulationRun(
 			NativeJADEMockContext nativeJadeContextForThisRun,
-			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext) {
+			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext, boolean isJADE_ControllerAgent) {
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI
 				.initializeSimulationRun(nativeJadeContextForThisRun,
@@ -133,7 +133,10 @@ public class JADE_MAS_AdapterAPI {
 
 		assignJadeAgentsToDistributedAutonomousAgents(
 				nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext);
-
+		
+		if (!isJADE_ControllerAgent)
+			return jade_MAS_RunContext;
+		
 		// Listen for START_SIMULATION command from the simulation engine
 		FRAMEWORK_COMMAND fc = jade_MAS_RunContext.listenForMessageFromSimulationEngine()
 				.getFrameworkToDistributedSystemCommand();

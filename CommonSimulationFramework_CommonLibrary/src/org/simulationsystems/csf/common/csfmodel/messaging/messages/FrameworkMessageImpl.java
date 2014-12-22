@@ -176,6 +176,9 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
+	/*
+	 * Side effect includes removing the distributedAutononomousAgentElement from the current Document
+	 */
 	public Document addDistributedAutonomousAgent(Document csfMessageExchangeDoc, Element distributedAutononomousAgentElement, boolean removeChildren) {
 		return frameworkMessageDocumentHelper.addDistributedAutonomousAgent(csfMessageExchangeDoc,
 				distributedAutononomousAgentElement, removeChildren);

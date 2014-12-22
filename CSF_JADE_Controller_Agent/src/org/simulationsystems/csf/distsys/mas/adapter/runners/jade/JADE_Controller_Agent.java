@@ -46,7 +46,7 @@ public class JADE_Controller_Agent {
 		// TODO: Fix the native JADE context
 		JADE_MAS_RunContext jade_MAS_RunContext = jade_MAS_AdapterAPI
 				.initializeSimulationRun(new NativeJADEMockContext(),
-						jade_MAS_RunGroupContext);
+						jade_MAS_RunGroupContext, true);
 
 	}
 }

@@ -11,7 +11,7 @@ public class DistSysRunGroupContext extends CsfRunGroupContext  {
 
 	// LOW: Support Multiple simulation run groups/run contexts
 	private DistSysRunContext distSysRunContext;
-	private Document cachedMessageExchangeTemplate;
+
 
 	public DistSysRunGroupContext() {
 	}
@@ -40,14 +40,7 @@ public class DistSysRunGroupContext extends CsfRunGroupContext  {
 
 	}
 
-	public Document getCachedMessageExchangeTemplate() {
-		return cachedMessageExchangeTemplate.clone();
-	}
 
-	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
-		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;	
-		setupElementTemplates(cachedMessageExchangeTemplate);
-	}
 
 
 }

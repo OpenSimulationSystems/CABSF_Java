@@ -3,9 +3,11 @@ package test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import jzombies.JZombies_Repast_Csf;
+import jzombies.JZombies_Csf;
 
 import org.jdom2.Content;
 import org.jdom2.Document;
@@ -28,20 +30,23 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.JZombies_JADE_Csf;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
 import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.sim.core.api.SimulationAPI;
 import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
+import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunGroupContext;
 
-public class XMLTests {
+public class XMLTests implements JadeController {
 	static private SimulationRunContext simulationRunContext;
 	static private SimulationRunGroupContext simulationRunGroupContext;
 	static private SimulationAPI simulationAPI;
 	static private String simToolNameToSetInSimulationAPI;
-	private static JZombies_Repast_Csf jZombies_Repast_Csf;
-	
+	private static JZombies_Csf jZombies_Csf;
+	static JADE_MAS_AgentContext jade_MAS_AgentContext;
+	static private RepastS_AgentContext repastS_AgentContext;
+
 	String xmlString = "        <DistributedAutonomousAgent xmlns=\"http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0\"\r\n"
 			+ "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n"
 			+ "          <Name />\r\n"
@@ -252,13 +257,19 @@ public class XMLTests {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		RepastS_AgentContext repastS_AgentContext = new RepastS_AgentContext();
-		jZombies_Repast_Csf = new JZombies_Repast_Csf(repastS_AgentContext);
+		repastS_AgentContext = new RepastS_AgentContext();
+		repastS_AgentContext.setBypassRepastRuntimeForTestingPurposes(true);
+		repastS_AgentContext.initializeCsfAgent();
+		
+		jZombies_Csf = new JZombies_Csf(repastS_AgentContext);
+		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
+		jade_MAS_AgentContext.initializeCsfAgent("TEST");
 
 		simulationAPI = SimulationAPI.getInstance();
 		simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
 		simulationRunGroupContext = null;
 		simulationRunContext = null;
+
 		try {
 			simulationRunGroupContext = simulationAPI.initializeAPI("TEMP",
 					simToolNameToSetInSimulationAPI);
@@ -266,11 +277,16 @@ public class XMLTests {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
+				simulationRunGroupContext);
+		repastS_AgentContext
+				.setRepastS_SimulationRunGroupContext(repastS_SimulationRunGroupContext);
+
 	}
 
 	@Test
-	@Ignore
-	public void testSetInitialLocationOfLocalZombies() {
+	public void testPopulateZombiesMessage() {
 		/*
 		 * Document doc = getDocument();
 		 * 
@@ -286,43 +302,21 @@ public class XMLTests {
 
 		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				simulationRunGroupContext.getCachedMessageExchangeTemplate());
-		populateZombiesMessage(msg, "distAutAgent1", "distAutAgentMode1", "1", "2", "3",
-				"4");
-		populateZombiesMessage(msg, "distAutAgent2", "distAutAgentMode2", "5", "6", "7",
-				"8");
+				simulationRunGroupContext.getBlankCachedMessageExchangeTemplate());
+		
+		List<String> thisAgentModelPosition = new ArrayList<String>();
+		thisAgentModelPosition.add("1");
+		thisAgentModelPosition.add("2");
+		List<String> pointLeastZombies = new ArrayList<String>();
+		thisAgentModelPosition.add("3");
+		thisAgentModelPosition.add("4");
+		
+		jZombies_Csf.populateZombiesMessage(msg, "distAutAgent1",
+				"distAutAgentMode1", thisAgentModelPosition, pointLeastZombies, new ArrayList<String>());
+		// jzombies_JADE_Csf.populateZombiesMessage(msg, "distAutAgent2",
+		// "distAutAgentMode2", "5", "6", "7",
+		// "8");
 
-	}
-
-	private FrameworkMessage populateZombiesMessage(FrameworkMessage msg,
-			String distributedAutononmousAgentID, String agentModelID,
-			String thisAgentPositionX, String thisAgentPositionY, String leastZombiesX,
-			String leastZombiesY) {
-
-		Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(
-				msg.getDocument(),
-				simulationRunGroupContext.getDistributedAutonomousAgentTemplate());
-		msg.populateDistributedAutonomousAgent(distributedAutonomousAgent,
-				distributedAutononmousAgentID);
-		Element agentModelActor = msg.getNextAgentModelActor(distributedAutonomousAgent,
-				simulationRunGroupContext.getCachedAgentModelActorTemplate());
-		msg.populateThisActorLocationInAgentModel(agentModelActor, agentModelID,
-				thisAgentPositionX, thisAgentPositionY);
-		jZombies_Repast_Csf.populatePointWithLeastZombies(msg, agentModelActor,
-				leastZombiesX, leastZombiesY,
-				simulationRunGroupContext.getCachedLocationTemplate());
-
-		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-		String xmlString = outputter.outputString(msg.getDocument());
-		System.out.println(xmlString);
-
-		/*
-		 * JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
-		 * JZombies_JADE_Csf jzombies_JADE_Csf = new
-		 * JZombies_JADE_Csf(jade_MAS_AgentContext);
-		 * jzombies_JADE_Csf.getPointWithLeastZombies(distributedAutonomousAgent, msg,
-		 * simulationRunGroupContext.getCachedAgentModelActorTemplate());
-		 */return msg;
 	}
 
 	@Test
@@ -343,24 +337,34 @@ public class XMLTests {
 		FrameworkMessage msg = null;
 		msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				simulationRunGroupContext.getCachedMessageExchangeTemplate());
+				simulationRunGroupContext.getBlankCachedMessageExchangeTemplate());
 
 		msg.addDistributedAutonomousAgent(msg.getDocument(),
 				distributedAutonomousAgentElement, true);
 
 		JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
-		JZombies_JADE_Csf jzombies_JADE_Csf = new JZombies_JADE_Csf(jade_MAS_AgentContext);
 
-		jzombies_JADE_Csf.getSelfLocation(distributedAutonomousAgentElement,
-				msg, jade_MAS_AgentContext);
+		msg.getSelfLocation(distributedAutonomousAgentElement, msg);
 
 	}
-	
+
 	@Test
+	@Ignore
 	public void testReceiveMessageInJADEAgent() {
-		MockHumanJADE_Agent mockHumanJADE_Agent = new MockHumanJADE_Agent();
+		MockHumanJADE_Agent mockHumanJADE_Agent = new MockHumanJADE_Agent(
+				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1");
 		try {
-			mockHumanJADE_Agent.receiveMessage(XMLUtilities.xmlStringTojdom2Document(xmlString));
+			String messageID = UUID.randomUUID().toString();
+			String distributedAutonomousAgentID = UUID.randomUUID().toString();
+
+			Element distributedAutonomousAgentElement = XMLUtilities
+					.xmlStringTojdom2Document(xmlString).getRootElement();
+			FrameworkMessage msg = jade_MAS_AgentContext
+					.convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage(
+							distributedAutonomousAgentElement,
+							distributedAutonomousAgentID, SYSTEM_TYPE.SIMULATION_ENGINE,
+							SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
+			mockHumanJADE_Agent.receiveMessage(msg, messageID, null, this);
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -368,7 +372,13 @@ public class XMLTests {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	public void receiveMessage(FrameworkMessage message, String messageID,
+			String inReplyToMessageID) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

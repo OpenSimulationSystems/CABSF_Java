@@ -67,9 +67,11 @@
 								</Command>
 							</ControlMessages>
 						</AllAgentModels>
-						<!-- Message submitted to this one agent model in the parent distributed autonomous agent -->
+						<!-- Message submitted to this one agent model in the parent distributed 
+							autonomous agent -->
 						<AgentModel>
-							<!-- Message about this one actor to this one agent model (parent element) under the parent distributed autonomous agent -->
+							<!-- Message about this one actor to this one agent model (parent 
+								element) under the parent distributed autonomous agent -->
 							<Actor>
 								<!-- RE: Self or another agent model -->
 								<ID />
@@ -87,9 +89,8 @@
 										</EnvironmentChange>
 									</CommonEnvironmentChanges>
 									<SimulationDefinedEnvironmentChanges>
-										<EnvironmentChange>
-											<!-- key/value pair suggested, format is open -->
-										</EnvironmentChange>
+										<!-- EnvironmentChange elements. key/value pair child elements 
+											of EnvironmentChange suggested, format is open -->
 									</SimulationDefinedEnvironmentChanges>
 								</EnvironmentChanges>
 								<!-- These are changes in state that are not observable by other 

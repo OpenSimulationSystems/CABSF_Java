@@ -42,12 +42,4 @@ public class SimulationRunGroupContext extends CsfRunGroupContext {
 		
 	}
 	
-	public Document getCachedMessageExchangeTemplate() {
-		return cachedMessageExchangeTemplate.clone();
-	}
-	
-	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
-		this.cachedMessageExchangeTemplate = cachedMessageExchangeTemplate;
-		setupElementTemplates(cachedMessageExchangeTemplate);
-	}
 }

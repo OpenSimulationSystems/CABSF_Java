@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
-
-</head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title></head>
 <body>
 <h1><span style="font-weight: bold;">The Common
 Simulation Framework Installation Instructions</span></h1>
@@ -136,7 +134,10 @@ the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight
 <li>Add all of the External JARS in the following
 directory:&nbsp;<span style="font-weight: bold; color: red;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li>
 
-<li>The
+<li>Right click on the CommonSimulationFramework project and add&nbsp; JZombies_CSF_Demo.
+&nbsp;For now there the there is JZombies code that is inside of the
+common library. In the future this should be moved to a separate
+project.</li><li>The
 project will show some errors &nbsp;in the Junit tests (Java unit
 tests) due to missing Eclipse plugins/software. &nbsp;It is
 recommended
@@ -162,8 +163,10 @@ Path.</li><li>Select the Libraries button and select JUnit if available (see the
 about installing the additional software for Eclipse to be able to get
 JUnit).</li><li>Select add&nbsp;JARs, and select the jars under the folder and subfolders in&nbsp;CommonSimulationFramework//lib.</li><li>Select the External JARs button and add all of the JARS from the<span style="color: red;"><span style="color: black;"> two red bolded&nbsp;</span></span><span style="color: black;">{Repast_Installation}/eclipse</span><span style="font-weight: bold;"> </span>lines above.</li>
 
-<li>Follow the same steps for the RepastSimulationRunner and CSF_JADE_Controller_Agent as for the&nbsp;&nbsp;JZombies_CSF_Demo project.</li>
-<li>For the RepastSimulationRunner also make sure to add the&nbsp;JZombies_CSF_Demo project.</li><li>For the  CSF_JADE_Controller_Agent, don't add the&nbsp;JZombies_CSF_Demo as its only dependency should be the CSF, not any Repast project or code.</li><li>Open
+<li>Follow the same steps for the RepastSimulationRunner and
+CSF_JADE_Controller_Agent as for the&nbsp;&nbsp;JZombies_CSF_Demo
+project.</li>
+<li>For the RepastSimulationRunner also make sure to add the&nbsp;JZombies_CSF_Demo project.</li><li>For the  CSF_JADE_Controller_Agent, don't add the&nbsp;JZombies_CSF_Demo.</li><li>Open
 the launchers folder, right click on RepastSimulationRunner -
 CSF.launch, right click, open with Editor. &nbsp;Change the path to
 the simulation in simulation to your JZombies_Demo path.</li>

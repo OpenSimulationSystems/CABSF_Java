@@ -89,7 +89,7 @@ public class JADE_MAS_RunContext {
 	 */
 	public Document getCachedMessageExchangeTemplate() {
 		return this.getDistSysRunContext().getDistSysRunGroupContext()
-				.getCachedMessageExchangeTemplate();
+				.getBlankCachedMessageExchangeTemplate();
 	}
 
 	public void messageSimulationEngine(FrameworkMessage frameworkMessage,

@@ -13,13 +13,14 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunGroupContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
 import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentModel;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAutonomousAgent;
 
-public class JADE_Controller_Agent {
+public class JADE_Controller_Agent implements JadeController {
 	JADE_MAS_AdapterAPI jade_MAS_AdapterAPI;
 
 	public static void main(String[] args) {
@@ -44,9 +45,16 @@ public class JADE_Controller_Agent {
 
 		// Initialize simulation run
 		// TODO: Fix the native JADE context
+		JADE_Controller_Agent jade_Controller_Agent = new JADE_Controller_Agent();
 		JADE_MAS_RunContext jade_MAS_RunContext = jade_MAS_AdapterAPI
 				.initializeSimulationRun(new NativeJADEMockContext(),
-						jade_MAS_RunGroupContext, true);
-
+						jade_MAS_RunGroupContext,jade_Controller_Agent);
 	}
+
+	public void receiveMessage(FrameworkMessage message, String messageID,
+			String inReplyToMessageID) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -169,7 +169,7 @@ public class RepastS_SimulationAdapterAPI {
 		// and is ready to accept messages from the distributed agents.
 		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				repastS_SimulationRunContext.getCachedMessageExchangeTemplate());
+				repastS_SimulationRunContext.getBlankCachedMessageExchangeTemplate());
 		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
 		//TODO: Loop through the multiple distributed systems
 		repastS_SimulationRunContext.messageDistributedSystems(msg,

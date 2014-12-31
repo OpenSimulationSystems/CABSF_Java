@@ -3,9 +3,11 @@
  */
 package jzombies;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.jdom2.Document;
+import org.jdom2.JDOMException;
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
@@ -42,7 +44,8 @@ public class Human {
 	private RepastS_AgentContext repastS_AgentContext = RepastS_AgentAdapterAPI
 			.getInstance().getAgentContext();
 	private SIMULATION_TYPE simulationType;
-	private JZombies_Repast_Csf jZombies_Repast_Csf = new JZombies_Repast_Csf(repastS_AgentContext);
+	private JZombies_Csf jZombies_Csf = new JZombies_Csf(
+			repastS_AgentContext);
 
 	// /////////////////
 
@@ -58,7 +61,15 @@ public class Human {
 		// CSF-Specific
 		// FIXME: Make this transparent (do this from the Adapter so the agent doesn't
 		// have to
-		simulationType = repastS_AgentContext.initializeCsfAgent();
+		try {
+			simulationType = repastS_AgentContext.initializeCsfAgent();
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// /////////////////
 
 		// ////////////////////////////////
@@ -89,13 +100,14 @@ public class Human {
 		if (simulationType == SIMULATION_TYPE.CSF_SIMULATION)
 			// Communicate the local environment information for this agent to the
 			// distributed agent (agent model)
-			// LOW: Add support for merging multiple messages bound for different agents 
-			jZombies_Repast_Csf.sendCorrespondingDistributedAgentModelThisAgentLocationAndZombieLocations(this,
-					pt, pointWithLeastZombies);
-		
-			//Now read the decision from the distributed agent and process it;
-			System.exit(0);
-		//////////////////////////////////////////////
+			// LOW: Add support for merging multiple messages bound for different agents
+			jZombies_Csf
+					.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
+							this, pt, pointWithLeastZombies);
+
+		// Now read the decision from the distributed agent and process it;
+		System.exit(0);
+		// ////////////////////////////////////////////
 
 		// /////////////////////////////////////////////
 		// Back to common code for Repast

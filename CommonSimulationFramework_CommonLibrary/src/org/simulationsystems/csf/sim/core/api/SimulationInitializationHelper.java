@@ -63,7 +63,7 @@ public class SimulationInitializationHelper {
 		
 		//Cache the message exchange template from the file system
 		try {
-			simulationRunGroupContext.setCachedMessageExchangeTemplate(MessagingUtilities.createCachedMessageExchangeTemplate());
+			simulationRunGroupContext.setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities.createCachedMessageExchangeTemplateWithPlaceholders());
 		} catch (JDOMException e) {
 			throw new CsfInitializationRuntimeException(
 					"Error reading the message exchange template from the file system", e);

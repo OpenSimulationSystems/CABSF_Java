@@ -1,5 +1,6 @@
 package org.simulationsystems.csf.common.internal.messaging.xml.transformers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Content;
@@ -29,12 +30,6 @@ public class FrameworkMessageDocumentHelper {
 	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 	private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
-
-	// Used to determine
-	// FIXME: Need a better way to determine whether the actor has already been used
-	private boolean firstAgentModelActorPopulated = false;
-
-	private boolean firstDistributedAutonomousAgentPopulated;
 
 	public FrameworkMessageDocumentHelper(FrameworkMessage frameworkMessage) {
 		this.frameworkMessage = frameworkMessage;
@@ -166,19 +161,24 @@ public class FrameworkMessageDocumentHelper {
 	}
 
 	// TODO: Extents/multiple dimensions
+	// TODO: Set the ID
 	private Element populateThisActorLocationInAgentModel(Element actor,
-			String gridPointX, String gridPointY) {
+			String gridPointX, String gridPointY, Element cachedLocationTemplate) {
 		@SuppressWarnings("unchecked")
 		// TODO: Support multiple actors
-		List<Element> thisAgentLocation = (List<Element>) XMLUtilities
+		List<Element> commonEnvironmentChangesElements = (List<Element>) XMLUtilities
 				.executeXPath(
 						actor,
-						"./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location[@id='self']",
+						"./x:EnvironmentChanges/x:CommonEnvironmentChanges",
 						namespaceStr, elementFilter);
-
-		thisAgentLocation.get(0).getChild("GridPointX", namespace).setText(gridPointX);
-		thisAgentLocation.get(0).getChild("GridPointY", namespace).setText(gridPointY);
-		XMLUtilities.convertElementToXMLString(thisAgentLocation.get(0), true);
+		//cachedLocationTemplate
+		///x:EnvironmentChange/x:Location[@id='self']
+		
+		commonEnvironmentChangesElements.get(0).addContent(cachedLocationTemplate);
+		
+		Element locationElement =  cachedLocationTemplate.getChild("Location",namespace);
+		locationElement.getChild("GridPointX", namespace).setText(gridPointX);
+		locationElement.getChild("GridPointY", namespace).setText(gridPointY);
 		return actor;
 	}
 
@@ -215,37 +215,23 @@ public class FrameworkMessageDocumentHelper {
 	public Element getNextAgentModelActor(Object distributedAutononomousAgent,
 			Element cachedAgentModelTemplate) {
 		@SuppressWarnings("unchecked")
-		List<Element> agentModelElements = (List<Element>) XMLUtilities.executeXPath(
-				distributedAutononomousAgent, "./x:AgentModels/x:AgentModel",
+		List<Element> agentModelsElements = (List<Element>) XMLUtilities.executeXPath(
+				distributedAutononomousAgent, "./x:AgentModels",
 				namespaceStr, elementFilter);
-		if (!firstAgentModelActorPopulated) {
-			firstAgentModelActorPopulated = true;
-			return agentModelElements.get(0).getChild("Actor", namespace);
-		} /*
-		 * else {XMLUtilities.convertDocumentToXMLString(this.getDocument(), true);
-		 * Element agentModelActor = cachedAgentModelTemplate;
-		 * agentModelElements.get(0).addContent(agentModelActor); return agentModelActor;
-		 * }
-		 */
-
-		else {// XMLUtilities.executeXPath(((Document)distributedAutononomousAgent).getRootElement(),
-				// "./x:AgentModels/x:AgentModel",namespaceStr, elementFilter);
-				// XMLUtilities.executeXPath(distributedAutononomousAgent,
-				// "./x:AgentModels/x:AgentModel",namespaceStr, elementFilter);
-
-			Element agentModelActor = null;
-			if (cachedAgentModelTemplate != null) {
-				agentModelActor = cachedAgentModelTemplate;
-				agentModelElements.get(0).addContent(agentModelActor);
-				return agentModelActor;
-			} else
-				agentModelActor = agentModelElements.get(0).getChild("Actor", namespace);
+		Element agentModelActor = null;
+		if (cachedAgentModelTemplate != null) {
+			Element agentModel = new Element("AgentModel", namespace);
+			agentModelActor = cachedAgentModelTemplate;
+			agentModelsElements.get(0).addContent(agentModel);
+			agentModel.addContent(agentModelActor);
 			return agentModelActor;
-		}
+		} else
+			agentModelActor = agentModelsElements.get(0).getChild("AgentModel", namespace).getChild("Actor", namespace);
+		return agentModelActor;
 	}
 
 	/*
-	 * iuf cachedDistributedAutonomousAgentTemplate is blank, don't add the element
+	 * if cachedDistributedAutonomousAgentTemplate is blank, don't add the element
 	 */
 	public Element getNextDistributedAutonomousAgent(Object doc,
 			Element cachedDistributedAutonomousAgentTemplate) {
@@ -253,21 +239,15 @@ public class FrameworkMessageDocumentHelper {
 		Element distributedAutonomousAgentsElement = getDistributedAutonomousAgentsElement(doc);
 		List<Element> distributedAutonomousAgentElements = getDistributedAutonomousAgentElements(doc);
 
-		if (!firstDistributedAutonomousAgentPopulated) {
-			firstDistributedAutonomousAgentPopulated = true;
-			return distributedAutonomousAgentElements.get(0);
-		} else {
-			Element distributedAutononomousAgent = null;
-			if (cachedDistributedAutonomousAgentTemplate != null) {
-				distributedAutononomousAgent = cachedDistributedAutonomousAgentTemplate;
-				distributedAutonomousAgentsElement
-						.addContent(distributedAutononomousAgent);
-				return distributedAutononomousAgent;
-			} else
-				distributedAutononomousAgent = distributedAutonomousAgentsElement
-						.getChild("DistributedAutonomousAgent", namespace);
+		Element distributedAutononomousAgent = null;
+		if (cachedDistributedAutonomousAgentTemplate != null) {
+			distributedAutononomousAgent = cachedDistributedAutonomousAgentTemplate;
+			distributedAutonomousAgentsElement.addContent(distributedAutononomousAgent);
 			return distributedAutononomousAgent;
-		}
+		} else
+			distributedAutononomousAgent = distributedAutonomousAgentsElement.getChild(
+					"DistributedAutonomousAgent", namespace);
+		return distributedAutononomousAgent;
 	}
 
 	public Element getNextNonSelfLocationForActor(Element actor,
@@ -275,13 +255,13 @@ public class FrameworkMessageDocumentHelper {
 		@SuppressWarnings("unchecked")
 		// TODO: Rename methods to differentiate Common environment changes from
 		// simulation-specific.
-		List<Element> environmentChange = (List<Element>) XMLUtilities
+		List<Element> simulationDefinedEnvironmentChangesElements = (List<Element>) XMLUtilities
 				.executeXPath(
 						actor,
-						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges/x:EnvironmentChange",
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
 						namespaceStr, elementFilter);
 		Element newLocation = cachedLocationTemplate;
-		environmentChange.get(0).addContent(newLocation);
+		simulationDefinedEnvironmentChangesElements.get(0).addContent(newLocation);
 		return newLocation;
 	}
 
@@ -289,13 +269,13 @@ public class FrameworkMessageDocumentHelper {
 	 * Returns an
 	 */
 	public Element populateThisActorLocationInAgentModel(Element actor, String ID,
-			String gridPointX, String gridPointY) {
+			String gridPointX, String gridPointY, Element cachedLocationTemplate) {
 		// Select Agent Model
 
 		// Go ahead and populate the already created agent model from the Document
 		// template
 		setIDForActorInAgentModel(actor, ID);
-		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY);
+		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY, cachedLocationTemplate);
 	}
 
 	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent,
@@ -342,9 +322,10 @@ public class FrameworkMessageDocumentHelper {
 	public String getAgentModelID(Element agentModel) {
 		return agentModel.getChild("ID", namespace).getValue();
 	}
-	
+
 	/*
-	 * Side effect includes removing the distributedAutononomousAgentElement from the current Document
+	 * Side effect includes removing the distributedAutononomousAgentElement from the
+	 * current Document
 	 */
 	public Document addDistributedAutonomousAgent(Document doc,
 			Element distributedAutononomousAgentElement, boolean removeChildren) {
@@ -356,8 +337,8 @@ public class FrameworkMessageDocumentHelper {
 						elementFilter);
 		if (removeChildren)
 			distributedAutonomousAgents.get(0).removeContent();
-		distributedAutonomousAgents.get(0)
-				.addContent(distributedAutononomousAgentElement.detach());
+		distributedAutonomousAgents.get(0).addContent(
+				distributedAutononomousAgentElement.detach());
 		return doc;
 	}
 
@@ -366,5 +347,43 @@ public class FrameworkMessageDocumentHelper {
 				.executeXPath(doc, distributedAutonomousAgentsXpath, namespaceStr,
 						elementFilter);
 		distributedAutonomousAgents.get(0).removeContent();
+	}
+
+	public List<String> getSelfLocation(Element distributedAutononomousAgentElement,
+			FrameworkMessage msg) {
+		// FIXME: Why does this have to be an element, and not Document?
+		Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutononomousAgentElement, null);
+		List<Element> commonEnvironmentChangesElements = (List<Element>) XMLUtilities
+				.executeXPath(agentModelActor,
+						"./x:EnvironmentChanges/x:CommonEnvironmentChanges",
+						namespaceStr, elementFilter);
+
+		// FIXME: check the attributes
+		List<Element> locations = (List<Element>) XMLUtilities.executeXPath(
+				commonEnvironmentChangesElements.get(0),
+				"./x:EnvironmentChange/x:Location[@id='self']", namespaceStr,
+				elementFilter);
+		Element location = locations.get(0);
+
+		XMLUtilities.convertDocumentToXMLString(agentModelActor, true);
+
+		XMLUtilities.convertDocumentToXMLString(agentModelActor, true);
+
+		String xValue = location.getChild("GridPointX", namespace).getText();
+		String yValue = location.getChild("GridPointY", namespace).getText();
+		System.out.println("Grid Point X: " + xValue);
+		System.out.println("Grid Point Y: " + yValue);
+		List<String> coordinate = new ArrayList<String>();
+		coordinate.add(xValue);
+		coordinate.add(yValue);
+
+		/*
+		 * location.setAttribute("category", "neighborhood");
+		 * location.setAttribute("includecenter", "true");
+		 * location.setAttribute("entitytype", "Zombie");
+		 */
+		return coordinate;
+		
 	}
 }

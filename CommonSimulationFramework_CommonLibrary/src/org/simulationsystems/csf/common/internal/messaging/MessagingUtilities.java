@@ -7,7 +7,8 @@ import org.jdom2.JDOMException;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 
 public class MessagingUtilities {
-	static public org.jdom2.Document createCachedMessageExchangeTemplate() throws JDOMException,
+	static public org.jdom2.Document createCachedMessageExchangeTemplateWithPlaceholders
+	() throws JDOMException,
 			IOException {
 		return XMLUtilities
 				.filenameStrTojdom2Document("../CommonSimulationFramework_CommonLibrary/bin/org/simulationsystems/csf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");

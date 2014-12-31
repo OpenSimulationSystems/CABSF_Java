@@ -49,9 +49,9 @@ public class RepastS_SimulationRunContext {
 	/*
 	 * Convenience method to get the cached messgae exchange template
 	 */
-	public Document getCachedMessageExchangeTemplate() {
+	public Document getBlankCachedMessageExchangeTemplate() {
 		return this.getSimulationRunContext().getSimulationRunGroupContext()
-				.getCachedMessageExchangeTemplate();
+				.getBlankCachedMessageExchangeTemplate();
 	}
 	
 	public Element getCachedAgentModelActorTemplate() {

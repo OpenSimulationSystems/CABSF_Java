@@ -15,7 +15,7 @@ public class JADE_MAS_RunGroupContext {
 	}
 	
 	public Document getCachedMessageExchangeTemplate() {
-		return this.distSysRunGroupContext.getCachedMessageExchangeTemplate();
+		return this.distSysRunGroupContext.getBlankCachedMessageExchangeTemplate();
 	}
 
 }

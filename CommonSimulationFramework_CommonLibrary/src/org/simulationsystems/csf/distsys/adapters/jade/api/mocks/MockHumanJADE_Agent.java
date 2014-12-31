@@ -1,67 +1,114 @@
 package org.simulationsystems.csf.distsys.adapters.jade.api.mocks;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import jzombies.JZombies_Csf;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfCheckedException;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfMessagingRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
 
 public class MockHumanJADE_Agent {
+
+	private String distributedAutonomousAgentID;
+	private String distAutAgentModelID;
 
 	// This is not the same instance as the context running in the controller agent due to
 	// the fact that these JADE agents are all autononmous. The important here is to
 	// provide access to the API to understand the messages.
 	JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
+	private JZombies_Csf jzombies_Repast_Csf = new JZombies_Csf(jade_MAS_AgentContext);
 
-	private String ID;
-	private JZombies_JADE_Csf jzombies_JADE_Csf = new JZombies_JADE_Csf(
-			jade_MAS_AgentContext);
+	public MockHumanJADE_Agent(String distributedAutonomousAgentID,
+			String distAutAgentModelID) {
+		try {
+			this.distributedAutonomousAgentID = distributedAutonomousAgentID;
+			this.distAutAgentModelID = distAutAgentModelID;
+
+			jade_MAS_AgentContext.initializeCsfAgent("TESTconfigFile");
+		} catch (JDOMException e) {
+			throw new CsfRuntimeException("Error initializing the agent", e);
+		} catch (IOException e) {
+			throw new CsfRuntimeException("Error initializing the agent", e);
+		}
+	}
 
 	/*
 	 * Receives the portion of the Message Exchange XML that belongs to this agent
 	 */
-	public void receiveMessage(Document distributedAutononomousAgent) {
+	public void receiveMessage(FrameworkMessage msg, String messageID,
+			String inReplyToMessageID, JadeController jade_Controller_Agent) {
 		// converts the distributed autonomous agent document back to the full message
 		// exchange document that then gets converted into a FrameworkMessage
 		// All of the other information not meant for this distributed autonomous agent is
 		// not present either in the original or converted XML
+		// jzombies_JADE_Csf.setJadeController(jade_Controller_Agent);
+
 		System.out.println("[MockHumanJADE_Agent "
-				+ ID
-				+ "] Received message: "
-				+ XMLUtilities.convertDocumentToXMLString(
-						distributedAutononomousAgent.getRootElement(), true));
+				+ distributedAutonomousAgentID
+				+ "] Received message ID: "
+				+ distributedAutonomousAgentID
+				+ " Message:"
+				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
+						.getRootElement(), true));
 
-		jade_MAS_AgentContext.initializeCsfAgent("TESTconfigFile", false);
+		// The framework message to this distributed autonomous agent can be expected to
+		// only contain a single entry for the distributed autonomous agent
+		Element distributedAutonomousAgentElement = msg
+				.getNextDistributedAutonomousAgent(msg.getDocument(), null);
 
-		// convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage removes the root element from the distributedAutononomousAgent Documenbt and so
-		// we need to hold on to the element before calling the method.  The old document will end up blank and a new Document will exist in the FrameworkMessage
-		Element distributedAutononomousAgentElement = distributedAutononomousAgent.getRootElement();
 		FrameworkMessage fm = jade_MAS_AgentContext
 				.convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage(
-						distributedAutononomousAgent, ID);
+						distributedAutonomousAgentElement, distributedAutonomousAgentID,
+						SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
 
-		List<String> pointWithLeaseZombiesPoint = jzombies_JADE_Csf
-				.getPointWithLeastZombies(distributedAutononomousAgentElement,
-						fm, jade_MAS_AgentContext);
-
-		for (int i = 0; i < pointWithLeaseZombiesPoint.size(); i++) {
-			System.out.println("[MockHumanJADE_Agent" + ID
-					+ "] Received Zombie location " + String.valueOf(i) + " : "
-					+ String.valueOf(pointWithLeaseZombiesPoint.get(i)));
-		}
-
-XMLUtilities.convertElementToXMLString(fm.getDocument().getRootElement(),true);
-		List<String> selfPoint = jzombies_JADE_Csf.getSelfLocation(
-				distributedAutononomousAgentElement, fm, jade_MAS_AgentContext);
+		List<String> selfPoint = fm
+				.getSelfLocation(distributedAutonomousAgentElement, fm);
 		for (int i = 0; i < selfPoint.size(); i++) {
-			System.out.println("[MockHumanJADE_Agent ID " + ID + "] Self Location: "
-					+ String.valueOf(i) + " : " + String.valueOf(selfPoint.get(i)));
+			System.out.println("[MockHumanJADE_Agent ID: " + distributedAutonomousAgentID
+					+ "] Self Location: " + String.valueOf(i) + " : "
+					+ String.valueOf(selfPoint.get(i)));
 		}
+
+		List<String> pointWithLeastZombiesPoint = jzombies_Repast_Csf
+				.getPointWithLeastZombies(distributedAutonomousAgentElement, fm,
+						jade_MAS_AgentContext);
+
+		for (int i = 0; i < pointWithLeastZombiesPoint.size(); i++) {
+			System.out.println("[MockHumanJADE_Agent ID: " + distributedAutonomousAgentID
+					+ "] Received Zombie location " + String.valueOf(i) + " : "
+					+ String.valueOf(pointWithLeastZombiesPoint.get(i)));
+		}
+
+		List<String> pointToMoveTo = decideWhereToMoveTo(selfPoint,
+				pointWithLeastZombiesPoint);
+		// Send the decision on where to move to
+		String newMessageID = UUID.randomUUID().toString();
+		String originalMessageId = messageID;
+
+		jade_Controller_Agent.receiveMessage(jzombies_Repast_Csf
+				.convertMoveToPointToFrameworkMessage(new ArrayList<String>(),
+						new ArrayList<String>(), pointToMoveTo,
+						distributedAutonomousAgentID, distAutAgentModelID), newMessageID,
+				originalMessageId);
+
+	}
+
+	private List<String> decideWhereToMoveTo(List<String> selfPoint,
+			List<String> pointWithLeastZombiesPoint) {
+		return pointWithLeastZombiesPoint;
+
 	}
 }

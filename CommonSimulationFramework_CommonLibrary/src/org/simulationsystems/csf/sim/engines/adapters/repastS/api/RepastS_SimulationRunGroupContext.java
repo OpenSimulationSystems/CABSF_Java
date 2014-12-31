@@ -15,11 +15,11 @@ public class RepastS_SimulationRunGroupContext {
 	}
 
 	public Document getCachedMessageExchangeTemplate() {
-		return this.simulationRunGroupContext.getCachedMessageExchangeTemplate();
+		return this.simulationRunGroupContext.getBlankCachedMessageExchangeTemplate();
 	}
 	
 	
-/*	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplate) {
-		this.simulationRunGroupContext = cachedMessageExchangeTemplate;
+/*	public void setCachedMessageExchangeTemplate(Document cachedMessageExchangeTemplateWithEmptyPlaceholders) {
+		this.simulationRunGroupContext = cachedMessageExchangeTemplateWithEmptyPlaceholders;
 	}*/
 }

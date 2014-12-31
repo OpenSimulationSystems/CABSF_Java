@@ -8,6 +8,6 @@ import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 
-public class CsfRunContext {
+public class CsfRunContext extends AbstractContext {
 
 }

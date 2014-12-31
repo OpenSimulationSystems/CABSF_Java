@@ -1,6 +1,7 @@
 package org.simulationsystems.csf.common.csfmodel.messaging.messages;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -119,10 +120,10 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element populateThisActorLocationInAgentModel(Element actor, String ID,
-			String gridPointX, String gridPointY) {
+	public Element populateThisLocationInAgentModelActor(Element actor, String ID,
+			String gridPointX, String gridPointY, Element cachedLocationTemplate) {
 		return frameworkMessageDocumentHelper.populateThisActorLocationInAgentModel(
-				actor, ID, gridPointX, gridPointY);
+				actor, ID, gridPointX, gridPointY,cachedLocationTemplate);
 	}
 
 	@Override
@@ -140,7 +141,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent,
+	public Element setDistributedAutonomousAgent(Element distributedAutonomousAgent,
 			String ID) {
 		return frameworkMessageDocumentHelper.populateDistributedAutonomousAgent(
 				distributedAutonomousAgent, ID);
@@ -156,7 +157,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 	
 	@Override
-	public List<Element> getDistributedAutonomousAgents(Object doc) {
+	public List<Element> getDistributedAutonomousAgentElements(Object doc) {
 		return frameworkMessageDocumentHelper.getDistributedAutonomousAgentElements(doc);
 	}
 
@@ -188,6 +189,12 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	public void removeDistributedAutonomousAgents(Document csfMessageExchangeDoc) {
 		frameworkMessageDocumentHelper.removeDistributedAutonomousAgents(csfMessageExchangeDoc);
 		
+	}
+	
+	@Override
+	public List<String> getSelfLocation(Element distributedAutononomousAgentElement,
+			FrameworkMessage msg) {
+		return frameworkMessageDocumentHelper.getSelfLocation(distributedAutononomousAgentElement, msg);
 	}
 
 }

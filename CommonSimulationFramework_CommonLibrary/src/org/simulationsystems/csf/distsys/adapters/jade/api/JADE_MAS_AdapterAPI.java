@@ -14,8 +14,8 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.NativeJADEMockContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunGroupContext;
 import org.simulationsystems.csf.distsys.core.api.DistributedSystemAPI;
@@ -118,7 +118,7 @@ public class JADE_MAS_AdapterAPI {
 	public JADE_MAS_RunContext initializeSimulationRun(
 			NativeJADEMockContext nativeJadeContextForThisRun,
 			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
-			JadeController jadeControllerAgent) {
+			JadeController jadeControllerAgent, Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
 		this.jadeControllerAgent = jadeControllerAgent;
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI
@@ -134,7 +134,7 @@ public class JADE_MAS_AdapterAPI {
 		// LOW: Support multiple Simulation Run Groups. For now just assume that there's
 		// one.
 		jade_MAS_RunContext.getDistSysRunContext().getDistributedAgentsManager()
-				.initializeDistributedAutonomousAgents(nativeJadeContextForThisRun);
+				.initializeDistributedAutonomousAgents(nativeJadeContextForThisRun, nativeAgentsSet);
 
 		assignJadeAgentsToDistributedAutonomousAgents(
 				nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext);
@@ -177,8 +177,8 @@ public class JADE_MAS_AdapterAPI {
 	 */
 	@SuppressWarnings("unused")
 	private void assignJadeAgentsToDistributedAutonomousAgents(
-			Set<MockHumanJADE_Agent> jadeAgents, JADE_MAS_RunContext jade_MAS_RunContext) {
-		for (MockHumanJADE_Agent jadeAgent : jadeAgents) {
+			Set<NativeDistributedAutonomousAgent> jadeAgents, JADE_MAS_RunContext jade_MAS_RunContext) {
+		for (NativeDistributedAutonomousAgent jadeAgent : jadeAgents) {
 						assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
 		}
 	}
@@ -196,7 +196,7 @@ public class JADE_MAS_AdapterAPI {
 	 * @see mapSimulationSideAgents
 	 */
 	private void assignJadeAgentToDistributedAutonomousAgent(
-			MockHumanJADE_Agent jadeAgent, JADE_MAS_RunContext jade_MAS_RunContext) {
+			NativeDistributedAutonomousAgent jadeAgent, JADE_MAS_RunContext jade_MAS_RunContext) {
 		distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent,
 				jade_MAS_RunContext.getDistSysRunContext());
 	}

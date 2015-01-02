@@ -3,8 +3,6 @@ package org.simulationsystems.csf.sim.engines.adapters.repastS.api;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import jzombies.JZombies_Csf;
-
 import org.jdom2.JDOMException;
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.api.AgentContext;

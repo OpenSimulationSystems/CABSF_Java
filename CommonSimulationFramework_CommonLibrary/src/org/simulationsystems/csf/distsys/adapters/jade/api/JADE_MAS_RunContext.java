@@ -11,7 +11,7 @@ import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentModel;
@@ -170,9 +170,9 @@ public class JADE_MAS_RunContext {
 
 			// FIXME: Need to keep this case on the JADE API side, everything else in
 			// the main DistaSys API
-			MockHumanJADE_Agent mockHumanJADE_Agent = (MockHumanJADE_Agent) distAutAgent
+			NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = (NativeDistributedAutonomousAgent) distAutAgent
 					.getNativeDistributedAutonomousAgent();
-			assert (mockHumanJADE_Agent != null);
+			assert (nativeDistributedAutonomousAgent != null);
 
 			fm = getDistSysRunContext()
 					.getDistSysRunGroupContext()
@@ -182,7 +182,7 @@ public class JADE_MAS_RunContext {
 							SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
 
 			String messageID = UUID.randomUUID().toString();
-			mockHumanJADE_Agent.receiveMessage(fm, messageID, null, jadeControllerAgent);
+			nativeDistributedAutonomousAgent.receiveMessage(fm, messageID, null, jadeControllerAgent);
 			// At this point the distributed agent has received the message from here/the
 			// controller, the distributed agent has notified the controller of its
 			// decision, the controller has send the message over

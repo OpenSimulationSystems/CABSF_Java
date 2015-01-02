@@ -1,7 +1,9 @@
 package org.simulationsystems.csf.distsys.mas.adapter.runners.jade;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.jdom2.Element;
@@ -16,7 +18,8 @@ import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunGroupContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
 import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.NativeJADEMockContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentModel;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAutonomousAgent;
@@ -56,14 +59,36 @@ public class JADE_Controller_Agent implements JadeController {
 		// Initialize simulation run
 		// TODO: Fix the native JADE context
 		JADE_Controller_Agent jade_Controller_Agent = new JADE_Controller_Agent();
+		Set<NativeDistributedAutonomousAgent> st = getInitialSetOfNativeJADEagents();
+
 		jade_Controller_Agent.setJade_MAS_RunContext(jade_MAS_AdapterAPI
 				.initializeSimulationRun(new NativeJADEMockContext(),
-						jade_MAS_RunGroupContext, jade_Controller_Agent));
+						jade_MAS_RunGroupContext, jade_Controller_Agent, st));
 
 		jade_Controller_Agent.getJade_MAS_RunContext()
 				.waitForAndProcessSimulationEngineMessageAfterHandshake();
 
 		// System.out.println("[JADE Controller Agent] Simulation Ended");
+	}
+
+	private static Set<NativeDistributedAutonomousAgent> getInitialSetOfNativeJADEagents() {
+		Set<NativeDistributedAutonomousAgent> st = new HashSet<NativeDistributedAutonomousAgent>();
+
+		NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
+				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1", "Human");
+		st.add(nativeDistributedAutonomousAgent);
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
+				"DistributedSystemAutonomousAgent2", "DistributedAgentModel2", "Human");
+		st.add(nativeDistributedAutonomousAgent);
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
+				"DistributedSystemAutonomousAgent3", "DistributedAgentModel3", "Human");
+		st.add(nativeDistributedAutonomousAgent);
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
+				"DistributedSystemAutonomousAgent4", "DistributedAgentModel4", "Human");
+		st.add(nativeDistributedAutonomousAgent);
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
+				"DistributedSystemAutonomousAgent5", "DistributedAgentModel5", "Human");
+		return st;
 	}
 
 	public JADE_MAS_RunContext getJade_MAS_RunContext() {

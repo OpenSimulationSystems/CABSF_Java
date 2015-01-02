@@ -12,7 +12,7 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.NativeJADEMockContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunGroupContext;
 import org.simulationsystems.csf.distsys.core.api.DistributedSystemAPI;

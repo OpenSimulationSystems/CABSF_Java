@@ -11,8 +11,8 @@ import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.Co
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.NativeJADEMockContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunGroupContext;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunConfiguration;
@@ -110,7 +110,8 @@ public class DistributedAgentsManager {
 
 	// TODO: Pull these from the configuration
 	public void initializeDistributedAutonomousAgents(
-			NativeJADEMockContext nativeJadeContextForThisRun) {
+			NativeJADEMockContext nativeJadeContextForThisRun,
+			Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
 		// Create AgentMapping objects based on the configured type and number
 		// of agents.
 		// These objects will be populated with actual mapped simulation-side
@@ -121,49 +122,15 @@ public class DistributedAgentsManager {
 		// TODO: Pull from configuration (actual JADE objects) For now just assuming one
 		// model agent
 		// per distributed autonomous software agent.
-		HashSet<String> hs = new HashSet<String>();
-		hs.add("DistributedAgentModel1");
-		DistributedAutonomousAgent distributedAutonomousAgent = createDistributedAutonomousAgent(
-				distSysRunContext, "DistributedSystemAutonomousAgent1", hs, "Human");
-		MockHumanJADE_Agent mockHumanJADE_Agent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1");
-		// distributedAutonomousAgent.setNativeDistributedAutonomousAgent(mockHumanJADE_Agent);
-		nativeJadeContextForThisRun.addAgent(mockHumanJADE_Agent);
+		for (NativeDistributedAutonomousAgent agent : nativeAgentsSet) {
+			HashSet<String> hs = new HashSet<String>();
+			hs.add(agent.getDistributedAutonomousAgentID() + "MODEL");
+			DistributedAutonomousAgent distributedAutonomousAgent = createDistributedAutonomousAgent(
+					distSysRunContext, agent.getDistributedAutonomousAgentID(), hs,
+					agent.getModelName());
+			nativeJadeContextForThisRun.addAgent(agent);
 
-		hs = new HashSet<String>();
-		hs.add("DistributedAgentModel2");
-		DistributedAutonomousAgent distributedAutonomousAgent2 = createDistributedAutonomousAgent(
-				distSysRunContext, "DistributedSystemAutonomousAgent2", hs, "Human");
-		mockHumanJADE_Agent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent2", "DistributedAgentModel2");
-		// distributedAutonomousAgent2.setNativeDistributedAutonomousAgent(mockHumanJADE_Agent);
-		nativeJadeContextForThisRun.addAgent(mockHumanJADE_Agent);
-
-		hs = new HashSet<String>();
-		hs.add("DistributedAgentModel3");
-		DistributedAutonomousAgent distributedAutonomousAgent3 = createDistributedAutonomousAgent(
-				distSysRunContext, "DistributedSystemAutonomousAgent3", hs, "Human");
-		mockHumanJADE_Agent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent3", "DistributedAgentModel3");
-		// distributedAutonomousAgent3.setNativeDistributedAutonomousAgent(mockHumanJADE_Agent);
-		nativeJadeContextForThisRun.addAgent(mockHumanJADE_Agent);
-
-		hs = new HashSet<String>();
-		hs.add("DistributedAgentModel4");
-		DistributedAutonomousAgent distributedAutonomousAgent4 = createDistributedAutonomousAgent(
-				distSysRunContext, "DistributedSystemAutonomousAgent4", hs, "Human");
-		mockHumanJADE_Agent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent4", "DistributedAgentModel4");
-		// distributedAutonomousAgent4.setNativeDistributedAutonomousAgent(mockHumanJADE_Agent);
-		nativeJadeContextForThisRun.addAgent(mockHumanJADE_Agent);
-
-		hs.add("DistributedAgentModel5");
-		DistributedAutonomousAgent distributedAutonomousAgent5 = createDistributedAutonomousAgent(
-				distSysRunContext, "DistributedSystemAutonomousAgent5", hs, "Human");
-		mockHumanJADE_Agent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent5", "DistributedAgentModel5");
-		// distributedAutonomousAgent5.setNativeDistributedAutonomousAgent(mockHumanJADE_Agent);
-		nativeJadeContextForThisRun.addAgent(mockHumanJADE_Agent);
+		}
 	}
 
 	/*
@@ -184,12 +151,13 @@ public class DistributedAgentsManager {
 					.setNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent);
 			agentsReadyforNativeDistributedAgentMapping
 					.remove(distributedAutonomousAgent);
-			
-			System.out.println("[DISTRIBUTED_SYSTEM]" + this.getClass().getCanonicalName().toString()
-					+ ": Successfully assigned native Distributed Autonomous Agent: "
+
+			System.out.println("[DISTRIBUTED_SYSTEM] "
+					+ " Agent ID: "
+					+ distributedAutonomousAgent.getDistributedAutonomousAgentID()
+					+ " Successfully assigned native Distributed Autonomous Agent: "
 					+ distributedAutonomousAgent
 							.getDistributedAgentModelIDStoAgentModels().hashCode()
-							+ " Agent ID: "+ distributedAutonomousAgent.getDistributedAutonomousAgentID()
 					+ " native class: "
 					+ nativeDistributedAutonomousAgent.getClass().getCanonicalName());
 		} catch (java.util.NoSuchElementException e) {

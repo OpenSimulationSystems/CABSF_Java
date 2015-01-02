@@ -29,7 +29,10 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.MessagingUtilities;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunContext;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunGroupContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
 import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.sim.core.api.SimulationAPI;
@@ -39,6 +42,8 @@ import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentC
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunGroupContext;
 
 public class XMLTests implements JadeController {
+	static private XMLTests instance = new XMLTests();
+	
 	static private SimulationRunContext simulationRunContext;
 	static private SimulationRunGroupContext simulationRunGroupContext;
 	static private SimulationAPI simulationAPI;
@@ -47,7 +52,9 @@ public class XMLTests implements JadeController {
 	static JADE_MAS_AgentContext jade_MAS_AgentContext;
 	static private RepastS_AgentContext repastS_AgentContext;
 
-	String xmlString = "        <DistributedAutonomousAgent xmlns=\"http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0\"\r\n"
+	private static JADE_MAS_RunContext jade_MAS_RunContext;
+
+	String xmlString = "<DistributedAutonomousAgent xmlns=\"http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0\"\r\n"
 			+ "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n"
 			+ "          <Name />\r\n"
 			+ "          <ID>distAutAgent2</ID>\r\n"
@@ -255,11 +262,17 @@ public class XMLTests implements JadeController {
 	 * namespace).setText(GridPointY); return location; }
 	 */
 
+	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {	
 		repastS_AgentContext = new RepastS_AgentContext();
 		repastS_AgentContext.setBypassRepastRuntimeForTestingPurposes(true);
 		repastS_AgentContext.initializeCsfAgent();
+		
+		JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
+		JADE_MAS_RunGroupContext jade_MAS_RunGroupContext = jade_MAS_AdapterAPI.initializeAPI("TEMP");
+		//jade_MAS_RunContext =  jade_MAS_AdapterAPI.initializeSimulationRun(null, jade_MAS_RunGroupContext, instance);
+		jade_MAS_RunContext = new JADE_MAS_RunContext(null);
 		
 		jZombies_Csf = new JZombies_Csf(repastS_AgentContext);
 		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
@@ -308,20 +321,32 @@ public class XMLTests implements JadeController {
 		thisAgentModelPosition.add("1");
 		thisAgentModelPosition.add("2");
 		List<String> pointLeastZombies = new ArrayList<String>();
-		thisAgentModelPosition.add("3");
-		thisAgentModelPosition.add("4");
+		pointLeastZombies.add("3");
+		pointLeastZombies.add("4");
+		List<String> moveToPoint = new ArrayList<String>();
 		
 		jZombies_Csf.populateZombiesMessage(msg, "distAutAgent1",
-				"distAutAgentMode1", thisAgentModelPosition, pointLeastZombies, new ArrayList<String>());
-		// jzombies_JADE_Csf.populateZombiesMessage(msg, "distAutAgent2",
-		// "distAutAgentMode2", "5", "6", "7",
-		// "8");
+				"distAutAgentMode1", thisAgentModelPosition, pointLeastZombies, moveToPoint);
+		
+		
+		thisAgentModelPosition = new ArrayList<String>();
+		thisAgentModelPosition.add("5");
+		thisAgentModelPosition.add("6");
+		pointLeastZombies = new ArrayList<String>();
+		pointLeastZombies.add("7");
+		pointLeastZombies.add("8");
+		
+		jZombies_Csf.populateZombiesMessage(msg, "distAutAgent2",
+				"distAutAgentMode2", thisAgentModelPosition, pointLeastZombies, moveToPoint);
+		
+		System.out.println("Msg:"+XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
+
 
 	}
 
 	@Test
 	@Ignore
-	public void testReadZombiesLocation() {
+	public void testReadZombiesAndSelfLocations() {
 		Element distributedAutonomousAgentElement = null;
 		try {
 			distributedAutonomousAgentElement = XMLUtilities.xmlStringTojdom2Document(
@@ -345,6 +370,10 @@ public class XMLTests implements JadeController {
 		JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
 
 		msg.getSelfLocation(distributedAutonomousAgentElement, msg);
+											  
+		jZombies_Csf.getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
+		
+		System.out.println("Msg:"+XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
 
 	}
 
@@ -378,7 +407,13 @@ public class XMLTests implements JadeController {
 	public void receiveMessage(FrameworkMessage message, String messageID,
 			String inReplyToMessageID) {
 		// TODO Auto-generated method stub
-
+		
 	}
+	
+/*	@Test
+	public void testWaitMethod() {
+		jade_MAS_RunContext.waitForAndProcessSimulationEngineMessageAfterHandshake();
+	}*/
+
 
 }

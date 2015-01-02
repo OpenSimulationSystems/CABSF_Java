@@ -118,7 +118,11 @@ public class XMLUtilities {
 		 * content.getValue()); }
 		 */
 	}
-
+	
+	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
+		return convertDocumentToXMLString(document.getRootElement(), prettyPrint);
+	}
+	
 	static public String convertDocumentToXMLString(Element document, boolean prettyPrint) {
 		XMLOutputter outputter = null;
 		if (prettyPrint)

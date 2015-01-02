@@ -79,6 +79,23 @@ public class JZombies_Csf {
 		location.setAttribute("entitytype", "Zombie");
 		return location;
 	}
+	
+	public Element populateMoveToPoint(FrameworkMessage msg,
+			Element agentModelActor, String GridPointX, String GridPointY,
+			Element cachedLocationTemplate) {
+		Element locationEnvironmentChange = msg.getNextNonSelfLocationForActor(
+				agentModelActor, cachedLocationTemplate);
+
+		Element location = locationEnvironmentChange.getChild("Location", namespace);
+		location.getChild("GridPointX", namespace).setText(GridPointX);
+		location.getChild("GridPointY", namespace).setText(GridPointY);
+		location.setAttribute("category", "neighborhood");
+		location.setAttribute("includecenter", "true");
+		location.setAttribute("entitytype", "Zombie");
+		return location;
+	}
+	
+	
 
 	public void sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
 			Object obj, GridPoint pt, GridPoint pointWithLeastZombies) {
@@ -145,9 +162,9 @@ public class JZombies_Csf {
 				thisAgentModelPosition, pointLeastZombies,
 				pointToMoveTo);
 
-		System.out.println("[JZombies CSF convertMoveToPointToFrameworkMessage]: "
+/*		System.out.println("[JZombies CSF convertMoveToPointToFrameworkMessage]: "
 				+ XMLUtilities.convertElementToXMLString(msg.getDocument()
-						.getRootElement(), true));
+						.getRootElement(), true));*/
 		return msg;
 	}
 
@@ -157,11 +174,10 @@ public class JZombies_Csf {
 	 */
 
 	public List<String> getPointWithLeastZombies(
-			Element distributedAutononomousAgentElement, FrameworkMessage msg,
-			JADE_MAS_AgentContext jade_MAS_AgentContext) {
+			Element distributedAutonomousAgentElement, FrameworkMessage msg) {
 		// FIXME: Why does this have to be an element, and not Document?
 		Element agentModelActor = msg.getNextAgentModelActor(
-				distributedAutononomousAgentElement, null);
+				distributedAutonomousAgentElement, null);
 		List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
 				.executeXPath(agentModelActor,
 						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
@@ -173,13 +189,13 @@ public class JZombies_Csf {
 						simulationDefinedEnvironmentChanges.get(0),
 						"./x:EnvironmentChange/x:Location[@category='neighborhood' and @entitytype='Zombie']",
 						namespaceStr, elementFilter);
-		XMLUtilities.convertElementToXMLString(distributedAutononomousAgentElement, true);
+		XMLUtilities.convertElementToXMLString(distributedAutonomousAgentElement, true);
 		Element location = locations.get(0);
 
 		String xValue = location.getChild("GridPointX", namespace).getText();
 		String yValue = location.getChild("GridPointY", namespace).getText();
-		System.out.println("Grid Point X: " + xValue);
-		System.out.println("Grid Point Y: " + yValue);
+		System.out.println("Zombies Grid Point X: " + xValue);
+		System.out.println("Zombies Grid Point Y: " + yValue);
 		List<String> coordinate = new ArrayList<String>();
 		coordinate.add(xValue);
 		coordinate.add(yValue);
@@ -191,7 +207,8 @@ public class JZombies_Csf {
 		 */
 		return coordinate;
 	}
-
+	
+	//FIXME: Remove moveToPoint
 	public FrameworkMessage populateZombiesMessage(FrameworkMessage msg,
 			String distributedAutononmousAgentID, String agentModelID, List<String> thisAgentModelPosition, List<String> pointLeastZombies,
 			List<String> pointToMoveTo) {
@@ -218,9 +235,14 @@ public class JZombies_Csf {
 			populateLeastZombiesPoint(msg, agentModelActor, pointLeastZombies.get(0), pointLeastZombies.get(1),
 					agentContext.getCachedLocationTemplate());
 
+		if (pointToMoveTo.size() >= 2)
+			populateMoveToPoint(msg, agentModelActor, pointToMoveTo.get(0), pointToMoveTo.get(1),
+					agentContext.getCachedLocationTemplate());
+
+		
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
 		String xmlString = outputter.outputString(msg.getDocument());
-		System.out.println(xmlString);
+		System.out.println("Populated Zombie Message: " +xmlString);
 
 		/*
 		 * JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
@@ -230,5 +252,7 @@ public class JZombies_Csf {
 		 * simulationRunGroupContext.getCachedAgentModelActorTemplate());
 		 */return msg;
 	}
+	
+
 
 }

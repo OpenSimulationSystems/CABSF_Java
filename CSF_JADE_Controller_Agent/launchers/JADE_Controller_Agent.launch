@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/CommonSimulationFramework_CommonLibrary"/>
+<listEntry value="/JADE_Controller_Agent/src/org/simulationsystems/csf/distsys/mas/adapter/runners/jade/JADE_Controller_Agent.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="4"/>
+<listEntry value="1"/>
 </listAttribute>
-<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.simulationsystems.csf.distsys.mas.adapter.runners.jade.JADE_Controller_Agent"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="PlaceholderForConfigurationFile"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="CommonSimulationFramework_CommonLibrary"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="PlaceholderConfigurationFile"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JADE_Controller_Agent"/>
 </launchConfiguration>

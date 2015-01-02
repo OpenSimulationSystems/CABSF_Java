@@ -13,6 +13,7 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_CO
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
+import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
@@ -59,6 +60,8 @@ public class JADE_MAS_AdapterAPI {
 	private String distributedSystemNameToSetInDistributedSystemAPI = "JADE";
 	// private String fullyQualifiedClassNameForDistributedAgentManager =
 	// "org.simulationsystems.csf.sim.engines.adapters.repastS.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
+	private JADE_MAS_RunContext jade_MAS_RunContext;
+	private JadeController jadeControllerAgent;
 
 	private static JADE_MAS_AdapterAPI instance = new JADE_MAS_AdapterAPI();
 
@@ -116,14 +119,14 @@ public class JADE_MAS_AdapterAPI {
 			NativeJADEMockContext nativeJadeContextForThisRun,
 			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
 			JadeController jadeControllerAgent) {
+		this.jadeControllerAgent = jadeControllerAgent;
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI
 				.initializeSimulationRun(nativeJadeContextForThisRun,
 						jade_MAS_RunGroupContext.getDistSysRunGroupContext());
 
 		// User Decorator Pattern for JADE_DistSysRunContext
-		JADE_MAS_RunContext jade_MAS_RunContext = new JADE_MAS_RunContext(
-				distSysRunContext);
+		jade_MAS_RunContext = new JADE_MAS_RunContext(distSysRunContext);
 		jade_MAS_RunContext.setJadeContextForThisRun(nativeJadeContextForThisRun);
 
 		// jade_MAS_RunContext.getDistSysRunContext().getSimulationEngineManager().initializeAgentMappings();
@@ -137,8 +140,11 @@ public class JADE_MAS_AdapterAPI {
 				nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext);
 
 		// Listen for START_SIMULATION command from the simulation engine
-		FRAMEWORK_COMMAND fc = jade_MAS_RunContext.listenForMessageFromSimulationEngine()
-				.getFrameworkToDistributedSystemCommand();
+		FrameworkMessage msg = jade_MAS_RunContext.listenForMessageFromSimulationEngine();
+		System.out
+				.println("[JADE Controller Agent] Received message from the simulation engine to start the simulation: "
+						+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
+		FRAMEWORK_COMMAND fc = msg.getFrameworkToDistributedSystemCommand();
 		// TODO: Better error handling. Send a message back to the simulation engine that
 		// this distributed system is terminating
 
@@ -146,8 +152,6 @@ public class JADE_MAS_AdapterAPI {
 			throw new CsfInitializationRuntimeException(
 					"The JADE Controller Agent tried to read message from the simulation engine, but did not understand the command: "
 							+ fc.toString());
-		System.out
-				.println("[JADE Controller Agent] Received message from the simulation engine to start the simulation");
 
 		// Push Status of Ready back to the simulation engine
 		FrameworkMessage fm = new FrameworkMessageImpl(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
@@ -160,68 +164,10 @@ public class JADE_MAS_AdapterAPI {
 		// TODO:Move all of this up one API level
 		// Get the tick information from the simulation engine
 		// Distribute message to the JADE Agent
-		DistributedAgentsManager dam = jade_MAS_RunContext.getDistSysRunContext()
-				.getDistributedAgentsManager();
+		jade_MAS_RunContext.setDam(jade_MAS_RunContext.getDistSysRunContext()
+				.getDistributedAgentsManager());
 
-		fm = jade_MAS_RunContext.listenForMessageFromSimulationEngine();
-		List<Element> distributedAutonomousAgentElements = fm
-				.getDistributedAutonomousAgentElements(fm.getDocument());
-		// TODO: better validation
-		assert (distributedAutonomousAgentElements.size() != 0);
-
-		for (Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
-			String daaID = fm
-					.getDistributedAutonomousAgentElementID(distributedAutonomousAgentElement);
-			DistributedAutonomousAgent distAutAgent = dam
-					.getDistributedAutonomousAgent(daaID);
-			// TODO: better validation
-			assert (distAutAgent != null);
-
-			List<Element> agentModelElements = fm
-					.getAgentModels(distributedAutonomousAgentElement); // TODO: better
-																		// validation
-			assert (agentModelElements.size() != 0);
-
-			System.out
-					.println("[JADE Controller Agent] Received message from the simulation engine to start the simulation: "
-							+ fm.transformToCommonMessagingXMLString(true));
-
-			// Agent Model Assertions. We don't actually message the modesl from here,
-			// only the distributed autonomous agents
-			for (Element agentModelsElement : agentModelElements) {
-				String agentModelID = fm.getAgentModelID(agentModelsElement);
-				DistributedAgentModel distAgentModel = distAutAgent
-						.getDistributedAgentModelIDStoAgentModels().get(agentModelID);
-				// TODO: add better validation
-				assert (distAgentModel != null && agentModelID.equals(distAgentModel
-						.getDistributedAgentModelID()));
-
-			}
-
-			// FIXME: Need to keep this case on the JADE API side, everything else in
-			// the main DistaSys API
-			MockHumanJADE_Agent mockHumanJADE_Agent = (MockHumanJADE_Agent) distAutAgent
-					.getNativeDistributedAutonomousAgent();
-			assert (mockHumanJADE_Agent != null);
-			String messageID = UUID.randomUUID().toString();
-
-			fm = jade_MAS_RunContext
-					.getDistSysRunContext()
-					.getDistSysRunGroupContext()
-					.convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage(
-							distributedAutonomousAgentElement,
-							distAutAgent.getDistributedAutonomousAgentID(),
-							SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
-			
-			mockHumanJADE_Agent.receiveMessage(fm, messageID, null, jadeControllerAgent);
-		}
-
-		/*
-		 * if (fc == null || !fc.equals(FRAMEWORK_COMMAND.START_SIMULATION)) throw new
-		 * CsfInitializationRuntimeException(
-		 * "The JADE Controller Agent tried to read message from the simulation engine, but did not understand the command: "
-		 * + fc.toString());
-		 */
+		jade_MAS_RunContext.setJadeControllerAgent(jadeControllerAgent);
 
 		return jade_MAS_RunContext;
 	}
@@ -233,7 +179,7 @@ public class JADE_MAS_AdapterAPI {
 	private void assignJadeAgentsToDistributedAutonomousAgents(
 			Set<MockHumanJADE_Agent> jadeAgents, JADE_MAS_RunContext jade_MAS_RunContext) {
 		for (MockHumanJADE_Agent jadeAgent : jadeAgents) {
-			assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
+						assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
 		}
 	}
 

@@ -196,5 +196,11 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 			FrameworkMessage msg) {
 		return frameworkMessageDocumentHelper.getSelfLocation(distributedAutononomousAgentElement, msg);
 	}
+	
+	@Override
+	public List<String> getSelfLocation(FrameworkMessage msg) {
+		return frameworkMessageDocumentHelper.getSelfLocation(msg);
+
+	}
 
 }

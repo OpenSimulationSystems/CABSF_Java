@@ -3,6 +3,8 @@ package org.simulationsystems.csf.sim.engines.adapters.repastS.api;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import jzombies.JZombies_Csf;
+
 import org.jdom2.JDOMException;
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.api.AgentContext;
@@ -16,7 +18,7 @@ public class RepastS_AgentContext extends AgentContext {
 	private RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 	private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
 	
-	private Boolean bypassRepastRuntimeForTestingPurposes;
+	private Boolean bypassRepastRuntimeForTestingPurposes=false;
 	
 	public void setBypassRepastRuntimeForTestingPurposes(
 			Boolean bypassRepastRuntimeForTestingPurposes) {
@@ -42,7 +44,7 @@ public class RepastS_AgentContext extends AgentContext {
 	 * has occured. if not, it initializes the simulation for this agent.
 	 * 
 	 */
-	public SIMULATION_TYPE initializeCsfAgent() throws JDOMException, IOException {
+	public SIMULATION_TYPE initializeCsfAgent() throws JDOMException, IOException {	
 		// Get a hold of the REpast Simulation Run Context. The agent authors only use
 		// this API class.
 		if (!bypassRepastRuntimeForTestingPurposes && repastS_SimulationRunContext == null) {

@@ -56,4 +56,6 @@ public interface FrameworkMessage {
 
 	List<String> getSelfLocation(Element distributedAutononomousAgentElement,
 			FrameworkMessage msg);
+
+	List<String> getSelfLocation(FrameworkMessage msg);
 }

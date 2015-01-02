@@ -29,7 +29,7 @@ public class MockHumanJADE_Agent {
 	// the fact that these JADE agents are all autononmous. The important here is to
 	// provide access to the API to understand the messages.
 	JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
-	private JZombies_Csf jzombies_Repast_Csf = new JZombies_Csf(jade_MAS_AgentContext);
+	private JZombies_Csf jzombies_CSF = new JZombies_Csf(jade_MAS_AgentContext);
 
 	public MockHumanJADE_Agent(String distributedAutonomousAgentID,
 			String distAutAgentModelID) {
@@ -66,7 +66,7 @@ public class MockHumanJADE_Agent {
 
 		// The framework message to this distributed autonomous agent can be expected to
 		// only contain a single entry for the distributed autonomous agent
-		Element distributedAutonomousAgentElement = msg
+/*		Element distributedAutonomousAgentElement = msg
 				.getNextDistributedAutonomousAgent(msg.getDocument(), null);
 
 		FrameworkMessage fm = jade_MAS_AgentContext
@@ -75,16 +75,20 @@ public class MockHumanJADE_Agent {
 						SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
 
 		List<String> selfPoint = fm
-				.getSelfLocation(distributedAutonomousAgentElement, fm);
+				.getSelfLocation(distributedAutonomousAgentElement, fm);*/
+		
+		List<String> selfPoint = msg.getSelfLocation(msg);
 		for (int i = 0; i < selfPoint.size(); i++) {
 			System.out.println("[MockHumanJADE_Agent ID: " + distributedAutonomousAgentID
 					+ "] Self Location: " + String.valueOf(i) + " : "
 					+ String.valueOf(selfPoint.get(i)));
 		}
-
-		List<String> pointWithLeastZombiesPoint = jzombies_Repast_Csf
-				.getPointWithLeastZombies(distributedAutonomousAgentElement, fm,
-						jade_MAS_AgentContext);
+		
+		Element distributedAutonomousAgentElement = msg
+				.getNextDistributedAutonomousAgent(msg.getDocument(), null);
+		
+		List<String> pointWithLeastZombiesPoint = jzombies_CSF
+				.getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
 
 		for (int i = 0; i < pointWithLeastZombiesPoint.size(); i++) {
 			System.out.println("[MockHumanJADE_Agent ID: " + distributedAutonomousAgentID
@@ -97,17 +101,23 @@ public class MockHumanJADE_Agent {
 		// Send the decision on where to move to
 		String newMessageID = UUID.randomUUID().toString();
 		String originalMessageId = messageID;
-
-		jade_Controller_Agent.receiveMessage(jzombies_Repast_Csf
+		
+		msg = jzombies_CSF
 				.convertMoveToPointToFrameworkMessage(new ArrayList<String>(),
 						new ArrayList<String>(), pointToMoveTo,
-						distributedAutonomousAgentID, distAutAgentModelID), newMessageID,
+						distributedAutonomousAgentID, distAutAgentModelID);
+		System.out.println("[MockHumanJADE_Agent ID: " + distributedAutonomousAgentID
+				+ "] Sending move decision to the JADE Controller Agent: "+ XMLUtilities.convertDocumentToXMLString(msg.getDocument().getRootElement(),true));
+		
+		jade_Controller_Agent.receiveMessage(msg, newMessageID,
 				originalMessageId);
+		
 
 	}
 
 	private List<String> decideWhereToMoveTo(List<String> selfPoint,
 			List<String> pointWithLeastZombiesPoint) {
+
 		return pointWithLeastZombiesPoint;
 
 	}

@@ -93,27 +93,6 @@
 											of EnvironmentChange suggested, format is open -->
 									</SimulationDefinedEnvironmentChanges>
 								</EnvironmentChanges>
-								<!-- These are changes in state that are not observable by other 
-									agents. Only for use by this agent or to populate the global environment 
-									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
-									for changes that are at least in theory observable by other agents/agent 
-									models in the simulation model. -->
-								<Actions>
-									<!-- Common CSF Actions -->
-									<CommonActions>
-										<Action>
-											<Move>
-												<GridPointX />
-												<GridPointY />
-												<GridPointZ />
-											</Move>
-										</Action>
-									</CommonActions>
-									<!-- Optional, based on the simulation -->
-									<SimulationDefinedActions>
-										<!-- key/value pair suggested, format is open -->
-									</SimulationDefinedActions>
-								</Actions>
 								<MessageExchange>
 									<CommonMessages>
 										<!-- To this agent model, regarding actor above -->
@@ -128,6 +107,11 @@
 										</Message>
 									</SimulationDefinedMessages>
 								</MessageExchange>
+								<!-- These are changes in state that are not observable by other 
+									agents. Only for use by this agent or to populate the global environment 
+									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
+									for changes that are at least in theory observable by other agents/agent 
+									models in the simulation model. -->
 								<InternalStateChanges>
 									<CommonInternalStateChanges>
 										<InternalStateChange>

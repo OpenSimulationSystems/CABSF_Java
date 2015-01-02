@@ -10,6 +10,7 @@ import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
@@ -343,10 +344,13 @@ public class FrameworkMessageDocumentHelper {
 	}
 
 	public void removeDistributedAutonomousAgents(Document doc) {
-		List<Element> distributedAutonomousAgents = (List<Element>) XMLUtilities
-				.executeXPath(doc, distributedAutonomousAgentsXpath, namespaceStr,
+		List<Element> distributedAutonomousAgentElements = (List<Element>) XMLUtilities
+				.executeXPath(doc, distributedAutonomousAgentsXpath+"/x:DistributedAutonomousAgent", namespaceStr,
 						elementFilter);
-		distributedAutonomousAgents.get(0).removeContent();
+		for (Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
+			distributedAutonomousAgentElement.detach();
+		}
+		
 	}
 
 	public List<String> getSelfLocation(Element distributedAutononomousAgentElement,
@@ -372,8 +376,8 @@ public class FrameworkMessageDocumentHelper {
 
 		String xValue = location.getChild("GridPointX", namespace).getText();
 		String yValue = location.getChild("GridPointY", namespace).getText();
-		System.out.println("Grid Point X: " + xValue);
-		System.out.println("Grid Point Y: " + yValue);
+		System.out.println("Self Grid Point X: " + xValue);
+		System.out.println("Self Grid Point Y: " + yValue);
 		List<String> coordinate = new ArrayList<String>();
 		coordinate.add(xValue);
 		coordinate.add(yValue);
@@ -386,4 +390,14 @@ public class FrameworkMessageDocumentHelper {
 		return coordinate;
 		
 	}
+		
+	//TODO: Handle messages with multiple distributed autonomous agent elemements
+	public List<String> getSelfLocation(FrameworkMessage msg) {
+		Element distributedAutonomousAgentElement = msg
+				.getNextDistributedAutonomousAgent(msg.getDocument(), null);
+
+		return getSelfLocation(distributedAutonomousAgentElement,
+				 msg);
+	}
+	
 }

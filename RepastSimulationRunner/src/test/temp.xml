@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <CsfMessageExchange xmlns="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Identifiers>
     <Simulation>
@@ -42,14 +41,6 @@
       <Name />
       <ID />
       <DistributedAutonomousAgents>
-        <AllDistributedAutonomousAgents>
-          <!-- To all Distributed Autonomous Agents in this Distributed System -->
-          <ControlMessages>
-            <!-- START_SIMULATION or END_SIMULATION -->
-            <Command />
-          </ControlMessages>
-        </AllDistributedAutonomousAgents>
-        <!-- To a specific Distributed Autonomous Agent -->
         <DistributedAutonomousAgent>
           <Name />
           <ID>distAutAgent1</ID>
@@ -61,9 +52,9 @@
                 <Command />
               </ControlMessages>
             </AllAgentModels>
-            <!-- Message submitted to this one agent model in the parent distributed autonomous agent -->
-            <AgentModel>
-              <!-- Message about this one actor to this one agent model (parent element) under the parent distributed autonomous agent -->
+            <!-- Message submitted to this one agent model in the parent distributed 
+							autonomous agent -->
+            <x:AgentModel xmlns:x="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0">
               <Actor>
                 <!-- RE: Self or another agent model -->
                 <ID>distAutAgentMode1</ID>
@@ -71,7 +62,7 @@
 									information if desired, not just changes since the last tick -->
                 <EnvironmentChanges>
                   <CommonEnvironmentChanges>
-                    <EnvironmentChange>
+                    <EnvironmentChange id="">
                       <!-- self = the actor above. Initial location or change -->
                       <Location id="self">
                         <GridPointX>1</GridPointX>
@@ -81,9 +72,11 @@
                     </EnvironmentChange>
                   </CommonEnvironmentChanges>
                   <SimulationDefinedEnvironmentChanges>
-                    <EnvironmentChange>
-                      <!-- key/value pair suggested, format is open -->
-                      <Location id="" category="neighborhood" includecenter="true" entitytype="Zombie">
+                    <!-- EnvironmentChange elements. key/value pair child elements 
+											of EnvironmentChange suggested, format is open -->
+                    <EnvironmentChange id="">
+                      <!-- self = the actor above. Initial location or change -->
+                      <Location id="self" category="neighborhood" includecenter="true" entitytype="Zombie">
                         <GridPointX>3</GridPointX>
                         <GridPointY>4</GridPointY>
                         <GridPointZ />
@@ -91,27 +84,6 @@
                     </EnvironmentChange>
                   </SimulationDefinedEnvironmentChanges>
                 </EnvironmentChanges>
-                <!-- These are changes in state that are not observable by other 
-									agents. Only for use by this agent or to populate the global environment 
-									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
-									for changes that are at least in theory observable by other agents/agent 
-									models in the simulation model. -->
-                <Actions>
-                  <!-- Common CSF Actions -->
-                  <CommonActions>
-                    <Action>
-                      <Move>
-                        <GridPointX />
-                        <GridPointY />
-                        <GridPointZ />
-                      </Move>
-                    </Action>
-                  </CommonActions>
-                  <!-- Optional, based on the simulation -->
-                  <SimulationDefinedActions>
-                    <!-- key/value pair suggested, format is open -->
-                  </SimulationDefinedActions>
-                </Actions>
                 <MessageExchange>
                   <CommonMessages>
                     <!-- To this agent model, regarding actor above -->
@@ -126,6 +98,11 @@
                     </Message>
                   </SimulationDefinedMessages>
                 </MessageExchange>
+                <!-- These are changes in state that are not observable by other 
+									agents. Only for use by this agent or to populate the global environment 
+									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
+									for changes that are at least in theory observable by other agents/agent 
+									models in the simulation model. -->
                 <InternalStateChanges>
                   <CommonInternalStateChanges>
                     <InternalStateChange>
@@ -142,7 +119,7 @@
                   </SimulationDefinedInternalStateChanges>
                 </InternalStateChanges>
               </Actor>
-            </AgentModel>
+            </x:AgentModel>
           </AgentModels>
         </DistributedAutonomousAgent>
         <DistributedAutonomousAgent>
@@ -156,82 +133,9 @@
                 <Command />
               </ControlMessages>
             </AllAgentModels>
-            <!-- Message submitted to this one agent model in the parent distributed autonomous agent -->
-            <AgentModel>
-              <!-- Message about this one actor to this one agent model (parent element) under the parent distributed autonomous agent -->
-              <Actor>
-                <!-- RE: Self or another agent model -->
-                <ID />
-                <!-- EnvironmentChanges Could be used to communicate all local environment 
-									information if desired, not just changes since the last tick -->
-                <EnvironmentChanges>
-                  <CommonEnvironmentChanges>
-                    <EnvironmentChange>
-                      <!-- self = the actor above. Initial location or change -->
-                      <Location id="self">
-                        <GridPointX />
-                        <GridPointY />
-                        <GridPointZ />
-                      </Location>
-                    </EnvironmentChange>
-                  </CommonEnvironmentChanges>
-                  <SimulationDefinedEnvironmentChanges>
-                    <EnvironmentChange>
-                      <!-- key/value pair suggested, format is open -->
-                    </EnvironmentChange>
-                  </SimulationDefinedEnvironmentChanges>
-                </EnvironmentChanges>
-                <!-- These are changes in state that are not observable by other 
-									agents. Only for use by this agent or to populate the global environment 
-									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
-									for changes that are at least in theory observable by other agents/agent 
-									models in the simulation model. -->
-                <Actions>
-                  <!-- Common CSF Actions -->
-                  <CommonActions>
-                    <Action>
-                      <Move>
-                        <GridPointX />
-                        <GridPointY />
-                        <GridPointZ />
-                      </Move>
-                    </Action>
-                  </CommonActions>
-                  <!-- Optional, based on the simulation -->
-                  <SimulationDefinedActions>
-                    <!-- key/value pair suggested, format is open -->
-                  </SimulationDefinedActions>
-                </Actions>
-                <MessageExchange>
-                  <CommonMessages>
-                    <!-- To this agent model, regarding actor above -->
-                    <Message>
-                      <From />
-                      <!-- key/value pair here -->
-                    </Message>
-                  </CommonMessages>
-                  <SimulationDefinedMessages>
-                    <Message>
-                      <!-- key/value pair suggested, format is open -->
-                    </Message>
-                  </SimulationDefinedMessages>
-                </MessageExchange>
-                <InternalStateChanges>
-                  <CommonInternalStateChanges>
-                    <InternalStateChange>
-                      <!-- Key value pair -->
-                    </InternalStateChange>
-                    <InternalStateUpdate />
-                  </CommonInternalStateChanges>
-                  <!-- User/simulation defined common states -->
-                  <!-- Children may contain any format -->
-                  <SimulationDefinedInternalStateChanges>
-                    <InternalStateChange>
-                      <!-- key/value pair suggested, format is open -->
-                    </InternalStateChange>
-                  </SimulationDefinedInternalStateChanges>
-                </InternalStateChanges>
-              </Actor>
+            <!-- Message submitted to this one agent model in the parent distributed 
+							autonomous agent -->
+            <x:AgentModel xmlns:x="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0">
               <Actor>
                 <!-- RE: Self or another agent model -->
                 <ID>distAutAgentMode2</ID>
@@ -239,7 +143,7 @@
 									information if desired, not just changes since the last tick -->
                 <EnvironmentChanges>
                   <CommonEnvironmentChanges>
-                    <EnvironmentChange>
+                    <EnvironmentChange id="">
                       <!-- self = the actor above. Initial location or change -->
                       <Location id="self">
                         <GridPointX>5</GridPointX>
@@ -249,9 +153,11 @@
                     </EnvironmentChange>
                   </CommonEnvironmentChanges>
                   <SimulationDefinedEnvironmentChanges>
-                    <EnvironmentChange>
-                      <!-- key/value pair suggested, format is open -->
-                      <Location id="" category="neighborhood" includecenter="true" entitytype="Zombie">
+                    <!-- EnvironmentChange elements. key/value pair child elements 
+											of EnvironmentChange suggested, format is open -->
+                    <EnvironmentChange id="">
+                      <!-- self = the actor above. Initial location or change -->
+                      <Location id="self" category="neighborhood" includecenter="true" entitytype="Zombie">
                         <GridPointX>7</GridPointX>
                         <GridPointY>8</GridPointY>
                         <GridPointZ />
@@ -259,27 +165,6 @@
                     </EnvironmentChange>
                   </SimulationDefinedEnvironmentChanges>
                 </EnvironmentChanges>
-                <!-- These are changes in state that are not observable by other 
-									agents. Only for use by this agent or to populate the global environment 
-									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
-									for changes that are at least in theory observable by other agents/agent 
-									models in the simulation model. -->
-                <Actions>
-                  <!-- Common CSF Actions -->
-                  <CommonActions>
-                    <Action>
-                      <Move>
-                        <GridPointX />
-                        <GridPointY />
-                        <GridPointZ />
-                      </Move>
-                    </Action>
-                  </CommonActions>
-                  <!-- Optional, based on the simulation -->
-                  <SimulationDefinedActions>
-                    <!-- key/value pair suggested, format is open -->
-                  </SimulationDefinedActions>
-                </Actions>
                 <MessageExchange>
                   <CommonMessages>
                     <!-- To this agent model, regarding actor above -->
@@ -294,6 +179,11 @@
                     </Message>
                   </SimulationDefinedMessages>
                 </MessageExchange>
+                <!-- These are changes in state that are not observable by other 
+									agents. Only for use by this agent or to populate the global environment 
+									for the simulation administrator. Prefer use of EnvironmentChanges over StateChanges 
+									for changes that are at least in theory observable by other agents/agent 
+									models in the simulation model. -->
                 <InternalStateChanges>
                   <CommonInternalStateChanges>
                     <InternalStateChange>
@@ -310,11 +200,10 @@
                   </SimulationDefinedInternalStateChanges>
                 </InternalStateChanges>
               </Actor>
-            </AgentModel>
+            </x:AgentModel>
           </AgentModels>
         </DistributedAutonomousAgent>
       </DistributedAutonomousAgents>
     </DistributedSystem>
   </ReceivingEntities>
 </CsfMessageExchange>
-

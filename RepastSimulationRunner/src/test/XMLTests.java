@@ -383,7 +383,8 @@ public class XMLTests implements JadeController {
 	@Ignore
 	public void testReceiveMessageInJADEAgent() {
 		NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1", "Human");
+				"DistSys1", "DistributedSystemAutonomousAgent1",
+				"DistributedAgentModel1", "Human");
 		try {
 			String messageID = UUID.randomUUID().toString();
 			String distributedAutonomousAgentID = UUID.randomUUID().toString();

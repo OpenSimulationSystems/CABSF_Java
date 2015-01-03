@@ -29,7 +29,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 	public String getModelName() {
 		return modelName;
 	}
-
+	
 	public String getDistributedAutonomousAgentID() {
 		return distributedAutonomousAgentID;
 	}
@@ -38,20 +38,24 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 		this.distributedAutonomousAgentID = distributedAutonomousAgentID;
 	}
 
-	private String distAutAgentModelID;
+	private String distributedAutonomousAgentModelID;
 
 	// This is not the same instance as the context running in the controller agent due to
 	// the fact that these JADE agents are all autononmous. The important here is to
 	// provide access to the API to understand the messages.
 	JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
 	private JZombies_Csf jzombies_CSF = new JZombies_Csf(jade_MAS_AgentContext);
+	private String distributedSystemID;
+	private String logPrefix=null;
 
-	public MockHumanJADE_Agent(String distributedAutonomousAgentID,
+	public MockHumanJADE_Agent(String distributedSystemID, String distributedAutonomousAgentID,
 			String distAutAgentModelID, String modelName) {
 		try {
+			this.distributedSystemID = distributedSystemID;
 			this.distributedAutonomousAgentID = distributedAutonomousAgentID;
-			this.distAutAgentModelID = distAutAgentModelID;
+			this.distributedAutonomousAgentModelID = distAutAgentModelID;
 			this.modelName = modelName;
+			logPrefix = "[MockHumanJADE_Agent "+ distributedSystemID+" "+distributedAutonomousAgentID+" "+distAutAgentModelID+"]";
 
 			jade_MAS_AgentContext.initializeCsfAgent("TESTconfigFile");
 		} catch (JDOMException e) {
@@ -59,6 +63,10 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 		} catch (IOException e) {
 			throw new CsfRuntimeException("Error initializing the agent", e);
 		}
+	}
+	
+	public String getDistributedAutonomousAgentModelID() {
+		return distributedAutonomousAgentModelID;
 	}
 
 	/*
@@ -97,8 +105,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 
 		List<String> selfPoint = msg.getSelfLocation(msg);
 		for (int i = 0; i < selfPoint.size(); i++) {
-			System.out.println("[NativeDistributedAutonomousAgent ID: " + distributedAutonomousAgentID
-					+ "] Self Location: " + String.valueOf(i) + " : "
+			System.out.println(logPrefix+" Self Location: " + String.valueOf(i) + " : "
 					+ String.valueOf(selfPoint.get(i)));
 		}
 
@@ -109,8 +116,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 				distributedAutonomousAgentElement, msg);
 
 		for (int i = 0; i < pointWithLeastZombiesPoint.size(); i++) {
-			System.out.println("[NativeDistributedAutonomousAgent ID: " + distributedAutonomousAgentID
-					+ "] Received Zombie location " + String.valueOf(i) + " : "
+			System.out.println(logPrefix+" Received Zombie location " + String.valueOf(i) + " : "
 					+ String.valueOf(pointWithLeastZombiesPoint.get(i)));
 		}
 
@@ -121,10 +127,8 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 		String originalMessageId = messageID;
 
 		msg = jzombies_CSF.convertMoveToPointToFrameworkMessage(pointToMoveTo,
-				distributedAutonomousAgentID, distAutAgentModelID);
-		System.out.println("[NativeDistributedAutonomousAgent ID: "
-				+ distributedAutonomousAgentID
-				+ "] Sending move decision to the JADE Controller Agent: "
+				distributedAutonomousAgentID, distributedAutonomousAgentModelID);
+		System.out.println(logPrefix+" Sending move decision to the JADE Controller Agent: "
 				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
 						.getRootElement(), true));
 

@@ -11,6 +11,7 @@ import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
@@ -138,15 +139,16 @@ public class JADE_MAS_RunContext {
 				.getDistributedAutonomousAgentElements(fm.getDocument());
 		// TODO: better validation
 		assert (distributedAutonomousAgentElements.size() != 0);
-
+		// dam.getDistributedAutonomousAgentIDStoDistributedAutonomousAgents().keySet().toString();
 		for (Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
-			String daaID = fm
-					.getDistributedAutonomousAgentElementID(distributedAutonomousAgentElement);
+			String distributedAutonomousAgentID = fm
+					.getDistributedAutonomousAgentID(distributedAutonomousAgentElement);
 			DistributedAutonomousAgent distAutAgent = dam
-					.getDistributedAutonomousAgent(daaID);
+					.getDistributedAutonomousAgent(distributedAutonomousAgentID);
 			// TODO: better validation
 			assert (distAutAgent != null);
-
+			// XMLUtilities.convertDocumentToXMLString(distributedAutonomousAgentElement,
+			// true);
 			List<Element> agentModelElements = fm
 					.getAgentModels(distributedAutonomousAgentElement); // TODO: better
 																		// validation
@@ -158,13 +160,15 @@ public class JADE_MAS_RunContext {
 
 			// Agent Model Assertions. We don't actually message the modesl from here,
 			// only the distributed autonomous agents
-			for (Element agentModelsElement : agentModelElements) {
-				String agentModelID = fm.getAgentModelID(agentModelsElement);
+			for (Element agentModelElement : agentModelElements) {
+				String agentModelIDfromMessage = fm
+						.getFirstAgentModelActorAgentModelID(agentModelElement);
 				DistributedAgentModel distAgentModel = distAutAgent
-						.getDistributedAgentModelIDStoAgentModels().get(agentModelID);
+						.getDistributedAgentModelIDStoAgentModels().get(
+								agentModelIDfromMessage);
 				// TODO: add better validation
-				assert (distAgentModel != null && agentModelID.equals(distAgentModel
-						.getDistributedAgentModelID()));
+				assert (distAgentModel != null && agentModelIDfromMessage
+						.equals(distAgentModel.getDistributedAgentModelID()));
 
 			}
 
@@ -181,8 +185,11 @@ public class JADE_MAS_RunContext {
 							distAutAgent.getDistributedAutonomousAgentID(),
 							SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
 
+			assert (nativeDistributedAutonomousAgent.getDistributedAutonomousAgentID()
+					.equals(distributedAutonomousAgentID));
 			String messageID = UUID.randomUUID().toString();
-			nativeDistributedAutonomousAgent.receiveMessage(fm, messageID, null, jadeControllerAgent);
+			nativeDistributedAutonomousAgent.receiveMessage(fm, messageID, null,
+					jadeControllerAgent);
 			// At this point the distributed agent has received the message from here/the
 			// controller, the distributed agent has notified the controller of its
 			// decision, the controller has send the message over

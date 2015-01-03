@@ -14,4 +14,6 @@ public interface NativeDistributedAutonomousAgent {
 	public String getDistributedAutonomousAgentID();
 	
 	public String getModelName();
+
+	public String getDistributedAutonomousAgentModelID();
 }

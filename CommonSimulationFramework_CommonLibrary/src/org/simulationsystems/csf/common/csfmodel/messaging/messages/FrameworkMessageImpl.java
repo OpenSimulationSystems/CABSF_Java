@@ -162,8 +162,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public String getDistributedAutonomousAgentElementID(Element distributedAutononomousAgentElement) {
-		return frameworkMessageDocumentHelper.getDistributedAutonomousAgentElementID(distributedAutononomousAgentElement);
+	public String getDistributedAutonomousAgentID(Element distributedAutononomousAgentElement) {
+		return frameworkMessageDocumentHelper.getDistributedAutonomousAgentID(distributedAutononomousAgentElement);
 	}
 
 	@Override
@@ -172,8 +172,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public String getAgentModelID(Element agentModel) {
-		return frameworkMessageDocumentHelper.getAgentModelID(agentModel);
+	public String getFirstAgentModelActorAgentModelID(Element agentModel) {
+		return frameworkMessageDocumentHelper.getFirstAgentModelActorAgentModelID(agentModel);
 	}
 
 	@Override

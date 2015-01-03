@@ -80,7 +80,7 @@
 								<EnvironmentChanges>
 									<CommonEnvironmentChanges>
 										<EnvironmentChange>
-											<!-- self = the actor above. Initial location or change -->
+											<!-- self = the actor above. Initial location or new location -->
 											<Location id="self">
 												<GridPointX />
 												<GridPointY />

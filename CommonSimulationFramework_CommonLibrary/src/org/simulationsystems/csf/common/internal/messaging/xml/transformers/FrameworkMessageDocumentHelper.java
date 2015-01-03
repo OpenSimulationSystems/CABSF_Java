@@ -308,7 +308,7 @@ public class FrameworkMessageDocumentHelper {
 				"DistributedAutonomousAgent", namespace);
 	}
 
-	public String getDistributedAutonomousAgentElementID(
+	public String getDistributedAutonomousAgentID(
 			Element distributedAutononomousAgentElement) {
 
 		return distributedAutononomousAgentElement.getChild("ID", namespace).getValue();
@@ -316,12 +316,13 @@ public class FrameworkMessageDocumentHelper {
 	}
 
 	public List<Element> getAgentModels(Element distributedAutonomousAgentElement) {
-		return distributedAutonomousAgentElement.getChildren("AgentModel", namespace);
-
+		 Element agentModelsElement = distributedAutonomousAgentElement.getChild("AgentModels",namespace);
+		 return agentModelsElement.getChildren("AgentModel", namespace);
 	}
 
-	public String getAgentModelID(Element agentModel) {
-		return agentModel.getChild("ID", namespace).getValue();
+	public String getFirstAgentModelActorAgentModelID(Element agentModel) {
+		Element actorElement = agentModel.getChild("Actor", namespace);
+		return actorElement.getChild("ID", namespace).getValue();
 	}
 
 	/*

@@ -124,10 +124,12 @@ public class DistributedAgentsManager {
 		// per distributed autonomous software agent.
 		for (NativeDistributedAutonomousAgent agent : nativeAgentsSet) {
 			HashSet<String> hs = new HashSet<String>();
-			hs.add(agent.getDistributedAutonomousAgentID() + "MODEL");
+			hs.add(agent.getDistributedAutonomousAgentModelID() );
 			DistributedAutonomousAgent distributedAutonomousAgent = createDistributedAutonomousAgent(
 					distSysRunContext, agent.getDistributedAutonomousAgentID(), hs,
 					agent.getModelName());
+			assignNativeDistributedAutonomousAgent(agent);
+			
 			nativeJadeContextForThisRun.addAgent(agent);
 
 		}

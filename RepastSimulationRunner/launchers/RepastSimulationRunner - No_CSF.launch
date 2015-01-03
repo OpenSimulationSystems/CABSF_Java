@@ -8,7 +8,7 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.simulationsystems.csf.sim.engines.runners.repastS.RepastS_SimulationRunnerMain"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:\Users\jorge\workspace\jcalderon-thesis\JZombies_CSF_Demo\JZombies_CSF_Demo.rs"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../JZombies_CSF_Demo/JZombies_CSF_Demo.rs"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="RepastSimulationRunner"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
 </launchConfiguration>

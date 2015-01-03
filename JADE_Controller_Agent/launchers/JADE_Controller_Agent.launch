@@ -9,4 +9,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.simulationsystems.csf.distsys.mas.adapter.runners.jade.JADE_Controller_Agent"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="PlaceholderConfigurationFile"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JADE_Controller_Agent"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
 </launchConfiguration>

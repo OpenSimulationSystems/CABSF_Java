@@ -103,8 +103,8 @@ public class DistributedAutonomousAgent {
 		this.nativeDistributedAutonomousAgent = nativeDistributedAutonomousAgent;
 		// TODO: Throw exception if null native object?
 
-		if (nativeDistributedAutonomousAgent == null)
-			nativeDistributedAutonomousAgent = new String("null");
+/*		if (nativeDistributedAutonomousAgent == null)
+			nativeDistributedAutonomousAgent = new String("null");*/
 
 		System.out.println("Successfully mapped Distributed Autonomous Agent: "
 				+ distributedAutonomousAgentID + " to native autonomous agent "

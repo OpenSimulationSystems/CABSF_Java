@@ -75,19 +75,25 @@ public class JADE_Controller_Agent implements JadeController {
 		Set<NativeDistributedAutonomousAgent> st = new HashSet<NativeDistributedAutonomousAgent>();
 
 		NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1", "Human");
+				"DistSys1", "DistributedSystemAutonomousAgent1",
+				"DistributedSystemAutonomousAgent1MODEL", "Human");
 		st.add(nativeDistributedAutonomousAgent);
-		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent2", "DistributedAgentModel2", "Human");
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+				"DistributedSystemAutonomousAgent2",
+				"DistributedSystemAutonomousAgent2MODEL", "Human");
 		st.add(nativeDistributedAutonomousAgent);
-		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent3", "DistributedAgentModel3", "Human");
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+				"DistributedSystemAutonomousAgent3",
+				"DistributedSystemAutonomousAgent3MODEL", "Human");
 		st.add(nativeDistributedAutonomousAgent);
-		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent4", "DistributedAgentModel4", "Human");
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+				"DistributedSystemAutonomousAgent4",
+				"DistributedSystemAutonomousAgent4MODEL", "Human");
 		st.add(nativeDistributedAutonomousAgent);
-		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
-				"DistributedSystemAutonomousAgent5", "DistributedAgentModel5", "Human");
+		nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+				"DistributedSystemAutonomousAgent5",
+				"DistributedSystemAutonomousAgent5MODEL", "Human");
+		st.add(nativeDistributedAutonomousAgent);
 		return st;
 	}
 

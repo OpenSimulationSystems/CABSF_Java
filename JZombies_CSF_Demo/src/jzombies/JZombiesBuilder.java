@@ -28,8 +28,13 @@ public class JZombiesBuilder implements ContextBuilder<Object> {
 	 * repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context
 	 * .Context)
 	 */
+	@SuppressWarnings("rawtypes")
 	//@Override
 	public Context build(Context<Object> context) {
+/*		double MAX_ITERATIONS = 30;
+		RunEnvironment runEnvironment = RunEnvironment.getInstance();
+		runEnvironment.endAt(MAX_ITERATIONS);*/
+		
 		context.setId("jzombies");
 
 		NetworkBuilder<Object> netBuilder = new NetworkBuilder<Object>(
@@ -65,10 +70,10 @@ public class JZombiesBuilder implements ContextBuilder<Object> {
 			grid.moveTo(obj, (int) pt.getX(), (int) pt.getY());
 		}
 		
-		if (RunEnvironment.getInstance().isBatch()) {
+/*		if (RunEnvironment.getInstance().isBatch()) {
 			RunEnvironment.getInstance().endAt(20);
-		}
-
+		}*/
+		
 		return context;
 	}
 }

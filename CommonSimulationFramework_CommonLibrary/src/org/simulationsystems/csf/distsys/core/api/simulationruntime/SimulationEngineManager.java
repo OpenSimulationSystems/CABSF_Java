@@ -107,30 +107,30 @@ public class SimulationEngineManager {
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
 	}
 
-	public void initializeAgentMappings() {
+/*	public void initializeAgentMappings() {
 
 		AgentMappingHelper.createAgentMapping(
 				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1",
+				"DistributedSystemAutonomousAgent1", "DistributedSystemAutonomousAgent1MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(
 				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent2", "DistributedAgentModel2",
+				"DistributedSystemAutonomousAgent2", "DistributedSystemAutonomousAgent2MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(
 				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent3", "DistributedAgentModel3",
+				"DistributedSystemAutonomousAgent3", "DistributedSystemAutonomousAgent3MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(
 				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent4", "DistributedAgentModel4",
+				"DistributedSystemAutonomousAgent4", "DistributedSystemAutonomousAgent4MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(
 				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent5", "DistributedAgentModel5",
+				"DistributedSystemAutonomousAgent5", "DistributedSystemAutonomousAgent5MODEL",
 				"jzombies.Human");
 	}
-
+*/
 	public void closeInterface() {
 		commonMessagingAbstraction.closeInterface();
 	}

@@ -135,14 +135,15 @@ public class JADE_MAS_AdapterAPI {
 		// one.
 		jade_MAS_RunContext.getDistSysRunContext().getDistributedAgentsManager()
 				.initializeDistributedAutonomousAgents(nativeJadeContextForThisRun, nativeAgentsSet);
-
-		assignJadeAgentsToDistributedAutonomousAgents(
-				nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext);
+		
+		//TODO: Remove these old set of assign methods
+		/*assignJadeAgentsToDistributedAutonomousAgents(
+				nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext)*/;
 
 		// Listen for START_SIMULATION command from the simulation engine
 		FrameworkMessage msg = jade_MAS_RunContext.listenForMessageFromSimulationEngine();
 		System.out
-				.println("[JADE Controller Agent] Received message from the simulation engine to start the simulation: "
+				.println("[JADE Controller Agent] Received framework message from the simulation engine: "
 						+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
 		FRAMEWORK_COMMAND fc = msg.getFrameworkToDistributedSystemCommand();
 		// TODO: Better error handling. Send a message back to the simulation engine that

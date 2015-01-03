@@ -124,23 +124,23 @@ public class SimulationDistributedSystemManager {
 		// TODO: Pull from configuration
 		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
 				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent1", "DistributedAgentModel1",
+				"DistributedSystemAutonomousAgent1", "DistributedSystemAutonomousAgent1MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
 				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent2", "DistributedAgentModel2",
+				"DistributedSystemAutonomousAgent2", "DistributedSystemAutonomousAgent2MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
 				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent3", "DistributedAgentModel3",
+				"DistributedSystemAutonomousAgent3", "DistributedSystemAutonomousAgent3MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
 				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent4", "DistributedAgentModel4",
+				"DistributedSystemAutonomousAgent4", "DistributedSystemAutonomousAgent4MODEL",
 				"jzombies.Human");
 		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
 				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent5", "DistributedAgentModel5",
+				"DistributedSystemAutonomousAgent5", "DistributedSystemAutonomousAgent5MODEL",
 				"jzombies.Human");
 	}
 

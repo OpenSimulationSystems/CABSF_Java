@@ -109,11 +109,11 @@ public class JZombies_Csf {
 				agentContext.getCachedAgentModelActorTemplate());
 		// TODO: First get the distributed system manager section.
 		// TODO: Add validation here
-		assert (am.getDistributedAgentModelID() != null);
+		assert (am.getDistributedAutonomousAgentModelID() != null);
 
 		// Set up the self agent model actor
 		msg.populateThisLocationInAgentModelActor(agentModelActor,
-				am.getDistributedAgentModelID(), String.valueOf(pt.getX()),
+				am.getDistributedAutonomousAgentModelID(), String.valueOf(pt.getX()),
 				String.valueOf(pt.getY()), agentContext.getCachedLocationTemplate());
 
 		// Populate the Zombies info

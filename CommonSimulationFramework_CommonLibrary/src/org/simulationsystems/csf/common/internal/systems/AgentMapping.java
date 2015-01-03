@@ -8,7 +8,7 @@ import java.util.UUID;
 public class AgentMapping {
 	private String distributedSystemID;
 	private String distributedAutonomousAgentID;
-	private String distributedAgentModelID;
+	private String distributedAutonomousAgentModelID;
 	private String fullyQualifiedSimulationAgent;
 
 	Object simulationAgent;
@@ -22,12 +22,13 @@ public class AgentMapping {
 		this.distributedAutonomousAgentID = distributedAutonomousAgentID;
 	}
 
-	public String getDistributedAgentModelID() {
-		return distributedAgentModelID;
+	
+	public String getDistributedAutonomousAgentModelID() {
+		return distributedAutonomousAgentModelID;
 	}
 
-	public void setDistributedAgentModelID(String distributedAgentModelID) {
-		this.distributedAgentModelID = distributedAgentModelID;
+	public void setDistributedAutonomousAgentModelID(String distributedAgentModelID) {
+		this.distributedAutonomousAgentModelID = distributedAgentModelID;
 	}
 
 	// Disabled
@@ -40,8 +41,12 @@ public class AgentMapping {
 			String distributedAgentModelID, String fullyQualifiedSimulationAgentName) {
 		this.distributedSystemID = distributedSystemID;
 		this.distributedAutonomousAgentID = distributedAutonomousAgentID;
-		this.distributedAgentModelID = distributedAgentModelID;
+		this.distributedAutonomousAgentModelID = distributedAgentModelID;
 		this.fullyQualifiedSimulationAgentName = fullyQualifiedSimulationAgentName;
+	}
+
+	public String getDistributedSystemID() {
+		return distributedSystemID;
 	}
 
 	public String getFullyQualifiedSimulationAgentName() {
@@ -54,7 +59,7 @@ public class AgentMapping {
 		int result = 1;
 		result = prime
 				* result
-				+ ((distributedAgentModelID == null) ? 0 : distributedAgentModelID
+				+ ((distributedAutonomousAgentModelID == null) ? 0 : distributedAutonomousAgentModelID
 						.hashCode());
 		result = prime
 				* result
@@ -74,10 +79,10 @@ public class AgentMapping {
 		if (getClass() != obj.getClass())
 			return false;
 		AgentMapping other = (AgentMapping) obj;
-		if (distributedAgentModelID == null) {
-			if (other.distributedAgentModelID != null)
+		if (distributedAutonomousAgentModelID == null) {
+			if (other.distributedAutonomousAgentModelID != null)
 				return false;
-		} else if (!distributedAgentModelID.equals(other.distributedAgentModelID))
+		} else if (!distributedAutonomousAgentModelID.equals(other.distributedAutonomousAgentModelID))
 			return false;
 		if (distributedAutonomousAgentID == null) {
 			if (other.distributedAutonomousAgentID != null)

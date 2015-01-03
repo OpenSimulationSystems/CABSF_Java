@@ -32,5 +32,3 @@
  * SIMULATION WRAPPER (RSW)<br/>
  * 
  * @author Jorge Calderon
- */
-package org.simulationsystems.csf.sim.core.api;

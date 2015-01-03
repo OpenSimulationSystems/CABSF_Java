@@ -43,12 +43,12 @@ public interface FrameworkMessage {
 
 	List<Element> getDistributedAutonomousAgentElements(Object csfMessageExchangeDoc);
 
-	String getDistributedAutonomousAgentElementID(
+	String getDistributedAutonomousAgentID(
 			Element distributedAutononomousAgentElement);
 
 	List<Element> getAgentModels(Element distributedAutonomousAgentElement);
 
-	String getAgentModelID(Element agentModel);
+	String getFirstAgentModelActorAgentModelID(Element agentModel);
 
 	public Document addDistributedAutonomousAgent(Document csfMessageExchangeDoc, Element distributedAutononomousAgentElement, boolean removeChildren);
 

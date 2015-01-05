@@ -48,14 +48,14 @@ public class RepastS_SimulationRunnerMain {
 
 		// Run the simulation a few times to check for cleanup and init issues.
 		// TODO: Tie in the number of simulation runs from the configuration
-		int simulation_runs = 2;
+		int simulation_runs = 1;
 		for (int i = 0; i < simulation_runs; i++) {
 			RepastS_SimulationRunContext repastS_SimulationRunContext = repastS_SimulationRunner
 					.runInitialize(); // initialize the run
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the configuration
-			Double max_ticks = null; //= 3d;
+			Double max_ticks = 300d;
 			double tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 
 			System.out

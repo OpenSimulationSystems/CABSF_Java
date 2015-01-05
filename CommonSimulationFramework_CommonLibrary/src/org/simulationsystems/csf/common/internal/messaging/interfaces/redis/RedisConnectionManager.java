@@ -56,9 +56,14 @@ public class RedisConnectionManager {
 			Long sleepTime, Long maximumNumberOfPolls) {
 		String value = null;
 		int i = 0;
+		System.out.println("[" + requestingSystem + "]"
+				+ "Attempting lpop on: " + redisKey );
 		while (maximumNumberOfPolls == null || maximumNumberOfPolls > 0) {
-			System.out.println("[" + requestingSystem + "]"
-					+ "Attempting lpop on: " + redisKey + " attempt: " + i);
+			if (requestingSystem==SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
+				System.out.print("+");
+			else
+				System.out.print(".");
+			
 			value = jedis.lpop(redisKey);
 			if (value == null) {
 				try {

@@ -42,16 +42,14 @@ public class RepastS_AgentContext extends AgentContext {
 	 * has occured. if not, it initializes the simulation for this agent.
 	 * 
 	 */
-	public SIMULATION_TYPE initializeCsfAgent() throws JDOMException, IOException {	
+	public SIMULATION_TYPE initializeCsfAgent(Iterable<Class> simulationAgentsClasses, Iterable<Object> csfRepastContextIterable) throws JDOMException, IOException {
 		// Get a hold of the REpast Simulation Run Context. The agent authors only use
 		// this API class.
-		if (!bypassRepastRuntimeForTestingPurposes && repastS_SimulationRunContext == null) {
+		if (!bypassRepastRuntimeForTestingPurposes && repastS_SimulationRunContext == null) { 
 			@SuppressWarnings("unchecked")
-			Context<Object> repastContext = RunState.getInstance().getMasterContext();
-			Iterable<Class> simulationAgentsClasses = repastContext.getAgentTypes();
-			// for (Class clazz : simulationAgentsClasses )
-			Iterable<Object> csfRepastContextIterable = RunState.getInstance()
-					.getMasterContext().getAgentLayer(RepastS_SimulationRunContext.class);
+			//Iterable<Class> simulationAgentsClasses = RunState.getInstance().getMasterContext().getAgentTypes();
+		
+			//Iterable<Object> csfRepastContextIterable = RunState.getInstance().getMasterContext().getAgentLayer(RepastS_SimulationRunContext.class);
 			RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 
 			// Look to see if the Repast Simulation Context has been created

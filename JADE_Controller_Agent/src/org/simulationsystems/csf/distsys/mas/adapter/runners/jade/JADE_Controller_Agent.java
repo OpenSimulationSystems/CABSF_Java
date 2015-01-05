@@ -117,7 +117,7 @@ public class JADE_Controller_Agent implements JadeController {
 
 		jade_MAS_RunContext.messageSimulationEngine(message,
 				jade_MAS_RunContext.getDistSysRunContext());
-
+		getJade_MAS_RunContext().waitForAndProcessSimulationEngineMessageAfterHandshake();
 	}
 
 }

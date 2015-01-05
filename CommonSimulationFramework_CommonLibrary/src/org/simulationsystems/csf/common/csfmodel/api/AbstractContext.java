@@ -11,7 +11,7 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 
-public class AbstractContext {
+public abstract class AbstractContext {
 	// TODO: Get these two from the configuration
 	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
 	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);

@@ -120,7 +120,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 					+ String.valueOf(pointWithLeastZombiesPoint.get(i)));
 		}
 
-		List<String> pointToMoveTo = decideWhereToMoveTowards(selfPoint,
+		List<String> pointToMoveTo = chooseMoveTowardsLocation(selfPoint,
 				pointWithLeastZombiesPoint);
 		// Send the decision on where to move to
 		String newMessageID = UUID.randomUUID().toString();
@@ -136,7 +136,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 
 	}
 
-	private List<String> decideWhereToMoveTowards(List<String> selfPoint,
+	private List<String> chooseMoveTowardsLocation(List<String> selfPoint,
 			List<String> pointWithLeastZombiesPoint) {
 
 		return pointWithLeastZombiesPoint;

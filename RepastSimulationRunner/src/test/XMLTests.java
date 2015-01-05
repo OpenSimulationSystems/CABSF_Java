@@ -267,7 +267,7 @@ public class XMLTests implements JadeController {
 	public static void setUpBeforeClass() throws Exception {
 		repastS_AgentContext = new RepastS_AgentContext();
 		repastS_AgentContext.setBypassRepastRuntimeForTestingPurposes(true);
-		repastS_AgentContext.initializeCsfAgent();
+		repastS_AgentContext.initializeCsfAgent(null,null);
 
 		JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
 		JADE_MAS_RunGroupContext jade_MAS_RunGroupContext = jade_MAS_AdapterAPI

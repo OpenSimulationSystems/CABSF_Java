@@ -118,7 +118,8 @@ public class JADE_MAS_AdapterAPI {
 	public JADE_MAS_RunContext initializeSimulationRun(
 			NativeJADEMockContext nativeJadeContextForThisRun,
 			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
-			JadeController jadeControllerAgent, Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
+			JadeController jadeControllerAgent,
+			Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
 		this.jadeControllerAgent = jadeControllerAgent;
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI
@@ -133,12 +134,17 @@ public class JADE_MAS_AdapterAPI {
 
 		// LOW: Support multiple Simulation Run Groups. For now just assume that there's
 		// one.
-		jade_MAS_RunContext.getDistSysRunContext().getDistributedAgentsManager()
-				.initializeDistributedAutonomousAgents(nativeJadeContextForThisRun, nativeAgentsSet);
-		
-		//TODO: Remove these old set of assign methods
-		/*assignJadeAgentsToDistributedAutonomousAgents(
-				nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext)*/;
+		jade_MAS_RunContext
+				.getDistSysRunContext()
+				.getDistributedAgentsManager()
+				.initializeDistributedAutonomousAgents(nativeJadeContextForThisRun,
+						nativeAgentsSet);
+
+		// TODO: Remove these old set of assign methods
+		/*
+		 * assignJadeAgentsToDistributedAutonomousAgents(
+		 * nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext)
+		 */;
 
 		// Listen for START_SIMULATION command from the simulation engine
 		FrameworkMessage msg = jade_MAS_RunContext.listenForMessageFromSimulationEngine();
@@ -149,10 +155,15 @@ public class JADE_MAS_AdapterAPI {
 		// TODO: Better error handling. Send a message back to the simulation engine that
 		// this distributed system is terminating
 
-		if (fc == null || !fc.equals(FRAMEWORK_COMMAND.START_SIMULATION))
+		if (fc == null || !fc.equals(FRAMEWORK_COMMAND.START_SIMULATION)) {
+			String fcStr = "null";
+			if (fc != null)
+				fcStr = fc.toString();
 			throw new CsfInitializationRuntimeException(
 					"The JADE Controller Agent tried to read message from the simulation engine, but did not understand the command: "
-							+ fc.toString());
+							+ fcStr
+							+ " It's possible that a previous simulation didn't complete, and a message was left in the Redis cache, which has been picked up in this new simulation run.  Next time try flushing the Redis cache if the simulation does not end normally, before running a new simulation.");
+		}
 
 		// Push Status of Ready back to the simulation engine
 		FrameworkMessage fm = new FrameworkMessageImpl(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
@@ -178,9 +189,10 @@ public class JADE_MAS_AdapterAPI {
 	 */
 	@SuppressWarnings("unused")
 	private void assignJadeAgentsToDistributedAutonomousAgents(
-			Set<NativeDistributedAutonomousAgent> jadeAgents, JADE_MAS_RunContext jade_MAS_RunContext) {
+			Set<NativeDistributedAutonomousAgent> jadeAgents,
+			JADE_MAS_RunContext jade_MAS_RunContext) {
 		for (NativeDistributedAutonomousAgent jadeAgent : jadeAgents) {
-						assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
+			assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
 		}
 	}
 
@@ -197,7 +209,8 @@ public class JADE_MAS_AdapterAPI {
 	 * @see mapSimulationSideAgents
 	 */
 	private void assignJadeAgentToDistributedAutonomousAgent(
-			NativeDistributedAutonomousAgent jadeAgent, JADE_MAS_RunContext jade_MAS_RunContext) {
+			NativeDistributedAutonomousAgent jadeAgent,
+			JADE_MAS_RunContext jade_MAS_RunContext) {
 		distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent,
 				jade_MAS_RunContext.getDistSysRunContext());
 	}

@@ -9,6 +9,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
@@ -132,11 +133,22 @@ public class JADE_MAS_RunContext {
 
 	}
 
-	public void waitForAndProcessSimulationEngineMessageAfterHandshake() {
+	public FRAMEWORK_COMMAND waitForAndProcessSimulationEngineMessageAfterHandshake() {
 		// Now listen for the messages from the simulation engine
 		FrameworkMessage fm = listenForMessageFromSimulationEngine();
 		List<Element> distributedAutonomousAgentElements = fm
 				.getDistributedAutonomousAgentElements(fm.getDocument());
+
+		// check whether to terminate the simulation
+		// Listen for START_SIMULATION command from the simulation engine
+		FRAMEWORK_COMMAND fc = fm.getFrameworkToDistributedSystemCommand();
+		// TODO: Better error handling. Send a message back to the simulation engine that
+		// this distributed system is terminating
+
+		if (fc != null && fc.equals(FRAMEWORK_COMMAND.STOP_SIMULATION)) {
+			return FRAMEWORK_COMMAND.STOP_SIMULATION;
+		}
+
 		// TODO: better validation
 		assert (distributedAutonomousAgentElements.size() != 0);
 		// dam.getDistributedAutonomousAgentIDStoDistributedAutonomousAgents().keySet().toString();
@@ -190,6 +202,7 @@ public class JADE_MAS_RunContext {
 			String messageID = UUID.randomUUID().toString();
 			nativeDistributedAutonomousAgent.receiveMessage(fm, messageID, null,
 					jadeControllerAgent);
+
 			// At this point the distributed agent has received the message from here/the
 			// controller, the distributed agent has notified the controller of its
 			// decision, the controller has send the message over
@@ -203,6 +216,7 @@ public class JADE_MAS_RunContext {
 		 * + fc.toString());
 		 */
 
+		return null;
 	}
 
 	public void setJadeControllerAgent(JadeController jadeControllerAgent) {

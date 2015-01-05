@@ -218,5 +218,7 @@ public class RepastS_SimulationAdapterAPI {
 			SimulationRunContext simulationRunContext) {
 		simulationAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
+	
+
 
 }

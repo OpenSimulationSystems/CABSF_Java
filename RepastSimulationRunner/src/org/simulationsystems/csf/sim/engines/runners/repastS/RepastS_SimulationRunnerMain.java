@@ -48,7 +48,7 @@ public class RepastS_SimulationRunnerMain {
 
 		// Run the simulation a few times to check for cleanup and init issues.
 		// TODO: Tie in the number of simulation runs from the configuration
-		int simulation_runs = 1;
+		int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
 			RepastS_SimulationRunContext repastS_SimulationRunContext = repastS_SimulationRunner
 					.runInitialize(); // initialize the run

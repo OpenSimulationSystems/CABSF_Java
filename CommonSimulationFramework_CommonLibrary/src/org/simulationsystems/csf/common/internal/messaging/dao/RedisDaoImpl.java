@@ -132,7 +132,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 		// LOW: Improve performance, use publish/subscribe
 		String xmlString = redisConnectionManager.redisSynchronousPolling(
-				targetSystemType, redisChannelStr, 1l, null);
+				targetSystemType, redisChannelStr, 0.001d, null);
 
 		Document doc;
 		try {
@@ -165,7 +165,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 		// LOW: Improve performance, use publish/subscribe
 		String messageXML = redisConnectionManager.redisSynchronousPolling(
-				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, redisChannelStr, 1l, null);
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, redisChannelStr, 0.001d, null);
 		FrameworkMessage fm = null;
 		try {
 			fm = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,

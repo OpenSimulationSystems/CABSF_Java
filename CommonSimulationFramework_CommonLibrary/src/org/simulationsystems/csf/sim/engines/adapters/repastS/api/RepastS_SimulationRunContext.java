@@ -6,8 +6,11 @@ import java.util.Set;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.core.api.configuration.SimulationRunGroupConfiguration;
@@ -145,6 +148,19 @@ public class RepastS_SimulationRunContext {
 
 	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
 		return repastS_SimulationRunGroupContext;
+	}
+
+	public void terminateSimulationRun() {
+		// 2 - Message the distributed systems that the simulation has started
+		// and is ready to accept messages from the distributed agents.
+		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+				getBlankCachedMessageExchangeTemplate());
+		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.STOP_SIMULATION);
+		//TODO: Loop through the multiple distributed systems
+		messageDistributedSystems(msg,
+				getSimulationRunContext());
+
 	}
 
 }

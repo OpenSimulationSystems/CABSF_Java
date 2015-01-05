@@ -143,26 +143,28 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			System.out.println(repastS_SimulationRunContext
 					.getSimulationDistributedSystemManagers().iterator().next()
 					.logHelper());
-			
+
 			// TODO: Better handling for future multithreading. Set the interface at
 			// the run group
 			// level, close after all runs have executed.
-			
+
 			lastRepastS_SimulationRunContext = repastS_SimulationRunContext;
-			
-			//Now we're ready to start sending the tick information
+
+			// Now we're ready to start sending the tick information
 		}
-		
+
 		return repastS_SimulationRunContext;
 	}
 
 	public void cleanUpRun() {
 		controller.runCleanup();
 		isStopped = false; // Clear this flag for the next simulation run
-		if (lastRepastS_SimulationRunContext != null) // if CSF run
+		if (lastRepastS_SimulationRunContext != null) { // if CSF run
 			lastRepastS_SimulationRunContext
 					.closeInterface(lastRepastS_SimulationRunContext
 							.getSimulationRunContext());
+			lastRepastS_SimulationRunContext.terminateSimulationRun();
+		}
 	}
 
 	public void cleanUpBatch() {
@@ -214,9 +216,11 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		return isStopped;
 	}
 
-/*	public void csfPreStep(RepastS_SimulationRunContext repastS_SimulationRunContext) {
-		repastS_SimulationRunContext.perceiveGlobalEnvironment();
-		
-	}*/
+	/*
+	 * public void csfPreStep(RepastS_SimulationRunContext repastS_SimulationRunContext) {
+	 * repastS_SimulationRunContext.perceiveGlobalEnvironment();
+	 * 
+	 * }
+	 */
 
 }

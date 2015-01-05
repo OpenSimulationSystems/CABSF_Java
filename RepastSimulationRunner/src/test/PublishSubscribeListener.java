@@ -64,7 +64,7 @@ public class PublishSubscribeListener extends JedisPubSub {
 		
 		//TODO: remove afte reading?
 		//Rely on Polling for now, keep everything Synchronous and simple.
-		redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE, "csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff", 1l, null);
+		redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE, "csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff", 0.001d, null);
 		
 		//Test that connection works after 300 second timeout.
 /*		redisConnectionManager.redisSynchronousPolling("csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff", 1l, 1l);

@@ -38,38 +38,44 @@ public class RedisConnectionManager {
 		// actually using a Redis key for now, not a channel as used in Publish/Subscribe
 		jedis.lpush(channel, message);
 
-		// LOW: Future work. Switch to Publish/Subscribe model using multithreading for the separate
+		// LOW: Future work. Switch to Publish/Subscribe model using multithreading for
+		// the separate
 		// Redis subscribe listener.
 		// jedis.publish(channel, message);
 
-		System.out.println("Posted message to channel: " +channel + " Message: "+ message);
+		System.out.println("Posted message to channel: " + channel + " Message: "
+				+ message);
 		// System.out.println("lpop: " + jedis.lpop(channel));
 	}
 
 	/*
-	 * @param maximumNumberOfPolls the maximum number of polls on the Redis key. If null, this will
-	 * poll forever.
+	 * @param maximumNumberOfPolls the maximum number of polls on the Redis key. If null,
+	 * this will poll forever.
 	 * 
 	 * @param sleepTime the number of second to sleep
 	 */
 	public String redisSynchronousPolling(SYSTEM_TYPE requestingSystem, String redisKey,
-			Long sleepTime, Long maximumNumberOfPolls) {
+			Double sleepTime, Long maximumNumberOfPolls) {
 		String value = null;
-		int i = 0;
-		System.out.println("[" + requestingSystem + "]"
-				+ "Attempting lpop on: " + redisKey );
+		long i = 0;
+		long printCount = 0;
+		System.out.println("[" + requestingSystem + "]" + "Attempting lpop on: "
+				+ redisKey);
 		while (maximumNumberOfPolls == null || maximumNumberOfPolls > 0) {
-			if (requestingSystem==SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
-				System.out.print("+");
-			else
-				System.out.print(".");
-			
+			if (printCount == 0) {
+				if (requestingSystem == SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
+					System.out.print("+");
+				else
+					System.out.print(".");
+			}
+
 			value = jedis.lpop(redisKey);
 			if (value == null) {
 				try {
 					// System.out.println("sleeping: " + sleepTime * 1000);
-					//TODO: make the time configurable?
-					Thread.sleep(sleepTime * 1000);
+					// TODO: make the time configurable?
+					Long sleepLong = (long) (sleepTime * 1000);
+					Thread.sleep(sleepLong);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt(); // set interrupt flag
 					throw new RuntimeException(
@@ -84,6 +90,9 @@ public class RedisConnectionManager {
 			if (maximumNumberOfPolls != null)
 				maximumNumberOfPolls--;
 			i++;
+			printCount++;
+			if (printCount == 1000)
+				printCount = 0;
 		}
 
 		return value;

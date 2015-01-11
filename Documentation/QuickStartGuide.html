@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
-
-</head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title></head>
 <body>
 <h1><span style="font-weight: bold;">The Common
 Simulation Framework - Quick Start Tutorial</span></h1>
@@ -41,7 +39,7 @@ environment by individual agents.</li>
 <h2>Requirements</h2>
 <ol>
 <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK
-1.7+</a></li>
+1.7+</a> for the Common Simulation Framework/Repast, and JDK1.4+ for the JADE agents.</li>
 <li>Windows, MacOSX, or *nix. &nbsp;There are some
 scripts/batch files
 for starting the simulation, that have been created only for Windows so
@@ -69,15 +67,16 @@ simulation and Multi-agent Systems. &nbsp;In an effort to prevent
 misunderstandings of terms, we define a common terminology here used
 throughout the common simulation framework.<br>
 <br>
-<span style="font-style: italic;">What is an agent?</span><br>
+<span style="font-style: italic;">How does the Common Simulation Framework define and use the term "agent"?</span><br>
 &nbsp;&nbsp;&nbsp; In ABM, agents are autonomous actors in
 a model. &nbsp;In multi-agent systems, the term "agents" refers to
 autonomous <span style="font-style: italic;">softare
 agents</span>. &nbsp;From a multi-agent systems standpoint,
-the agents in Repast Simphony are not truly <span style="font-style: italic;">software agents. &nbsp;</span>They
-are not autonomous at the software level. &nbsp;They represent
-autonomous entitities in a model but are not autonomous in their
-software implementation. &nbsp; JADE agents, however, are truly
+the agents in Repast Simphony are not truly autonomous <span style="font-style: italic;">software agents </span>as
+they
+are not autonomous at the software implementation level, even though
+they represent autonomous entitities in an ABM model. &nbsp; JADE
+agents, however, are truly
 autonomous software agents. &nbsp;They send out messages at will,
 receive messages, and can even decide not not respond to messages
 received. &nbsp; Their actions are not controlled by a scheduler.
@@ -85,7 +84,8 @@ received. &nbsp; Their actions are not controlled by a scheduler.
 subservient only to the administrative agents that are conctrolled by
 the MAS administrator. &nbsp;Sometimes Repast has been incorrectly
 refered to as multi-agent system, even in the literature, and it is
-important that we be precise here as we are attempting to combine both
+important that we be precise here in our terminology as we are
+attempting to combine both
 types of systems.<br>
 <br>
 <span style="font-style: italic;">Terms in the Common
@@ -93,21 +93,21 @@ Simulation Framework</span><br>
 In the Common Simulation Framework, we try to always specify what type
 of agent we are talking about. &nbsp;We use the term "<span style="font-style: italic; font-weight: bold;">simulation
 agent"</span> to mean an agent that runs in the simulation
-runtime. &nbsp;Outside of the simulation runtime, we have one to
+runtime, such as Repast agents. &nbsp;Outside of the simulation runtime, we have one to
 many<span style="font-weight: bold;"> </span><span style="font-style: italic;"><span style="font-weight: bold;">distributed systems</span>.</span>
 &nbsp;Distributed systems can be thought of as synonomous with
-Multi-agent systems. &nbsp;The distinction in terms here is due to
+Multi-agent systems (MAS). &nbsp;The distinction in terms here is due to
 the fact that we are in the future striving to&nbsp;support
-distributed systems that are not a MAS, in addition to MASs like JADE.
+distributed systems that are not necessarily a MAS, in addition to MASs like JADE.
 &nbsp;Each distributed system/MAS may contain one to many <span style="font-style: italic;"><span style="font-weight: bold;">distributed autonomous software
-agents</span>. &nbsp;</span>In JADE, these would be the
+agents </span></span>or <span style="font-weight: bold;"><span style="font-style: italic;">distributed autonomous agents</span></span> for short<span style="font-style: italic;"><span style="font-weight: bold;"></span>. &nbsp;</span>In JADE, these would be the
 individual JADE agents. &nbsp;We call them "distributed" even if
 they are running on the same host as the Repast runtime. They are
 distributed from the perspective of the simulation runtime (they are
 running as separate non-Repast processes). &nbsp;The reason we use
-the term "distributed autonomous software agent" instead of "JADE
+the term "distributed autonomous (software) agent" instead of "JADE
 agent" is that the CSF will be supporting other types of
-MASs/distributed systems in the future, and so we prefer to use a
+MASs/distributed systems in the future besides JADE, and so we prefer to use a
 standard term from the beginning.<br>
 <br>
 Typically, a distributed autonomous software agent or JADE agent would
@@ -147,7 +147,7 @@ in an ABM.
 agent is dependent on its corresponding distributed agent model for the
 decision making part of its behavior. &nbsp;The distributed autononmous
 agent model is dependent on its corresponding simulation agent to
-retrieve the local environment information and to interact with other
+retrieve the local environment information from the simulation runtime, and to interact with other
 entities in the simulation runtime. Therefore,&nbsp;the
 simulation agent and the distributed autonomous agent model on their
 own form an incomplete ABM agent in CSF simulations. &nbsp;On the
@@ -159,8 +159,81 @@ basis of the Common Simulation Framework, please see the master's
 thesis proposal here.<br>
 <br><span style="font-weight: bold;">If you have any better
 suggestions for the terminology, please by all means, contact us at j c
-ald1 at..gmail.<br><br></span><h2>Redis - The Common Interface</h2><h2>XML - The Platform Independent Data Format for Message Exchange</h2>
-<ol>
-<br>
-</ol>
-</body></html>
+ald1 at..gmail.<br><br></span><h2>Redis - The Common Interface and XML - The Platform Independent Data Format for Message Exchange</h2>One
+of the key benefits of the Common Simulation Framework over other
+previously created agent-based systems integration efforts is that a
+common platform-independent interface has been created. &nbsp;Instead
+of having the various agent-based systems communicate directly with
+each other, instead they must all communicate to the common interface.
+&nbsp;This sets the stage for greater interoperability in the future.
+For example, it would it theory be possible to run multiple MASs at the
+same time communicating with an ABM toolkit. &nbsp;In addition, it
+would be possible to swap out one ABM toolkit for another.<br><br>Currently,
+only one interface option has been inplemented. &nbsp;It is the Redis
+in-memory database, which allows storage of key-value pairs and lists.
+&nbsp;XML is used to encode and transmit data between the distributed
+systems and the simulation runtime. &nbsp;We therefore avoid use of
+direct Java references. &nbsp;This has a few benefits. &nbsp;First,
+simulation authors are able to protect the integrity of the simulation
+runtime in a competitive simulation or programming game. &nbsp;<span style="font-style: italic;">The view of the global environment is programmatically hidden from the distributed agents.</span> &nbsp;<span style="font-style: italic;"> </span>ABM
+tools are not typically written with this requirement in mind.
+&nbsp;Simulation authors must programmtically limit the view of the
+global environment within each agent. &nbsp;But what happens in a game
+theory competition where the agent authors have an incentive to use as
+much information as possible? &nbsp;In the CSF, by creating a barrier
+between the distributed agents and the simulation runtime, simulation
+authors are able to easily create a level playing field in a
+competitive simulation such as a game theory competitions for all
+(distributed) agent authors.<br><br><h2>Limitations in the Current Release</h2><ol><li>A
+single distributed autonomous agent/JADE agent may only contain a
+single agent model, which corresponds to a single Repast agent.</li><li>There can only be a single distributed system/MAS connected to the framework at any given time for any given simulation run.</li><li>All
+JADE agents must reside on a single JADE platform. &nbsp;This doesn't
+mean that all agents must be on the same host. &nbsp;The framework
+currently uses local JADE names for agent addressing.</li><li>The JADE
+Contorller agent must be running on the same host as the Repast
+Simphony runtime. &nbsp;This is because the two sides share information
+over a Redis in-memory database. &nbsp;Future releases may include
+other interfaces such as web services, which would allow easing of this
+restriction.</li><li>If the JADE agents are to be run in either
+separate processes or separate hosts from the JADE Controller Agent,
+The JADE Controller Agent must have permission to accept TCP
+connections from wherever the distributed JADE agents are running,
+typically on port 1099 although that value can be changed. &nbsp;The
+JADE Controller Agent must also be able to establish TCP connections to
+each of the distributed JADE agents. &nbsp;The security restrictions
+will vary widely but in one campus settings, it was found that the JADE
+agents could communicate with each other when the students
+ran&nbsp;their agents on their laptops while on the secure campus
+wireless network, instead of while on the insecure or visitor campus
+network. &nbsp;The agents were also able to communicate with each other
+when being run on different computers in the same computer lab. &nbsp;Finally,
+when running the agents on shared student Linux servers, the agents
+could communicate with each other only if the students first SSHed to
+the same Linux host. &nbsp;Of course this is not guaranteed to be the
+case for all environemnts, but the scenarios above may provide the
+reader with some options. &nbsp;One note on running the JADE agents on
+shared Linux hosts, if each student runs his/her agent under his/her
+own account, a new JVM/JADE container will be created and the server
+may quickly run out of memory. &nbsp;It may be best for one person such
+as the professor or TF to run all of the agents under a single
+container, when using the option of running the agents on a shared
+server. &nbsp;The JADE documentation contains some information on
+networking issues.</li><li>The Common Simulation Framework currently
+only works while running the Repast simulation programmatically, using
+a version of TestMain (called the Repast Simulation Runner) as
+described in the Repast FAQ. &nbsp;Therefore a GUI will not be
+displayed. &nbsp;The same Repast simulation, if it not using the
+tournament feature of the framework, can be run as a regular Repast GUI
+simulation, but the common simulation framework functionality would be
+skipped. &nbsp;This limitation may be lifted in the future. &nbsp;The
+simulation author should set up a data sink file to retrieve the
+results of the simulation runs. &nbsp;The sample CSF Repast Simphony
+simulations already have the data sink files set up. &nbsp;The
+ModelOutput files will be written to the Repast Simulation Runner
+directory, unlike when the simulations are run with the GUI, in which
+case the ModelOutput files are written to the Repast Simphony
+simulation project directory,</li><li>Multithreading
+of the Common Simulation Framework is not supported. &nbsp;However,
+support for concurrent executions of the Common Simulatoin Framework as
+separate processing using the same Redis cache will be supported in the
+future.</li></ol><br><br></body></html>

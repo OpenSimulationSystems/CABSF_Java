@@ -88,10 +88,11 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// Set the Parameters across all simulation runs of this simulation
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters from the RunState?
+		// TODO: Add validation of this number against the actual number of distributed agent models
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter("human_count", "Human Count", Number.class, 5,
+		defaultParameters.addParameter("human_count", "Human Count", Number.class, 6,
 				true);
-		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 5,
+		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 6,
 				true);
 		controller.runParameterSetters(defaultParameters);
 

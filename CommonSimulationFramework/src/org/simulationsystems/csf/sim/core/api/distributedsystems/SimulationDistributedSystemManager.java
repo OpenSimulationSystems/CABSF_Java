@@ -142,6 +142,10 @@ public class SimulationDistributedSystemManager {
 				distributedSystem.getDistributedSystemID(),
 				"DistributedSystemAutonomousAgent5", "DistributedSystemAutonomousAgent5MODEL",
 				"jzombies.Human");
+		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+				distributedSystem.getDistributedSystemID(),
+				"DistributedSystemAutonomousAgent6", "DistributedSystemAutonomousAgent6MODEL",
+				"jzombies.Human");
 	}
 
 	/*

@@ -32,8 +32,8 @@ public class AgentMappingHelper {
 		return am;
 	}
 
-	public static AgentMapping addNativeSimulationToDistributedAutononmousAgentToAgentMapping(String requestingSystem,
-			HashSet<AgentMapping> beforeMappingSet,
+	public static AgentMapping addNativeSimulationToDistributedAutononmousAgentToAgentMapping(
+			String requestingSystem, HashSet<AgentMapping> beforeMappingSet,
 			HashSet<AgentMapping> afterMappingSet, Object agentObj) {
 		AgentMapping am = null;
 		try {
@@ -42,10 +42,10 @@ public class AgentMappingHelper {
 			am.setSimulationAgent(agentObj);
 			beforeMappingSet.remove(am);
 			afterMappingSet.add(am);
-			System.out
-					.println(requestingSystem + ": Successfully mapped Agent "
-							+ am.toString() + " class: "
-							+ agentObj.getClass().getCanonicalName());
+			System.out.println(requestingSystem + ": Successfully mapped Agent "
+					+ am.getDistributedAutonomousAgentID() + " "
+					+ am.getDistributedAutonomousAgentModelID() + " " + am.toString()
+					+ " class: " + agentObj.getClass().getCanonicalName());
 		} catch (java.util.NoSuchElementException e) {
 			System.out.println("exception:" + e.getMessage() + "  class: "
 					+ agentObj.getClass().getCanonicalName());

@@ -11,7 +11,7 @@ public class MessagingUtilities {
 	() throws JDOMException,
 			IOException {
 		return XMLUtilities
-				.filenameStrTojdom2Document("../CommonSimulationFramework_CommonLibrary/bin/org/simulationsystems/csf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
+				.filenameStrTojdom2Document("../CommonSimulationFramework/bin/org/simulationsystems/csf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
 	}
 
 	static public org.jdom2.Document createDocumentFromString(String xmlString) throws JDOMException, IOException {

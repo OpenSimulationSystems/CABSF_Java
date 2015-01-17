@@ -55,15 +55,6 @@ public class JZombies_Csf {
 	public JZombies_Csf(RepastS_AgentContext repastS_AgentContext) {
 		this.repastS_AgentContext = repastS_AgentContext;
 		agentContext = (AgentContext) repastS_AgentContext;
-/*		try {
-			//repastS_AgentContext.initializeCsfAgent();
-		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 
 	public Element populateLeastZombiesPoint(FrameworkMessage msg,
@@ -131,10 +122,10 @@ public class JZombies_Csf {
 
 	}
 
-	public void sendMessageToSimulationAgent(JadeController jade_Controller_Agent,
+/*	public void sendMessageToSimulationAgent(JadeController jade_Controller_Agent,
 			FrameworkMessage msg, String messageID, String inReplyToMessageID) {
 		jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID);
-	}
+	}*/
 
 	public FrameworkMessage convertMoveToPointToFrameworkMessage(
 			List<String> pointMoveTo, 
@@ -145,18 +136,8 @@ public class JZombies_Csf {
 		populateZombiesMessage(msg, distAutAgentID, distAutAgentModelID,
 				pointMoveTo, new ArrayList<String>());
 
-		/*
-		 * System.out.println("[JZombies CSF convertMoveToPointToFrameworkMessage]: " +
-		 * XMLUtilities.convertElementToXMLString(msg.getDocument() .getRootElement(),
-		 * true));
-		 */
 		return msg;
 	}
-
-	/*
-	 * public JZombies_JADE_Csf(JADE_MAS_AgentContext jade_MAS_AgentContext) {
-	 * this.jade_MAS_AgentContext = jade_MAS_AgentContext; }
-	 */
 
 	public List<String> getPointWithLeastZombies(
 			Element distributedAutonomousAgentElement, FrameworkMessage msg) {
@@ -185,11 +166,6 @@ public class JZombies_Csf {
 		coordinate.add(xValue);
 		coordinate.add(yValue);
 
-		/*
-		 * location.setAttribute("category", "neighborhood");
-		 * location.setAttribute("includecenter", "true");
-		 * location.setAttribute("entitytype", "Zombie");
-		 */
 		return coordinate;
 	}
 
@@ -197,11 +173,6 @@ public class JZombies_Csf {
 	public FrameworkMessage populateZombiesMessage(FrameworkMessage msg,
 			String distributedAutononmousAgentID, String agentModelID,
 			List<String> thisAgentModelPosition, List<String> pointLeastZombies) {
-
-		/*
-		 * String thisAgentPositionX; String thisAgentPositionY; String leastZombiesX;
-		 * String leastZombiesY; String moveToX, String moveToY;
-		 */
 
 		Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(
 				msg.getDocument(),
@@ -226,13 +197,7 @@ public class JZombies_Csf {
 		String xmlString = outputter.outputString(msg.getDocument());
 		System.out.println("Populated Zombie Message: " + xmlString);
 
-		/*
-		 * JADE_MAS_AgentContext jade_MAS_AgentContext = new JADE_MAS_AgentContext();
-		 * JZombies_JADE_Csf jzombies_JADE_Csf = new
-		 * JZombies_JADE_Csf(jade_MAS_AgentContext);
-		 * jzombies_JADE_Csf.getPointWithLeastZombies(distributedAutonomousAgent, msg,
-		 * simulationRunGroupContext.getCachedAgentModelActorTemplate());
-		 */return msg;
+		return msg;
 	}
 
 }

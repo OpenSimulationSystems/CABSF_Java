@@ -10,8 +10,18 @@ public class MessagingUtilities {
 	static public org.jdom2.Document createCachedMessageExchangeTemplateWithPlaceholders
 	() throws JDOMException,
 			IOException {
-		return XMLUtilities
+		//FIXME: Use the current path of this java file
+		Document doc = null;
+		try {
+		doc = XMLUtilities
 				.filenameStrTojdom2Document("../CommonSimulationFramework/bin/org/simulationsystems/csf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
+		}
+		catch (Exception e) {
+			doc = XMLUtilities
+					.filenameStrTojdom2Document("../../CommonSimulationFramework/bin/org/simulationsystems/csf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
+
+		}
+		return doc;
 	}
 
 	static public org.jdom2.Document createDocumentFromString(String xmlString) throws JDOMException, IOException {

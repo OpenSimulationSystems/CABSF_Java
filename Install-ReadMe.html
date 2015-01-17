@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
-
-</head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title></head>
 <body>
 <h1><span style="font-weight: bold;">The Common
 Simulation Framework - Installation Instructions</span></h1>
@@ -339,12 +337,37 @@ that
 the Common Simulation Framework is polling the
 Redis
 in-memory cache for commands from you, the simulation administrator.</li>
-<li>Start up the distributed system(s)</li>
+<li>Start up the distributed system(s).</li><ol><li>In our case we need
+to start the JADE agents, including the JADE Controller Agent, which
+brokers communication between the JADE agent participants in the
+simulation, and the simulation engine/runtime Repast Simphony.
+&nbsp;There is one project created for the JZombies JADE agents, called
+JZombies_CSF_JADE_Agents. &nbsp;Right click on it, find the launchers
+folder, expand it, and right click on
+JZombies-JADE_zombies_with_JADE_Controller_Agent.launch, click on Run
+As "JZombies-JADE_zombies_with_JADE_Controller_Agent.launch".</li><li>You should see the JADE Platform, the JADE Controller Agents, and all of the JADE zombies initialize
+with messages that come from both the JADE library and the Common
+Simulation Framework. &nbsp;If everything worked properly, you should
+start seeing a "+" printed periodically. &nbsp;This means that the JADE
+Controller Agent is polling the Redis in-memory cache. &nbsp;This is in
+contrast to the "." which is periodically printed from the simulation
+engine side (Repast) to poll the Redis-in memory cache. &nbsp;Because
+you have started both processes (Repast Simulation Runner and JADE
+agents), you should have two consoles that switch back and forth.</li></ol><li>The
+log statements will show the fully qualified JADE AID for an agent,
+such as: DistributedSystemAutonomousAgent4@169.254.80.80:1099/JADE, but
+the Common Simulation Framework currently only uses the local name
+(e.g.DistributedSystemAutonomousAgent4) to uniquely identify a JADE
+agent within a MAS. &nbsp;This is the reason for the limitation only
+allowing a single JADE platform for any JADE agents that need a
+representation in Repast.</li>
 </ol>
 <li style="font-weight: bold;">Kick off the Simulation
 Run(s)</li>
 <ol>
-<li>All
+<li>Do not proceed until you see both the "."s from the simulation side
+and the "+" from the JADE side being printed in separate consoles.
+&nbsp;All
 of the processes are running now. &nbsp;The distributed system(s)
 are
 waiting on the simulation engine and as mentioned already, the

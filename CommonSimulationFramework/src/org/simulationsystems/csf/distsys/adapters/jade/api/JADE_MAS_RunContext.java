@@ -1,5 +1,9 @@
 package org.simulationsystems.csf.distsys.adapters.jade.api;
 
+import jade.core.AID;
+import jade.core.Agent;
+import jade.lang.acl.ACLMessage;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +41,7 @@ public class JADE_MAS_RunContext {
 	private DistSysRunContext distSysRunContext;
 	Object jade_ContextForThisRun;
 	private DistributedAgentsManager dam;
-	private JadeController jadeControllerAgent;
+	private JadeController jadeController;
 
 	public void setDam(DistributedAgentsManager dam) {
 		this.dam = dam;
@@ -151,7 +155,6 @@ public class JADE_MAS_RunContext {
 
 		// TODO: better validation
 		assert (distributedAutonomousAgentElements.size() != 0);
-		// dam.getDistributedAutonomousAgentIDStoDistributedAutonomousAgents().keySet().toString();
 		for (Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
 			String distributedAutonomousAgentID = fm
 					.getDistributedAutonomousAgentID(distributedAutonomousAgentElement);
@@ -159,8 +162,6 @@ public class JADE_MAS_RunContext {
 					.getDistributedAutonomousAgent(distributedAutonomousAgentID);
 			// TODO: better validation
 			assert (distAutAgent != null);
-			// XMLUtilities.convertDocumentToXMLString(distributedAutonomousAgentElement,
-			// true);
 			List<Element> agentModelElements = fm
 					.getAgentModels(distributedAutonomousAgentElement); // TODO: better
 																		// validation
@@ -201,26 +202,19 @@ public class JADE_MAS_RunContext {
 					.equals(distributedAutonomousAgentID));
 			String messageID = UUID.randomUUID().toString();
 			nativeDistributedAutonomousAgent.receiveMessage(fm, messageID, null,
-					jadeControllerAgent);
+					jadeController);
 
 			// At this point the distributed agent has received the message from here/the
 			// controller, the distributed agent has notified the controller of its
-			// decision, the controller has send the message over
+			// decision, the controller has sent the message over
 			// the wire, and control has returned here.
 		}
-
-		/*
-		 * if (fc == null || !fc.equals(FRAMEWORK_COMMAND.START_SIMULATION)) throw new
-		 * CsfInitializationRuntimeException(
-		 * "The JADE Controller Agent tried to read message from the simulation engine, but did not understand the command: "
-		 * + fc.toString());
-		 */
 
 		return null;
 	}
 
-	public void setJadeControllerAgent(JadeController jadeControllerAgent) {
-		this.jadeControllerAgent = jadeControllerAgent;
+	public void setJadeController(JadeController jadeController) {
+		this.jadeController = jadeController;
 
 	}
 }

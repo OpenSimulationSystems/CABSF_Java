@@ -106,9 +106,9 @@ public class DistributedAutonomousAgent {
 /*		if (nativeDistributedAutonomousAgent == null)
 			nativeDistributedAutonomousAgent = new String("null");*/
 
-		System.out.println("Successfully mapped Distributed Autonomous Agent: "
+/*		System.out.println("Successfully set Native Distributed Autonomous Agent: "
 				+ distributedAutonomousAgentID + " to native autonomous agent "
-				+ nativeDistributedAutonomousAgent.hashCode());
+				+ nativeDistributedAutonomousAgent.hashCode());*/
 	}
 
 	public Object getNativeDistributedAutonomousAgent() {

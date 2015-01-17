@@ -79,14 +79,14 @@ they represent autonomous entitities in an ABM model. &nbsp; JADE
 agents, however, are truly
 autonomous software agents. &nbsp;They send out messages at will,
 receive messages, and can even decide not not respond to messages
-received. &nbsp; Their actions are not controlled by a scheduler.
+received.
 &nbsp;They execute in their own threads. &nbsp;They are
 subservient only to the administrative agents that are conctrolled by
 the MAS administrator. &nbsp;Sometimes Repast has been incorrectly
 refered to as multi-agent system, even in the literature, and it is
 important that we be precise here in our terminology as we are
 attempting to combine both
-types of systems.<br>
+types of systems and wish to avoid confusion.<br>
 <br>
 <span style="font-style: italic;">Terms in the Common
 Simulation Framework</span><br>
@@ -184,7 +184,7 @@ much information as possible? &nbsp;In the CSF, by creating a barrier
 between the distributed agents and the simulation runtime, simulation
 authors are able to easily create a level playing field in a
 competitive simulation such as a game theory competitions for all
-(distributed) agent authors.<br><br><h2>Limitations in the Current Release</h2><ol><li>A
+(distributed) agent authors.<br><br><h2>Limitations and Recommendations in the Current Release</h2><ol><li>A
 single distributed autonomous agent/JADE agent may only contain a
 single agent model, which corresponds to a single Repast agent.</li><li>There can only be a single distributed system/MAS connected to the framework at any given time for any given simulation run.</li><li>All
 JADE agents must reside on a single JADE platform. &nbsp;This doesn't
@@ -218,22 +218,49 @@ may quickly run out of memory. &nbsp;It may be best for one person such
 as the professor or TF to run all of the agents under a single
 container, when using the option of running the agents on a shared
 server. &nbsp;The JADE documentation contains some information on
-networking issues.</li><li>The Common Simulation Framework currently
+networking issues.</li><li>The
+Common Simulation Framework currently
 only works while running the Repast simulation programmatically, using
-a version of TestMain (called the Repast Simulation Runner) as
-described in the Repast FAQ. &nbsp;Therefore a GUI will not be
-displayed. &nbsp;The same Repast simulation, if it not using the
-tournament feature of the framework, can be run as a regular Repast GUI
-simulation, but the common simulation framework functionality would be
-skipped. &nbsp;This limitation may be lifted in the future. &nbsp;The
+a version of TestMain as
+described in the Repast FAQ. &nbsp;We call this application the Repast
+Simulation Runner. &nbsp;Because the simulation is run
+programmatically, a GUI will not be
+displayed.&nbsp; &nbsp;The
 simulation author should set up a data sink file to retrieve the
 results of the simulation runs. &nbsp;The sample CSF Repast Simphony
 simulations already have the data sink files set up. &nbsp;The
 ModelOutput files will be written to the Repast Simulation Runner
 directory, unlike when the simulations are run with the GUI, in which
 case the ModelOutput files are written to the Repast Simphony
-simulation project directory,</li><li>Multithreading
+simulation project directory. &nbsp;The
+same Repast simulation, if it not using the
+tournament feature of the framework, can be run as a regular Repast GUI
+simulation, assuming the Repast simulation code is set up to skip the
+common simulation framework functionality in the event that the
+simulation is not being run programmatically. &nbsp;This is set up in
+the non-tournament simulations. &nbsp;This limitation may be lifted in
+the future.</li><li>Multithreading
 of the Common Simulation Framework is not supported. &nbsp;However,
 support for concurrent executions of the Common Simulatoin Framework as
-separate processing using the same Redis cache will be supported in the
-future.</li></ol><br><br></body></html>
+separate processes using the same Redis cache will be supported in the
+future.</li><li>The
+number of &nbsp;JADE agents that need matching representations in
+Repast is fixed. &nbsp;No such agents can be added during the
+simulation run. &nbsp;This does not apply to Repast agents that do not
+have matching&nbsp;JADE agents or JADE agents with no representations
+in Repast.</li><li>The Common Simulation Framework Repast Simulation
+Runner uses a single thread to execute the simulations. &nbsp;Messages
+are pulled from the Redis cache using quick polling. &nbsp;Future
+releases may add an administrative thread per Redis key/channel so that
+true event-driven messaging can take place on the simulation side.</li><li>No assertions are made about the use of the Common Simulation Framework with JADE LEAP. </li><li>Limited
+error checking is provided by the framework. &nbsp;It is suggested that
+the Repast Simulation Runner and JADE Controller Agents be run with
+assertions on. &nbsp;Assertions have been added in a few places in the
+code as placeholders for better validation and error handling.
+&nbsp;These processes should be run with the "-ea" VM argument set to
+enable assertion checking, especially during the testing phase.
+&nbsp;All of the launchers in the CSF simulations have this options set
+by default.</li><li>The JADE Controller agent should be run either in
+the same JADE Container as the other JADE agents, or it should be
+running first. &nbsp;It is recommended that the JADE Controller Agent
+be running on the main JADE platform.</li><li>Limitations to be removed shortly post March 2015:</li><ol><li>The number of &nbsp;corresponding JADE and Repast agents is fixed at 6.</li><li></li></ol></ol><br><br></body></html>

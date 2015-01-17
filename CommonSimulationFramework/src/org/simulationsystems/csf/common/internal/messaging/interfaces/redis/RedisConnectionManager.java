@@ -59,7 +59,7 @@ public class RedisConnectionManager {
 		String value = null;
 		long i = 0;
 		long printCount = 0;
-		System.out.println("[" + requestingSystem + "]" + "Attempting lpop on: "
+		System.out.println("[" + requestingSystem + "]" + "Attempting Redis lpop on: "
 				+ redisKey);
 		while (maximumNumberOfPolls == null || maximumNumberOfPolls > 0) {
 			if (printCount == 0) {

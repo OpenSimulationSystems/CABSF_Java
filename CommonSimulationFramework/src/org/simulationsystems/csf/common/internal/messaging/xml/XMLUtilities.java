@@ -49,7 +49,8 @@ public class XMLUtilities {
 			document = saxBuilder.build(inputStream);
 
 			Element root = document.getRootElement();
-			System.out.println("Succesfully loaded template file: " + root.getName());
+			System.out.println("[Common Simulation Framework - internal] Succesfully loaded template file: "
+					+ root.getName());
 		} finally {
 			if (inputStream != null)
 				inputStream.close();
@@ -118,11 +119,11 @@ public class XMLUtilities {
 		 * content.getValue()); }
 		 */
 	}
-	
+
 	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
 		return convertDocumentToXMLString(document.getRootElement(), prettyPrint);
 	}
-	
+
 	static public String convertDocumentToXMLString(Element document, boolean prettyPrint) {
 		XMLOutputter outputter = null;
 		if (prettyPrint)

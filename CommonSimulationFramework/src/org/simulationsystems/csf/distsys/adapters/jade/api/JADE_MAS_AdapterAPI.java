@@ -1,5 +1,8 @@
 package org.simulationsystems.csf.distsys.adapters.jade.api;
 
+import jade.core.AID;
+import jade.core.Agent;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +17,7 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
+import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.CsfDistributedJADEagentWrapper;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
@@ -61,8 +65,9 @@ public class JADE_MAS_AdapterAPI {
 	// private String fullyQualifiedClassNameForDistributedAgentManager =
 	// "org.simulationsystems.csf.sim.engines.adapters.repastS.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
 	private JADE_MAS_RunContext jade_MAS_RunContext;
-	private JadeController jadeControllerAgent;
-
+	private JadeController jadeController;
+	private Agent jadeControllerAgent;
+	
 	private static JADE_MAS_AdapterAPI instance = new JADE_MAS_AdapterAPI();
 
 	/*
@@ -103,7 +108,7 @@ public class JADE_MAS_AdapterAPI {
 	public static JADE_MAS_AdapterAPI getInstance() {
 		return instance;
 	}
-
+	
 	/*
 	 * Initialize the simulation run in Repast Simphony. This method configures the
 	 * (already-created in the simulation API initialization) AgentMapping objects. Repast
@@ -118,9 +123,9 @@ public class JADE_MAS_AdapterAPI {
 	public JADE_MAS_RunContext initializeSimulationRun(
 			NativeJADEMockContext nativeJadeContextForThisRun,
 			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
-			JadeController jadeControllerAgent,
+			JadeController jadeController,
 			Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
-		this.jadeControllerAgent = jadeControllerAgent;
+		this.jadeController = jadeController;
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI
 				.initializeSimulationRun(nativeJadeContextForThisRun,
@@ -179,7 +184,7 @@ public class JADE_MAS_AdapterAPI {
 		jade_MAS_RunContext.setDam(jade_MAS_RunContext.getDistSysRunContext()
 				.getDistributedAgentsManager());
 
-		jade_MAS_RunContext.setJadeControllerAgent(jadeControllerAgent);
+		jade_MAS_RunContext.setJadeController(jadeController);
 
 		return jade_MAS_RunContext;
 	}

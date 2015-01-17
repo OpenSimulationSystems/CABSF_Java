@@ -153,13 +153,14 @@ public class DistributedAgentsManager {
 					.setNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent);
 			agentsReadyforNativeDistributedAgentMapping
 					.remove(distributedAutonomousAgent);
-
+			
+			//TODO: Support multiple agent models
 			System.out.println("[DISTRIBUTED_SYSTEM] "
-					+ " Agent ID: "
+					+ "Successfully assigned agent. Dist Aut. Agent ID: "
 					+ distributedAutonomousAgent.getDistributedAutonomousAgentID()
-					+ " Successfully assigned native Distributed Autonomous Agent: "
+					+ "  Agent Model ID (1st): "
 					+ distributedAutonomousAgent
-							.getDistributedAgentModelIDStoAgentModels().hashCode()
+							.getDistributedAgentModelIDStoAgentModels().values().iterator().next().getDistributedAgentModelID()
 					+ " native class: "
 					+ nativeDistributedAutonomousAgent.getClass().getCanonicalName());
 		} catch (java.util.NoSuchElementException e) {

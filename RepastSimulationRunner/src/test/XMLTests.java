@@ -34,8 +34,8 @@ import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunGroupContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
-import org.simulationsystems.csf.distsys.adapters.jade.api.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.simulationsystems.csf.distsys.mas.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.sim.core.api.SimulationAPI;
 import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;

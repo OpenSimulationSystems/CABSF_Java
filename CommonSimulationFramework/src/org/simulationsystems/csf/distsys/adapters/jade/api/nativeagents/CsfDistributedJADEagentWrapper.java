@@ -7,7 +7,7 @@ import jade.lang.acl.ACLMessage;
 import java.util.UUID;
 
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock;
 
 public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomousAgent {
 
@@ -48,10 +48,10 @@ public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomo
 	 * using native JADE communication. It is important to note that while this object
 	 * represents a distributed JADE agent, it is really an object contained within the
 	 * JADE Controller Agent's memory. Therefore, any references to the JADE agent or
-	 * myAgent is the JADE Controller agent. JadeController is only used with mocks.
+	 * myAgent is the JADE Controller agent. JadeControllerMock is only used with mocks.
 	 */
 	public void receiveMessage(FrameworkMessage msg, String messageID,
-			String inReplyToMessageID, JadeController jade_ControllerMock) {
+			String inReplyToMessageID, JadeControllerMock jade_ControllerMock) {
 		ACLMessage aclMsg = new ACLMessage(ACLMessage.INFORM);
 		aclMsg.addReceiver(aid);
 		aclMsg.setContent(msg.toPrettyPrintedXMLString());

@@ -33,7 +33,7 @@ import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunGroupContext;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.mas.mocks.MockHumanJADE_Agent;
 import org.simulationsystems.csf.sim.core.api.SimulationAPI;
@@ -42,7 +42,7 @@ import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunGroupContext;
 
-public class XMLTests implements JadeController {
+public class XMLTests implements JadeControllerMock {
 	static private XMLTests instance = new XMLTests();
 
 	static private SimulationRunContext simulationRunContext;

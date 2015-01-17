@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 
-public interface JadeController {
+public interface JadeControllerMock {
 
 	void receiveMessage(FrameworkMessage message, String messageID,
 			String inReplyToMessageID);

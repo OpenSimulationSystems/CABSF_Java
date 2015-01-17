@@ -41,7 +41,7 @@ public class JADE_MAS_RunContext {
 	private DistSysRunContext distSysRunContext;
 	Object jade_ContextForThisRun;
 	private DistributedAgentsManager dam;
-	private JadeController jadeController;
+	private JadeControllerMock jadeControllerMock;
 
 	public void setDam(DistributedAgentsManager dam) {
 		this.dam = dam;
@@ -202,7 +202,7 @@ public class JADE_MAS_RunContext {
 					.equals(distributedAutonomousAgentID));
 			String messageID = UUID.randomUUID().toString();
 			nativeDistributedAutonomousAgent.receiveMessage(fm, messageID, null,
-					jadeController);
+					jadeControllerMock);
 
 			// At this point the distributed agent has received the message from here/the
 			// controller, the distributed agent has notified the controller of its
@@ -213,8 +213,8 @@ public class JADE_MAS_RunContext {
 		return null;
 	}
 
-	public void setJadeController(JadeController jadeController) {
-		this.jadeController = jadeController;
+	public void setJadeController(JadeControllerMock jadeControllerMock) {
+		this.jadeControllerMock = jadeControllerMock;
 
 	}
 }

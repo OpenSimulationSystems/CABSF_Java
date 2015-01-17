@@ -17,7 +17,7 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.common.internal.systems.AgentMapping;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JadeController;
+import org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock;
 import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
 
@@ -122,7 +122,7 @@ public class JZombies_Csf {
 
 	}
 
-/*	public void sendMessageToSimulationAgent(JadeController jade_Controller_Agent,
+/*	public void sendMessageToSimulationAgent(JadeControllerMock jade_Controller_Agent,
 			FrameworkMessage msg, String messageID, String inReplyToMessageID) {
 		jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID);
 	}*/

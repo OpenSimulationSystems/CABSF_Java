@@ -65,7 +65,7 @@ public class JADE_MAS_AdapterAPI {
 	// private String fullyQualifiedClassNameForDistributedAgentManager =
 	// "org.simulationsystems.csf.sim.engines.adapters.repastS.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
 	private JADE_MAS_RunContext jade_MAS_RunContext;
-	private JadeController jadeController;
+	private JadeControllerMock jadeControllerMock;
 	private Agent jadeControllerAgent;
 	
 	private static JADE_MAS_AdapterAPI instance = new JADE_MAS_AdapterAPI();
@@ -123,9 +123,9 @@ public class JADE_MAS_AdapterAPI {
 	public JADE_MAS_RunContext initializeSimulationRun(
 			NativeJADEMockContext nativeJadeContextForThisRun,
 			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
-			JadeController jadeController,
+			JadeControllerMock jadeControllerMock,
 			Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
-		this.jadeController = jadeController;
+		this.jadeControllerMock = jadeControllerMock;
 
 		DistSysRunContext distSysRunContext = distributedSystemAPI
 				.initializeSimulationRun(nativeJadeContextForThisRun,
@@ -184,7 +184,7 @@ public class JADE_MAS_AdapterAPI {
 		jade_MAS_RunContext.setDam(jade_MAS_RunContext.getDistSysRunContext()
 				.getDistributedAgentsManager());
 
-		jade_MAS_RunContext.setJadeController(jadeController);
+		jade_MAS_RunContext.setJadeController(jadeControllerMock);
 
 		return jade_MAS_RunContext;
 	}

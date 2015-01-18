@@ -20,7 +20,7 @@ public class SimulationRunGroupContext extends CsfRunGroupContext {
 	public SimulationRunGroupContext() {
 	}
 
-	public SimulationRunGroupConfiguration getSimulationConfiguration() {
+	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
 		return simulationRunGroupConfiguration;
 	}
 
@@ -40,6 +40,10 @@ public class SimulationRunGroupContext extends CsfRunGroupContext {
 	public void setSimulationRunContext(SimulationRunContext simulationRunContext) {
 		this.simulationRunContext = simulationRunContext;
 		
+	}
+
+	public void setSimulationRunGroupConfiguration(SimulationRunGroupConfiguration simulationRunGroupConfiguration) {
+		this.simulationRunGroupConfiguration = simulationRunGroupConfiguration;
 	}
 	
 }

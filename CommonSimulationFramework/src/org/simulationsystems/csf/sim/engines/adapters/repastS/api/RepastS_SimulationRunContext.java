@@ -94,7 +94,7 @@ public class RepastS_SimulationRunContext {
 	}
 
 	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
-		return simulationRunContext.getSimulationRunGroupConfiguration();
+		return simulationRunContext.getSimulationRunGroupContext().getSimulationRunGroupConfiguration();
 	}
 
 	public SimulationRunGroup getSimulationRunGroup() {

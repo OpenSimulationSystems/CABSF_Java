@@ -144,12 +144,15 @@ public class RepastS_SimulationAdapterAPI {
 				Class<Object> simulationAgentClazz = simulationAgentClass;
 				Iterable<Object> simulationAgentsInSingleClass = nativeRepastContextForThisRun
 						.getAgentLayer(simulationAgentClazz);
+				
+				if (repastS_SimulationRunContext.getSimulationRunContext().getSimulationRunGroupContext().getSimulationRunGroupConfiguration().getSimulationAgentsBelongToOneClass()) {
 				// For a distributed agent class type, for each individual simulation
 				// agent, map to
 				// an existing free AgentMapping object
 				for (Object simulationAgent : simulationAgentsInSingleClass) {
 					mapSimulationSideAgent(simulationAgent,
 							repastS_SimulationRunContext.getSimulationRunContext());
+				}
 				}
 			} else
 				continue; // Not an agent we need to map.

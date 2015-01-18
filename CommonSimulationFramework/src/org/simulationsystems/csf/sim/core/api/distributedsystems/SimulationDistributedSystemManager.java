@@ -43,15 +43,15 @@ public class SimulationDistributedSystemManager {
 	@SuppressWarnings("unused")
 	private SimulationDistributedSystemManager() {
 	}
-	
+
 	public AgentMapping getAgentMappingForObject(Object obj) {
-		for (AgentMapping am: fullyInitializedAgentMappings) {
+		for (AgentMapping am : fullyInitializedAgentMappings) {
 			if (am.getSimulationAgent().equals(obj))
 				return am;
 		}
 		return null;
 	}
-	
+
 	public SimulationDistributedSystemManager(SimulationRunContext simulationRunContext,
 			String getCommonMessagingConcreteImplStr, DistributedSystem distributedSystem) {
 		this.simulationRunContext = simulationRunContext;
@@ -122,30 +122,47 @@ public class SimulationDistributedSystemManager {
 		// distributed-agent-side data.
 		// Mocking data for now;
 		// TODO: Pull from configuration
-		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent1", "DistributedSystemAutonomousAgent1MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent2", "DistributedSystemAutonomousAgent2MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent3", "DistributedSystemAutonomousAgent3MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent4", "DistributedSystemAutonomousAgent4MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent5", "DistributedSystemAutonomousAgent5MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-				distributedSystem.getDistributedSystemID(),
-				"DistributedSystemAutonomousAgent6", "DistributedSystemAutonomousAgent6MODEL",
-				"jzombies.Human");
+
+		// JZombies
+		if (simulationRunContext.getSimulationRunGroupContext().getSimulationRunGroupConfiguration()
+				.getFrameworkConfigurationFileNameName()
+				.equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent1",
+					"DistributedSystemAutonomousAgent1MODEL", "jzombies.Human");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent2",
+					"DistributedSystemAutonomousAgent2MODEL", "jzombies.Human");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent3",
+					"DistributedSystemAutonomousAgent3MODEL", "jzombies.Human");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent4",
+					"DistributedSystemAutonomousAgent4MODEL", "jzombies.Human");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent5",
+					"DistributedSystemAutonomousAgent5MODEL", "jzombies.Human");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent6",
+					"DistributedSystemAutonomousAgent6MODEL", "jzombies.Human");
+		}
+		// Prisoner's Dilemma
+		else {
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent1",
+					"DistributedSystemAutonomousAgent1MODEL", "prisonersdilemma.Player");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent2",
+					"DistributedSystemAutonomousAgent2MODEL", "prisonersdilemma.Player");
+		}
 	}
 
 	/*
@@ -154,7 +171,7 @@ public class SimulationDistributedSystemManager {
 	 */
 	public boolean isAgentClassDistributedType(Class<Object> agentClass) {
 		// TODO: Tie this to the simulation configuration
-		if (agentClass.getCanonicalName().equals("jzombies.Human"))
+		if (agentClass.getCanonicalName().equals("jzombies.Human") || agentClass.getCanonicalName().equals("prisonersdilemma.Player0"))
 			return true;
 		else
 			return false;
@@ -167,9 +184,11 @@ public class SimulationDistributedSystemManager {
 	public AgentMapping addSimulationAgentToAgentMapping(Object agentObj) {
 		// Add Validation to make sure mappings exist. / Throw exception
 
-		return AgentMappingHelper.addNativeSimulationToDistributedAutononmousAgentToAgentMapping(this.getClass()
-				.getCanonicalName().toString(), agentsReadyForSimulationSideMapping,
-				fullyInitializedAgentMappings, agentObj);
+		return AgentMappingHelper
+				.addNativeSimulationToDistributedAutononmousAgentToAgentMapping(this
+						.getClass().getCanonicalName().toString(),
+						agentsReadyForSimulationSideMapping,
+						fullyInitializedAgentMappings, agentObj);
 	}
 
 	public Object logHelper() {

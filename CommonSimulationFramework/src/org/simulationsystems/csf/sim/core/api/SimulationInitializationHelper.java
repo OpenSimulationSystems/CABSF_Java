@@ -111,8 +111,9 @@ public class SimulationInitializationHelper {
 		 * while ((strLine = br.readLine()) != null) { // Print the content on the console
 		 * System.out.println(strLine); }
 		 */
-		SimulationRunGroupConfiguration config = new SimulationRunGroupConfiguration();
-
+		SimulationRunGroupConfiguration config = new SimulationRunGroupConfiguration(frameworkConfigurationFileNameName);
+		simulationRunGroupContext.setSimulationRunGroupConfiguration(config);
+		
 		// TODO: Retrieve the Simulation Run Group level configuration and use those values here:
 		SimulationRunGroup simulationRunGroup = new SimulationRunGroup("12345", "1.0", "1.0");
 		// TODO: Organizae these two methods better.

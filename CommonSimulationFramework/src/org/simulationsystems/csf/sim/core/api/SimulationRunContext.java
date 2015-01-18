@@ -26,7 +26,7 @@ import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistr
  * Context object.
  */
 public class SimulationRunContext extends CsfRunContext {
-	protected SimulationRunGroupConfiguration simulationRunGroupConfiguration; // Simulation
+	//protected SimulationRunGroupConfiguration simulationRunGroupConfiguration; // Simulation
 																				// Run-group-wide
 	private Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
 	private SimulationRunGroup simulationRunGroup;
@@ -71,19 +71,19 @@ public class SimulationRunContext extends CsfRunContext {
 		return simulationDistributedSystemManagers;
 	}
 
-	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
+/*	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
 		return simulationRunGroupConfiguration;
-	}
+	}*/
 
 	public SimulationRunGroup getSimulationRunGroup() {
 		return simulationRunGroup;
 	}
 
-	protected void setSimulationConfiguration(
+/*	protected void setSimulationConfiguration(
 			SimulationRunGroupConfiguration simulationRunGroupConfiguration) {
 		this.simulationRunGroupConfiguration = simulationRunGroupConfiguration;
 	}
-
+*/
 	/*
 	 * @see mapSimulationSideAgent
 	 */

@@ -216,13 +216,10 @@ under the
 lib directory of&nbsp;CommonSimulationFramework, and subdirectories.</li>
 <li>Right
 click on the RepastSimulationRunner, Build Path, and add
-the&nbsp;&nbsp;JZombies_CSF_Demo, and&nbsp;JZombies_CSF_JADE_Agents
+the&nbsp;&nbsp;JZombies_CSF_Demo
 projects.
 &nbsp;While the underlying runner code doesn't need these projects,
-there are JUnit tests in the Repast Simulation Runner for both the
-common JZombies CSF code in the&nbsp;JZombies_CSF_Demo project and
-in
-and the mock JADE agents in the&nbsp;JZombies_CSF_JADE_Agents project.&nbsp;</li>
+there are JUnit tests in the Repast Simulation Runner for convenience methods&nbsp;in the&nbsp;JZombies_CSF_Demo project.</li>
 <li>Select add&nbsp;JARs, and select the jars under the
 folder and subfolders in&nbsp;CommonSimulationFramework//lib.</li>
 <li>Select the External JARs button and add all of the JARS
@@ -230,21 +227,7 @@ from the<span style="color: red;"><span style="color: black;"> two <span style="
 bolded</span>&nbsp;</span></span><span style="color: black;">{Repast_Installation}/eclipse</span><span style="font-weight: bold;"> </span>lines above.</li>
 <li>Click on the "Add Library" button and select&nbsp;the
 JUnit library.</li>
-<li>Follow
-the same steps for the JADE_Controller_Agent_Agent as for
-the&nbsp;&nbsp;RepastSimulationRunner
-project, except that JADE_Controller_Agent doesn't need references to
-the two red bolded Repast set of references.
-&nbsp;JADE_Controller_Agent_Agent does need a reference
-to&nbsp;JZombies_CSF_Demo
-as there is convenience code shared between the simulation-side and the
-distributed agent side. &nbsp;Otherwise, the dependency would not be
-required and in future projects, such common code could be separated
-out.
-&nbsp;The distributed agents only need really need JADE, the
-framework
-and accompanying third party libraries to be able to communicate with
-Repast.</li>
+<li>Add the Mock_JADE_Controller_Agent project. &nbsp;This project is used in JUnit tests.</li><li>Add the CommonSimulationFramework dependency and accompanying JARs to the JADE_Controller_Agent.</li>
 <li>Right click on JZombies_CSF_JADE_Agents and add the
 CommonSimulationFramework and accompanying JAR files. &nbsp;Add the
 JADE_Controller_Agent and JZombies_CSF_Demo projects. &nbsp;The JADE
@@ -254,7 +237,10 @@ Container/JVM, for simplicity. &nbsp;The&nbsp;JZombies_CSF_Demo
 dependency is added to give the JADE agent authors access to the
 simulation-specific convenience methods shared by both the Repast
 simulation and JADE agents. &nbsp;Otherwise there would be no need to
-add a dependency to a Repast project.</li><li>Click on the "Problems" tab below. &nbsp;You should no
+add a dependency to a Repast project. &nbsp;The simulation-specific
+convenience methods shared by both the Repast simulation and JADE
+agents are added to the Repast project for simplicity by eliminating
+the need to create yet another separate JAR/project.</li><li>Click on the "Problems" tab below. &nbsp;You should no
 longer see any red "Error" entries, only yellow warnings.</li>
 <li>Unlike the Repast simulations projects (such
 as&nbsp;JZombies_CSF_Demo), other applications such

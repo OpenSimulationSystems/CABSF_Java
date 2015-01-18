@@ -3,6 +3,8 @@ package org.simulationsystems.csf.common.internal.systems;
 import java.util.HashSet;
 import java.util.UUID;
 
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+
 public class AgentMappingHelper {
 
 	/*
@@ -47,7 +49,7 @@ public class AgentMappingHelper {
 					+ am.getDistributedAutonomousAgentModelID() + " " + am.toString()
 					+ " class: " + agentObj.getClass().getCanonicalName());
 		} catch (java.util.NoSuchElementException e) {
-			System.out.println("exception:" + e.getMessage() + "  class: "
+			throw new CsfInitializationRuntimeException("exception:" + e.getMessage() + "  class: "
 					+ agentObj.getClass().getCanonicalName());
 		}
 

@@ -72,7 +72,7 @@ public class Human {
 
 				Iterable<Class> simulationAgentsClasses = RunState.getInstance()
 						.getMasterContext().getAgentTypes();
-				Iterable<Object> csfRepastContextIterable = csfRepastContextIterable = RunState
+				Iterable<Object> csfRepastContextIterable = RunState
 						.getInstance().getMasterContext()
 						.getAgentLayer(RepastS_SimulationRunContext.class);
 				simulationType = repastS_AgentContext.initializeCsfAgent(

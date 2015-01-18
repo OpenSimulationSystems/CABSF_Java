@@ -20,22 +20,34 @@ public class SimulationRunGroupConfiguration {
 	private Element locationTemplate=null;
 	private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
 
+	private boolean simulationAgentsBelongToOneClass = false;
 
 
 	// TODO: Actually populate these values
 	// LOW: Support Multiple Simulation Run Configurations
 	ArrayList<SimulationRunConfiguration> simulationRunConfigurations;
+	private String frameworkConfigurationFileNameName;
 
 	/*
 	 * DistributedSystemSimulationRunGroup Level.
 	 */
-	public SimulationRunGroupConfiguration() {
+	public SimulationRunGroupConfiguration(String frameworkConfigurationFileNameName) {
 		// TODO: Read the actual values from the configuration file. Add methods to get into the
 		// configuration values.
-
-
+		this.frameworkConfigurationFileNameName = frameworkConfigurationFileNameName;
+		if (frameworkConfigurationFileNameName.equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
+			this.simulationAgentsBelongToOneClass = true;
+		}
 	}
 	
+	public boolean getSimulationAgentsBelongToOneClass() {
+		return simulationAgentsBelongToOneClass;
+	}
+
+	public String getFrameworkConfigurationFileNameName() {
+		return frameworkConfigurationFileNameName;
+	}
+
 	public String getSimulationEngineID() {
 		return simulationEngineID;
 	}

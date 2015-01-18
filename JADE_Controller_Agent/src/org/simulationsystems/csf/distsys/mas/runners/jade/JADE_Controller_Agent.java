@@ -35,7 +35,6 @@ import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeJA
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentModel;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAutonomousAgent;
-import org.simulationsystems.csf.distsys.mas.mocks.MockHumanJADE_Agent;
 
 public class JADE_Controller_Agent extends jade.core.Agent {
 	private static JADE_MAS_RunGroupContext jade_MAS_RunGroupContext;

@@ -10,7 +10,8 @@ Release 0.1.TBD<br>
 <h2>Requirements</h2>
 <ol>
 <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK
-1.7+</a> for the Common Simulation Framework/Repast, and JDK1.4+ for the JADE agents.
+1.7+</a> for the Common Simulation Framework/Repast, and JDK1.4+
+for the JADE agents.
 </li>
 <li>Windows, MacOSX, or *nix. &nbsp;There are some
 scripts/batch files
@@ -133,12 +134,11 @@ the list below.&nbsp;</li>
 <ol>
 <li>Create a new Java Project for CommonSimulationFramework.</li>
 </ol>
-<li>CSF_JADE_Controller_Agent<span style="text-decoration: underline;"> <br>
-NOTE</span>:
-&nbsp;The CSF_JADE_Controller_Agent will become a become a
-JADE agent in the future. For now, it is a standalone Java program that
-holds mock Human agents for the simulation.</li>
+<li>CSF_JADE_Controller_Agent<span style="text-decoration: underline;"><br>
+</span></li>
 <li>RepastSimulationRunner</li>
+<li>JZombies_CSF_JADE_Agents under the
+CommonSimulationFrameworkSimulations subdirectory.</li>
 </ol>
 <li>Add the third party libraries to
 the CommonSimulationFramework&nbsp; You can&nbsp;download a zip
@@ -155,8 +155,8 @@ locations:&nbsp;<br>
 2.0.5
 </a><br>
 <a href="https://github.com/xetorthio/jedis/releases">Jedis
-2.4.2
-</a><br>
+2.4.2&nbsp;</a><br>
+JADE<br>
 Make sure to grab any dependency JARs from these two libraries
 (such as Jaxen 1.1.6). &nbsp;If downloading from the zip file
 above,
@@ -216,15 +216,13 @@ under the
 lib directory of&nbsp;CommonSimulationFramework, and subdirectories.</li>
 <li>Right
 click on the RepastSimulationRunner, Build Path, and add
-the&nbsp;&nbsp;JZombies_CSF_Demo and&nbsp;
-CSF_JADE_Controller_Agent
+the&nbsp;&nbsp;JZombies_CSF_Demo, and&nbsp;JZombies_CSF_JADE_Agents
 projects.
 &nbsp;While the underlying runner code doesn't need these projects,
 there are JUnit tests in the Repast Simulation Runner for both the
 common JZombies CSF code in the&nbsp;JZombies_CSF_Demo project and
 in
-and the mock JADE agents in the CSF_JADE_Controller_Agent
-project.&nbsp;</li>
+and the mock JADE agents in the&nbsp;JZombies_CSF_JADE_Agents project.&nbsp;</li>
 <li>Select add&nbsp;JARs, and select the jars under the
 folder and subfolders in&nbsp;CommonSimulationFramework//lib.</li>
 <li>Select the External JARs button and add all of the JARS
@@ -240,18 +238,28 @@ the two red bolded Repast set of references.
 &nbsp;JADE_Controller_Agent_Agent does need a reference
 to&nbsp;JZombies_CSF_Demo
 as there is convenience code shared between the simulation-side and the
-distributed agent side. &nbsp;The reference is not strictly
-required.
+distributed agent side. &nbsp;Otherwise, the dependency would not be
+required and in future projects, such common code could be separated
+out.
 &nbsp;The distributed agents only need really need JADE, the
 framework
 and accompanying third party libraries to be able to communicate with
 Repast.</li>
-<li>Click on the "Problems" tab below. &nbsp;You should no
+<li>Right click on JZombies_CSF_JADE_Agents and add the
+CommonSimulationFramework and accompanying JAR files. &nbsp;Add the
+JADE_Controller_Agent and JZombies_CSF_Demo projects. &nbsp;The JADE
+Controller Project is added here to be able to run all the JZombies
+Human JADE agents and the JADE Controller in a single JADE
+Container/JVM, for simplicity. &nbsp;The&nbsp;JZombies_CSF_Demo
+dependency is added to give the JADE agent authors access to the
+simulation-specific convenience methods shared by both the Repast
+simulation and JADE agents. &nbsp;Otherwise there would be no need to
+add a dependency to a Repast project.</li><li>Click on the "Problems" tab below. &nbsp;You should no
 longer see any red "Error" entries, only yellow warnings.</li>
 <li>Unlike the Repast simulations projects (such
 as&nbsp;JZombies_CSF_Demo), other applications such
 as&nbsp;&nbsp;RepastSimulationRunner
-and&nbsp;CSF_JADE_Controller_Agent
+and JADE_Controller_Agent
 do not automatically get the run configurations created when the
 projects are created. &nbsp;However, there is a presaved run
 configuration that can be added to the run configurations menu.
@@ -275,7 +283,7 @@ argument
 is the location of the Repast configuration for this simulation.
 &nbsp;The second file is the path to the CSF configuration for this
 simulation.</li>
-<li>Look for the launcher file for CSF_JADE_Controller_Agent
+<li>Look for the launcher file for JADE_Controller_Agent
 and do the same as for the&nbsp;RepastSimulationRunner.
 &nbsp;Stop the execution and verify that the run configuration has
 been
@@ -337,37 +345,55 @@ that
 the Common Simulation Framework is polling the
 Redis
 in-memory cache for commands from you, the simulation administrator.</li>
-<li>Start up the distributed system(s).</li><ol><li>In our case we need
+<li>Start up the distributed system(s).</li>
+<ol>
+<li>In our case we need
 to start the JADE agents, including the JADE Controller Agent, which
 brokers communication between the JADE agent participants in the
 simulation, and the simulation engine/runtime Repast Simphony.
-&nbsp;There is one project created for the JZombies JADE agents, called
-JZombies_CSF_JADE_Agents. &nbsp;Right click on it, find the launchers
+&nbsp;There is one project created for the JZombies JADE agents,
+called
+JZombies_CSF_JADE_Agents. &nbsp;Right click on it, find the
+launchers
 folder, expand it, and right click on
 JZombies-JADE_zombies_with_JADE_Controller_Agent.launch, click on Run
-As "JZombies-JADE_zombies_with_JADE_Controller_Agent.launch".</li><li>You should see the JADE Platform, the JADE Controller Agents, and all of the JADE zombies initialize
+As "JZombies-JADE_zombies_with_JADE_Controller_Agent.launch".</li>
+<li>You should see the JADE Platform, the JADE Controller
+Agents, and all of the JADE zombies initialize
 with messages that come from both the JADE library and the Common
-Simulation Framework. &nbsp;If everything worked properly, you should
-start seeing a "+" printed periodically. &nbsp;This means that the JADE
-Controller Agent is polling the Redis in-memory cache. &nbsp;This is in
+Simulation Framework. &nbsp;If everything worked properly, you
+should
+start seeing a "+" printed periodically. &nbsp;This means that the
+JADE
+Controller Agent is polling the Redis in-memory cache. &nbsp;This
+is in
 contrast to the "." which is periodically printed from the simulation
-engine side (Repast) to poll the Redis-in memory cache. &nbsp;Because
+engine side (Repast) to poll the Redis-in memory cache.
+&nbsp;Because
 you have started both processes (Repast Simulation Runner and JADE
-agents), you should have two consoles that switch back and forth.</li></ol><li>The
+agents), you should have two consoles that switch back and forth.</li>
+</ol>
+<li>The
 log statements will show the fully qualified JADE AID for an agent,
 such as: DistributedSystemAutonomousAgent4@169.254.80.80:1099/JADE, but
 the Common Simulation Framework currently only uses the local name
 (e.g.DistributedSystemAutonomousAgent4) to uniquely identify a JADE
-agent within a MAS. &nbsp;This is the reason for the limitation only
+agent within a MAS. &nbsp;This is the reason for the limitation
+only
 allowing a single JADE platform for any JADE agents that need a
 representation in Repast.</li>
 </ol>
 <li style="font-weight: bold;">Kick off the Simulation
 Run(s)</li>
 <ol>
-<li>Do not proceed until you see both the "."s from the simulation side
+<li>Do not proceed until you see both the "."s from the
+simulation side
 and the "+" from the JADE side being printed in separate consoles.
-&nbsp;All
+&nbsp;If you don't see the consoles switching back and forth, at the
+bottom, under the "Console" tab, select the "Display Selected Console"
+drop down arrow for the other process. &nbsp;Make sure that the name in
+the drop down doesn't say that it (or the other process) has been
+terminated.</li><li>All
 of the processes are running now. &nbsp;The distributed system(s)
 are
 waiting on the simulation engine and as mentioned already, the

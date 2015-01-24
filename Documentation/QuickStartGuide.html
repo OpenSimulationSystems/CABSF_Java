@@ -189,7 +189,7 @@ single distributed autonomous agent/JADE agent may only contain a
 single agent model, which corresponds to a single Repast agent.</li><li>There can only be a single distributed system/MAS connected to the framework at any given time for any given simulation run.</li><li>All
 JADE agents must reside on a single JADE platform. &nbsp;This doesn't
 mean that all agents must be on the same host. &nbsp;The framework
-currently uses local JADE names for agent addressing.</li><li>The JADE
+currently uses local JADE names for agent addressing and that is the reason for the JADE Platform limitation.</li><li>The JADE
 Contorller agent must be running on the same host as the Repast
 Simphony runtime. &nbsp;This is because the two sides share information
 over a Redis in-memory database. &nbsp;Future releases may include
@@ -239,7 +239,7 @@ simulation, assuming the Repast simulation code is set up to skip the
 common simulation framework functionality in the event that the
 simulation is not being run programmatically. &nbsp;This is set up in
 the non-tournament simulations. &nbsp;This limitation may be lifted in
-the future.</li><li>Multithreading
+the future.</li><li>Either all JADE agents must correspond to a single Repast class, or each JADE agent must correspond to a different Repast class.</li><li>Multithreading
 of the Common Simulation Framework is not supported. &nbsp;However,
 support for concurrent executions of the Common Simulatoin Framework as
 separate processes using the same Redis cache will be supported in the
@@ -252,7 +252,7 @@ in Repast.</li><li>The Common Simulation Framework Repast Simulation
 Runner uses a single thread to execute the simulations. &nbsp;Messages
 are pulled from the Redis cache using quick polling. &nbsp;Future
 releases may add an administrative thread per Redis key/channel so that
-true event-driven messaging can take place on the simulation side.</li><li>No assertions are made about the use of the Common Simulation Framework with JADE LEAP. </li><li>Limited
+true event-driven messaging can take place on the simulation side.</li><li>No assurances are made about the use of the Common Simulation Framework with JADE LEAP. </li><li>Limited
 error checking is provided by the framework. &nbsp;It is suggested that
 the Repast Simulation Runner and JADE Controller Agents be run with
 assertions on. &nbsp;Assertions have been added in a few places in the
@@ -261,6 +261,4 @@ code as placeholders for better validation and error handling.
 enable assertion checking, especially during the testing phase.
 &nbsp;All of the launchers in the CSF simulations have this options set
 by default.</li><li>The JADE Controller agent should be run either in
-the same JADE Container as the other JADE agents, or it should be
-running first. &nbsp;It is recommended that the JADE Controller Agent
-be running on the main JADE platform.</li><li>Limitations to be removed shortly post March 2015:</li><ol><li>The number of &nbsp;corresponding JADE and Repast agents is fixed at 6.</li><li></li></ol></ol><br><br></body></html>
+the same JADE Container as the other JADE agents, or it should be run first.</li><li>The JADE Controller agent should run on in the main JADE container.</li><li>Limitations to be removed shortly post March 2015:</li><ol><li>The number of &nbsp;corresponding JADE and Repast agents is fixed at 6.</li><li>Only the JZombies and Prisoner's Dilemma simulations are supported.</li></ol></ol><br><br></body></html>

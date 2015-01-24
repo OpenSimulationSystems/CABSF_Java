@@ -42,6 +42,9 @@ import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
 import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunGroupContext;
 
+import prisonersdilemma.DECISION;
+import prisonersdilemma.PrisonersDilemma_CSF;
+
 public class XMLTests implements JadeControllerMock {
 	static private XMLTests instance = new XMLTests();
 
@@ -49,7 +52,8 @@ public class XMLTests implements JadeControllerMock {
 	static private SimulationRunGroupContext simulationRunGroupContext;
 	static private SimulationAPI simulationAPI;
 	static private String simToolNameToSetInSimulationAPI;
-	private static JZombies_Csf jZombies_Csf;
+	private static JZombies_Csf jZombies_CSF;
+	private static PrisonersDilemma_CSF prisonersDilemma_CSF;
 	static JADE_MAS_AgentContext jade_MAS_AgentContext;
 	static private RepastS_AgentContext repastS_AgentContext;
 
@@ -267,7 +271,7 @@ public class XMLTests implements JadeControllerMock {
 	public static void setUpBeforeClass() throws Exception {
 		repastS_AgentContext = new RepastS_AgentContext();
 		repastS_AgentContext.setBypassRepastRuntimeForTestingPurposes(true);
-		repastS_AgentContext.initializeCsfAgent(null,null);
+		repastS_AgentContext.initializeCsfAgent(null, null);
 
 		JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
 		JADE_MAS_RunGroupContext jade_MAS_RunGroupContext = jade_MAS_AdapterAPI
@@ -276,7 +280,9 @@ public class XMLTests implements JadeControllerMock {
 		// jade_MAS_RunGroupContext, instance);
 		jade_MAS_RunContext = new JADE_MAS_RunContext(null);
 
-		jZombies_Csf = new JZombies_Csf(repastS_AgentContext);
+		jZombies_CSF = new JZombies_Csf(repastS_AgentContext);
+		prisonersDilemma_CSF = new PrisonersDilemma_CSF(repastS_AgentContext);
+
 		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
 		jade_MAS_AgentContext.initializeCsfAgent("TEST");
 
@@ -327,7 +333,7 @@ public class XMLTests implements JadeControllerMock {
 		pointLeastZombies.add("3");
 		pointLeastZombies.add("4");
 
-		jZombies_Csf.populateZombiesMessage(msg, "distAutAgent1", "distAutAgentMode1",
+		jZombies_CSF.populateZombiesMessage(msg, "distAutAgent1", "distAutAgentMode1",
 				thisAgentModelPosition, pointLeastZombies);
 
 		thisAgentModelPosition = new ArrayList<String>();
@@ -337,12 +343,59 @@ public class XMLTests implements JadeControllerMock {
 		pointLeastZombies.add("7");
 		pointLeastZombies.add("8");
 
-		jZombies_Csf.populateZombiesMessage(msg, "distAutAgent2", "distAutAgentMode2",
+		jZombies_CSF.populateZombiesMessage(msg, "distAutAgent2", "distAutAgentMode2",
 				thisAgentModelPosition, pointLeastZombies);
 
 		System.out.println("Msg:"
 				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
 
+	}
+
+	FrameworkMessage testPopulatePrisonersDilemmaMessageHelper() {
+		/*
+		 * Document doc = getDocument();
+		 * 
+		 * @SuppressWarnings("unchecked")
+		 * 
+		 * //TODO: Support for other actors Element agentModelActor =
+		 * getNextAgentModelActor(doc);
+		 * 
+		 * // For each agent model/actor Element actor =
+		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
+		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
+		 */
+
+		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+				simulationRunGroupContext.getBlankCachedMessageExchangeTemplate());
+
+		// Get the distributed autonomous agent element and set the ID
+		Element distributedAutonomousAgentElement = msg
+				.getNextDistributedAutonomousAgent(msg.getDocument(), simulationRunGroupContext
+						.getCachedDistributedAutonomousAgentTemplate());
+		msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
+				"distAutAgent2");
+
+		// Get the agent model actor and set the ID
+		Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutonomousAgentElement,
+				simulationRunGroupContext.getCachedAgentModelActorTemplate());
+		msg.setIDForActorInAgentModel(agentModelActor, "distAutAgentModel2");
+		int round = 1;
+		DECISION otherPlayerLastDecision = DECISION.COOPERATE;
+		prisonersDilemma_CSF.populatePrisonersDilemmaFrameworkMessage(msg,
+				agentModelActor, round, otherPlayerLastDecision, null);
+
+		System.out.println("Prisoner's Dilemma MSG:"
+				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
+
+		return msg;
+	}
+
+	@Test
+	@Ignore
+	public void testPopulatePrisonersDilemmaMessage() {
+		testPopulatePrisonersDilemmaMessageHelper();
 	}
 
 	@Test
@@ -372,11 +425,12 @@ public class XMLTests implements JadeControllerMock {
 
 		msg.getSelfLocation(distributedAutonomousAgentElement, msg);
 
-		jZombies_Csf.getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
+		jZombies_CSF.getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
 
 		System.out.println("Msg:"
 				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
 
+		// return msg;
 	}
 
 	@Test
@@ -405,6 +459,28 @@ public class XMLTests implements JadeControllerMock {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Test
+	// @Ignore
+	public void testReceiveMessageInPrisonersDilemmaJADEagent() {
+		FrameworkMessage msg = testPopulatePrisonersDilemmaMessageHelper();
+
+		Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(
+				msg.getDocument(), null);
+
+		/*
+		 * Element agentModelActor =
+		 * msg.getNextAgentModelActor(distributedAutonomousAgent,
+		 * repastS_AgentContext.getCachedAgentModelActorTemplate());
+		 */
+		DECISION decision = prisonersDilemma_CSF.getOtherPlayerDecision(
+				distributedAutonomousAgent, msg);
+		System.out.println("Read decision: " + decision.toString());
+
+		int roundNumber = prisonersDilemma_CSF.getRoundNumber(distributedAutonomousAgent,
+				msg);
+		System.out.println("Read round number: " + String.valueOf(roundNumber));
 	}
 
 	public void receiveMessage(FrameworkMessage message, String messageID,

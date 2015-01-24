@@ -30,17 +30,19 @@ public interface FrameworkMessage {
 
 	STATUS getStatus();
 
-	Element populateThisLocationInAgentModelActor(Element actor, String ID, String gridPointX,
+	Element populateThisLocationInAgentModelActor(Element actor, String gridPointX,
 			String gridPointY, Element cachedLocationTemplate);
 
-	Element setDistributedAutonomousAgent(Element distributedAutonomousAgent, String ID);
+	Element setDistributedAutonomousAgentID(Element distributedAutonomousAgent, String ID);
 	
 	Element getNextAgentModelActor(Object distributedAutononomousAgent, Element cachedAgentModelTemplate);
 
-	Element getNextDistributedAutonomousAgent(Object csfMessageExchangeDoc, Element cacheDistributedAutonomousAgentTemplate);
+	Element getNextDistributedAutonomousAgent(Document doc, Element cacheDistributedAutonomousAgentTemplate);
  
-	Element getNextNonSelfLocationForActor(Element actor, Element cachedLocationTemplate);
+	Element getNextNonSelfSimulationDefinedLocationForActor(Element actor, Element cachedLocationTemplate);
 
+	Element getSimulationDefinedEnvironmentChangesElement(Element actor);
+	
 	List<Element> getDistributedAutonomousAgentElements(Object csfMessageExchangeDoc);
 
 	String getDistributedAutonomousAgentID(
@@ -58,4 +60,6 @@ public interface FrameworkMessage {
 			FrameworkMessage msg);
 
 	List<String> getSelfLocation(FrameworkMessage msg);
+
+	void setIDForActorInAgentModel(Element actor, String ID);
 }

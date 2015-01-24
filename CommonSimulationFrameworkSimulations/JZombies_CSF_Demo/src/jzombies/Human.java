@@ -10,6 +10,7 @@ import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
@@ -72,20 +73,21 @@ public class Human {
 
 				Iterable<Class> simulationAgentsClasses = RunState.getInstance()
 						.getMasterContext().getAgentTypes();
-				Iterable<Object> csfRepastContextIterable = RunState
-						.getInstance().getMasterContext()
+				Iterable<Object> csfRepastContextIterable = RunState.getInstance()
+						.getMasterContext()
 						.getAgentLayer(RepastS_SimulationRunContext.class);
 				simulationType = repastS_AgentContext.initializeCsfAgent(
 						simulationAgentsClasses, csfRepastContextIterable);
 			}
 		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CsfInitializationRuntimeException(
+					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
+					e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CsfInitializationRuntimeException(
+					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
+					e);
 		}
-
 		// /////////////////
 
 		// ////////////////////////////////
@@ -134,7 +136,7 @@ public class Human {
 			// distributed agent (agent model)
 			// LOW: Add support for merging multiple messages bound for different agents
 			jZombies_Csf.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
-					this, pt, pointWithLeastZombies);
+					loggingPrefix, this, pt, pointWithLeastZombies);
 			// FIXME: Move to simultaneous processing of these messages?
 			FrameworkMessage msg = repastS_AgentContext.getRepastS_SimulationRunContext()
 					.readFrameworkMessageFromDistributedSystem();
@@ -159,12 +161,11 @@ public class Human {
 			}
 			assert (moveToPoint != null);
 
-		}
-		else
+		} else
 			moveToPoint = pointWithLeastZombies;
-		//////////////////////////////////////////////
+		// ////////////////////////////////////////////
 
-		///////////////////////////////////////////////
+		// /////////////////////////////////////////////
 		// Back to common code for Repast
 		if (energy > 0) {
 			moveTowards(moveToPoint);

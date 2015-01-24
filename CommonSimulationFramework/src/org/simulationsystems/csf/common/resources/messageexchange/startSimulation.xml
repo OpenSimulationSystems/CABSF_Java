@@ -28,7 +28,7 @@
 	</Identifiers>
 	<Status/>
 	<SendingEntity>
-		<Name>RepastSimulationWrapper</Name>
+		<Name>RepastSimulationRunner</Name>
 		<ID/>
 	</SendingEntity>
 	<ReceivingEntities>

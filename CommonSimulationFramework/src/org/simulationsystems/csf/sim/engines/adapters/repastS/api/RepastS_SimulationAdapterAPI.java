@@ -102,7 +102,7 @@ public class RepastS_SimulationAdapterAPI {
 	// non-distributed.
 	public RepastS_SimulationRunContext initializeSimulationRun(
 			Context<Object> nativeRepastContextForThisRun,
-			RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {	
+			RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
 		SimulationRunContext simulationRunContext = simulationAPI
 				.initializeSimulationRun(nativeRepastContextForThisRun,
 						repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
@@ -110,12 +110,14 @@ public class RepastS_SimulationAdapterAPI {
 		// User Decorator Pattern for RepastS_SimulationRunContext
 		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
 				simulationRunContext);
-		repastS_SimulationRunContext.setRepastContextForThisRun(nativeRepastContextForThisRun);
-		
-		repastS_SimulationRunContext.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
-		//Make the context available to the agents in the Repast model
+		repastS_SimulationRunContext
+				.setRepastContextForThisRun(nativeRepastContextForThisRun);
+
+		repastS_SimulationRunContext
+				.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
+		// Make the context available to the agents in the Repast model
 		nativeRepastContextForThisRun.add(repastS_SimulationRunContext);
-		
+
 		// LOW: Support multiple Simulation Run Groups. For now just assume that there's
 		// one.
 		// LOW: Handle multiple distributed systems
@@ -130,7 +132,8 @@ public class RepastS_SimulationAdapterAPI {
 		// TODO: Move all of this to the main simulation API to simplify Adapter code.
 		// (Same for JADE API side)
 		@SuppressWarnings({ "rawtypes" })
-		Iterable<Class> simulationAgentsClasses = nativeRepastContextForThisRun.getAgentTypes();
+		Iterable<Class> simulationAgentsClasses = nativeRepastContextForThisRun
+				.getAgentTypes();
 		// For each simulation agent class
 		for (@SuppressWarnings("rawtypes")
 		Class simulationAgentClass : simulationAgentsClasses) {
@@ -144,16 +147,22 @@ public class RepastS_SimulationAdapterAPI {
 				Class<Object> simulationAgentClazz = simulationAgentClass;
 				Iterable<Object> simulationAgentsInSingleClass = nativeRepastContextForThisRun
 						.getAgentLayer(simulationAgentClazz);
-				
-				if (repastS_SimulationRunContext.getSimulationRunContext().getSimulationRunGroupContext().getSimulationRunGroupConfiguration().getSimulationAgentsBelongToOneClass()) {
-				// For a distributed agent class type, for each individual simulation
-				// agent, map to
-				// an existing free AgentMapping object
-				for (Object simulationAgent : simulationAgentsInSingleClass) {
-					mapSimulationSideAgent(simulationAgent,
-							repastS_SimulationRunContext.getSimulationRunContext());
-				}
-				}
+
+/*				if (repastS_SimulationRunContext.getSimulationRunContext()
+						.getSimulationRunGroupContext()
+						.getSimulationRunGroupConfiguration()
+						.getSimulationAgentsBelongToOneClass()) {*/
+					// For a distributed agent class type, for each individual simulation
+					// agent, map to
+					// an existing free AgentMapping object
+					for (Object simulationAgent : simulationAgentsInSingleClass) {
+						mapSimulationSideAgent(simulationAgent,
+								repastS_SimulationRunContext.getSimulationRunContext());
+					}
+/*				}
+				else {
+					
+				}*/
 			} else
 				continue; // Not an agent we need to map.
 		}
@@ -174,7 +183,7 @@ public class RepastS_SimulationAdapterAPI {
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 				repastS_SimulationRunContext.getBlankCachedMessageExchangeTemplate());
 		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
-		//TODO: Loop through the multiple distributed systems
+		// TODO: Loop through the multiple distributed systems
 		repastS_SimulationRunContext.messageDistributedSystems(msg,
 				repastS_SimulationRunContext.getSimulationRunContext());
 
@@ -188,9 +197,9 @@ public class RepastS_SimulationAdapterAPI {
 			throw new CsfMessagingRuntimeException(
 					"Did not understand the message from the simulation distributed system.");
 
-		// The distributed agent (models) have previously been mapped.  
+		// The distributed agent (models) have previously been mapped.
 		// Now we're ready to perform the steps in the simulation.
-		
+
 		return repastS_SimulationRunContext;
 	}
 
@@ -221,7 +230,5 @@ public class RepastS_SimulationAdapterAPI {
 			SimulationRunContext simulationRunContext) {
 		simulationAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
-	
-
 
 }

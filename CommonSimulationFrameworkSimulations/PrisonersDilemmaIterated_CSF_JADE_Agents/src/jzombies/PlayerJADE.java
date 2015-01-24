@@ -14,6 +14,8 @@ import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.CsfDistributedJADEagentWrapper;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 
+import prisonersdilemma.DECISION;
+import prisonersdilemma.PrisonersDilemma_CSF;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -23,32 +25,31 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jzombies.JZombies_Csf;
 
-public class HumanJADE extends Agent {
+public class PlayerJADE extends Agent {
 	private String logPrefix;
 	private JADE_MAS_AgentContext jade_MAS_AgentContext;
-	private JZombies_Csf jzombies_CSF;
+	private PrisonersDilemma_CSF prisonersDilemma_CSF;
 	private String distributedAutonomousAgentID;
 	private String distributedAutonomousAgentModelID;
 	private AID jadeControllerAgent;
 
 	protected void setup() {
-		logPrefix = "[HumanJADE " + getAID().getName() + "]";
-		addBehaviour(new HumanJADE_Server());
+		logPrefix = "[PlayerJADE " + getAID().getName() + "]";
+		addBehaviour(new PrisonersDilemmaJADE_Server());
 
 		// The Common Simulation Framework (CSF) context object specific to CSF JADE
 		// agents. Gives the user access to many convenience methods for dealing with XML
 		// messages coming from the simulation engine/runtime such as Repast Simphony.
 		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
 		// This class contains convenience methods specific to this one simulation.
-		jzombies_CSF = new JZombies_Csf(jade_MAS_AgentContext);
-		//TODO: Support global JADE naming
+		prisonersDilemma_CSF = new PrisonersDilemma_CSF(jade_MAS_AgentContext);
+		// TODO: Support global JADE naming
 		// The mapping between the JADE agent and Repast agent actually happens on the
 		// "distributed autonomous agent model" level. So a JADE agent can theoretically
 		// in the future run several "agent models". For now only 1 to 1 is supported,
 		// however, there model must be identified separately.
-		//TODO: Support global JADE naming
+		// TODO: Support global JADE naming
 		distributedAutonomousAgentModelID = getAID().getLocalName() + "MODEL";
 
 		// Register this agent as one of the distributed JADE agents in the simulation in
@@ -57,20 +58,20 @@ public class HumanJADE extends Agent {
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("jade-csf-agents");
-		sd.setName("non-admin-agents"); //All JADE agents other than the JADE Controller Agent
+		sd.setName("non-admin-agents"); // All JADE agents other than the JADE Controller
+										// Agent
 		dfd.addServices(sd);
 		try {
 			DFService.register(this, dfd);
 		} catch (FIPAException fe) {
-			System.out
-					.println(logPrefix
-							+ " Error registering this JADE agent in the yellow pages");
+			System.out.println(logPrefix
+					+ " Error registering this JADE agent in the yellow pages");
 			doDelete(); // Cleanup and remove this agent from the MAS.
 			fe.printStackTrace();
 		}
-		
-		//Find the JADE Controller Agent
-		System.out.println(logPrefix+" Looking for the JADE Controller Agent");
+
+		// Find the JADE Controller Agent
+		System.out.println(logPrefix + " Looking for the JADE Controller Agent");
 		DFAgentDescription template = new DFAgentDescription();
 		sd = new ServiceDescription();
 		sd.setType("jade-csf-agents");
@@ -79,9 +80,10 @@ public class HumanJADE extends Agent {
 		try {
 			DFAgentDescription[] result = DFService.search(this, template);
 			assert (result.length == 1);
-			System.out.println(logPrefix+" Found the JADE Controller Agent: "+result[0].getName().getName());
-			jadeControllerAgent = result[0].getName();
-			
+			System.out.println(logPrefix + " Found the JADE Controller Agent: "
+					+ result[0].getName().getName());
+			jadeControllerAgent = result[0].getName(); // Only one JADE Controller Agent
+
 		} catch (FIPAException fe) {
 			System.out
 					.println("[JADE Controller Agent] FIPA error in finding the JADE Controller Agent.  Terminating.");
@@ -92,10 +94,8 @@ public class HumanJADE extends Agent {
 
 	/*
 	 * Inner class that specifies the behavior for this agent
-	 * 
-	 * This behavior is constantly re-run
 	 */
-	private class HumanJADE_Server extends CyclicBehaviour {
+	private class PrisonersDilemmaJADE_Server extends CyclicBehaviour {
 		// Called every time a message comes into the queue to this agent. This is done
 		// sequentially due to the fact that a JADE agent only runs a single thread.
 		public void action() {
@@ -122,47 +122,45 @@ public class HumanJADE extends Agent {
 					e.printStackTrace();
 				}
 
-				System.out.println(logPrefix + " Received Message: " + aclMsg.getConversationId() + " " +aclMsg.getReplyWith()+ " Message:"+ msgStr);
-
-				// Get the current grid location of this agent from the simulation
-				// engine/runtime. The result is a list (X, Y)
-				List<String> selfPoint = msg.getSelfLocation(msg);
-				for (int i = 0; i < selfPoint.size(); i++) {
-					System.out.println(logPrefix + " Self Location: " + String.valueOf(i)
-							+ " : " + String.valueOf(selfPoint.get(i)));
-				}
-
-				// Get the part of the XML message dealing with this JADE agent
-				// (distributed autonomous agent)
+				System.out.println(logPrefix + " Received Message: "
+						+ aclMsg.getConversationId() + " " + aclMsg.getReplyWith()
+						+ " Message:" + msgStr);
+				
+				// Get the distributed autonomous agent element and set the ID
 				Element distributedAutonomousAgentElement = msg
 						.getNextDistributedAutonomousAgent(msg.getDocument(), null);
+				msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
+						distributedAutonomousAgentID);
 
-				// Uses a convenience method that is specific to the JZombies simulation
-				// to get the location of the zombies. This convience method is located in
-				// the Repast project, hence why we need a dependency on that project.
-				// There is no direct use of Repast code from this JADE agent.
-				List<String> pointWithLeastZombiesPoint = jzombies_CSF
-						.getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
+				// Get the agent model actor and set the ID
+				Element agentModelActor = msg.getNextAgentModelActor(
+						distributedAutonomousAgentElement, null);
+				msg.setIDForActorInAgentModel(agentModelActor,
+						distributedAutonomousAgentModelID);
 
-				for (int i = 0; i < pointWithLeastZombiesPoint.size(); i++) {
-					System.out.println(logPrefix + " Received Zombie location "
-							+ String.valueOf(i) + " : "
-							+ String.valueOf(pointWithLeastZombiesPoint.get(i)));
-				}
+				int round = prisonersDilemma_CSF.getRoundNumber(
+						distributedAutonomousAgentElement, msg);
+				DECISION otherPlayerLastRoundDecision = prisonersDilemma_CSF
+						.getOtherPlayerDecision(distributedAutonomousAgentElement, msg);
+				System.out.println(logPrefix + " Round: " + String.valueOf(round)
+						+ " Received Last Round's Other Player's Decision: "
+						+ otherPlayerLastRoundDecision.toString());
 
-				List<String> pointToMoveTo = chooseMoveTowardsLocation(selfPoint,
-						pointWithLeastZombiesPoint);
+				DECISION myDecision = makeDecision(round, otherPlayerLastRoundDecision);
+				System.out.println(logPrefix + " Decided: " + myDecision.toString());
 
-				// Send the decision on where to move to
-				msg = jzombies_CSF.convertMoveToPointToFrameworkMessage(pointToMoveTo,
-						distributedAutonomousAgentID, distributedAutonomousAgentModelID);
+				msg = prisonersDilemma_CSF.populatePrisonersDilemmaFrameworkMessage(msg,
+						agentModelActor, round, null, myDecision);
+
 				System.out.println(logPrefix
-						+ " Sending move decision to the JADE Controller Agent: "+ aclMsg.getConversationId() + " Message:"
+						+ " Sending move decision to the JADE Controller Agent: "
+						+ aclMsg.getConversationId()
+						+ " Message:"
 						+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
 								.getRootElement(), true));
-	
-				//Send message to the JADE Controller Agent
-				ACLMessage response =  aclMsg.createReply();
+
+				// Send message to the JADE Controller Agent
+				ACLMessage response = aclMsg.createReply();
 				response.setPerformative(ACLMessage.INFORM);
 				response.setContent(msg.toPrettyPrintedXMLString());
 				myAgent.send(response);
@@ -174,10 +172,9 @@ public class HumanJADE extends Agent {
 
 		}
 
-		private List<String> chooseMoveTowardsLocation(List<String> selfPoint,
-				List<String> pointWithLeastZombiesPoint) {
+		private DECISION makeDecision(int round, DECISION otherPlayerLastRoundDecision) {
 
-			return pointWithLeastZombiesPoint;
+			return DECISION.COOPERATE;
 
 		}
 	}

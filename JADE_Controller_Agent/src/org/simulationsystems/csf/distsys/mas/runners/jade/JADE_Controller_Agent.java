@@ -40,13 +40,14 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 	private static JADE_MAS_RunGroupContext jade_MAS_RunGroupContext;
 	static private JADE_MAS_AdapterAPI jade_MAS_AdapterAPI;
 	private JADE_MAS_RunContext jade_MAS_RunContext;
+	String frameworkConfigurationFileName = null;
 
 	boolean newSimulationRun = true;
 
 	private Set<NativeDistributedAutonomousAgent> jadeAgents = new HashSet<NativeDistributedAutonomousAgent>();
 
 	// TODO: Make this configurable
-	private int numberOfAgents = 6;
+	private int numberOfAgents;
 
 	public JADE_MAS_AdapterAPI getJade_MAS_AdapterAPI() {
 		return jade_MAS_AdapterAPI;
@@ -58,15 +59,20 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 		// Printout a welcome message
 		System.out.println("JADE Controller Agent " + getAID().getName() + " is ready.");
 
-		String frameworkConfigurationFileName = null;
-
 		// TODO: Add Validation of CSF configuration file
 		// One-time setup
 		Object[] args = getArguments();
 		if (args != null && args.length > 0) {
 			frameworkConfigurationFileName = (String) args[0];
-			System.out.println("[JADE Controller Agent] JADE Controller Agent Configuration file "
-					+ frameworkConfigurationFileName);
+			System.out
+					.println("[JADE Controller Agent] JADE Controller Agent Configuration file "
+							+ frameworkConfigurationFileName);
+
+			// JZombies or Prisoner's Dilemma
+			if (frameworkConfigurationFileName.equals("PLACEHOLDERCONFIGFILE"))
+				numberOfAgents = 6;
+			else
+				numberOfAgents = 2;
 
 			jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
 			jade_MAS_RunGroupContext = null;
@@ -75,14 +81,15 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 				jade_MAS_RunGroupContext = jade_MAS_AdapterAPI
 						.initializeAPI(frameworkConfigurationFileName);
 			} catch (IOException e) {
-				//FIXME: Remove all of the agents/shutdown the MAS?
+				// FIXME: Remove all of the agents/shutdown the MAS?
 				System.out
 						.println("[JADE Controller Agent] Error in initializing the JADE Controller Agent");
 				doDelete();
 				e.printStackTrace();
 			}
-			
-			// Register the JADE Controller agent in the yellow pages for the distributed JADE agents to find
+
+			// Register the JADE Controller agent in the yellow pages for the distributed
+			// JADE agents to find
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
 			ServiceDescription sd = new ServiceDescription();
@@ -92,10 +99,9 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 			try {
 				DFService.register(this, dfd);
 			} catch (FIPAException fe) {
-				//FIXME: Remove all of the agents/shutdown the MAS?
-				System.out
-						.println("[JADE Controller Agent]"
-								+ " Error registering this JADE agent in the yellow pages");
+				// FIXME: Remove all of the agents/shutdown the MAS?
+				System.out.println("[JADE Controller Agent]"
+						+ " Error registering this JADE agent in the yellow pages");
 				doDelete(); // Cleanup and remove this agent from the MAS.
 				fe.printStackTrace();
 			}
@@ -158,27 +164,28 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 			template.addServices(sd);
 			try {
 				DFAgentDescription[] result = DFService.search(this, template);
-				System.out.println("[JADE Controller Agent] Found the following JADE agents ("
-						+ String.valueOf(result.length) + "):");
+				System.out
+						.println("[JADE Controller Agent] Found the following JADE agents ("
+								+ String.valueOf(result.length) + "):");
 				jadeAgents = new HashSet<NativeDistributedAutonomousAgent>();
 
 				// Create a CsfDistributedJADEagentWrapper concrete object for each JADE
 				// agent
 				// THe purpose is to hold both the JADE AID and CSF-specific identifiers
 				// in a single object.
-				//DistributedSystemAutonomousAgent1, DistributedSystemAutonomousAgent1MODEL
+				// DistributedSystemAutonomousAgent1,
+				// DistributedSystemAutonomousAgent1MODEL
 				for (int i = 0; i < result.length; ++i) {
 					String num = String.valueOf(i);
 					CsfDistributedJADEagentWrapper agent = new CsfDistributedJADEagentWrapper(
-							result[i].getName(), "DistSys1",
-							result[i].getName().getLocalName(),
-							result[i].getName().getLocalName() + "MODEL", "Human",
-							this);
+							result[i].getName(), "DistSys1", result[i].getName()
+									.getLocalName(), result[i].getName().getLocalName()
+									+ "MODEL", "Human", this);
 					jadeAgents.add(agent);
-					System.out.println("   "+result[i].getName().getName());
+					System.out.println("   " + result[i].getName().getName());
 				}
 			} catch (FIPAException fe) {
-				//FIXME: Remove all of the agents/shutdown the MAS?
+				// FIXME: Remove all of the agents/shutdown the MAS?
 				System.out
 						.println("[JADE Controller Agent] FIPA error in finding the distributed JADE agents.  Terminating.");
 				doDelete();
@@ -215,7 +222,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 					message = new FrameworkMessageImpl(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 							SYSTEM_TYPE.SIMULATION_ENGINE, msgStr);
 				} catch (CsfCheckedException e) {
-					//FIXME: Remove all of the agents/shutdown the MAS?
+					// FIXME: Remove all of the agents/shutdown the MAS?
 					System.out
 							.println("[JADE Controller Agent] Error converting message from a distributed JADE agent to the JADE Controller Agent: "
 									+ msgStr);

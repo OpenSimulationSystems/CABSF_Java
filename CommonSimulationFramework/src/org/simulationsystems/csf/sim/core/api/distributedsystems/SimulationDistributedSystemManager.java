@@ -124,7 +124,8 @@ public class SimulationDistributedSystemManager {
 		// TODO: Pull from configuration
 
 		// JZombies
-		if (simulationRunContext.getSimulationRunGroupContext().getSimulationRunGroupConfiguration()
+		if (simulationRunContext.getSimulationRunGroupContext()
+				.getSimulationRunGroupConfiguration()
 				.getFrameworkConfigurationFileNameName()
 				.equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
 			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
@@ -171,7 +172,9 @@ public class SimulationDistributedSystemManager {
 	 */
 	public boolean isAgentClassDistributedType(Class<Object> agentClass) {
 		// TODO: Tie this to the simulation configuration
-		if (agentClass.getCanonicalName().equals("jzombies.Human") || agentClass.getCanonicalName().equals("prisonersdilemma.Player0"))
+		if (agentClass.getCanonicalName().equals("jzombies.Human")
+				|| agentClass.getCanonicalName().equals("prisonersdilemma.Player0")
+				|| agentClass.getCanonicalName().equals("prisonersdilemma.Player1"))
 			return true;
 		else
 			return false;

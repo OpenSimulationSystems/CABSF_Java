@@ -163,7 +163,7 @@ public class FrameworkMessageDocumentHelper {
 
 	// TODO: Extents/multiple dimensions
 	// TODO: Set the ID
-	private Element populateThisActorLocationInAgentModel(Element actor,
+	public Element populateThisActorLocationInAgentModel(Element actor,
 			String gridPointX, String gridPointY, Element cachedLocationTemplate) {
 		@SuppressWarnings("unchecked")
 		// TODO: Support multiple actors
@@ -238,8 +238,7 @@ public class FrameworkMessageDocumentHelper {
 			Element cachedDistributedAutonomousAgentTemplate) {
 		@SuppressWarnings("unchecked")
 		Element distributedAutonomousAgentsElement = getDistributedAutonomousAgentsElement(doc);
-		List<Element> distributedAutonomousAgentElements = getDistributedAutonomousAgentElements(doc);
-
+		
 		Element distributedAutononomousAgent = null;
 		if (cachedDistributedAutonomousAgentTemplate != null) {
 			distributedAutononomousAgent = cachedDistributedAutonomousAgentTemplate;
@@ -250,8 +249,8 @@ public class FrameworkMessageDocumentHelper {
 					"DistributedAutonomousAgent", namespace);
 		return distributedAutononomousAgent;
 	}
-
-	public Element getNextNonSelfLocationForActor(Element actor,
+	
+	public Element getNextNonSelfSimulationDefinedLocationForActor(Element actor,
 			Element cachedLocationTemplate) {
 		@SuppressWarnings("unchecked")
 		// TODO: Rename methods to differentiate Common environment changes from
@@ -269,15 +268,15 @@ public class FrameworkMessageDocumentHelper {
 	/*
 	 * Returns an
 	 */
-	public Element populateThisActorLocationInAgentModel(Element actor, String ID,
+/*	public Element populateThisActorLocationInAgentModel(Element actor, 
 			String gridPointX, String gridPointY, Element cachedLocationTemplate) {
 		// Select Agent Model
 
 		// Go ahead and populate the already created agent model from the Document
 		// template
-		setIDForActorInAgentModel(actor, ID);
+		//setIDForActorInAgentModel(actor, ID);
 		return populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY, cachedLocationTemplate);
-	}
+	}*/
 
 	public Element populateDistributedAutonomousAgent(Element distributedAutonomousAgent,
 			String ID) {
@@ -399,6 +398,18 @@ public class FrameworkMessageDocumentHelper {
 
 		return getSelfLocation(distributedAutonomousAgentElement,
 				 msg);
+	}
+
+	public Element getSimulationDefinedEnvironmentChangesElement(Element actor) {
+		@SuppressWarnings("unchecked")
+		// TODO: Rename methods to differentiate Common environment changes from
+		// simulation-specific.
+		List<Element> simulationDefinedEnvironmentChangesElements = (List<Element>) XMLUtilities
+				.executeXPath(
+						actor,
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
+						namespaceStr, elementFilter);
+		return simulationDefinedEnvironmentChangesElements.get(0);
 	}
 	
 }

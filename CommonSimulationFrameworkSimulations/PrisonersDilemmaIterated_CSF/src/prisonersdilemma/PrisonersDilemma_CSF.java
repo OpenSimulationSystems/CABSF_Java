@@ -1,4 +1,4 @@
-package jzombies;
+package prisonersdilemma;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import repast.simphony.space.grid.GridPoint;
 /*
  * Convenience class provided to the simulation and agent authors.  Unlike all other classes, this class has references to both the Repast Agent Context and JADE Agent Context. This allows all JZombies-specific code to be in one place.
  */
-public class JZombies_Csf {
+public class PrisonersDilemma_CSF {
 	private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
 	private RepastS_AgentContext repastS_AgentContext;
 
@@ -37,7 +37,7 @@ public class JZombies_Csf {
 
 	private AgentContext agentContext;
 
-	public JZombies_Csf(JADE_MAS_AgentContext jade_MAS_AgentContext) {
+	public PrisonersDilemma_CSF(JADE_MAS_AgentContext jade_MAS_AgentContext) {
 		this.jade_MAS_AgentContext = jade_MAS_AgentContext;
 		agentContext = (AgentContext) jade_MAS_AgentContext;
 		try {
@@ -52,29 +52,39 @@ public class JZombies_Csf {
 		}
 	}
 
-	public JZombies_Csf(RepastS_AgentContext repastS_AgentContext) {
+	public PrisonersDilemma_CSF(RepastS_AgentContext repastS_AgentContext) {
 		this.repastS_AgentContext = repastS_AgentContext;
 		agentContext = (AgentContext) repastS_AgentContext;
 	}
 
-	public Element populateLeastZombiesPointElement(FrameworkMessage msg,
-			Element agentModelActor, String GridPointX, String GridPointY,
-			Element cachedLocationTemplate) {
-		Element locationEnvironmentChange = msg
-				.getNextNonSelfSimulationDefinedLocationForActor(agentModelActor,
-						cachedLocationTemplate);
+	public Element populatePrisonersDilemmaDecisionAndRoundElements(FrameworkMessage msg,
+			Element agentModelActor, int round, DECISION otherPlayerLastDecision,
+			DECISION myDecision) {
+		Element simulationDefinedEnvironmentChange = msg
+				.getSimulationDefinedEnvironmentChangesElement(agentModelActor);
 
-		Element location = locationEnvironmentChange.getChild("Location", namespace);
-		location.getChild("GridPointX", namespace).setText(GridPointX);
-		location.getChild("GridPointY", namespace).setText(GridPointY);
-		location.setAttribute("category", "neighborhood");
-		location.setAttribute("includecenter", "true");
-		location.setAttribute("entitytype", "Zombie");
-		return location;
+		Element roundElement = new Element("RoundNumber", namespace);
+		roundElement.setText(String.valueOf(round));
+		simulationDefinedEnvironmentChange.addContent(roundElement);
+
+		if (otherPlayerLastDecision != null) {
+			Element decisionElement = new Element("OtherPlayerDecision", namespace);
+			decisionElement.setText(otherPlayerLastDecision.toString());
+			simulationDefinedEnvironmentChange.addContent(decisionElement);
+
+		}
+		if (myDecision != null) {
+			Element decisionElement = new Element("ThisPlayerDecision", namespace);
+			decisionElement.setText(myDecision.toString());
+			simulationDefinedEnvironmentChange.addContent(decisionElement);
+		}
+
+		return simulationDefinedEnvironmentChange;
 	}
 
 	public void sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
-			String loggingPrefix, Object obj, GridPoint pt, GridPoint pointWithLeastZombies) {
+			String loggingPrefix, Object obj, int round,
+			DECISION otherPlayerLastDecision, DECISION myDecision) {
 		// TODO: Add support for multiple distributed systems
 		// Get the Agent Mapping
 		SimulationDistributedSystemManager dsm = repastS_AgentContext
@@ -90,8 +100,8 @@ public class JZombies_Csf {
 				agentContext.getBlankCachedMessageExchangeTemplate());
 		assert (repastS_AgentContext.getRepastS_SimulationRunContext()
 				.getCachedDistributedAutonomousAgentTemplate() != null);
-		
-		// Get the distributed autonomous agent element and set the ID
+
+		// Get the distributed autonomous agent and set the ID
 		Element distributedAutonomousAgentElement = msg
 				.getNextDistributedAutonomousAgent(msg.getDocument(),
 						agentContext.getCachedDistributedAutonomousAgentTemplate());
@@ -104,33 +114,26 @@ public class JZombies_Csf {
 				agentContext.getCachedAgentModelActorTemplate());
 		msg.setIDForActorInAgentModel(agentModelActor,
 				am.getDistributedAutonomousAgentModelID());
-		
+
 		// TODO: First get the distributed system manager section.
 		// TODO: Add validation here
 		assert (am.getDistributedAutonomousAgentModelID() != null);
 
-		// Set up the self agent model actor
-		msg.populateThisLocationInAgentModelActor(agentModelActor,
-				String.valueOf(pt.getX()), String.valueOf(pt.getY()),
-				agentContext.getCachedLocationTemplate());
+		// Populate the Decision and Round Info
+		populatePrisonersDilemmaFrameworkMessage(msg, agentModelActor,
+				round,
+				otherPlayerLastDecision, myDecision);
 
-		// Populate the Zombies info
-		populateLeastZombiesPointElement(msg, agentModelActor,
-				String.valueOf(pointWithLeastZombies.getX()),
-				String.valueOf(pointWithLeastZombies.getY()),
-				agentContext.getCachedLocationTemplate());
-		
 		System.out.println(loggingPrefix
 				+ "Sending Message to Distributed System: "
 				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
 						.getRootElement(), true));
-		
+
 		// The message has been constructed, now send it over the wire
 		repastS_AgentContext.getRepastS_SimulationRunContext().messageDistributedSystems(
 				msg,
 				repastS_AgentContext.getRepastS_SimulationRunContext()
 						.getSimulationRunContext());
-
 	}
 
 	/*
@@ -139,19 +142,8 @@ public class JZombies_Csf {
 	 * jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID); }
 	 */
 
-	public FrameworkMessage convertMoveToPointToFrameworkMessage(
-			List<String> pointMoveTo, String distAutAgentID, String distAutAgentModelID) {
-		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				SYSTEM_TYPE.SIMULATION_ENGINE,
-				agentContext.getBlankCachedMessageExchangeTemplate());
-		populateZombiesMessage(msg, distAutAgentID, distAutAgentModelID, pointMoveTo,
-				new ArrayList<String>());
-
-		return msg;
-	}
-
-	public List<String> getPointWithLeastZombies(
-			Element distributedAutonomousAgentElement, FrameworkMessage msg) {
+	public DECISION getThisPlayerDecision(Element distributedAutonomousAgentElement,
+			FrameworkMessage msg) {
 		// FIXME: Why does this have to be an element, and not Document?
 		Element agentModelActor = msg.getNextAgentModelActor(
 				distributedAutonomousAgentElement, null);
@@ -160,55 +152,54 @@ public class JZombies_Csf {
 						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
 						namespaceStr, elementFilter);
 
-		// FIXME: check the attributes
-		List<Element> locations = (List<Element>) XMLUtilities
-				.executeXPath(
-						simulationDefinedEnvironmentChanges.get(0),
-						"./x:EnvironmentChange/x:Location[@category='neighborhood' and @entitytype='Zombie']",
-						namespaceStr, elementFilter);
-		XMLUtilities.convertElementToXMLString(distributedAutonomousAgentElement, true);
-		Element location = locations.get(0);
+		String decisionStr = simulationDefinedEnvironmentChanges.get(0)
+				.getChild("ThisPlayerDecision", namespace).getText();
 
-		String xValue = location.getChild("GridPointX", namespace).getText();
-		String yValue = location.getChild("GridPointY", namespace).getText();
-		System.out.println("Zombies Grid Point X: " + xValue);
-		System.out.println("Zombies Grid Point Y: " + yValue);
-		List<String> coordinate = new ArrayList<String>();
-		coordinate.add(xValue);
-		coordinate.add(yValue);
-
-		return coordinate;
+		return DECISION.valueOf(decisionStr);
 	}
 
-	// FIXME: Remove moveToPoint
-	public FrameworkMessage populateZombiesMessage(FrameworkMessage msg,
-			String distributedAutononmousAgentID, String agentModelID,
-			List<String> thisAgentModelPosition, List<String> pointLeastZombies) {
+	public DECISION getOtherPlayerDecision(Element distributedAutonomousAgentElement,
+			FrameworkMessage msg) {
+		// FIXME: Why does this have to be an element, and not Document?
+		Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutonomousAgentElement, null);
+		List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
+				.executeXPath(agentModelActor,
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
+						namespaceStr, elementFilter);
 
-		Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(
-				msg.getDocument(),
-				agentContext.getCachedDistributedAutonomousAgentTemplate());
-		msg.setDistributedAutonomousAgentID(distributedAutonomousAgent,
-				distributedAutononmousAgentID);
-		Element agentModelActor = msg.getNextAgentModelActor(distributedAutonomousAgent,
-				agentContext.getCachedAgentModelActorTemplate());
+		String decisionStr = simulationDefinedEnvironmentChanges.get(0)
+				.getChild("OtherPlayerDecision", namespace).getText();
 
-		if (thisAgentModelPosition.size() >= 2) {
-			msg.setIDForActorInAgentModel(agentModelActor, agentModelID);
-			msg.populateThisLocationInAgentModelActor(agentModelActor,
-					thisAgentModelPosition.get(0), thisAgentModelPosition.get(1),
-					agentContext.getCachedLocationTemplate());
-		}
+		return DECISION.valueOf(decisionStr);
+	}
 
-		// Use the shared class in the simulation for this.
-		// FIXME: Move this to a common third project?
-		if (pointLeastZombies.size() >= 2)
-			populateLeastZombiesPointElement(msg, agentModelActor, pointLeastZombies.get(0),
-					pointLeastZombies.get(1), agentContext.getCachedLocationTemplate());
+	public Integer getRoundNumber(Element distributedAutonomousAgentElement,
+			FrameworkMessage msg) {
+		// FIXME: Why does this have to be an element, and not Document?
+		Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutonomousAgentElement, null);
+		List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
+				.executeXPath(agentModelActor,
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
+						namespaceStr, elementFilter);
+
+		String roundNumberStr = simulationDefinedEnvironmentChanges.get(0)
+				.getChild("RoundNumber", namespace).getText();
+
+		return Integer.parseInt(roundNumberStr);
+	}
+
+	public FrameworkMessage populatePrisonersDilemmaFrameworkMessage(
+			FrameworkMessage msg, Element agentModelActor, int round, DECISION otherPlayerLastDecision,
+			DECISION myDecision) {
+
+		populatePrisonersDilemmaDecisionAndRoundElements(msg, agentModelActor, round,
+				otherPlayerLastDecision, myDecision);
 
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
 		String xmlString = outputter.outputString(msg.getDocument());
-		System.out.println("Populated Zombie Message: " + xmlString);
+		System.out.println("Populated Prisoner's Dilemma Message: " + xmlString);
 
 		return msg;
 	}

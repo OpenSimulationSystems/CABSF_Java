@@ -120,10 +120,10 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element populateThisLocationInAgentModelActor(Element actor, String ID,
+	public Element populateThisLocationInAgentModelActor(Element actor, 
 			String gridPointX, String gridPointY, Element cachedLocationTemplate) {
 		return frameworkMessageDocumentHelper.populateThisActorLocationInAgentModel(
-				actor, ID, gridPointX, gridPointY,cachedLocationTemplate);
+				actor, gridPointX, gridPointY,cachedLocationTemplate);
 	}
 
 	@Override
@@ -134,14 +134,14 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	}
 
 	@Override
-	public Element getNextNonSelfLocationForActor(Element actor,
+	public Element getNextNonSelfSimulationDefinedLocationForActor(Element actor,
 			Element cachedLocationTemplate) {
-		return frameworkMessageDocumentHelper.getNextNonSelfLocationForActor(actor,
+		return frameworkMessageDocumentHelper.getNextNonSelfSimulationDefinedLocationForActor(actor,
 				cachedLocationTemplate);
 	}
 
 	@Override
-	public Element setDistributedAutonomousAgent(Element distributedAutonomousAgent,
+	public Element setDistributedAutonomousAgentID(Element distributedAutonomousAgent,
 			String ID) {
 		return frameworkMessageDocumentHelper.populateDistributedAutonomousAgent(
 				distributedAutonomousAgent, ID);
@@ -150,9 +150,9 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	// FIXME: Need to to rename these two getNext Function so it's obvious they are only
 	// used for writing messages
 	@Override
-	public Element getNextDistributedAutonomousAgent(Object csfMessageExchangeDoc,
+	public Element getNextDistributedAutonomousAgent(Document doc,
 			Element cacheDistributedAutonomousAgentTemplate) {
-		return frameworkMessageDocumentHelper.getNextDistributedAutonomousAgent(csfMessageExchangeDoc,
+		return frameworkMessageDocumentHelper.getNextDistributedAutonomousAgent(doc,
 				cacheDistributedAutonomousAgentTemplate);
 	}
 	
@@ -203,4 +203,13 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 
 	}
 
+	@Override
+	public Element getSimulationDefinedEnvironmentChangesElement(Element actor) {
+		return frameworkMessageDocumentHelper.getSimulationDefinedEnvironmentChangesElement(actor);
+	}
+	
+	@Override
+	public void setIDForActorInAgentModel(Element actor, String ID) {
+		frameworkMessageDocumentHelper.setIDForActorInAgentModel(actor, ID);
+	}
 }

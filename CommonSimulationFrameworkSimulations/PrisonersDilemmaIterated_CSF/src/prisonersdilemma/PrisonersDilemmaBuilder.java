@@ -9,19 +9,20 @@ public class PrisonersDilemmaBuilder implements ContextBuilder<Object> {
 	@SuppressWarnings("rawtypes")
 	public Context build(Context<Object> context) {
 		System.out.println("Running builder");
-
 		context.setId("prisonersdilemma");
+
+		GameAdministrator gameAdministrator = new GameAdministrator();
+		context.add(gameAdministrator);
+
 		// int playerCount = 2;
 
-		Player player0 = new Player0();
+		Player player0 = new Player0(gameAdministrator);
 		player0.setPlayerNumber(0);
 		context.add(player0);
 
-		Player player1 = new Player1();
+		Player player1 = new Player1(gameAdministrator);
 		player1.setPlayerNumber(1);
 		context.add(player1);
-
-		context.add(new GameAdministrator());
 
 		/*
 		 * if (RunEnvironment.getInstance().isBatch()) {

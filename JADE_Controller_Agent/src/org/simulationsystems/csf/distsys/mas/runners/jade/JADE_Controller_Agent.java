@@ -229,10 +229,9 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 					doDelete();
 					e.printStackTrace();
 				}
-				List<String> location = message.getSelfLocation(message
+/*				List<String> location = message.getSelfLocation(message
 						.getNextDistributedAutonomousAgent(message.getDocument(), null),
-						message);
-				assert (location.size() == 2);
+						message);*/
 
 				System.out
 						.println("[JADE Controller Agent] Received the distributed autonomous agent (model) decision. Forwarding to the simulation engine (agent)");

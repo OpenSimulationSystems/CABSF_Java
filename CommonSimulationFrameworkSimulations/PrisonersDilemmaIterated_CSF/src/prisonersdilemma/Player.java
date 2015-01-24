@@ -71,23 +71,31 @@ public abstract class Player {
 		// distributed agent (agent model)
 		// LOW: Add support for merging multiple messages bound for different agents
 		gameAdministrator.getPrisonersDilemma_CSF()
-				.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(loggingPrefix, this,
-						round, otherPlayerLastDecision, myDecision);
+				.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
+						loggingPrefix, this, round, otherPlayerLastDecision, myDecision);
 
 		// FIXME: Move to simultaneous processing of these messages?
 		FrameworkMessage msg = gameAdministrator.getRepastS_AgentContext()
 				.getRepastS_SimulationRunContext()
 				.readFrameworkMessageFromDistributedSystem();
 
+		int distributedAgentsRoundNumber = gameAdministrator.getPrisonersDilemma_CSF()
+				.getRoundNumber(
+						msg.getNextDistributedAutonomousAgent(msg.getDocument(), null),
+						msg);
+		assert (round == distributedAgentsRoundNumber);
+
 		System.out.println(loggingPrefix
 				+ "Received distributed decision: "
 				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
 						.getRootElement(), true));
 
-		DECISION thisPlayersDecision = gameAdministrator.getPrisonersDilemma_CSF().getThisPlayerDecision(
-				msg.getNextDistributedAutonomousAgent(msg.getDocument(), null), msg);
-		
+		DECISION thisPlayersDecision = gameAdministrator.getPrisonersDilemma_CSF()
+				.getThisPlayerDecision(
+						msg.getNextDistributedAutonomousAgent(msg.getDocument(), null),
+						msg);
+
 		return thisPlayersDecision;
-		//////////////////////////////////////////////
+		// ////////////////////////////////////////////
 	}
 }

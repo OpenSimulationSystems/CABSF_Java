@@ -120,8 +120,7 @@ public class PrisonersDilemma_CSF {
 		assert (am.getDistributedAutonomousAgentModelID() != null);
 
 		// Populate the Decision and Round Info
-		populatePrisonersDilemmaFrameworkMessage(msg, agentModelActor,
-				round,
+		populatePrisonersDilemmaFrameworkMessage(msg, agentModelActor, round,
 				otherPlayerLastDecision, myDecision);
 
 		System.out.println(loggingPrefix
@@ -168,8 +167,13 @@ public class PrisonersDilemma_CSF {
 						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
 						namespaceStr, elementFilter);
 
-		String decisionStr = simulationDefinedEnvironmentChanges.get(0)
-				.getChild("OtherPlayerDecision", namespace).getText();
+		Element otherPlayerDecisionElement = simulationDefinedEnvironmentChanges.get(0)
+				.getChild("OtherPlayerDecision", namespace);
+		String decisionStr = null;
+		if (otherPlayerDecisionElement != null)
+			decisionStr = otherPlayerDecisionElement.getText();
+		else
+			return null;
 
 		return DECISION.valueOf(decisionStr);
 	}
@@ -191,8 +195,8 @@ public class PrisonersDilemma_CSF {
 	}
 
 	public FrameworkMessage populatePrisonersDilemmaFrameworkMessage(
-			FrameworkMessage msg, Element agentModelActor, int round, DECISION otherPlayerLastDecision,
-			DECISION myDecision) {
+			FrameworkMessage msg, Element agentModelActor, int round,
+			DECISION otherPlayerLastDecision, DECISION myDecision) {
 
 		populatePrisonersDilemmaDecisionAndRoundElements(msg, agentModelActor, round,
 				otherPlayerLastDecision, myDecision);

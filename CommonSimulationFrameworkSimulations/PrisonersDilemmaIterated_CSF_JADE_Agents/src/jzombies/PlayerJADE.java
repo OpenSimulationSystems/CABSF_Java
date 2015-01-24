@@ -125,7 +125,7 @@ public class PlayerJADE extends Agent {
 				System.out.println(logPrefix + " Received Message: "
 						+ aclMsg.getConversationId() + " " + aclMsg.getReplyWith()
 						+ " Message:" + msgStr);
-				
+
 				// Get the distributed autonomous agent element and set the ID
 				Element distributedAutonomousAgentElement = msg
 						.getNextDistributedAutonomousAgent(msg.getDocument(), null);
@@ -142,27 +142,47 @@ public class PlayerJADE extends Agent {
 						distributedAutonomousAgentElement, msg);
 				DECISION otherPlayerLastRoundDecision = prisonersDilemma_CSF
 						.getOtherPlayerDecision(distributedAutonomousAgentElement, msg);
+
 				System.out.println(logPrefix + " Round: " + String.valueOf(round)
 						+ " Received Last Round's Other Player's Decision: "
-						+ otherPlayerLastRoundDecision.toString());
+						+ otherPlayerLastRoundDecision);
 
 				DECISION myDecision = makeDecision(round, otherPlayerLastRoundDecision);
 				System.out.println(logPrefix + " Decided: " + myDecision.toString());
 
-				msg = prisonersDilemma_CSF.populatePrisonersDilemmaFrameworkMessage(msg,
-						agentModelActor, round, null, myDecision);
+				FrameworkMessage replyMsg = new FrameworkMessageImpl(
+						SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_ENGINE,
+						jade_MAS_AgentContext.getBlankCachedMessageExchangeTemplate());
+
+				// Get the distributed autonomous agent and set the ID
+				distributedAutonomousAgentElement = replyMsg
+						.getNextDistributedAutonomousAgent(replyMsg.getDocument(),
+								jade_MAS_AgentContext
+										.getCachedDistributedAutonomousAgentTemplate());
+				replyMsg.setDistributedAutonomousAgentID(
+						distributedAutonomousAgentElement, distributedAutonomousAgentID);
+
+				// Get the agent model actor and set the ID
+				agentModelActor = replyMsg.getNextAgentModelActor(
+						distributedAutonomousAgentElement,
+						jade_MAS_AgentContext.getCachedAgentModelActorTemplate());
+				replyMsg.setIDForActorInAgentModel(agentModelActor,
+						distributedAutonomousAgentModelID);
+
+				replyMsg = prisonersDilemma_CSF.populatePrisonersDilemmaFrameworkMessage(
+						replyMsg, agentModelActor, round, null, myDecision);
 
 				System.out.println(logPrefix
 						+ " Sending move decision to the JADE Controller Agent: "
 						+ aclMsg.getConversationId()
 						+ " Message:"
-						+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
+						+ XMLUtilities.convertDocumentToXMLString(replyMsg.getDocument()
 								.getRootElement(), true));
 
 				// Send message to the JADE Controller Agent
 				ACLMessage response = aclMsg.createReply();
 				response.setPerformative(ACLMessage.INFORM);
-				response.setContent(msg.toPrettyPrintedXMLString());
+				response.setContent(replyMsg.toPrettyPrintedXMLString());
 				myAgent.send(response);
 
 			} else {

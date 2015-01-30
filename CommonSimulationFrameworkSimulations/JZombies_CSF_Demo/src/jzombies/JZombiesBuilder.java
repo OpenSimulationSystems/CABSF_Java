@@ -31,9 +31,9 @@ public class JZombiesBuilder implements ContextBuilder<Object> {
 	@SuppressWarnings("rawtypes")
 	//@Override
 	public Context build(Context<Object> context) {
-/*		double MAX_ITERATIONS = 30;
+		double MAX_ITERATIONS = 300;
 		RunEnvironment runEnvironment = RunEnvironment.getInstance();
-		runEnvironment.endAt(MAX_ITERATIONS);*/
+		runEnvironment.endAt(MAX_ITERATIONS);
 		
 		context.setId("jzombies");
 

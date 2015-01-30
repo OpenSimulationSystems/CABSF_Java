@@ -55,7 +55,7 @@ public class RepastS_SimulationRunnerMain {
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the configuration
-			Double max_ticks = 300d;
+			Double max_ticks = null; //= 300d;
 			double tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 
 			System.out

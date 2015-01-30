@@ -2,8 +2,8 @@
   <name>Time Series Chart</name>
   <dataSet>A Data Set</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Total SCore</yAxisLabel>
-  <chartTitle>Total Scores Player 0 vs. Player 1</chartTitle>
+  <yAxisLabel></yAxisLabel>
+  <chartTitle></chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>
@@ -21,9 +21,9 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Total Score - Player 0</string>
+      <string>Running Score - A</string>
       <SeriesData>
-        <label>Total Score - Player 0</label>
+        <label>Running Score - A</label>
         <color>
           <red>0</red>
           <green>0</green>
@@ -33,9 +33,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Total Score - Player 1</string>
+      <string>Running Score - B</string>
       <SeriesData>
-        <label>Total Score - Player 1</label>
+        <label>Running Score - B</label>
         <color>
           <red>255</red>
           <green>0</green>

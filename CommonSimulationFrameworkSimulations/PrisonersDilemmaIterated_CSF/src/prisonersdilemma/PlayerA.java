@@ -2,13 +2,13 @@ package prisonersdilemma;
 
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 
-public class Player0 extends Player {
+public class PlayerA extends Player {
 
-	private Player0() {
+	private PlayerA() {
 		super(null);
 	}
 
-	public Player0(GameAdministrator gameAdministrator) {
+	public PlayerA(GameAdministrator gameAdministrator) {
 		super(gameAdministrator);
 	}
 
@@ -20,6 +20,7 @@ public class Player0 extends Player {
 					this.gameAdministrator.getRound(),
 					this.gameAdministrator.getLastPlayer1Decision(), null);
 		} else {
+			//For purposes of testing with the GUI (non-CSF functionality)
 			return DECISION.COOPERATE;
 		}
 

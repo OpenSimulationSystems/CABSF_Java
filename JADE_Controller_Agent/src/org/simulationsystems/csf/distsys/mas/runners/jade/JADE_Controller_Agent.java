@@ -72,7 +72,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 			if (frameworkConfigurationFileName.equals("PLACEHOLDERCONFIGFILE"))
 				numberOfAgents = 6;
 			else
-				numberOfAgents = 2;
+				numberOfAgents = 8;
 
 			jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
 			jade_MAS_RunGroupContext = null;

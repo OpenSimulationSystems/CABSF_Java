@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfMessagingRuntimeException;
+import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
@@ -126,6 +127,7 @@ public class RepastS_SimulationAdapterAPI {
 		repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
 				.next().initializeAgentMappings();
 
+		boolean atLeastOneMappingPerformed = false;
 		// Find all of the individual Repast agents to be mapped in the framework to
 		// distributed
 		// agents
@@ -148,24 +150,31 @@ public class RepastS_SimulationAdapterAPI {
 				Iterable<Object> simulationAgentsInSingleClass = nativeRepastContextForThisRun
 						.getAgentLayer(simulationAgentClazz);
 
-/*				if (repastS_SimulationRunContext.getSimulationRunContext()
-						.getSimulationRunGroupContext()
-						.getSimulationRunGroupConfiguration()
-						.getSimulationAgentsBelongToOneClass()) {*/
-					// For a distributed agent class type, for each individual simulation
-					// agent, map to
-					// an existing free AgentMapping object
-					for (Object simulationAgent : simulationAgentsInSingleClass) {
-						mapSimulationSideAgent(simulationAgent,
-								repastS_SimulationRunContext.getSimulationRunContext());
-					}
-/*				}
-				else {
-					
-				}*/
+				/*
+				 * if (repastS_SimulationRunContext.getSimulationRunContext()
+				 * .getSimulationRunGroupContext() .getSimulationRunGroupConfiguration()
+				 * .getSimulationAgentsBelongToOneClass()) {
+				 */
+				// For a distributed agent class type, for each individual simulation
+				// agent, map to
+				// an existing free AgentMapping object
+				for (Object simulationAgent : simulationAgentsInSingleClass) {
+					atLeastOneMappingPerformed = true;
+					mapSimulationSideAgent(simulationAgent,
+							repastS_SimulationRunContext.getSimulationRunContext());
+				}
+				/*
+				 * } else {
+				 * 
+				 * }
+				 */
 			} else
 				continue; // Not an agent we need to map.
 		}
+
+		if (atLeastOneMappingPerformed != true)
+			throw new CsfRuntimeException(
+					"No mapping was performed of simulation agent(s) to distributed autonomous agent and agent model IDs");
 
 		// TODO: Move this whole section to the main simulation API?
 		// 1 - Wait for the command from the simulation administrator to start the

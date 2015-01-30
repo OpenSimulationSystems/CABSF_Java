@@ -1,6 +1,7 @@
 package prisonersdilemma;
 
 import java.util.List;
+
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
@@ -12,11 +13,17 @@ import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentC
 import repast.simphony.context.Context;
 import repast.simphony.query.space.grid.GridCell;
 
-public abstract class Player {
+public class Player {
 	private Player currentCompetitor;
-	private int totalScore;
+	private int runningScore;
 	private int playerNumber;
 	protected GameAdministrator gameAdministrator;
+	private Player playerParent;
+	private int totalScore;
+
+	public Player getPlayerParent() {
+		return playerParent;
+	}
 
 	public Player(GameAdministrator gameAdministrator) {
 		this.gameAdministrator = gameAdministrator;
@@ -34,17 +41,38 @@ public abstract class Player {
 		this.currentCompetitor = player;
 	}
 
-	abstract public DECISION decide();
+	/*
+	 * Child class makes the decision
+	 */
+	public DECISION decide() {
+		return null;
+	};
 
-	public void updateScore(int newScore) {
+	public void updateRunningScore(int newScore, String playerStr) {
+		runningScore += newScore;
+		System.out.println("[Game Administrator] Updating Running Scores.  Player "
+				+ String.valueOf(playerNumber) + " (" + playerStr + ")"
+				+ " got new score: " + String.valueOf(newScore) + " New Running Score: "
+				+ String.valueOf(runningScore));
+	}
+	
+	/*
+	 * Total scores are kept by the player parent
+	 */
+	public void updateTotalScore(int newScore, String playerStr) {
 		totalScore += newScore;
-		System.out.println("[Game Administrator] Player " + String.valueOf(playerNumber)
+		System.out.println("[Game Administrator] Updating Total Scores.  Player "
+				+ String.valueOf(playerNumber) + " (" + playerStr + ")"
 				+ " got new score: " + String.valueOf(newScore) + " New Total Score: "
 				+ String.valueOf(totalScore));
 	}
 
 	public int getTotalScore() {
 		return totalScore;
+	}
+
+	public int getRunningScore() {
+		return runningScore;
 	}
 
 	public DECISION sendRoundInformationToAndGetDecisionFromDistributedAgent(int round,
@@ -57,8 +85,9 @@ public abstract class Player {
 		SimulationDistributedSystemManager dsm = gameAdministrator
 				.getRepastS_AgentContext().getRepastS_SimulationRunContext()
 				.getSimulationDistributedSystemManagers().iterator().next();
-		AgentMapping am = dsm.getAgentMappingForObject(this);
-
+		AgentMapping am = dsm.getAgentMappingForObject(this.getPlayerParent());
+		assert(am!=null);
+		
 		String distributedSystemID = am.getDistributedSystemID();
 		String distributedAutonomousAgentID = am.getDistributedAutonomousAgentID();
 		String distributedAutonomousAgentModelID = am
@@ -72,7 +101,7 @@ public abstract class Player {
 		// LOW: Add support for merging multiple messages bound for different agents
 		gameAdministrator.getPrisonersDilemma_CSF()
 				.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
-						loggingPrefix, this, round, otherPlayerLastDecision, myDecision);
+						loggingPrefix, this.getPlayerParent(), round, otherPlayerLastDecision, myDecision);
 
 		// FIXME: Move to simultaneous processing of these messages?
 		FrameworkMessage msg = gameAdministrator.getRepastS_AgentContext()
@@ -97,5 +126,9 @@ public abstract class Player {
 
 		return thisPlayersDecision;
 		// ////////////////////////////////////////////
+	}
+
+	public void setPlayerParent(Player playerParent) {
+		this.playerParent = playerParent;
 	}
 }

@@ -163,6 +163,31 @@ public class SimulationDistributedSystemManager {
 					distributedSystem.getDistributedSystemID(),
 					"DistributedSystemAutonomousAgent2",
 					"DistributedSystemAutonomousAgent2MODEL", "prisonersdilemma.Player");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent3",
+					"DistributedSystemAutonomousAgent3MODEL", "prisonersdilemma.Player");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent4",
+					"DistributedSystemAutonomousAgent4MODEL", "prisonersdilemma.Player");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent5",
+					"DistributedSystemAutonomousAgent5MODEL", "prisonersdilemma.Player");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent6",
+					"DistributedSystemAutonomousAgent6MODEL", "prisonersdilemma.Player");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent7",
+					"DistributedSystemAutonomousAgent7MODEL", "prisonersdilemma.Player");
+			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
+					distributedSystem.getDistributedSystemID(),
+					"DistributedSystemAutonomousAgent8",
+					"DistributedSystemAutonomousAgent8MODEL", "prisonersdilemma.Player");
+
 		}
 	}
 
@@ -173,8 +198,8 @@ public class SimulationDistributedSystemManager {
 	public boolean isAgentClassDistributedType(Class<Object> agentClass) {
 		// TODO: Tie this to the simulation configuration
 		if (agentClass.getCanonicalName().equals("jzombies.Human")
-				|| agentClass.getCanonicalName().equals("prisonersdilemma.Player0")
-				|| agentClass.getCanonicalName().equals("prisonersdilemma.Player1"))
+				|| agentClass.getCanonicalName().equals("prisonersdilemma.Player"))
+				//|| agentClass.getCanonicalName().equals("prisonersdilemma.PlayerB"))
 			return true;
 		else
 			return false;

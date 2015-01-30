@@ -11,25 +11,25 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>648780257</hashCode>
+    <hashCode>1276649003</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Total Score - Player 0</string>
+      <string>Running Score - A</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Total Score - Player 0</id>
-        <className>prisonersdilemma.Player0</className>
-        <methodName>getTotalScore</methodName>
+        <id>Running Score - A</id>
+        <className>prisonersdilemma.PlayerA</className>
+        <methodName>getRunningScore</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Total Score - Player 1</string>
+      <string>Running Score - B</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Total Score - Player 1</id>
-        <className>prisonersdilemma.Player1</className>
-        <methodName>getTotalScore</methodName>
+        <id>Running Score - B</id>
+        <className>prisonersdilemma.PlayerB</className>
+        <methodName>getRunningScore</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

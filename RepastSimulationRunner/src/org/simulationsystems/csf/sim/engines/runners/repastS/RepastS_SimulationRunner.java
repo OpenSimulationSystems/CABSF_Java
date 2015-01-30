@@ -90,10 +90,22 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// TODO: Programmatically read the parameters from the RunState?
 		// TODO: Add validation of this number against the actual number of distributed agent models
 		DefaultParameters defaultParameters = new DefaultParameters();
+		//JZombies
+		if (frameworkConfigurationFileName.equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
 		defaultParameters.addParameter("human_count", "Human Count", Number.class, 6,
 				true);
 		defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class, 6,
 				true);
+		}
+		//Prisoner's Dilemma
+		else {
+			defaultParameters.addParameter("player_count", "Player Count", Number.class, 8,
+					true);
+			defaultParameters.addParameter("number_of_rounds", "Number of Rounds", Number.class, 10,
+					true);
+			
+		}
+			
 		controller.runParameterSetters(defaultParameters);
 
 		// If Common Framework configuration file is provided, initialize Common

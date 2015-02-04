@@ -17,9 +17,9 @@ import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
-import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentAdapterAPI;
-import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
-import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_SimulationRunContext;
+import org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
+import org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
+import org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;

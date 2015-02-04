@@ -38,13 +38,11 @@ public abstract class CommonMessagingAbstraction {
 	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator(String clientID) {
 		return commonMessagingImplementationAPI.readFrameworkMessageFromSimulationAdministrator(clientID);
 		
-	};
-	
+	}	
 	public FrameworkMessage readFrameworkMessageFromDistributedSystem(String clientID) {
 		return commonMessagingImplementationAPI.readFrameworkMessageFromDistributedSystem(clientID);
 		
-	};
-
+	}
 	
 	public FrameworkMessage listenForMessageFromSimulationEngine(SYSTEM_TYPE targetSystemType, String clientID) {
 		return commonMessagingImplementationAPI.listenForMessageFromSimulationEngine(targetSystemType, clientID);

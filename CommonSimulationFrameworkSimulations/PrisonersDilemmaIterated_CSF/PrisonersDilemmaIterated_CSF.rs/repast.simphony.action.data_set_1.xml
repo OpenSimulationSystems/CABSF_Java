@@ -16,18 +16,18 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Running Score - A</string>
+      <string>Player A - Running Score</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Running Score - A</id>
+        <id>Player A - Running Score</id>
         <className>prisonersdilemma.PlayerA</className>
         <methodName>getRunningScore</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Running Score - B</string>
+      <string>Player B - Running Score</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Running Score - B</id>
+        <id>Player B - Running Score</id>
         <className>prisonersdilemma.PlayerB</className>
         <methodName>getRunningScore</methodName>
         <aggType>SUM</aggType>

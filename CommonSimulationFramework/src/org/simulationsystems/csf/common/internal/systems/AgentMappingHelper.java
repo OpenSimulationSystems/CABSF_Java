@@ -3,6 +3,7 @@ package org.simulationsystems.csf.common.internal.systems;
 import java.util.HashSet;
 import java.util.UUID;
 
+import org.simulationsystems.csf.common.csfmodel.AgentMapping;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 
 public class AgentMappingHelper {

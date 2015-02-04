@@ -75,6 +75,5 @@ public class RedisMessagingConcreteImplementation implements CommonMessagingImpl
 			DistSysRunContext distSysRunContext, String simulationEngineID) {
 		commonMessagingDao.sendMessageToSimulationEngine(distSysRunContext, frameworkMessage, simulationEngineID);
 		
-	};
-
+	}
 }

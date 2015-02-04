@@ -6,7 +6,7 @@
 Simulation Framework - Quick Start Tutorial</span></h1>
 Author: <a href="mailto:jcald1@NOSPAMREMOVEgmail">Jorge Calderon</a><br>
 Release 0.1.TBD<br>
-1/5/2015<br>
+1/31/2015<br>
 <h2>Introduction</h2>
 The Common Simulation Framework has several goals:<br>
 <ol>
@@ -261,4 +261,26 @@ code as placeholders for better validation and error handling.
 enable assertion checking, especially during the testing phase.
 &nbsp;All of the launchers in the CSF simulations have this options set
 by default.</li><li>The JADE Controller agent should be run either in
-the same JADE Container as the other JADE agents, or it should be run first.</li><li>The JADE Controller agent should run on in the main JADE container.</li><li>Limitations to be removed shortly post March 2015:</li><ol><li>The number of &nbsp;corresponding JADE and Repast agents is fixed at 6.</li><li>Only the JZombies and Prisoner's Dilemma simulations are supported.</li></ol></ol><br><br></body></html>
+the same JADE Container as the other JADE agents, or it should be run first.</li><li>The JADE Controller agent should run on in the main JADE container.</li><li>Limitations to be removed shortly post March 2015:</li><ol><li>The number of &nbsp;corresponding JADE and Repast agents is fixed at 6 for JZombies and 8 for the Prisoner's Dilemma Tournament.</li><li>Only the JZombies and Prisoner's Dilemma simulations are supported.</li></ol></ol><h1>Important Information for Simulation Authors (Developers)</h1>The
+Common Simulation Framework uses a default namespace (namespace at the
+root element with no namespace qualifier/prefix) in the message
+exchange document. &nbsp; The root element is&nbsp;CsfMessageExchange.
+&nbsp;The value of the default namespace is currently:&nbsp;
+http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0
+as specified in the xmlns attribute in the root element. &nbsp;Most
+elements, including the root element, do not have a namespace prefix
+(such as "csf:"). &nbsp;CSF uses XPath to query the XML messages,
+however, XPath has no support for default namespaces. &nbsp;Therefore,
+CSF programmatically adds a "x:" qualifier before <span style="text-decoration: underline;">querying </span>and
+all queries into the XML must contain the "x:" namespace qualifier.
+&nbsp;This becomes important when creating methods to query or
+populate&nbsp;simulation-specific elements. &nbsp;If you follow the
+sample simulations examples, there should not be a problem. <br>While most elements do not have a namespace qualifier, at times, when CSF <span style="text-decoration: underline;">populates </span>sections
+of the XML, it does add an "x:" qualifier and repeats the default
+namespace. &nbsp;While this is unecessary in XML, semantically this is
+equivalent to leaving off the qualifier and namespace attribute, as all
+elements already belong to the default namespace by default.
+&nbsp;Again, if you follow the examples in the sample simulations, you
+should be fine. &nbsp;If you choose to use your own parsing library,
+make sure your library is set to be namespace-aware. &nbsp;CSF uses
+JDOM 2 for XML creation and parsing.</body></html>

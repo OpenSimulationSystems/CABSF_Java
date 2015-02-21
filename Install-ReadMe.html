@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title></head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
+
+</head>
 <body>
 <h1><span style="font-weight: bold;">The Common
 Simulation Framework - Installation Instructions</span></h1>
@@ -18,7 +20,7 @@ scripts/batch files
 for starting the simulation, that have been created only for Windows so
 far. &nbsp;Each contains a small number of simple commands, which
 could
-be be easily copied and pasted into a Linux/MacOS shell.</li>
+be be easily copied and pasted into a Linux/MacOS shell, but may need to be modified slightly to work in Linux or MacOS.</li>
 </ol>
 <h2>Third Party Software Downloads<br>
 </h2>
@@ -143,11 +145,11 @@ CommonSimulationFrameworkSimulations subdirectory.</li>
 <li>Add the third party libraries to
 the CommonSimulationFramework&nbsp; You can&nbsp;download a zip
 file from:
-https://drive.google.com/file/d/0B8tCWle1gJ9XOXZ4ZS1xSlIzSGM/view?usp=sharing,
+https://drive.google.com/file/d/0B8tCWle1gJ9XcXk2MUdCM2F3MnM/view?usp=sharing,
 and extract this lib directory to
 the CommonSimulationFramework/lib
 directory.
-<br>
+&nbsp;Make sure you don't end up with a lib/lib directory<br>
 Alternatively, you can download the third party binaries (JARs
 )directly the source
 locations:&nbsp;<br>
@@ -156,11 +158,15 @@ locations:&nbsp;<br>
 </a><br>
 <a href="https://github.com/xetorthio/jedis/releases">Jedis
 2.4.2&nbsp;</a><br>
-JADE<br>
-Make sure to grab any dependency JARs from these two libraries
-(such as Jaxen 1.1.6). &nbsp;If downloading from the zip file
+<a href="http://jade.tilab.com/">JADE 4.3.3</a><br>
+<a href="https://code.google.com/p/combinatoricslib/">Combinatronic
+2.1</a><br>
+<a href="https://code.google.com/p/guava-libraries/">Java
+Guava 18.0</a></li>Make sure to grab any dependency JARs from each of these libraries
+(such as Jaxen 1.1.6 required by JDOM). &nbsp;If downloading from
+the zip file
 above,
-these will already be included.</li>
+these will already be included.
 <li>Extract the JARs to the CommonSimulationFramework lib
 directory. Make sure you don't end up with a /lib/lib
 directory.
@@ -219,7 +225,8 @@ click on the RepastSimulationRunner, Build Path, and add
 the&nbsp;&nbsp;JZombies_CSF_Demo
 projects.
 &nbsp;While the underlying runner code doesn't need these projects,
-there are JUnit tests in the Repast Simulation Runner for convenience methods&nbsp;in the&nbsp;JZombies_CSF_Demo project.</li>
+there are JUnit tests in the Repast Simulation Runner for convenience
+methods&nbsp;in the&nbsp;JZombies_CSF_Demo project.</li>
 <li>Select add&nbsp;JARs, and select the jars under the
 folder and subfolders in&nbsp;CommonSimulationFramework//lib.</li>
 <li>Select the External JARs button and add all of the JARS
@@ -227,20 +234,26 @@ from the<span style="color: red;"><span style="color: black;"> two <span style="
 bolded</span>&nbsp;</span></span><span style="color: black;">{Repast_Installation}/eclipse</span><span style="font-weight: bold;"> </span>lines above.</li>
 <li>Click on the "Add Library" button and select&nbsp;the
 JUnit library.</li>
-<li>Add the Mock_JADE_Controller_Agent project. &nbsp;This project is used in JUnit tests.</li><li>Add the CommonSimulationFramework dependency and accompanying JARs to the JADE_Controller_Agent.</li>
+<li>Add the Mock_JADE_Controller_Agent project. &nbsp;This
+project is used in JUnit tests.</li>
+<li>Add the CommonSimulationFramework dependency and
+accompanying JARs to the JADE_Controller_Agent.</li>
 <li>Right click on JZombies_CSF_JADE_Agents and add the
 CommonSimulationFramework and accompanying JAR files. &nbsp;Add the
-JADE_Controller_Agent and JZombies_CSF_Demo projects. &nbsp;The JADE
+JADE_Controller_Agent and JZombies_CSF_Demo projects. &nbsp;The
+JADE
 Controller Project is added here to be able to run all the JZombies
 Human JADE agents and the JADE Controller in a single JADE
 Container/JVM, for simplicity. &nbsp;The&nbsp;JZombies_CSF_Demo
 dependency is added to give the JADE agent authors access to the
 simulation-specific convenience methods shared by both the Repast
-simulation and JADE agents. &nbsp;Otherwise there would be no need to
+simulation and JADE agents. &nbsp;Otherwise there would be no need
+to
 add a dependency to a Repast project. &nbsp;The simulation-specific
 convenience methods shared by both the Repast simulation and JADE
 agents are added to the Repast project for simplicity by eliminating
-the need to create yet another separate JAR/project.</li><li>Click on the "Problems" tab below. &nbsp;You should no
+the need to create yet another separate JAR/project.</li>
+<li>Click on the "Problems" tab below. &nbsp;You should no
 longer see any red "Error" entries, only yellow warnings.</li>
 <li>Unlike the Repast simulations projects (such
 as&nbsp;JZombies_CSF_Demo), other applications such
@@ -251,7 +264,8 @@ projects are created. &nbsp;However, there is a presaved run
 configuration that can be added to the run configurations menu.
 &nbsp;Right click&nbsp;RepastSimulationRunner, open the
 launders
-folder, select "RepastSimulationRunner - CSF - JZombies.launch", right click "Run As",
+folder, select "RepastSimulationRunner - CSF - JZombies.launch", right
+click "Run As",
 click "RepastSimulationRunner - CSF - JZombies.launch
 . &nbsp;The simulation runner has started executing. &nbsp;Next
 time
@@ -262,7 +276,8 @@ been
 started.&nbsp;</li>
 <li>Click on that drop down next to the green run, Run
 Configurations, select the "RepastSimulationRunner - CSF -
-JZombies.launch button", select the Arguments tab. &nbsp;You should see
+JZombies.launch button", select the Arguments tab. &nbsp;You should
+see
 the path to your JZombies_CSF_Demo directory. &nbsp;The first
 argument
 is the location of the Repast configuration for this simulation.
@@ -325,7 +340,8 @@ file), changes directly to the run configuration will not change the
 run configuration, and right click again.</li>
 <li>Click
 on the drop down next to the run button and select
-RepastSimulationRunner - CSF - JZombies.launch. &nbsp;You should see in
+RepastSimulationRunner - CSF - JZombies.launch. &nbsp;You should
+see in
 the console
 that
 the Common Simulation Framework is polling the
@@ -375,11 +391,14 @@ Run(s)</li>
 <li>Do not proceed until you see both the "."s from the
 simulation side
 and the "+" from the JADE side being printed in separate consoles.
-&nbsp;If you don't see the consoles switching back and forth, at the
+&nbsp;If you don't see the consoles switching back and forth, at
+the
 bottom, under the "Console" tab, select the "Display Selected Console"
-drop down arrow for the other process. &nbsp;Make sure that the name in
+drop down arrow for the other process. &nbsp;Make sure that the
+name in
 the drop down doesn't say that it (or the other process) has been
-terminated.</li><li>All
+terminated.</li>
+<li>All
 of the processes are running now. &nbsp;The distributed system(s)
 are
 waiting on the simulation engine and as mentioned already, the

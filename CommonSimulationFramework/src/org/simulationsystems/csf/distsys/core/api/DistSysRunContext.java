@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
-import org.simulationsystems.csf.common.csfmodel.api.CsfRunContext;
+import org.simulationsystems.csf.common.csfmodel.context.CsfRunContext;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunConfiguration;
@@ -25,7 +25,7 @@ import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistr
 /*
  * Provides the context for the Common Simulation Framework. Adapter developers may use this context
  * directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g.,
- * org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastSimphonySimulationFrameworkContext). The benefit
+ * org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastSimphonySimulationFrameworkContext). The benefit
  * is that the API client would be able to utilize native Simulation-Toolkit-specific objects
  * instead of the generic "Object" that is used by this generic Simulation Framework API.
  * 
@@ -33,6 +33,38 @@ import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistr
  * Context object.
  */
 public class DistSysRunContext extends CsfRunContext {
+/**
+    * <pre>
+    *           0..*     0..*
+    * DistSysRunContext ------------------------- DistSysRunContext
+    *           distSysRunContext1        &lt;       distSysRunContext
+    * </pre>
+    */
+   private Set<DistSysRunContext> distSysRunContext;
+   
+   public Set<DistSysRunContext> getDistSysRunContext() {
+      if (this.distSysRunContext == null) {
+         this.distSysRunContext = new HashSet<DistSysRunContext>();
+      }
+      return this.distSysRunContext;
+   }
+   
+   /**
+    * <pre>
+    *           0..*     0..*
+    * DistSysRunContext ------------------------- DistSysRunContext
+    *           distSysRunContext        &gt;       distSysRunContext1
+    * </pre>
+    */
+   private Set<DistSysRunContext> distSysRunContext1;
+   
+   public Set<DistSysRunContext> getDistSysRunContext1() {
+      if (this.distSysRunContext1 == null) {
+         this.distSysRunContext1 = new HashSet<DistSysRunContext>();
+      }
+      return this.distSysRunContext1;
+   }
+   
 	protected DistSysRunGroupConfiguration distSysRunGroupConfiguration; // Simulation
 	// Run-group-wide
 

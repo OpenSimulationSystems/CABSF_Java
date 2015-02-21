@@ -63,7 +63,7 @@ public class JADE_MAS_AdapterAPI {
 			.getInstance();
 	private String distributedSystemNameToSetInDistributedSystemAPI = "JADE";
 	// private String fullyQualifiedClassNameForDistributedAgentManager =
-	// "org.simulationsystems.csf.sim.engines.adapters.repastS.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
+	// "org.simulationsystems.csf.sim.adapters.simengines.repastS.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
 	private JADE_MAS_RunContext jade_MAS_RunContext;
 	private JadeControllerMock jadeControllerMock;
 	private Agent jadeControllerAgent;

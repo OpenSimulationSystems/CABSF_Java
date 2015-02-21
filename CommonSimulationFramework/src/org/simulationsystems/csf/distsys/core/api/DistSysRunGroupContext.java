@@ -2,7 +2,7 @@ package org.simulationsystems.csf.distsys.core.api;
 
 import org.jdom2.Document;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
-import org.simulationsystems.csf.common.csfmodel.api.CsfRunGroupContext;
+import org.simulationsystems.csf.common.csfmodel.context.CsfRunGroupContext;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 
 public class DistSysRunGroupContext extends CsfRunGroupContext  {

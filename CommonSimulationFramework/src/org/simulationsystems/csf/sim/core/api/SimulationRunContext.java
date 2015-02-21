@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
-import org.simulationsystems.csf.common.csfmodel.api.CsfRunContext;
+import org.simulationsystems.csf.common.csfmodel.context.CsfRunContext;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.sim.core.api.configuration.SimulationRunConfiguration;
 import org.simulationsystems.csf.sim.core.api.configuration.SimulationRunGroupConfiguration;
@@ -18,7 +18,7 @@ import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistr
 /*
  * Provides the context for the Common Simulation Framework. Adapter developers may use this context
  * directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g.,
- * org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastSimphonySimulationFrameworkContext). The benefit
+ * org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastSimphonySimulationFrameworkContext). The benefit
  * is that the API client would be able to utilize native Simulation-Toolkit-specific objects
  * instead of the generic "Object" that is used by this generic Simulation Framework API.
  * 

@@ -10,16 +10,16 @@ import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.simulationsystems.csf.common.csfmodel.AgentMapping;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
-import org.simulationsystems.csf.common.csfmodel.api.AgentContext;
+import org.simulationsystems.csf.common.csfmodel.context.AgentContext;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
-import org.simulationsystems.csf.common.internal.systems.AgentMapping;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock;
+import org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
 import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
-import org.simulationsystems.csf.sim.engines.adapters.repastS.api.RepastS_AgentContext;
 
 import repast.simphony.space.grid.GridPoint;
 

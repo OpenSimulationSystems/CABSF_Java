@@ -4,7 +4,7 @@
     <eAnnotations xmi:id="_JUkF8KtVEeSb7-jUi2rLpg" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_JUkF8atVEeSb7-jUi2rLpg" source="codegen">
         <details xmi:id="_JUkF8qtVEeSb7-jUi2rLpg" key="codegenDirectory" value="/CommonSimulationFramework/src"/>
-        <details xmi:id="_P-ve8KtVEeSb7-jUi2rLpg" key="AssociatedSourceCode" value="/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/AgentMapping.java;759008630/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SIMULATION_TYPE.java;1559420036/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SYSTEM_TYPE.java;4234072832/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SimulationRunGroup.java;3117728862/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AbstractContext.java;2104141906/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AgentContext.java;3141592117/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunContext.java;1691604787/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunGroupContext.java;782798452/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfCheckedException.java;415388482/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfInitializationRuntimeException.java;2789990652/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfMessagingRuntimeException.java;2059312893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfRuntimeException.java;1978746924/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FRAMEWORK_COMMAND.java;1650210909/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessage.java;1424560369/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessageImpl.java;4127490706/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/STATUS.java;3533373896/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/MessagingUtilities.java;4280592877/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingAbstraction.java;1410138903/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingRefinedAbstractionAPI.java;1328553118/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/CommonMessagingImplementationAPI.java;837527433/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/RedisMessagingConcreteImplementation.java;1802150801/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/CommonMessagingDao.java;3352715707/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/RedisDaoImpl.java;3343081834/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/interfaces/redis/RedisConnectionManager.java;2953901171/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/XMLUtilities.java;1174092979/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/transformers/FrameworkMessageDocumentHelper.java;2556523941/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/AgentMappingHelper.java;1927010188/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/DistributedSystem.java;947440138/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AdapterAPI.java;3886115082/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AgentContext.java;2139417651/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunContext.java;3750822353/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunGroupContext.java;1128553747/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JadeControllerMock.java;561648807/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/CsfDistributedJADEagentWrapper.java;229763079/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeDistributedAutonomousAgent.java;1095643326/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeJADEMockContext.java;3674348158/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysInitializationHelper.java;71665886/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunContext.java;2094832678/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunGroupContext.java;3117824750/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistributedSystemAPI.java;3546920281/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunConfiguration.java;2634529670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunGroupConfiguration.java;3450817928/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentModel.java;1693472448/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentsManager.java;4270847513/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAutonomousAgent.java;1967923745/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/simulationruntime/SimulationEngineManager.java;1522540727/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentAdapterAPI.java;1320389027/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentContext.java;1968437434/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationAdapterAPI.java;3537955438/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunContext.java;2158755670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunGroupContext.java;758445775/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationAPI.java;3129962893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationInitializationHelper.java;1552759204/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunContext.java;2650777746/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunGroupContext.java;2326374792/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunConfiguration.java;146394112/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunGroupConfiguration.java;339347761/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/distributedsystems/SimulationDistributedSystemManager.java;2948522945/1;"/>
+        <details xmi:id="_P-ve8KtVEeSb7-jUi2rLpg" key="AssociatedSourceCode" value="/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/AgentMapping.java;759008630/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SIMULATION_TYPE.java;1559420036/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SYSTEM_TYPE.java;4234072832/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SimulationRunGroup.java;3117728862/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AbstractContext.java;4209977774/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AgentContext.java;3141592117/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunContext.java;1691604787/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunGroupContext.java;782798452/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfCheckedException.java;415388482/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfInitializationRuntimeException.java;2789990652/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfMessagingRuntimeException.java;2059312893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfRuntimeException.java;1978746924/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FRAMEWORK_COMMAND.java;1650210909/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessage.java;1424560369/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessageImpl.java;4127490706/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/STATUS.java;3533373896/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/MessagingUtilities.java;4280592877/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingAbstraction.java;1410138903/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingRefinedAbstractionAPI.java;1328553118/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/CommonMessagingImplementationAPI.java;837527433/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/RedisMessagingConcreteImplementation.java;1802150801/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/CommonMessagingDao.java;3352715707/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/RedisDaoImpl.java;3343081834/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/interfaces/redis/RedisConnectionManager.java;2953901171/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/XMLUtilities.java;1174092979/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/transformers/FrameworkMessageDocumentHelper.java;2556523941/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/AgentMappingHelper.java;1927010188/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/DistributedSystem.java;947440138/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AdapterAPI.java;3886115082/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AgentContext.java;2139417651/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunContext.java;3750822353/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunGroupContext.java;1128553747/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JadeControllerMock.java;561648807/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/CsfDistributedJADEagentWrapper.java;229763079/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeDistributedAutonomousAgent.java;1095643326/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeJADEMockContext.java;3674348158/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysInitializationHelper.java;71665886/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunContext.java;2094832678/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunGroupContext.java;3117824750/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistributedSystemAPI.java;3546920281/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunConfiguration.java;2634529670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunGroupConfiguration.java;3450817928/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentModel.java;1693472448/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentsManager.java;4270847513/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAutonomousAgent.java;1967923745/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/simulationruntime/SimulationEngineManager.java;1522540727/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentAdapterAPI.java;1320389027/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentContext.java;1968437434/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationAdapterAPI.java;1740242688/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunContext.java;2158755670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunGroupContext.java;758445775/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationAPI.java;3129962893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationInitializationHelper.java;1552759204/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunContext.java;2650777746/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunGroupContext.java;2326374792/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunConfiguration.java;146394112/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunGroupConfiguration.java;339347761/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/distributedsystems/SimulationDistributedSystemManager.java;2948522945/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_K_QtMatVEeSb7-jUi2rLpg">
@@ -663,29 +663,31 @@
                     <language>java</language>
                     <body>@SuppressWarnings(&quot;unchecked&quot;)&#xD;
 		List&lt;Element> distributedAutonomousAgentElements = (List&lt;Element>) XMLUtilities&#xD;
-				.executeXPath(&#xD;
-						doc,&#xD;
-						&quot;/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent&quot;,&#xD;
-						namespaceStr, elementFilter);&#xD;
-		distributedAutonomousAgentTemplate = distributedAutonomousAgentElements.get(0)&#xD;
-				.clone();&#xD;
+		.executeXPath(&#xD;
+				doc,&#xD;
+				&quot;/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent&quot;,&#xD;
+				namespaceStr, elementFilter);&#xD;
+		distributedAutonomousAgentTemplate = distributedAutonomousAgentElements&#xD;
+				.get(0).clone();&#xD;
 &#xD;
 		// Agent Model Template&#xD;
-		List&lt;Element> agentModelsElements = (List&lt;Element>) XMLUtilities.executeXPath(&#xD;
-				distributedAutonomousAgentTemplate, &quot;./x:AgentModels&quot;, namespaceStr,&#xD;
-				elementFilter);&#xD;
-		Element agentModels = cachedAgentModelActorTemplate = agentModelsElements.get(0);&#xD;
-		Element agentModel = agentModels.getChild(&quot;AgentModel&quot;, namespace).detach();&#xD;
+		List&lt;Element> agentModelsElements = (List&lt;Element>) XMLUtilities&#xD;
+				.executeXPath(distributedAutonomousAgentTemplate,&#xD;
+						&quot;./x:AgentModels&quot;, namespaceStr, elementFilter);&#xD;
+		Element agentModels = cachedAgentModelActorTemplate = agentModelsElements&#xD;
+				.get(0);&#xD;
+		Element agentModel = agentModels.getChild(&quot;AgentModel&quot;, namespace)&#xD;
+				.detach();&#xD;
 		cachedAgentModelActorTemplate = agentModel.getChild(&quot;Actor&quot;, namespace);&#xD;
 &#xD;
 		// Location Template&#xD;
 		@SuppressWarnings(&quot;unchecked&quot;)&#xD;
 		// TODO: Support multiple actors&#xD;
 		List&lt;Element> agentEnvironmentChangeLocation = (List&lt;Element>) XMLUtilities&#xD;
-				.executeXPath(&#xD;
-						cachedAgentModelActorTemplate,&#xD;
-						&quot;./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange&quot;,&#xD;
-						namespaceStr, elementFilter);&#xD;
+		.executeXPath(&#xD;
+				cachedAgentModelActorTemplate,&#xD;
+				&quot;./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange&quot;,&#xD;
+				namespaceStr, elementFilter);&#xD;
 		cachedLocationTemplate = agentEnvironmentChangeLocation.get(0).detach();&#xD;
 		cachedLocationTemplate.setAttribute(&quot;id&quot;, &quot;&quot;);&#xD;
 &#xD;
@@ -722,8 +724,8 @@
                     <language>java</language>
                     <body>FrameworkMessage fm = new FrameworkMessageImpl(sourceSystem,&#xD;
 				targetSystem,&#xD;
-				//jade_MAS_RunContext.getCachedMessageExchangeTemplate());&#xD;
-			this.getBlankCachedMessageExchangeTemplate());&#xD;
+				// jade_MAS_RunContext.getCachedMessageExchangeTemplate());&#xD;
+				this.getBlankCachedMessageExchangeTemplate());&#xD;
 		// FIXME: Need a better name if all we're doing is setting the ID.&#xD;
 		// populateDistributedAutonomousAgent&#xD;
 		fm.addDistributedAutonomousAgent(fm.getDocument(),&#xD;
@@ -733,24 +735,70 @@
 	</body>
                   </ownedBehavior>
                   <ownedOperation xmi:id="_K_syEKtVEeSb7-jUi2rLpg" name="getCachedDistributedAutonomousAgentTemplate" method="_LoYiyKtVEeSb7-jUi2rLpg">
+                    <ownedComment xmi:id="_XgRtQLl4EeSj4_GTtuInEQ">
+                      <body>Gets the cached distributed autonomous agent template.&#xD;
+	 *&#xD;
+	 * @return the cached distributed autonomous agent template</body>
+                    </ownedComment>
                     <ownedParameter xmi:id="_LeQWUKtVEeSb7-jUi2rLpg" type="_LZoVAatVEeSb7-jUi2rLpg" direction="return"/>
                   </ownedOperation>
                   <ownedOperation xmi:id="_K_syEatVEeSb7-jUi2rLpg" name="getCachedAgentModelActorTemplate" method="_LoYiyqtVEeSb7-jUi2rLpg">
+                    <ownedComment xmi:id="_XgRtQbl4EeSj4_GTtuInEQ">
+                      <body>Gets the cached agent model actor template.&#xD;
+	 *&#xD;
+	 * @return the cached agent model actor template</body>
+                    </ownedComment>
                     <ownedParameter xmi:id="_LeQWUatVEeSb7-jUi2rLpg" type="_LZoVAatVEeSb7-jUi2rLpg" direction="return"/>
                   </ownedOperation>
                   <ownedOperation xmi:id="_K_syEqtVEeSb7-jUi2rLpg" name="getCachedLocationTemplate" method="_LoYizKtVEeSb7-jUi2rLpg">
+                    <ownedComment xmi:id="_XgRtQrl4EeSj4_GTtuInEQ">
+                      <body>Gets the cached location template.&#xD;
+	 *&#xD;
+	 * @return the cached location template</body>
+                    </ownedComment>
                     <ownedParameter xmi:id="_LeZgQKtVEeSb7-jUi2rLpg" type="_LZoVAatVEeSb7-jUi2rLpg" direction="return"/>
                   </ownedOperation>
                   <ownedOperation xmi:id="_K_syE6tVEeSb7-jUi2rLpg" name="getBlankCachedMessageExchangeTemplate" method="_LoYi0KtVEeSb7-jUi2rLpg">
+                    <ownedComment xmi:id="_XgRtRLl4EeSj4_GTtuInEQ">
+                      <body>Gets the blank cached message exchange template.&#xD;
+	 *&#xD;
+	 * @return the blank cached message exchange template</body>
+                    </ownedComment>
                     <ownedParameter xmi:id="_LeZgQ6tVEeSb7-jUi2rLpg" type="_LZfLFatVEeSb7-jUi2rLpg" direction="return"/>
                   </ownedOperation>
                   <ownedOperation xmi:id="_LeZgQatVEeSb7-jUi2rLpg" name="setupElementTemplates" method="_LoYizqtVEeSb7-jUi2rLpg">
+                    <ownedComment xmi:id="_XgRtQ7l4EeSj4_GTtuInEQ">
+                      <body>Sets the up element templates.&#xD;
+	 *&#xD;
+	 * @param doc&#xD;
+	 *            the new up element templates</body>
+                    </ownedComment>
                     <ownedParameter xmi:id="_LeZgQqtVEeSb7-jUi2rLpg" name="doc" type="_LZfLFatVEeSb7-jUi2rLpg"/>
                   </ownedOperation>
                   <ownedOperation xmi:id="_LeZgRKtVEeSb7-jUi2rLpg" name="setCachedMessageExchangeTemplateWithPlaceholders" method="_LoYi0qtVEeSb7-jUi2rLpg">
+                    <ownedComment xmi:id="_XgRtRbl4EeSj4_GTtuInEQ">
+                      <body>Sets the cached message exchange template with placeholders.&#xD;
+	 *&#xD;
+	 * @param cachedMessageExchangeTemplateWithPlaceholders&#xD;
+	 *            the new cached message exchange template with placeholders</body>
+                    </ownedComment>
                     <ownedParameter xmi:id="_LeZgRatVEeSb7-jUi2rLpg" name="cachedMessageExchangeTemplateWithPlaceholders" type="_LZfLFatVEeSb7-jUi2rLpg"/>
                   </ownedOperation>
                   <ownedOperation xmi:id="_LeZgRqtVEeSb7-jUi2rLpg" name="convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage" method="_LoYi1KtVEeSb7-jUi2rLpg">
+                    <ownedComment xmi:id="_XgRtRrl4EeSj4_GTtuInEQ">
+                      <body>Convert document sent to distributed autonomous agent to framework&#xD;
+	 * message.&#xD;
+	 *&#xD;
+	 * @param distributedAutononomousAgentElement&#xD;
+	 *            the distributed autononomous agent element&#xD;
+	 * @param distributedAutonomousAgentID&#xD;
+	 *            the distributed autonomous agent id&#xD;
+	 * @param sourceSystem&#xD;
+	 *            the source system&#xD;
+	 * @param targetSystem&#xD;
+	 *            the target system&#xD;
+	 * @return the framework message</body>
+                    </ownedComment>
                     <ownedParameter xmi:id="_LeZgR6tVEeSb7-jUi2rLpg" name="distributedAutononomousAgentElement" type="_LZoVAatVEeSb7-jUi2rLpg"/>
                     <ownedParameter xmi:id="_LeZgSKtVEeSb7-jUi2rLpg" name="distributedAutonomousAgentID">
                       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
@@ -6753,34 +6801,19 @@ Context object.</body>
                       </ownedOperation>
                     </packagedElement>
                     <packagedElement xmi:type="uml:Class" xmi:id="_LHKE8KtVEeSb7-jUi2rLpg" name="RepastS_SimulationAdapterAPI">
-                      <ownedComment xmi:id="_LqLScqtVEeSb7-jUi2rLpg">
-                        <body>This API is only for use by developers of adapters to connect simulation tools (such as&#xD;
-Repast) and agent-based systems (such as JADE) into the common simulation framework.&#xD;
-Simulation and Agent developers using such systems should use the appropriate&#xD;
-adapter(s). The following highlights the where in the overall system this code sits:&lt;br/>&#xD;
-&lt;br/>&#xD;
+                      <ownedComment xmi:id="_XgRtR7l4EeSj4_GTtuInEQ">
+                        <body>The Repast Simphony Adapter API context factory. This class is the entry&#xD;
+point for RepastS simulations to use the Common Simulation Framework.&#xD;
 &#xD;
-Common Framework---> ***COMMON FRAMEWORK API*** --> Simulation and Agent&#xD;
-RepastSimphonyRepastSimphonySimulationAdapterAPI(s) --> Simulations and Agents (Such as&#xD;
-Repast simulations and JADE agents) --> End Users of Simulation&lt;br/>&#xD;
-&lt;br/>&#xD;
-&#xD;
-Currently supported Adaptors (Implementors of this API):&lt;br/>&#xD;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Repast - Via the&#xD;
-&quot;Repast Simulation RepastS_SimulationRunnerMain&quot; Application, which is both an&#xD;
-RepastSimphonyRepastSimphonySimulationAdapterAPI into the common simulation framework&#xD;
-and its own application programmatically running Repast as a library.&lt;br/>&#xD;
-&lt;br/>&#xD;
-&#xD;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JADE - Via the&#xD;
-&quot;Common Simulation Framework RepastSimphonyRepastSimphonySimulationAdapterAPI JADE Agent&quot;&#xD;
-.&lt;br/>&#xD;
-&lt;br/>&#xD;
-&#xD;
-THIS PACKAGE WILL BE MOVED TO A SEPARATE JAR. TEMPORARILY HERE WIH THE REPAST&#xD;
-SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
-&#xD;
-@author Jorge Calderon</body>
+Note: This API was originally intended to only be used at the RepastS&#xD;
+simulation-level, not at the individual RepastS agent-level. However, in the&#xD;
+current version, the individual agents do use this API directly in addition&#xD;
+to the agent-level API (RepastS Agent API). This may change in newer versions&#xD;
+so that agents only use instantiate the agent-level API.&#xD;
+ *&#xD;
+@author Jorge Calderon&#xD;
+@version 0.1&#xD;
+@since 0.1</body>
                       </ownedComment>
                       <ownedAttribute xmi:id="_Lnys8qtVEeSb7-jUi2rLpg" name="simulationAPI" visibility="private" type="_LHmw4qtVEeSb7-jUi2rLpg" association="_LsaHIKtVEeSb7-jUi2rLpg">
                         <defaultValue xmi:type="uml:LiteralString" xmi:id="_Lnys86tVEeSb7-jUi2rLpg" value="SimulationAPI.getInstance()"/>
@@ -6789,7 +6822,7 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
                         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                         <defaultValue xmi:type="uml:LiteralString" xmi:id="_Ln72wKtVEeSb7-jUi2rLpg" value="&quot;REPAST_SIMPHONY&quot;"/>
                       </ownedAttribute>
-                      <ownedAttribute xmi:id="_Ln72wqtVEeSb7-jUi2rLpg" name="instance" isStatic="true" type="_LHKE8KtVEeSb7-jUi2rLpg" isReadOnly="true" association="_LsaHI6tVEeSb7-jUi2rLpg">
+                      <ownedAttribute xmi:id="_Ln72wqtVEeSb7-jUi2rLpg" name="instance" visibility="private" isStatic="true" type="_LHKE8KtVEeSb7-jUi2rLpg" isReadOnly="true" association="_LsaHI6tVEeSb7-jUi2rLpg">
                         <defaultValue xmi:type="uml:LiteralString" xmi:id="_Ln72xKtVEeSb7-jUi2rLpg" value="new RepastS_SimulationAdapterAPI()"/>
                       </ownedAttribute>
                       <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_LpR6o6tVEeSb7-jUi2rLpg" name="RepastS_SimulationAdapterAPI" specification="_LHKE8atVEeSb7-jUi2rLpg">
@@ -6801,7 +6834,7 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
 	</body>
                       </ownedBehavior>
                       <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_LpR6patVEeSb7-jUi2rLpg" name="initializeAPI" specification="_LHKE9atVEeSb7-jUi2rLpg">
-                        <ownedParameter xmi:id="_LpR6pqtVEeSb7-jUi2rLpg" name="frameworkConfigurationFileName">
+                        <ownedParameter xmi:id="_LpR6pqtVEeSb7-jUi2rLpg" name="csfConfigurationFileName">
                           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                         </ownedParameter>
                         <ownedParameter xmi:id="_LpR6p6tVEeSb7-jUi2rLpg" type="_LHmw4KtVEeSb7-jUi2rLpg" direction="return">
@@ -6809,7 +6842,7 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
                         </ownedParameter>
                         <language>java</language>
                         <body>SimulationRunGroupContext simulationRunGroupContext = simulationAPI&#xD;
-				.initializeAPI(frameworkConfigurationFileName,&#xD;
+				.initializeAPI(csfConfigurationFileName,&#xD;
 						simToolNameToSetInSimulationAPI);&#xD;
 &#xD;
 		// Set the Repast-Simphony-specific objects, using the Decorator Pattern&#xD;
@@ -6820,70 +6853,78 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
 	</body>
                       </ownedBehavior>
                       <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_LpR6qKtVEeSb7-jUi2rLpg" name="initializeSimulationRun" specification="_LjdmeKtVEeSb7-jUi2rLpg">
-                        <ownedParameter xmi:id="_LpR6qatVEeSb7-jUi2rLpg" name="nativeRepastContextForThisRun" type="_Lb3wtKtVEeSb7-jUi2rLpg"/>
+                        <ownedParameter xmi:id="_LpR6qatVEeSb7-jUi2rLpg" name="nativeRepastScontextForThisRun" type="_Lb3wtKtVEeSb7-jUi2rLpg"/>
                         <ownedParameter xmi:id="_LpR6qqtVEeSb7-jUi2rLpg" name="repastS_SimulationRunGroupContext" type="_LHmw4KtVEeSb7-jUi2rLpg"/>
                         <ownedParameter xmi:id="_LpR6q6tVEeSb7-jUi2rLpg" type="_LHTO4KtVEeSb7-jUi2rLpg" direction="return">
                           <name xsi:nil="true"/>
                         </ownedParameter>
                         <language>java</language>
                         <body>SimulationRunContext simulationRunContext = simulationAPI&#xD;
-				.initializeSimulationRun(nativeRepastContextForThisRun,&#xD;
-						repastS_SimulationRunGroupContext.getSimulationRunGroupContext());&#xD;
+				.initializeSimulationRun(nativeRepastScontextForThisRun,&#xD;
+						repastS_SimulationRunGroupContext&#xD;
+						.getSimulationRunGroupContext());&#xD;
 &#xD;
 		// User Decorator Pattern for RepastS_SimulationRunContext&#xD;
 		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(&#xD;
 				simulationRunContext);&#xD;
 		repastS_SimulationRunContext&#xD;
-				.setRepastContextForThisRun(nativeRepastContextForThisRun);&#xD;
+		.setRepastContextForThisRun(nativeRepastScontextForThisRun);&#xD;
 &#xD;
 		repastS_SimulationRunContext&#xD;
-				.setRepastRunGroupContext(repastS_SimulationRunGroupContext);&#xD;
+		.setRepastRunGroupContext(repastS_SimulationRunGroupContext);&#xD;
 		// Make the context available to the agents in the Repast model&#xD;
-		nativeRepastContextForThisRun.add(repastS_SimulationRunContext);&#xD;
+		nativeRepastScontextForThisRun.add(repastS_SimulationRunContext);&#xD;
 &#xD;
-		// LOW: Support multiple Simulation Run Groups. For now just assume that there's&#xD;
-		// one.&#xD;
+		// LOW: Support multiple Simulation Run Groups. For now just assume that&#xD;
+		// there's one.&#xD;
 		// LOW: Handle multiple distributed systems&#xD;
 		// TODO: Move distributed system manager to main level? same for on the&#xD;
 		// distributed side (simulation engine manager)&#xD;
-		repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()&#xD;
-				.next().initializeAgentMappings();&#xD;
+		repastS_SimulationRunContext.getSimulationDistributedSystemManagers()&#xD;
+		.iterator().next().initializeAgentMappings();&#xD;
 &#xD;
 		boolean atLeastOneMappingPerformed = false;&#xD;
-		// Find all of the individual Repast agents to be mapped in the framework to&#xD;
-		// distributed&#xD;
-		// agents&#xD;
-		// TODO: Move all of this to the main simulation API to simplify Adapter code.&#xD;
+&#xD;
+		// Find all of the individual RepastS agents to be mapped in the&#xD;
+		// framework to distributed agents&#xD;
+		// TODO: Move all of this to the main simulation API to simplify Adapter&#xD;
+		// code.&#xD;
 		// (Same for JADE API side)&#xD;
 		@SuppressWarnings({ &quot;rawtypes&quot; })&#xD;
-		Iterable&lt;Class> simulationAgentsClasses = nativeRepastContextForThisRun&#xD;
-				.getAgentTypes();&#xD;
+		Iterable&lt;Class> simulationAgentsClasses = nativeRepastScontextForThisRun&#xD;
+		.getAgentTypes();&#xD;
+&#xD;
 		// For each simulation agent class&#xD;
 		for (@SuppressWarnings(&quot;rawtypes&quot;)&#xD;
 		Class simulationAgentClass : simulationAgentsClasses) {&#xD;
-			// LOW: Allow individual simulation agent classes to be either simulation-only&#xD;
+			// LOW: Allow individual simulation agent classes to be either&#xD;
+			// simulation-only&#xD;
 			// or&#xD;
 			// representations of distributed agents.&#xD;
 			// TODO: Handle multiple distributed systems&#xD;
-			if (repastS_SimulationRunContext.getSimulationDistributedSystemManagers()&#xD;
-					.iterator().next().isAgentClassDistributedType(simulationAgentClass)) {&#xD;
+			if (repastS_SimulationRunContext&#xD;
+					.getSimulationDistributedSystemManagers().iterator().next()&#xD;
+					.isAgentClassDistributedType(simulationAgentClass)) {&#xD;
 				@SuppressWarnings(&quot;unchecked&quot;)&#xD;
 				Class&lt;Object> simulationAgentClazz = simulationAgentClass;&#xD;
-				Iterable&lt;Object> simulationAgentsInSingleClass = nativeRepastContextForThisRun&#xD;
+				Iterable&lt;Object> simulationAgentsInSingleClass = nativeRepastScontextForThisRun&#xD;
 						.getAgentLayer(simulationAgentClazz);&#xD;
 &#xD;
+				// TODO: Look into handling multiple classes in the mapping&#xD;
 				/*&#xD;
 				 * if (repastS_SimulationRunContext.getSimulationRunContext()&#xD;
-				 * .getSimulationRunGroupContext() .getSimulationRunGroupConfiguration()&#xD;
+				 * .getSimulationRunGroupContext()&#xD;
+				 * .getSimulationRunGroupConfiguration()&#xD;
 				 * .getSimulationAgentsBelongToOneClass()) {&#xD;
 				 */&#xD;
-				// For a distributed agent class type, for each individual simulation&#xD;
-				// agent, map to&#xD;
-				// an existing free AgentMapping object&#xD;
+&#xD;
+				// For an agent class type, for each individual simulation&#xD;
+				// agent, map to an existing free AgentMapping object&#xD;
 				for (Object simulationAgent : simulationAgentsInSingleClass) {&#xD;
 					atLeastOneMappingPerformed = true;&#xD;
 					mapSimulationSideAgent(simulationAgent,&#xD;
-							repastS_SimulationRunContext.getSimulationRunContext());&#xD;
+							repastS_SimulationRunContext&#xD;
+							.getSimulationRunContext());&#xD;
 				}&#xD;
 				/*&#xD;
 				 * } else {&#xD;
@@ -6899,8 +6940,8 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
 					&quot;No mapping was performed of simulation agent(s) to distributed autonomous agent and agent model IDs&quot;);&#xD;
 &#xD;
 		// TODO: Move this whole section to the main simulation API?&#xD;
-		// 1 - Wait for the command from the simulation administrator to start the&#xD;
-		// simulation&#xD;
+		// 1 - Wait for the command from the simulation administrator to start&#xD;
+		// the simulation&#xD;
 		FRAMEWORK_COMMAND fc = repastS_SimulationRunContext&#xD;
 				.readFrameworkMessageFromSimulationAdministrator()&#xD;
 				.getFrameworkToSimulationEngineCommand();&#xD;
@@ -6910,9 +6951,10 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
 &#xD;
 		// 2 - Message the distributed systems that the simulation has started&#xD;
 		// and is ready to accept messages from the distributed agents.&#xD;
-		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,&#xD;
-				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,&#xD;
-				repastS_SimulationRunContext.getBlankCachedMessageExchangeTemplate());&#xD;
+		FrameworkMessage msg = new FrameworkMessageImpl(&#xD;
+				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,&#xD;
+				repastS_SimulationRunContext&#xD;
+				.getBlankCachedMessageExchangeTemplate());&#xD;
 		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);&#xD;
 		// TODO: Loop through the multiple distributed systems&#xD;
 		repastS_SimulationRunContext.messageDistributedSystems(msg,&#xD;
@@ -6930,7 +6972,6 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
 &#xD;
 		// The distributed agent (models) have previously been mapped.&#xD;
 		// Now we're ready to perform the steps in the simulation.&#xD;
-&#xD;
 		return repastS_SimulationRunContext;&#xD;
 	</body>
                       </ownedBehavior>
@@ -6947,7 +6988,16 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
                         <ownedParameter xmi:id="_LpR6sKtVEeSb7-jUi2rLpg" name="simulationAgent" type="_LeGlUKtVEeSb7-jUi2rLpg"/>
                         <ownedParameter xmi:id="_LpR6satVEeSb7-jUi2rLpg" name="simulationRunContext" type="_LHv626tVEeSb7-jUi2rLpg"/>
                         <language>java</language>
-                        <body>simulationAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);&#xD;
+                        <body>simulationAPI.mapSimulationSideAgent(simulationAgent,&#xD;
+				simulationRunContext);&#xD;
+	</body>
+                      </ownedBehavior>
+                      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_LpR6oatVEeSb7-jUi2rLpg" name="getInstance" specification="_Ln72xatVEeSb7-jUi2rLpg">
+                        <ownedParameter xmi:id="_LpR6oqtVEeSb7-jUi2rLpg" type="_LHKE8KtVEeSb7-jUi2rLpg" direction="return">
+                          <name xsi:nil="true"/>
+                        </ownedParameter>
+                        <language>java</language>
+                        <body>return instance;&#xD;
 	</body>
                       </ownedBehavior>
                       <ownedOperation xmi:id="_LHKE8atVEeSb7-jUi2rLpg" name="RepastS_SimulationAdapterAPI" visibility="private" method="_LpR6o6tVEeSb7-jUi2rLpg">
@@ -6955,33 +7005,47 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
                           <details xmi:id="_LHKE86tVEeSb7-jUi2rLpg" key="create"/>
                         </eAnnotations>
                         <ownedComment xmi:id="_LqLSc6tVEeSb7-jUi2rLpg">
-                          <body>Use getInstance() instead.</body>
+                          <body>Instantiates a new repast s_ simulation adapter api.</body>
                         </ownedComment>
                         <ownedParameter xmi:id="_LHKE9KtVEeSb7-jUi2rLpg" type="_LHKE8KtVEeSb7-jUi2rLpg" direction="return"/>
                       </ownedOperation>
                       <ownedOperation xmi:id="_LHKE9atVEeSb7-jUi2rLpg" name="initializeAPI" method="_LpR6patVEeSb7-jUi2rLpg" raisedException="_LZ7P8KtVEeSb7-jUi2rLpg">
                         <ownedComment xmi:id="_LqLSdKtVEeSb7-jUi2rLpg">
-                          <body>This method should be called afterRepastSimphonySimulationAdapterAPI.getInstance()&#xD;
-	 * to initialize the common framework simulation based on the supplied configuration&#xD;
-	 * properties.&#xD;
+                          <body>Initializes the Common Simulation Framework on the RepastS simulation&#xD;
+	 * side, based on the supplied CSF configuration property file. Calls the&#xD;
+	 * simulation-adaptor-wide Simulation API to initialize the simulation run&#xD;
+	 * group.&#xD;
 	 * &#xD;
-	 * @ param String The path to the Common Simulation Configuration File</body>
+	 * NOTE: The current version initialization is hard coded to only work with&#xD;
+	 * the two reference implementation simulations. The CSF configuration&#xD;
+	 * filename is used to switch the configuration based on the simulation. In&#xD;
+	 * the future, this filename will be used to read an XML configuration file&#xD;
+	 * from the file system so that the CSF can be used for any simulation.&#xD;
+	 *&#xD;
+	 * @param csfConfigurationFileName&#xD;
+	 *            the framework configuration file name&#xD;
+	 * @return the repast s_ simulation run group context&#xD;
+	 * @throws IOException&#xD;
+	 *             Signals that an I/O exception has occurred.</body>
                         </ownedComment>
-                        <ownedParameter xmi:id="_LHKE9qtVEeSb7-jUi2rLpg" name="frameworkConfigurationFileName">
+                        <ownedParameter xmi:id="_LHKE9qtVEeSb7-jUi2rLpg" name="csfConfigurationFileName">
                           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                         </ownedParameter>
                         <ownedParameter xmi:id="_Lc6Sh6tVEeSb7-jUi2rLpg" type="_LHmw4KtVEeSb7-jUi2rLpg" direction="return"/>
                       </ownedOperation>
                       <ownedOperation xmi:id="_LjdmeKtVEeSb7-jUi2rLpg" name="initializeSimulationRun" method="_LpR6qKtVEeSb7-jUi2rLpg">
                         <ownedComment xmi:id="_LqLSdatVEeSb7-jUi2rLpg">
-                          <body>Initialize the simulation run in Repast Simphony. This method configures the&#xD;
-	 * (already-created in the simulation API initialization) AgentMapping objects. Repast&#xD;
-	 * Simphony-specific simulation run initialization&#xD;
-	 * &#xD;
-	 * JADE_DistSysRunContext result from initializing the API is passed in, in this&#xD;
-	 * method.</body>
+                          <body>Initializes a single CSF Repast Simphony simulation run. This method&#xD;
+	 * configures the (already-created in the simulation API initialization)&#xD;
+	 * AgentMapping objects.&#xD;
+	 *&#xD;
+	 * @param nativeRepastScontextForThisRun&#xD;
+	 *            the native repast context for this run&#xD;
+	 * @param repastS_SimulationRunGroupContext&#xD;
+	 *            the repast s_ simulation run group context&#xD;
+	 * @return the repast s_ simulation run context</body>
                         </ownedComment>
-                        <ownedParameter xmi:id="_LjdmeatVEeSb7-jUi2rLpg" name="nativeRepastContextForThisRun" type="_Lb3wtKtVEeSb7-jUi2rLpg"/>
+                        <ownedParameter xmi:id="_LjdmeatVEeSb7-jUi2rLpg" name="nativeRepastScontextForThisRun" type="_Lb3wtKtVEeSb7-jUi2rLpg"/>
                         <ownedParameter xmi:id="_LjdmeqtVEeSb7-jUi2rLpg" name="repastS_SimulationRunGroupContext" type="_LHmw4KtVEeSb7-jUi2rLpg"/>
                         <ownedParameter xmi:id="_Ljdme6tVEeSb7-jUi2rLpg" type="_LHTO4KtVEeSb7-jUi2rLpg" direction="return"/>
                       </ownedOperation>
@@ -6991,19 +7055,28 @@ SIMULATION WRAPPER (RSW)&lt;br/>&#xD;
                       </ownedOperation>
                       <ownedOperation xmi:id="_LjnXc6tVEeSb7-jUi2rLpg" name="mapSimulationSideAgent" visibility="private" method="_LpR6r6tVEeSb7-jUi2rLpg">
                         <ownedComment xmi:id="_LqLSd6tVEeSb7-jUi2rLpg">
-                          <body>After the Simulation and Common Framework are initialized, the Simulation Adaptor&#xD;
-	 * API (or child class) is initialized, and prior to executing a simulation run, this&#xD;
-	 * method must be called to configure the simulation-side of the AgentMappings for one&#xD;
-	 * type (class) of simulation agent. If multiple agent classes are distributed, this&#xD;
-	 * method must be called for each type. This is done prior to the distributed&#xD;
-	 * agent-side mappings.&#xD;
-	 * &#xD;
-	 * Use this method to send a single Simulation Agent object.&#xD;
-	 * &#xD;
-	 * @see mapSimulationSideAgents</body>
+                          <body>After the Simulation and Common Framework are initialized, the Simulation&#xD;
+	 * Adaptor API (or child class) is initialized, and prior to executing a&#xD;
+	 * simulation run, this method must be called to configure the&#xD;
+	 * simulation-side of the AgentMappings for one type (class) of simulation&#xD;
+	 * agent. If multiple agent classes are distributed, this method must be&#xD;
+	 * called for each type.&#xD;
+	 *&#xD;
+	 * @param simulationAgent&#xD;
+	 *            the simulation agent&#xD;
+	 * @param simulationRunContext&#xD;
+	 *            the simulation run context</body>
                         </ownedComment>
                         <ownedParameter xmi:id="_LjnXdKtVEeSb7-jUi2rLpg" name="simulationAgent" type="_LeGlUKtVEeSb7-jUi2rLpg"/>
                         <ownedParameter xmi:id="_LjnXdatVEeSb7-jUi2rLpg" name="simulationRunContext" type="_LHv626tVEeSb7-jUi2rLpg"/>
+                      </ownedOperation>
+                      <ownedOperation xmi:id="_Ln72xatVEeSb7-jUi2rLpg" name="getInstance" isStatic="true" method="_LpR6oatVEeSb7-jUi2rLpg">
+                        <ownedComment xmi:id="_XgRtSLl4EeSj4_GTtuInEQ">
+                          <body>The API singleton for adaptor&#xD;
+	 *&#xD;
+	 * @return single instance of RepastS_SimulationAdapterAPI</body>
+                        </ownedComment>
+                        <ownedParameter xmi:id="_Ln72xqtVEeSb7-jUi2rLpg" type="_LHKE8KtVEeSb7-jUi2rLpg" direction="return"/>
                       </ownedOperation>
                     </packagedElement>
                     <packagedElement xmi:type="uml:Class" xmi:id="_LHTO4KtVEeSb7-jUi2rLpg" name="RepastS_SimulationRunContext">
@@ -7946,11 +8019,7 @@ Simulation-Toolkit-specific Context such as this class.</body>
   <UMLLabProfile:LegacyStyledElement xmi:id="_Lnys8atVEeSb7-jUi2rLpg" base_Element="_Lnys76tVEeSb7-jUi2rLpg"/>
   <UMLLabProfile:LegacyStyledElement xmi:id="_Lnys9KtVEeSb7-jUi2rLpg" base_Element="_Lnys8qtVEeSb7-jUi2rLpg"/>
   <UMLLabProfile:LegacyStyledElement xmi:id="_Ln72watVEeSb7-jUi2rLpg" base_Element="_Lnys9atVEeSb7-jUi2rLpg"/>
-  <UMLLabProfile:LegacyStyledElement xmi:id="_Ln72w6tVEeSb7-jUi2rLpg" base_Element="_Ln72wqtVEeSb7-jUi2rLpg">
-    <associatedElement xmi:type="uml:Operation" xmi:id="_Ln72xatVEeSb7-jUi2rLpg" name="getInstance" isStatic="true" method="_LpR6oatVEeSb7-jUi2rLpg">
-      <ownedParameter xmi:id="_Ln72xqtVEeSb7-jUi2rLpg" type="_LHKE8KtVEeSb7-jUi2rLpg" direction="return"/>
-    </associatedElement>
-  </UMLLabProfile:LegacyStyledElement>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Ln72w6tVEeSb7-jUi2rLpg" base_Element="_Ln72wqtVEeSb7-jUi2rLpg"/>
   <UMLLabProfile:Generics xmi:id="_Ln72yatVEeSb7-jUi2rLpg" genericsValue="Object" base_Element="_Ln72yKtVEeSb7-jUi2rLpg"/>
   <UMLLabProfile:LegacyStyledElement xmi:id="_Ln72yqtVEeSb7-jUi2rLpg" base_Element="_Ln72yKtVEeSb7-jUi2rLpg"/>
   <UMLLabProfile:LegacyStyledElement xmi:id="_Ln72zqtVEeSb7-jUi2rLpg" base_Element="_Ln72y6tVEeSb7-jUi2rLpg"/>
@@ -8028,14 +8097,6 @@ Simulation-Toolkit-specific Context such as this class.</body>
   </uml:OpaqueBehavior>
   <uml:OpaqueBehavior xmi:id="_LpR6latVEeSb7-jUi2rLpg" name="getInstance" specification="_Lnys6qtVEeSb7-jUi2rLpg">
     <ownedParameter xmi:id="_LpR6lqtVEeSb7-jUi2rLpg" type="_LHAT8KtVEeSb7-jUi2rLpg" direction="return">
-      <name xsi:nil="true"/>
-    </ownedParameter>
-    <language>java</language>
-    <body>return instance;&#xD;
-	</body>
-  </uml:OpaqueBehavior>
-  <uml:OpaqueBehavior xmi:id="_LpR6oatVEeSb7-jUi2rLpg" name="getInstance" specification="_Ln72xatVEeSb7-jUi2rLpg">
-    <ownedParameter xmi:id="_LpR6oqtVEeSb7-jUi2rLpg" type="_LHKE8KtVEeSb7-jUi2rLpg" direction="return">
       <name xsi:nil="true"/>
     </ownedParameter>
     <language>java</language>

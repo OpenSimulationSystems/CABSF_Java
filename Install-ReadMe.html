@@ -1,429 +1,434 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The Common Simulation Framework Installation Instructions</title>
-
+<html>
+<head>
+  <meta content="text/html; charset=iso-8859-1" http-equiv="content-type">
+  <title>The Common Simulation Framework Installation Instructions</title>
 </head>
+
 <body>
-<h1><span style="font-weight: bold;">The Common
-Simulation Framework - Installation Instructions</span></h1>
+<h1><span style="font-weight: bold;">The Common Simulation Framework -
+Installation Instructions</span></h1>
 Author: <a href="mailto:jcald1@gmail.com">Jorge Calderon</a><br>
-Release 0.1.TBD<br>
-11/19/2014<br>
+Release 0.1.0-{build}<br>
+2/25/2015<br>
+
+
 <h2>Requirements</h2>
 <ol>
-<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK
-1.7+</a> for the Common Simulation Framework/Repast, and JDK1.4+
-for the JADE agents.
-</li>
-<li>Windows, MacOSX, or *nix. &nbsp;There are some
-scripts/batch files
-for starting the simulation, that have been created only for Windows so
-far. &nbsp;Each contains a small number of simple commands, which
-could
-be be easily copied and pasted into a Linux/MacOS shell, but may need to be modified slightly to work in Linux or MacOS.</li>
+  <li><a
+    href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK
+    1.7+</a></li>
+  <li>Windows, MacOSX, or *nix.  There are some scripts/batch files for
+    starting the simulation, that have been created only for Windows so far.
+     Each contains a small number of simple commands, which could be be easily
+    copied and pasted into a Linux/MacOS shell, but may need to be modified
+    slightly to work in Linux or MacOS.</li>
 </ol>
+
 <h2>Third Party Software Downloads<br>
 </h2>
-Download and install the following software
+Download and install the following software 
 <ol>
-<li><a href="http://repast.sourceforge.net/download.html">Repast
-Simphony (Java version)</a></li>
-<li><a href="http://jade.tilab.com/download/jade/">JADE</a></li>
-<li><a href="http://redis.io/download">Redis</a>
-There is a <a href="https://github.com/MSOpenTech/redis">Redis
-port for use in Windows 6</a>4, you will have to install Visual
-Studio Express and compile Redis. &nbsp;It's possible to set up
-Redis as a Windows service. &nbsp;In these instructions we assume
-that Redis must be started from the command line.</li>
-<li><a href="http://www.git-scm.com/downloads">git</a>
-to pull the code</li>
-<li>Third party libraries used by the Common Simulation
-Framework, as described in the instructions below. &nbsp;Currently
-there is no build tool set up for the framework, and so you will have
-to set up these libraries manually.</li>
+  <li><a href="http://repast.sourceforge.net/download.html">Repast Simphony
+    (Java version)</a> This is a customized Eclipse IDE. It is possible run
+    Repast Simphony and the Common Simulation Framework without the full Repast
+    Simphony IDE, either using the command line or with a general Eclipse
+    distribution. However, the instructions here assume that the Repast
+    Simphony version of the eclipse IDE will be used to run the Common
+    Simulation framework, the distributed systems (Multi-agent systems) and
+    distributed agent models.
+    <p>NOTE: If you are using Linux, the Repast site suggests that you download
+    the standard version of Eclipse and add Repast from the Eclipse update
+    site. We only tested this with the Luna version of Eclilpse and received
+    some Groovy errors. You should only use the version of Eclipse that is
+    suggested in the Repast instructions.</p>
+  </li>
+  <li><a href="http://jade.tilab.com/download/jade/">JADE</a> The JADE library
+    is already included in the third party libraries zip file below, but you
+    may wish to download it separately to get the sample JADE applications and
+    documentation.</li>
+  <li><a href="http://redis.io/download">Redis</a> There is a <a
+    href="https://github.com/MSOpenTech/redis">Redis port for use in Windows 64
+    bit</a>, you will have to install Visual Studio Express and compile Redis.
+     It's possible to set up Redis as a Windows service.  In these instructions
+    we assume that Redis must be started from the command line.</li>
+  <li><a href="http://www.git-scm.com/downloads">git</a> to pull the code</li>
+  <li>Download (no installation) these third party libraries used by the Common
+    Simulation Framework. For now just keep them in your Downloads
+    folder.  Currently there is no build tool set up for the framework (such as
+    Maven), and so you will have to add these ibraries manually. You
+    can download a zip file from:
+    https://drive.google.com/file/d/0B8tCWle1gJ9XcXk2MUdCM2F3MnM/view?usp=sharing
+    (click the down arrow) Alternatively, you can download the third party
+    binaries (JARs) directly the source locations: <br>
+    <a href="http://www.jdom.org/downloads/index.html">JDOM 2.0.5 </a><br>
+    <a href="https://github.com/xetorthio/jedis/releases">Jedis 2.4.2 </a><br>
+    <a href="http://jade.tilab.com/">JADE 4.3.3</a><br>
+    <a href="https://code.google.com/p/combinatoricslib/">Combinatronic
+    2.1</a><br>
+    <a href="https://code.google.com/p/guava-libraries/">Java Guava
+  18.0</a></li>
 </ol>
-Add redis-server, redis-cli, and git to your environment path variable.<br>
-<br>
-It
-is possible run the Common Simulation Framework without the full Repast
-Simphony IDE, either using the command line or with a general Eclipse
-distribution. However, the instructions here assume that the Repast
-Simphony customization of the eclipse IDE will be used to run the
-Common Simulation framework, the distributed systems (Multi-agent
-systems) and distributed agent models.<br>
+You may want to add redis-server, redis-cli, and git to your environment path
+variable if it's not done automatically in your installation. 
+
+<p></p>
+
 <h2>Installation Instructions</h2>
 <ol>
-<li>Download and install Repast Simphony (Java Version), Redis,
-and
-git.<br>
-</li>
-<li>Download the Common Simulation Framework Code (To be moved
-to GitHub)</li>
+  <li>Download the Common Simulation Framework Code (To be moved to GitHub) 
+    <ol>
+      <li>Log on to code.seas.harvard.edu with your Harvard id.</li>
+      <li>In your Eclipse workspace directory (usually "workspace" under your
+        username), clone this SEAS repository:
+        git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
+      <li>Go to the project page: <a
+        href="https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis">https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis</a></li>
+      <li>Copy the git URL and clone it on your local machine using this
+        command: git clone
+        git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
+    </ol>
+  </li>
+  <li>Install <span style="font-weight: bold;">JZombies_CSF_Demo</span> 
+    <ol>
+      <li>While this simulation comes with the Repast Simphony samples
+        (File-Import-Repast Simphony-Import Repast Example Models), the CSF
+        version of JZombies_Demo is a modification that adds the CSF/JADE
+        functionality. The name of this modified project/directory is <span
+        style="font-weight: bold;">JZombies_CSF_Demo</span>. Make sure not to
+        confuse this directory with JZombies_CSF_JADE_Agents, which is a
+        separate project with the JADE agents. 
+        <ol>
+          <li>Go into the cloned repository, change to the
+            CommonSimulationFrameworkSimulations directory and find the
+            JZombies_CSF_Demo directory. Now temporarily rename this
+          directory.</li>
+          <li>In Repast Simphony/Eclipse, go to
+            File-&gt;New-&gt;Other-&gt;Repast Simphony-&gt;Repast Simphony
+            Project-&gt;Next. Unselect "default location", browse to the
+            CommonSimulationFrameworkSimulations directory, add
+            JZombies_CSF_Demo to the project location, OK, then add
+            "JZombies_CSF_Demo<span style="font-weight: bold;">"</span> (not
+            the renamed folder) to the project directory-&gt;Next-Finish.  If
+            you get an error stating that the project "overlaps the location of
+            another project", you probably selected the wrong directory; you
+            may have left off the JZombies_CSF_Demo directory in either the
+            project name or the location.</li>
+          <li>Right click on the JZombies_CSF_Demo project on the left hand
+            side (the project explorer) and under Resource, verify that the
+            JZombies_CSF_Demo directory you created is in the
+            CommonSimulationFrameworkSimulations directory.
+            CommonSimulationFrameworkSimulations is also the same directory
+            where the original renamed version is. </li>
+          <li>In the file system go to your original renamed directory. Ensure
+            that there is no .classpath or .project file there (these files
+            could be hidden). Delete them if they exist. Copy the contents of
+            this original renamed JZombies_CSF_Demo directory into the newly
+            created  JZombies_CSF_Demo directory.  Replace all files. 
+            <p></p>
+            <p>All of these steps were necessary because the Eclipse metadata
+            files (.project and .classpath) are not part of the source code.
+            Normally in Eclipse you would simply create a new project (such as
+            a Java project) and point to the directory with the code you just
+            cloned. For the Repast Simphony projects this generates errors and
+            so we must use the workaround just mentioned. These extra steps
+            aren't required for setting up the JADE agent projects. They're
+            also not required when creating a project from scratch. If you ever
+            need to start over, make sure to delete the .project and .classpath
+            files from your file system, then delete the project from the
+            project explorer. If you have to recover back to the original
+            state, you may need to use the git checkout, reset, and clean
+            commands.</p>
+          </li>
+          <li>Delete the renamed project.</li>
+          <li>Right click on the JZombies_CSF_Demo project in the project
+            explorer and click Refresh. You should see the new source files
+            added under the "zombies" package.</li>
+          <li>In the the new JZombies_CSF_Demo project, if you haven't done so
+            already, delete the JZombies_CSF_Demo package directory, leaving
+            only the "jzombies" package because we're not using Groovy</li>
+          <li>Right click on the project on the left side (package explorer)
+            and click Refresh. You should see the new files added to the src
+            directory. The launcher for the project has been updated to use CSF
+            dependencies and so those first need to be set up even if you're
+            trying to run this project without the CSF features.</li>
+          <li>Repeat these steps for the PrisonersDilemmaIterated_CSF project.
+            Just as with the zombies project, make sure not to use
+            PrisonersDilemmaIterated_CSF_JADE_Agents as that is for the JADE
+            agents.</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>Open a separate new Java Project for these projects under the cloned
+    local repo go going to File-New-Java Project, unselect "Use default
+    location", browse to each directory in the list below.  
+    <ol>
+      <li>CommonSimulationFramework</li>
+      <li>CSF_JADE_Controller_Agent<span
+        style="text-decoration: underline;"><br>
+        </span></li>
+      <li>RepastSimulationRunner</li>
+      <li>JZombies_CSF_JADE_Agents (This on is under the
+        CommonSimulationFrameworkSimulations subdirectory.)</li>
+      <li>JZombies_CSF_JADE_Agents (This on is under under the
+        CommonSimulationFrameworkSimulations subdirectory.)</li>
+    </ol>
+  </li>
+  <li>Add the third party libraries to the CommonSimulationFramework  from the
+    downloaded zip or from the URLs listed above. 
+    <ul>
+      <li>Extract the JARs to the CommonSimulationFramework/lib directory (or
+        copy in the JARs directly from each website).  Make sure you don't end
+        up with a lib/lib directory<br>
+
+        <p>These libraries aren't in the Common Simulation Framework source
+        control to prevent having to add binaries.  All of this can be
+        simplified in the future using the Maven or Grails build tools.</p>
+      </li>
+    </ul>
+  </li>
+  <li>Right click on the CommonSimulationFramework, Right click on Build Path,
+    Configure Build Path, Click on the libraries tab, select add JARs, and
+    select all of the JARs in the CommonSimulationFramework/lib folder and all
+    of its subfolders.</li>
+  <li>Click on the libraries tab, Add External JARs, and select the
+    "repast.simphony.bin_and_src.jar", which is in your (The version numbers
+    may be slightly different) <span
+    style="font-weight: bold; color: red;">{Repast_Installation}/eclipse/plugins/repast.simphony.bin_and_src_2.2.0</span>
+    directory.</li>
+  <li>Add all of the External JARS in the following directory: <span
+    style="font-weight: bold; color: red;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.2.0/lib</span></li>
+  <li>The project will show some errors  in the Junit tests (Java unit tests)
+    due to missing Eclipse plugins/software.  It is recommended that the
+    following software be added to Eclipse to get rid of these errors and to
+    make it easier to find errors in your code:  Help-About, get the version
+    name of Eclispe. Then go to Help-Install New Software.  In the "Work with"
+    drop down, select the version name of Eclipse such as Kepler or Luna,
+    Select "Web, XML, Java EE, and OSGI Enterprise Development" and restart. 
+    Once JUnit is installed, you'll need to add the library to the individual
+    projects that have JUnits (explained later on). The Junit set up is not
+    required for the CSF to function.</li>
+  <li>Under the JADE_Controller_Agent and RepastS_SimulationRunner projects, go
+    to Build Path, Configure Build Path, Select the Libraries button and select
+    JUnit. If you don't see Junit, follow the instructions above to install it.
+  </li>
+  <li>Click "OK".</li>
+  <li>Edit each of the *Model projects' run configurations 
+    <ul>
+      <li>Select the drop down next to the green arrow by the menu.</li>
+      <li>Select Run Configurations, select the Model project. Make sure not to
+        select any of the ones such as Batch.</li>
+      <li>Click the Classpath tab, select the "User Entries", Select the "Add
+        Projects" button,  add the CommonSimulationFramework project</li>
+      <li>Select the "Add JARs" tab and select all of the JARs under the lib
+        directory of CommonSimulationFramework, including subdirectories.  You
+        should only have to modify the run configuration CLASSPATH for the
+        Repast simulation projects.  All of the other projects just need to
+        have the dependencies set up in the "Build Path".  The CSF Repast
+        simulations(Model projects) also need to have the dependencies set up
+        in the "Build Path" section (described below).</li>
+      <li>Select Close and repeat for the other Model project(s).</li>
+    </ul>
+  </li>
+  <li>In the same tab click on on add JARs, and select all JARS under the lib
+    directory of CommonSimulationFramework, and subdirectories.</li>
+  <li>Right click on the RepastSimulationRunner, Build Path, and add
+    the  JZombies_CSF_Demo project.  While the underlying runner code doesn't
+    need these projects, there are JUnit tests in the Repast Simulation Runner
+    for convenience methods in the JZombies_CSF_Demo project.</li>
+  <li>Select add JARs, and select the jars under the folder and subfolders
+    in CommonSimulationFramework//lib.</li>
+  <li>Select the External JARs button and add all of the JARS from the<span
+    style="color: red;"><span style="color: black;">two <span
+    style="color: red;">red bolded</span> </span></span><span
+    style="color: black;">{Repast_Installation}/eclipse</span><span
+    style="font-weight: bold;"></span>lines above.</li>
+  <li>Add the Mock_JADE_Controller_Agent project.  This project is used in
+    JUnit tests.</li>
+  <li>Add the CommonSimulationFramework dependency and accompanying JARs to the
+    JADE_Controller_Agent.</li>
+  <li>Follow these steps for each of the JADE Agent Projects
+    (JZombies_CSF_JADE_Agents and PrisonersDilemmaIterated_CSF_JADE_Agents)
+    that are run agents for the simulations. (The JADE Controller Agent is an
+    administrative agent of the CSF). 
+    <ul>
+      <li>Add the CommonSimulationFramework project and accompanying JAR files
+        as described above but do not add the two sets of dependencies in
+      red.</li>
+      <li>Add the JADE_Controller_Agent under Projects.  The JADE Controller
+        Project is added here to be able to run all the JZombies Human JADE
+        agents and the JADE Controller in a single JADE Container/JVM, for
+        simplicity.  </li>
+      <li>Add the corresponding Model (Repast) project. For example for
+        JZombies_CSF_JADE_Agents add the JZombies_CSF_Demo project. This is to
+        give the JADE agent access to convenience methods that are in the
+        Repast project.</li>
+    </ul>
+  </li>
+  <li>Add the CommonSimulationFramework and associated JARs to the
+    JADE_Controller_Agent. Don't add the red bolded dependencies from
+  above.</li>
+  <li>Click on the main menu: Project-&gt;Clean-&gt;Clean all
+  Projects-&gt;OK.</li>
+  <li>Click on the "Problems" tab below.  Assuming you added Junit, you should
+    no longer see any red "Error" entries, only yellow warnings.</li>
+  <li>Unlike the Repast simulations projects (such as JZombies_CSF_Demo), other
+    applications such as  RepastSimulationRunner and JADE_Controller_Agent do
+    not automatically get the run configurations created when the projects are
+    created.  However, there is a presaved run configuration that can be added
+    to the run configurations menu.  Right click RepastSimulationRunner, open
+    the launders folder, select "RepastSimulationRunner - CSF -
+    JZombies.launch", right click "Run As", click "RepastSimulationRunner - CSF
+    - JZombies.launch .  The simulation runner has started executing.  Next
+    time you should see it in the drop down next to the run button.  Click on
+    the red square to stop the execution.</li>
+  <li>You should see an error message initially as Redis has not been
+  started. </li>
+  <li>Run the Projeect without the CSF features 
+    <ul>
+      <li>Click the down arrow next to the green "Run" button.  Verify that
+        Repast Simphony/Eclipse has created a run configuration for  <span
+        style="font-weight: bold;">JZombies_CSF_Demo </span>simulation.</li>
+      <li>Click the simulation in the drop down list for JZombies_CSF_Demo.
+        This will run the JZombies_CSF_Demo simulation, but without actually
+        using the CSF features.</li>
+      <li>If you see an error when using Windows, such as "WARNING: Could not
+        open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002.
+        Windows RegCreateKeyEx(...) returned error code 5." in the eclipse
+        console window, you can implement the fix described <a
+        href="http://stackoverflow.com/questions/16428098/groovy-shell-warning-could-not-open-create-prefs-root-node">here</a>,
+        but is not necessary.</li>
+      <li>The Repast GUI should pop up after a few seconds.</li>
+      <li>Run the simulation by clicking on the blue run button.  You should
+        see the image on the right of zombies catching humans.  The ticks
+        should increment by 1s.  You should be able to step one tick at a time
+        as well.</li>
+      <li>The Repast "<a href="http://repast.sourceforge.net/docs.php">Getting
+        Started guide</a>" is a great place to start for learning Repast.  Even
+        if you don't plan to create your own simulations, browse through the
+        instructions so you learn  the directory structure, parameters, and how
+        to use the GUI.</li>
+    </ul>
+  </li>
+  <li>Click on that drop down next to the green run, Run Configurations, select
+    the "RepastSimulationRunner - CSF - JZombies.launch button", select the
+    Arguments tab.  You should see the path to your JZombies_CSF_Demo
+    directory.  The first argument is the location of the Repast configuration
+    for this simulation.  The second file is the path to the CSF configuration
+    for this simulation.</li>
+  <li>Look for the launcher file for JADE_Controller_Agent and do the same as
+    for the RepastSimulationRunner.  Stop the execution and verify that the run
+    configuration has been added to the list of run configurations.</li>
+  <li>The configuration in eclipse is now complete.</li>
+  <li>You are ready to start the execution of the simulation run(s) now as
+    described in the next section.</li>
+</ol>
 <ol>
-<li>Log on to code.seas.harvard.edu with your Harvard id.</li>
-<li>Clone this repository:
-git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
-<li>Go to the project page: <a href="https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis">https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis</a></li>
-<li>Copy the git URL and clone it on your local machine using
-this command: git clone
-git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
 </ol>
-<li>Install <span style="font-weight: bold;">JZombies_CSF_Demo</span></li>
-<ol>
-<li>While this simulation comes with the Repast samples
-(File-Import-Repast Simphony-Import Repast Example Models), the CSF
-version of JZombies_Demo is needed as it includes code to connect to
-the CSF.
-&nbsp;The name of the project/directory is <span style="font-weight: bold;">JZombies_CSF_Demo</span>.</li>
-<ol>
-<li>Temporarily rename the JZombies_CSF_Demo directory.</li>
-<li>File-New-Repast Simphony-Select your workspace
-folder-Add the JZombies_CSF_Demo<span style="font-weight: bold;">
-</span>folder
-to the Location (under the CommonSimulationFrameworkSimulations
-subdirectory) and make it the project name-Next-Finish. &nbsp;If
-you
-get an error stating that the project "overlaps the location of another
-project", you probably didn't add the new directory nanme to the
-location bar. &nbsp;It also belongs in the projec t name. Also make
-sure to
-first temporarily rename the&nbsp;Zombies_CSF_Demo so that a new
-Repast
-Simphony project can be created with that name. &nbsp;The Eclipse
-project metadata is not checked
-into source control and has to be created by Eclipsel</li>
-<li>Copy the contents of your old renamed JZombies_CSF_Demo
-directory into the newly created&nbsp; JZombies_CSF_Demo directory.
-&nbsp;Replace all files.</li>
-<li>Delete the old renamed project.</li>
-<li>In the the new JZombies_CSF_Demo project, delete
-the&nbsp;JZombies_CSF_Demo package directory, leaving
-only the "jzombies" package.</li>
-<li>Right click on the project on the left side (package
-explorer) and click Refresh.</li>
-<li>Click the down arrow next to the green "Run" button.
-&nbsp;Verify that Repast Simphony/Eclipse has created a run
-configuration for&nbsp; <span style="font-weight: bold;">JZombies_CSF_Demo
-</span>simulation.</li>
-<li>Click the simulation in the drop down list
-for JZombies_CSF_Demo.</li>
-<li>If you see an error when using Windows, such as
-"WARNING: Could not
-open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002.
-Windows RegCreateKeyEx(...) returned error code 5." in the eclipse
-console window, you can implement the fix described <a href="http://stackoverflow.com/questions/16428098/groovy-shell-warning-could-not-open-create-prefs-root-node">here</a>,
-but is not necessary.&nbsp;</li>
-<li>The Repast GUI should pop up after a few seconds.</li>
-<li>Run the simulation by clicking on the blue run button.
-&nbsp;You should see the image on the right of zombies catching
-humans. &nbsp;The ticks should increment by 1s. &nbsp;You
-should be able to step one tick at a time.</li>
-<li>The
-Repast "<a href="http://repast.sourceforge.net/docs.php">Getting
-Started guide</a>" is a great place to start for learning Repast.
-&nbsp;Even if you don't plan to create your own simulations, browse
-through the instructions so you learn&nbsp; the directory
-structure, parameters, and how to use the GUI.</li>
-</ol>
-</ol>
-<li>Open Repast Simphony (Eclipse) and create a separate new
-Java
-Project for these projects under the cloned local repo (File-New-Java
-Project), unselect "Use default location", browse to each directory in
-the list below.&nbsp;</li>
-<ol>
-<li>CommonSimulationFramework</li>
-<ol>
-<li>Create a new Java Project for CommonSimulationFramework.</li>
-</ol>
-<li>CSF_JADE_Controller_Agent<span style="text-decoration: underline;"><br>
-</span></li>
-<li>RepastSimulationRunner</li>
-<li>JZombies_CSF_JADE_Agents under the
-CommonSimulationFrameworkSimulations subdirectory.</li>
-</ol>
-<li>Add the third party libraries to
-the CommonSimulationFramework&nbsp; You can&nbsp;download a zip
-file from:
-https://drive.google.com/file/d/0B8tCWle1gJ9XcXk2MUdCM2F3MnM/view?usp=sharing,
-and extract this lib directory to
-the CommonSimulationFramework/lib
-directory.
-&nbsp;Make sure you don't end up with a lib/lib directory<br>
-Alternatively, you can download the third party binaries (JARs
-)directly the source
-locations:&nbsp;<br>
-<a href="http://www.jdom.org/downloads/index.html">JDOM
-2.0.5
-</a><br>
-<a href="https://github.com/xetorthio/jedis/releases">Jedis
-2.4.2&nbsp;</a><br>
-<a href="http://jade.tilab.com/">JADE 4.3.3</a><br>
-<a href="https://code.google.com/p/combinatoricslib/">Combinatronic
-2.1</a><br>
-<a href="https://code.google.com/p/guava-libraries/">Java
-Guava 18.0</a></li>Make sure to grab any dependency JARs from each of these libraries
-(such as Jaxen 1.1.6 required by JDOM). &nbsp;If downloading from
-the zip file
-above,
-these will already be included.
-<li>Extract the JARs to the CommonSimulationFramework lib
-directory. Make sure you don't end up with a /lib/lib
-directory.
-&nbsp;These libraries aren't in the Common Simulation Framework
-source control to prevent having to
-add
-binaries. &nbsp;All of this can be simplified in the future using
-the Maven
-or Grails build tools.</li>
-<li>Right click on the CommonSimulationFramework, Right click
-on Build Path, Click
-on the libraries tab, select add JARs, and select all of the JARs in
-the&nbsp;CommonSimulationFramework/lib folder and its subfolders.</li>
-<li>Click on the libraries tab, Add External JARs, and select
-the "repast.simphony.bin_and_src.jar", which is in your <span style="font-weight: bold; color: red;">{Repast_Installation}/eclipse/plugins/repast.simphony.bin_and_src_2.1.0
-</span>directory.</li>
-<li>Add all of the External JARS in the following
-directory:&nbsp;<span style="font-weight: bold; color: red;">{Repast_Installation}/eclipse/plugins/repast.simphony.runtime_2.1.0/lib</span></li>
-<li>The
-project will show some errors &nbsp;in the Junit tests (Java unit
-tests) due to missing Eclipse plugins/software. &nbsp;It is
-recommended
-that the following software be added to Eclipse to get rid of these
-errors and to make it easier to find your own errors:
-&nbsp;Help-Install New Software. &nbsp;In the "Work with" drop
-down,
-select Kepler (this is the verion of Eclipse), Select "Web, XML, Java
-EE, and OSGI Enterprise Development" and restart.
-&nbsp;Alternatively,
-you can look
-for just the individual missing components. &nbsp;In order to get
-passed the Junit errors, right click on the "test" folder, right click
-New-Create a new JUnit test, give it a name, Next, select "Add Junit to
-the build path". &nbsp;The errors on the Junit tests should go away.</li>
-<li>Select the Libraries button and select JUnit if available
-(see the note
-about installing the additional software for Eclipse to be able to get
-JUnit).</li>
-<li>Click "OK".</li>
-<li>Edit
-the JZombies_CSF_Demo project run configuration (Drop down next to the
-green arrow), select Run Configurations, select JZombies_CSF_Demo,
-click the Classpath tab, add Projects,&nbsp; add
-the&nbsp;CommonSimulationFramework project, and all of the JARs
-under the lib directory of&nbsp;CommonSimulationFramework.
-&nbsp;You should only have to modify the run configuration
-CLASSPATH for the Repast simulation projects. &nbsp;All of the
-other projects just need to have the dependencies set up in the "Build
-Path". &nbsp;The CSF Repast simulations (JZombies_CSF_Demo) also
-need to have the dependencies set up in the "Build Path" section.</li>
-<li>In the same tab click on on add JARs, and select all JARS
-under the
-lib directory of&nbsp;CommonSimulationFramework, and subdirectories.</li>
-<li>Right
-click on the RepastSimulationRunner, Build Path, and add
-the&nbsp;&nbsp;JZombies_CSF_Demo
-projects.
-&nbsp;While the underlying runner code doesn't need these projects,
-there are JUnit tests in the Repast Simulation Runner for convenience
-methods&nbsp;in the&nbsp;JZombies_CSF_Demo project.</li>
-<li>Select add&nbsp;JARs, and select the jars under the
-folder and subfolders in&nbsp;CommonSimulationFramework//lib.</li>
-<li>Select the External JARs button and add all of the JARS
-from the<span style="color: red;"><span style="color: black;"> two <span style="color: red;">red
-bolded</span>&nbsp;</span></span><span style="color: black;">{Repast_Installation}/eclipse</span><span style="font-weight: bold;"> </span>lines above.</li>
-<li>Click on the "Add Library" button and select&nbsp;the
-JUnit library.</li>
-<li>Add the Mock_JADE_Controller_Agent project. &nbsp;This
-project is used in JUnit tests.</li>
-<li>Add the CommonSimulationFramework dependency and
-accompanying JARs to the JADE_Controller_Agent.</li>
-<li>Right click on JZombies_CSF_JADE_Agents and add the
-CommonSimulationFramework and accompanying JAR files. &nbsp;Add the
-JADE_Controller_Agent and JZombies_CSF_Demo projects. &nbsp;The
-JADE
-Controller Project is added here to be able to run all the JZombies
-Human JADE agents and the JADE Controller in a single JADE
-Container/JVM, for simplicity. &nbsp;The&nbsp;JZombies_CSF_Demo
-dependency is added to give the JADE agent authors access to the
-simulation-specific convenience methods shared by both the Repast
-simulation and JADE agents. &nbsp;Otherwise there would be no need
-to
-add a dependency to a Repast project. &nbsp;The simulation-specific
-convenience methods shared by both the Repast simulation and JADE
-agents are added to the Repast project for simplicity by eliminating
-the need to create yet another separate JAR/project.</li>
-<li>Click on the "Problems" tab below. &nbsp;You should no
-longer see any red "Error" entries, only yellow warnings.</li>
-<li>Unlike the Repast simulations projects (such
-as&nbsp;JZombies_CSF_Demo), other applications such
-as&nbsp;&nbsp;RepastSimulationRunner
-and JADE_Controller_Agent
-do not automatically get the run configurations created when the
-projects are created. &nbsp;However, there is a presaved run
-configuration that can be added to the run configurations menu.
-&nbsp;Right click&nbsp;RepastSimulationRunner, open the
-launders
-folder, select "RepastSimulationRunner - CSF - JZombies.launch", right
-click "Run As",
-click "RepastSimulationRunner - CSF - JZombies.launch
-. &nbsp;The simulation runner has started executing. &nbsp;Next
-time
-you should see it in the drop down next to the run
-button. &nbsp;Click on the red square to stop the execution.</li>
-<li>You should see an error message initially as Redis has not
-been
-started.&nbsp;</li>
-<li>Click on that drop down next to the green run, Run
-Configurations, select the "RepastSimulationRunner - CSF -
-JZombies.launch button", select the Arguments tab. &nbsp;You should
-see
-the path to your JZombies_CSF_Demo directory. &nbsp;The first
-argument
-is the location of the Repast configuration for this simulation.
-&nbsp;The second file is the path to the CSF configuration for this
-simulation.</li>
-<li>Look for the launcher file for JADE_Controller_Agent
-and do the same as for the&nbsp;RepastSimulationRunner.
-&nbsp;Stop the execution and verify that the run configuration has
-been
-added to the list of run configurations.</li>
-<li>The configuration in eclipse is now complete.</li>
-<li>You are ready to start the execution of the simulation
-run(s) now as described in the next section.</li>
-<ol>
-</ol>
-</ol>
+
 <h2>Simulation Execution</h2>
 <ol>
-<li><span style="font-weight: bold;">Start up all
-of the Processes</span></li>
-<ol>
-<li>Start
-the Redis server by opening the launcher folder, selecting the
-appropriate subfolder for your operating system, and double clicking on
-"redis-server". &nbsp; If it opens as a text file, right click it,
-open
-with, default editor. &nbsp; (TODO: Create another version for
-Linux/MacOS for each of these files).&nbsp;Keep a separate
-terminal window open for Redis and watch for error messages.
-&nbsp;Alternatively, in Windows, Redis can be installed as a
-service. </li>
-<li>Optionally,
-run a separate terminal window for the redis command line "redis-cli".
-&nbsp;This allows you to inspect messages. &nbsp;For example,
-if you
-shut down or pause the distributed system(s), you can checkto see what
-message the simulation engine (Repast) is trying to send those systems.
-</li>
-<ol>
-<li>Useful
-commands include "KEYS *" to see all messages, "lpop thechannelname" to
-pop a value from the list. &nbsp;Note, that these messaging
-structures
-may be changed in the future to apublish/subscribe model, which would
-require a different command to read the messages. </li>
+  <li><span style="font-weight: bold;">Start up all of the Processes</span> 
+    <ol>
+      <li>Start the Redis server by opening the launcher folder, selecting the
+        appropriate subfolder for your operating system, and double clicking on
+        "redis-server".   If it opens as a text file, right click it, open
+        with, default editor.   (TODO: Create another version for Linux/MacOS
+        for each of these files). Keep a separate terminal window open for
+        Redis and watch for error messages.  Alternatively, in Windows, Redis
+        can be installed as a service. </li>
+      <li>Optionally, run a separate terminal window for the redis command line
+        "redis-cli".  This allows you to inspect messages.  For example, if you
+        shut down or pause the distributed system(s), you can checkto see what
+        message the simulation engine (Repast) is trying to send those systems. 
+        <ol>
+          <li>Useful commands include "KEYS *" to see all messages, "lpop
+            thechannelname" to pop a value from the list.  Note, that these
+            messaging structures may be changed in the future to
+            apublish/subscribe model, which would require a different command
+            to read the messages. </li>
+        </ol>
+      </li>
+      <li>Navigate to the launchers folder and right click on
+        "RepastSimulationRunner - CSF.launch".   You should see that the
+        RepastSimulationRunner, running the Simulation side of the CSF begins
+        to execute.  After right clicking this .launch file, you should now see
+        this entry as a run configuration in the drop down next to the green
+        run button at the top.  In the future, you can execute this run from
+        there.  If any changes are needed such as a changed program argument
+        (such as a new location of the CSF configuration file), changes
+        directly to the run configuration will not change the .launch file. It
+        would be best to change the .launch file, delete the run configuration,
+        and right click again.</li>
+      <li>Click on the drop down next to the run button and select
+        RepastSimulationRunner - CSF - JZombies.launch.  You should see in the
+        console that the Common Simulation Framework is polling the Redis
+        in-memory cache for commands from you, the simulation
+      administrator.</li>
+      <li>Start up the distributed system(s). 
+        <ol>
+          <li>In our case we need to start the JADE agents, including the JADE
+            Controller Agent, which brokers communication between the JADE
+            agent participants in the simulation, and the simulation
+            engine/runtime Repast Simphony.  There is one project created for
+            the JZombies JADE agents, called JZombies_CSF_JADE_Agents.  Right
+            click on it, find the launchers folder, expand it, and right click
+            on JZombies-JADE_zombies_with_JADE_Controller_Agent.launch, click
+            on Run As
+          "JZombies-JADE_zombies_with_JADE_Controller_Agent.launch".</li>
+          <li>You should see the JADE Platform, the JADE Controller Agents, and
+            all of the JADE zombies initialize with messages that come from
+            both the JADE library and the Common Simulation Framework.  If
+            everything worked properly, you should start seeing a "+" printed
+            periodically.  This means that the JADE Controller Agent is polling
+            the Redis in-memory cache.  This is in contrast to the "." which is
+            periodically printed from the simulation engine side (Repast) to
+            poll the Redis-in memory cache.  Because you have started both
+            processes (Repast Simulation Runner and JADE agents), you should
+            have two consoles that switch back and forth.</li>
+        </ol>
+      </li>
+      <li>The log statements will show the fully qualified JADE AID for an
+        agent, such as:
+        DistributedSystemAutonomousAgent4@169.254.80.80:1099/JADE, but the
+        Common Simulation Framework currently only uses the local name
+        (e.g.DistributedSystemAutonomousAgent4) to uniquely identify a JADE
+        agent within a MAS.  This is the reason for the limitation only
+        allowing a single JADE platform for any JADE agents that need a
+        representation in Repast.</li>
+    </ol>
+  </li>
+  <li><span style="font-weight: bold;">Kick off the Simulation Run(s)</span> 
+    <ol>
+      <li>Do not proceed until you see both the "."s from the simulation side
+        and the "+" from the JADE side being printed in separate consoles.  If
+        you don't see the consoles switching back and forth, at the bottom,
+        under the "Console" tab, select the "Display Selected Console" drop
+        down arrow for the other process.  Make sure that the name in the drop
+        down doesn't say that it (or the other process) has been
+      terminated.</li>
+      <li>All of the processes are running now.  The distributed system(s) are
+        waiting on the simulation engine and as mentioned already, the
+        simulation engine is waiting on you, the simulation administrator.</li>
+      <li>Start the simulation run(s) by passing a START_SIMULATION command to
+        the simulation engine.  Double click
+        on"sendStartSimulationCommandFromAdmin.bat"t to do so.</li>
+      <li>After reading the message, hit any key to continue.</li>
+      <li>You should see a message stating that (integer 1).  This means that
+        the batch file successfully sent the message to start the execution of
+        the simulation run to the Redis in-memory cache.</li>
+      <li>If you terminate the simulation early, make sure to flush the Redis
+        cache by clicking on flushRedisCache.bat.  </li>
+    </ol>
+  </li>
+  <br>
 </ol>
-<li>Navigate
-to the launchers folder and right click on "RepastSimulationRunner -
-CSF.launch". &nbsp; You should see that the
-RepastSimulationRunner, running the Simulation side of the CSF begins
-to execute. &nbsp;After right clicking this .launch file, you
-should
-now see this entry as a run configuration in the drop down next to the
-green run button at the top. &nbsp;In the future, you can execute
-this
-run from there. &nbsp;If any changes are needed such as a changed
-program argument (such as a new location of the CSF configuration
-file), changes directly to the run configuration will not change the
-.launch file. It would be best to change the .launch file, delete the
-run configuration, and right click again.</li>
-<li>Click
-on the drop down next to the run button and select
-RepastSimulationRunner - CSF - JZombies.launch. &nbsp;You should
-see in
-the console
-that
-the Common Simulation Framework is polling the
-Redis
-in-memory cache for commands from you, the simulation administrator.</li>
-<li>Start up the distributed system(s).</li>
-<ol>
-<li>In our case we need
-to start the JADE agents, including the JADE Controller Agent, which
-brokers communication between the JADE agent participants in the
-simulation, and the simulation engine/runtime Repast Simphony.
-&nbsp;There is one project created for the JZombies JADE agents,
-called
-JZombies_CSF_JADE_Agents. &nbsp;Right click on it, find the
-launchers
-folder, expand it, and right click on
-JZombies-JADE_zombies_with_JADE_Controller_Agent.launch, click on Run
-As "JZombies-JADE_zombies_with_JADE_Controller_Agent.launch".</li>
-<li>You should see the JADE Platform, the JADE Controller
-Agents, and all of the JADE zombies initialize
-with messages that come from both the JADE library and the Common
-Simulation Framework. &nbsp;If everything worked properly, you
-should
-start seeing a "+" printed periodically. &nbsp;This means that the
-JADE
-Controller Agent is polling the Redis in-memory cache. &nbsp;This
-is in
-contrast to the "." which is periodically printed from the simulation
-engine side (Repast) to poll the Redis-in memory cache.
-&nbsp;Because
-you have started both processes (Repast Simulation Runner and JADE
-agents), you should have two consoles that switch back and forth.</li>
-</ol>
-<li>The
-log statements will show the fully qualified JADE AID for an agent,
-such as: DistributedSystemAutonomousAgent4@169.254.80.80:1099/JADE, but
-the Common Simulation Framework currently only uses the local name
-(e.g.DistributedSystemAutonomousAgent4) to uniquely identify a JADE
-agent within a MAS. &nbsp;This is the reason for the limitation
-only
-allowing a single JADE platform for any JADE agents that need a
-representation in Repast.</li>
-</ol>
-<li style="font-weight: bold;">Kick off the Simulation
-Run(s)</li>
-<ol>
-<li>Do not proceed until you see both the "."s from the
-simulation side
-and the "+" from the JADE side being printed in separate consoles.
-&nbsp;If you don't see the consoles switching back and forth, at
-the
-bottom, under the "Console" tab, select the "Display Selected Console"
-drop down arrow for the other process. &nbsp;Make sure that the
-name in
-the drop down doesn't say that it (or the other process) has been
-terminated.</li>
-<li>All
-of the processes are running now. &nbsp;The distributed system(s)
-are
-waiting on the simulation engine and as mentioned already, the
-simulation engine is waiting on you, the simulation administrator.</li>
-<li>Start
-the simulation run(s) by&nbsp;passing a START_SIMULATION command to
-the
-simulation engine. &nbsp;Double click
-on"sendStartSimulationCommandFromAdmin.bat"t to do
-so.</li>
-<li>After reading the message, hit any key to continue.</li>
-<li>You
-should see a message stating that (integer 1). &nbsp;This means
-that
-the batch file successfully sent the message to start the execution of
-the simulation run to the Redis in-memory cache.</li>
-<li>If you terminate the simulation early, make sure to flush
-the Redis cache by clicking on flushRedisCache.bat. &nbsp;</li>
-</ol>
-<br>
-</ol>
+
 <h2>Next Steps</h2>
-Read the <a href="Documentation/QuickStartGuide.html">Quick
-Start Guide</a>.
+Read the <a href="Documentation/QuickStartGuide.html">Quick Start Guide</a>. 
 <ol>
-<br>
+  <br>
 </ol>
-</body></html>
+</body>
+</html>

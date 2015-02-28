@@ -10,7 +10,7 @@
 User Guide</span></h1>
 
 <p>Author: <a href="mailto:jcald1@NOSPAMREMOVEgmail">Jorge Calderon</a><br>
-Release 0.1.0 {build} </p>
+Release 0.1.0</p>
 
 <p>Feb 21, 2015<br>
 </p>
@@ -27,7 +27,7 @@ The Common Simulation Framework has several goals:<br>
     this release we only support integration of JADE agents into
     Repast-Simphony-administered simulations. 
     <p>In the future it is expected that tools to model agents and other
-    ABM-simulation software systems will be supported..  For example, <a
+    ABM-simulation software systems will be supported.  For example, <a
     href="http://jade.tilab.com/">JADE</a> or <a
     href="http://jacamo.sourceforge.net/">JaCaMo</a> agents, among other types
     of agents, could be used in <a href="http://repast.sourceforge.net/">Repast
@@ -53,7 +53,7 @@ The Common Simulation Framework has several goals:<br>
     1.7+</a></li>
   <li>Windows, MacOSX, or *nix.  There are some scripts/batch files for
     starting the simulation, that have been created only for Windows so far.
-     Each contains a small number of simple commands, which could be be easily
+     Each contains a small number of simple commands, which could be easily
     copied and pasted into a Linux/MacOS shell.</li>
 </ol>
 
@@ -99,16 +99,16 @@ framework.<br>
 define and use the term "agent"?</span><br>
     In ABM, agents are autonomous actors in a model.  In multi-agent systems,
 the term "agents" refers to autonomous <span
-style="font-style: italic;">softare agents</span>.  From a multi-agent systems
+style="font-style: italic;">software agents</span>.  From a multi-agent systems
 standpoint, the agents in Repast Simphony are not truly autonomous <span
 style="font-style: italic;">software agents </span>as they are not autonomous
 at the software implementation level, even though they represent autonomous
-entitities in an ABM model.   JADE agents, however, are truly autonomous
+entities in an ABM model.   JADE agents, however, are truly autonomous
 software agents.  They send out messages at will, receive messages, can even
-decide not not respond to messages received, and execute in their own threads
+decide not respond to messages received, and execute in their own threads
 of control. They are subservient only to the administrative agents that are
 controlled by the MAS administrator.  Sometimes Repast has been incorrectly
-refered to as multi-agent system and it is important that we be precise here in
+referred to as multi-agent system and it is important that we be precise here in
 our terminology as we are attempting to combine both types of systems and wish
 to avoid confusion.<br>
 <br>
@@ -120,8 +120,8 @@ style="font-style: italic; font-weight: bold;">simulation agent"</span> to mean
 an agent that runs in the simulation runtime, such as Repast agents.  Outside
 of the simulation runtime, we have one to many<span
 style="font-weight: bold;"></span><span style="font-style: italic;"><span
-style="font-weight: bold;">distributed systems</span>.</span>  Distributed
-systems can be thought of as synonomous with Multi-agent systems (MAS).  The
+style="font-weight: bold;"> distributed systems</span>.</span>  Distributed
+systems can be thought of as synonymous with Multi-agent systems (MAS).  The
 distinction in terms here is due to the fact that we are in the future striving
 to support distributed systems that are not necessarily a MAS, in addition to
 MASs like JADE.  Each distributed system/MAS may contain one to many <span
@@ -139,7 +139,7 @@ CSF will be supporting other types of MASs/distributed systems in the future
 besides JADE, and so we prefer to use a standard term from the beginning.<br>
 <br>
 Typically, a distributed autonomous software agent or JADE agent would
-correspond to one (simulation) agent on the Repast side.  For example, in a
+correspond to one (simulation) agent on the Repast side.  For example, in a
 Prisoner's Dilemma, a participants creates a JADE agent to represent a Human
 prisoner.  Repast doesn't understand JADE agent terminology and so there is a
 representation of the JADE agent, implemented as a Human Repast (simulation)
@@ -166,13 +166,13 @@ ABM/Common Simulation Framework, other than being necessary to identify the
 messages so that they may be routed to the appropriate agent model.<br>
 <br>
 <span style="font-weight: bold;"></span><span
-style="font-style: italic;">Relationship Between the Distributed Agent Model
+style="font-style: italic;">Relationship between the Distributed Agent Model
 and the Simulation Agent</span><br>
 We can think of these two entities as jointly composing the <span
 style="font-style: italic;">agent</span> in an ABM.  In a Common Simulation
 Framework simulation, the simulation agent is dependent on its corresponding
 distributed agent model for the decision making part of its behavior.  The
-distributed autononmous agent model is dependent on its corresponding
+distributed autonomous agent model is dependent on its corresponding
 simulation agent to retrieve the local environment information from the
 simulation runtime, and to interact with other entities in the simulation
 runtime. Therefore, the simulation agent and the distributed autonomous agent
@@ -197,7 +197,7 @@ possible to run multiple MASs at the same time communicating with an ABM
 toolkit.  In addition, it would be possible to swap out one ABM toolkit for
 another.<br>
 <br>
-Currently, only one interface option has been inplemented.  It is the Redis
+Currently, only one interface option has been implemented.  It is the Redis
 in-memory database, which allows storage of key-value pairs and lists.  XML is
 used to encode and transmit data between the distributed systems and the
 simulation runtime.  We therefore avoid use of direct Java references.  This
@@ -206,7 +206,7 @@ integrity of the simulation runtime in a competitive simulation or programming
 game.  <span style="font-style: italic;">The view of the global environment is
 programmatically hidden from the distributed agents.</span>  <span
 style="font-style: italic;"></span>ABM tools are not typically written with
-this requirement in mind.  Simulation authors must programmtically limit the
+this requirement in mind.  Simulation authors must programmatically limit the
 view of the global environment within each agent.  But what happens in a game
 theory competition where the agent authors have an incentive to use as much
 information as possible?  In the CSF, by creating a barrier between the
@@ -279,7 +279,7 @@ theory competitions for all (distributed) agent authors.<br>
     object instance of a single Repast class). In the future we may support
     JADE agents corresponding to different Repast classes.</li>
   <li>Multithreading of the Common Simulation Framework is not supported.
-     However, support for concurrent executions of the Common Simulatoin
+     However, support for concurrent executions of the Common Simulation
     Framework as separate processes using the same Redis cache will be
     supported in the future.</li>
   <li>The number of  JADE agents that need matching representations in Repast
@@ -310,7 +310,7 @@ theory competitions for all (distributed) agent authors.<br>
     the first scenario has been tested)</li>
   <li>Limitations to be removed shortly post March 2015: 
     <ol>
-      <li>The number of  corresponding JADE and Repast agents is fixed at 6 for
+      <li>The number of corresponding JADE and Repast agents is fixed at 6 for
         JZombies and 8 for the Prisoner's Dilemma Tournament.</li>
       <li>Only the JZombies and Prisoner's Dilemma simulations are
       supported.</li>
@@ -338,7 +338,7 @@ problem. <br>
 <p>While most elements do not have a namespace qualifier, at times, when CSF
 <span style="text-decoration: underline;">populates </span>sections of the XML,
 it does add an "x:" qualifier and repeats the default namespace.  While this is
-unecessary in XML as it is semantically equivalent to leaving off the qualifier
+unnecessary in XML as it is semantically equivalent to leaving off the qualifier
 and repeated namespace attribute, because all elements already belong to the
 default namespace by default.  Again, if you follow the examples in the sample
 simulations, you should be fine.  If you choose to use your own parsing

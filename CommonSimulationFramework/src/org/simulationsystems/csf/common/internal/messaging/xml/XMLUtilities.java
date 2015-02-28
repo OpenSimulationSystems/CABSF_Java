@@ -49,7 +49,7 @@ public class XMLUtilities {
 			document = saxBuilder.build(inputStream);
 
 			Element root = document.getRootElement();
-			System.out.println("[Common Simulation Framework - internal] Succesfully loaded template file: "
+			System.out.println("[Common Simulation Framework - internal] Successfully loaded template file: "
 					+ root.getName());
 		} finally {
 			if (inputStream != null)
@@ -82,7 +82,7 @@ public class XMLUtilities {
 			document = saxBuilder.build(inputSource);
 
 			Element root = document.getRootElement();
-			System.out.println("Succesfully loaded template file: " + root.getName());
+			System.out.println("Successfully loaded template file: " + root.getName());
 		} finally {
 			if (sr != null)
 				sr.close();

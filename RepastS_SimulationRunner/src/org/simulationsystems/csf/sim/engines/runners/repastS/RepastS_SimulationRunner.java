@@ -31,10 +31,9 @@ import simphony.util.messages.MessageCenter;
 /**
  * Contains most of the logic for the RepastS Simulation Runner.
  * 
- * Based on TestRunner_2.java from:
- * http://sourceforge.net/p/repast/repast-simphony
+ * Based on TestRunner_2.java from: http://sourceforge.net/p/repast/repast-simphony
  * -docs/ci/master/tree/docs/RepastFAQ/TestRunner_2.java
- *
+ * 
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -103,8 +102,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		isStopped = false; // Clear this flag for the next simulation run
 		if (lastRepastS_SimulationRunContext != null) { // if CSF run
 			lastRepastS_SimulationRunContext
-			.closeInterface(lastRepastS_SimulationRunContext
-					.getSimulationRunContext());
+					.closeInterface(lastRepastS_SimulationRunContext
+							.getSimulationRunContext());
 			lastRepastS_SimulationRunContext.terminateSimulationRun();
 		}
 	}
@@ -114,7 +113,6 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 * 
 	 * @see repast.simphony.engine.graph.Executor#execute(java.lang.Object)
 	 */
-	@Override
 	public void execute(RunState toExecuteOn) {
 		// required AbstractRunner stub. We will control the
 		// schedule directly.
@@ -122,7 +120,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/**
 	 * Gets the action count (number of non-model actions in the schedule)
-	 *
+	 * 
 	 * @return the action count
 	 */
 	public int getActionCount() {
@@ -130,10 +128,10 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	}
 
 	/**
-	 * Checks if the simulation is stopped. For example, if the RepastS
-	 * simulation's builder class sets the maximum number of ticks, this would
-	 * return true after all ticks have executed.
-	 *
+	 * Checks if the simulation is stopped. For example, if the RepastS simulation's
+	 * builder class sets the maximum number of ticks, this would return true after all
+	 * ticks have executed.
+	 * 
 	 * @return the checks if is stopped
 	 */
 	public boolean getIsStopped() {
@@ -142,7 +140,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/**
 	 * Gets the model action count.
-	 *
+	 * 
 	 * @return the model action count
 	 */
 	public int getModelActionCount() {
@@ -151,7 +149,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/**
 	 * Gets the next scheduled time.
-	 *
+	 * 
 	 * @return the next scheduled time
 	 */
 	public double getNextScheduledTime() {
@@ -161,7 +159,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/**
 	 * Gets the repast s_ simulation run group context.
-	 *
+	 * 
 	 * @return the repast s_ simulation run group context
 	 */
 	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
@@ -170,7 +168,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/**
 	 * Gets the simulation runner type.
-	 *
+	 * 
 	 * @return the simulation runner type
 	 */
 	public SIMULATION_TYPE getSimulationRunnerType() {
@@ -178,10 +176,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	}
 
 	/**
-	 * Loads the Repast Simphony simulation and, optionally, the Common
-	 * Simulation Framework depending on whether or not the
-	 * csfConfigurationFileName is supplied.
-	 *
+	 * Loads the Repast Simphony simulation and, optionally, the Common Simulation
+	 * Framework depending on whether or not the csfConfigurationFileName is supplied.
+	 * 
 	 * @param scenarioDir
 	 *            the RepastS scenario directory
 	 * @param csfConfigurationFileName
@@ -189,8 +186,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void load(File scenarioDir, String csfConfigurationFileName)
-			throws Exception {
+	public void load(File scenarioDir, String csfConfigurationFileName) throws Exception {
 		if (scenarioDir.exists()) {
 			BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			ControllerRegistry registry = loader.load(runEnvironmentBuilder);
@@ -211,19 +207,18 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// distributed agent models
 		DefaultParameters defaultParameters = new DefaultParameters();
 		// JZombies
-		if (csfConfigurationFileName
-				.equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
-			defaultParameters.addParameter("human_count", "Human Count",
-					Number.class, 6, true);
-			defaultParameters.addParameter("zombie_count", "Zombie Count",
-					Number.class, 6, true);
+		if (csfConfigurationFileName.equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
+			defaultParameters.addParameter("human_count", "Human Count", Number.class, 6,
+					true);
+			defaultParameters.addParameter("zombie_count", "Zombie Count", Number.class,
+					6, true);
 		}
 		// Prisoner's Dilemma
 		else {
-			defaultParameters.addParameter("player_count", "Player Count",
-					Number.class, 8, true);
-			defaultParameters.addParameter("number_of_rounds",
-					"Number of Rounds", Number.class, 10, true);
+			defaultParameters.addParameter("player_count", "Player Count", Number.class,
+					8, true);
+			defaultParameters.addParameter("number_of_rounds", "Number of Rounds",
+					Number.class, 10, true);
 
 		}
 
@@ -236,8 +231,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		if (csfConfigurationFileName != null) {
 			// Call the concrete Adapter as this Adapter is only for Repast
 			// Simphony
-			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI
-					.getInstance();
+			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(csfConfigurationFileName);
 			simulationRunnerType = SIMULATION_TYPE.CSF_SIMULATION;
@@ -248,7 +242,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	/**
 	 * Initializes a single simulation run. Called after the simulation and (if
 	 * configured) Common Simulation Framework are initialized.
-	 *
+	 * 
 	 * @return the repast s_ simulation run context
 	 */
 	public RepastS_SimulationRunContext runInitialize() {
@@ -256,18 +250,16 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters
 		DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter(
-				ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
-				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME,
-				Number.class, 1, true);
+		defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
+				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1,
+				true);
 
 		controller.runInitialize(defaultParameters);
-		schedule = RunState.getInstance().getScheduleRegistry()
-				.getModelSchedule();
+		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 
 		@SuppressWarnings("unchecked")
 		Context<Object> repastContextForThisRun = RunState.getInstance()
-		.getMasterContext();
+				.getMasterContext();
 
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 		if (simulationRunnerType == SIMULATION_TYPE.CSF_SIMULATION) {
@@ -292,9 +284,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	}
 
 	/**
-	 * Sets the finishing variable. Called after the last step in the simulation
-	 * run executes.
-	 *
+	 * Sets the finishing variable. Called after the last step in the simulation run
+	 * executes.
+	 * 
 	 * @param fin
 	 *            the new finishing
 	 */

@@ -23,14 +23,125 @@ import org.jdom2.xpath.XPathFactory;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfRuntimeException;
 import org.xml.sax.InputSource;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Utility class for XML messages
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
+ */
 public class XMLUtilities {
 
-	/*
-	 * @throws IOException
+	/**
+	 * Convert Document to XML string.
 	 * 
-	 * @throws JDOMException
+	 * @param document
+	 *            the document
+	 * @param prettyPrint
+	 *            pretty-print the XML
+	 * @return the string
 	 */
-	static public org.jdom2.Document filenameStrTojdom2Document(String fileName)
+	static public String convertDocumentToXMLString(final Document document,
+			final boolean prettyPrint) {
+		return convertDocumentToXMLString(document.getRootElement(), prettyPrint);
+	}
+
+	/**
+	 * Convert Document to XML string.
+	 * 
+	 * @param document
+	 *            the document
+	 * @param prettyPrint
+	 *            pretty-print the XML
+	 * @return the string
+	 */
+	static public String convertDocumentToXMLString(final Element document,
+			final boolean prettyPrint) {
+		XMLOutputter outputter = null;
+		if (prettyPrint)
+			outputter = new XMLOutputter(Format.getPrettyFormat());
+		else
+			outputter = new XMLOutputter();
+		final String xmlString = outputter.outputString(document);
+		return xmlString;
+	}
+
+	/**
+	 * Convert an JDOM2 Element to an XML string.
+	 * 
+	 * @param document
+	 *            the document
+	 * @param prettyPrint
+	 *            the pretty print
+	 * @return the string
+	 */
+	static public String convertElementToXMLString(final Element document,
+			final boolean prettyPrint) {
+		XMLOutputter outputter = null;
+		if (prettyPrint)
+			outputter = new XMLOutputter(Format.getPrettyFormat());
+		else
+			outputter = new XMLOutputter();
+		final String xmlString = outputter.outputString(document);
+		return xmlString;
+	}
+
+	/**
+	 * Execute an XPath
+	 * 
+	 * @param document
+	 *            the Document
+	 * @param xpathStr
+	 *            the Xpath String
+	 * @param namespaceStr
+	 *            the namespace str
+	 * @param filter
+	 *            the filter
+	 * @return the list<? extends content>
+	 */
+	static public List<? extends Content> executeXPath(final Object document,
+			final String xpathStr, final String namespaceStr,
+			final Filter<? extends Content> filter) {
+		final XPathFactory xpathFactory = XPathFactory.instance();
+		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
+
+		XPathExpression<? extends Content> expr = null;
+		if (namespaceStr != null)
+			expr = xpathFactory.compile(xpathStr, filter, null,
+					Namespace.getNamespace("x", namespaceStr));
+		else
+			expr = xpathFactory.compile(xpathStr, filter);
+
+		List<? extends Content> xPathSearchedNodes = null;
+		try {
+			xPathSearchedNodes = expr.evaluate(document);
+		}
+		// TODO: Add better handling for these kinds of exceptions
+		catch (final Exception e) {
+			throw new CsfRuntimeException("Error in querying the message", e);
+		}
+		return xPathSearchedNodes;
+		/*
+		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content =
+		 * xPathSearchedNodes.get(i); System.out.println("content: " + i + ": " +
+		 * content.getValue()); }
+		 */
+	}
+
+	/**
+	 * Take a filename, read the file to an XML string, and convert the string to a JDOM2
+	 * Document.
+	 * 
+	 * @param fileName
+	 *            the file name
+	 * @return the org.jdom2. document
+	 * @throws JDOMException
+	 *             the JDOM exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	static public org.jdom2.Document filenameStrTojdom2Document(final String fileName)
 			throws JDOMException, IOException {
 		File file = null;
 		InputStream inputStream = null;
@@ -44,13 +155,14 @@ public class XMLUtilities {
 			// LOW: is there a way of not having to specify the encoding?
 			reader = new InputStreamReader(inputStream, "UTF-8");
 
-			SAXBuilder saxBuilder = new SAXBuilder();
+			final SAXBuilder saxBuilder = new SAXBuilder();
 			// begin of try - catch block
 			document = saxBuilder.build(inputStream);
 
-			Element root = document.getRootElement();
-			System.out.println("[Common Simulation Framework - internal] Successfully loaded template file: "
-					+ root.getName());
+			final Element root = document.getRootElement();
+			System.out
+					.println("[Common Simulation Framework - internal] Successfully loaded template file: "
+							+ root.getName());
 		} finally {
 			if (inputStream != null)
 				inputStream.close();
@@ -67,7 +179,18 @@ public class XMLUtilities {
 	 * 
 	 * @throws JDOMException
 	 */
-	static public org.jdom2.Document xmlStringTojdom2Document(String xmlString)
+	/**
+	 * Xml string tojdom2 document.
+	 * 
+	 * @param xmlString
+	 *            the xml string
+	 * @return the org.jdom2. document
+	 * @throws JDOMException
+	 *             the JDOM exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	static public org.jdom2.Document xmlStringTojdom2Document(final String xmlString)
 			throws JDOMException, IOException {
 		StringReader sr = null;
 		InputSource inputSource = null;
@@ -77,11 +200,11 @@ public class XMLUtilities {
 			sr = new StringReader(xmlString);
 			inputSource = new InputSource(sr);
 
-			SAXBuilder saxBuilder = new SAXBuilder();
+			final SAXBuilder saxBuilder = new SAXBuilder();
 			// begin of try - catch block
 			document = saxBuilder.build(inputSource);
 
-			Element root = document.getRootElement();
+			final Element root = document.getRootElement();
 			System.out.println("Successfully loaded template file: " + root.getName());
 		} finally {
 			if (sr != null)
@@ -90,57 +213,5 @@ public class XMLUtilities {
 
 		return document;
 
-	}
-
-	static public List<? extends Content> executeXPath(Object document, String xpathStr,
-			String namespaceStr, Filter<? extends Content> filter) {
-		XPathFactory xpathFactory = XPathFactory.instance();
-		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
-
-		XPathExpression<? extends Content> expr = null;
-		if (namespaceStr != null)
-			expr = xpathFactory.compile(xpathStr, filter, null,
-					Namespace.getNamespace("x", namespaceStr));
-		else
-			expr = xpathFactory.compile(xpathStr, filter);
-
-		List<? extends Content> xPathSearchedNodes = null;
-		try {
-			xPathSearchedNodes = expr.evaluate(document);
-		}
-		// TODO: Add better handling for these kinds of exceptions
-		catch (Exception e) {
-			throw new CsfRuntimeException("Error in querying the message", e);
-		}
-		return xPathSearchedNodes;
-		/*
-		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content =
-		 * xPathSearchedNodes.get(i); System.out.println("content: " + i + ": " +
-		 * content.getValue()); }
-		 */
-	}
-
-	static public String convertDocumentToXMLString(Document document, boolean prettyPrint) {
-		return convertDocumentToXMLString(document.getRootElement(), prettyPrint);
-	}
-
-	static public String convertDocumentToXMLString(Element document, boolean prettyPrint) {
-		XMLOutputter outputter = null;
-		if (prettyPrint)
-			outputter = new XMLOutputter(Format.getPrettyFormat());
-		else
-			outputter = new XMLOutputter();
-		String xmlString = outputter.outputString(document);
-		return xmlString;
-	}
-
-	static public String convertElementToXMLString(Element document, boolean prettyPrint) {
-		XMLOutputter outputter = null;
-		if (prettyPrint)
-			outputter = new XMLOutputter(Format.getPrettyFormat());
-		else
-			outputter = new XMLOutputter();
-		String xmlString = outputter.outputString(document);
-		return xmlString;
 	}
 }

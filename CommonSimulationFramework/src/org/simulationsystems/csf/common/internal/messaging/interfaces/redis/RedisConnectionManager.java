@@ -6,15 +6,47 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-/*
+/**
  * Manages the CRUD operations to Redis. This class has no business-level knowledge.
+ * 
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
  */
 public class RedisConnectionManager {
 	// private Jedis jedis=null;
+	/** The jedis pool. */
 	static private JedisPool jedisPool = null;
+
+	/** The jedis. */
 	static private Jedis jedis = null;
+
+	/** The host. */
 	private String host;
 
+	/**
+	 * Close pool.
+	 */
+	public void closePool() {
+		jedisPool.destroy();
+	}
+
+	/**
+	 * Gets the jedis.
+	 * 
+	 * @return the jedis
+	 */
+	public Jedis getJedis() {
+		return jedis;
+	}
+
+	/**
+	 * Initialize Redis connection.
+	 * 
+	 * @param host
+	 *            the host
+	 */
 	public void initializeRedisConnection(final String host) {
 		// jedis = new Jedis(host);
 
@@ -34,7 +66,15 @@ public class RedisConnectionManager {
 		// TODO: Throw exception is Jedis returns null?
 	}
 
-	public void postMessage(String channel, String message) {
+	/**
+	 * Post message.
+	 * 
+	 * @param channel
+	 *            the channel
+	 * @param message
+	 *            the message
+	 */
+	public void postMessage(final String channel, final String message) {
 		// actually using a Redis key for now, not a channel as used in Publish/Subscribe
 		jedis.lpush(channel, message);
 
@@ -48,22 +88,30 @@ public class RedisConnectionManager {
 		// System.out.println("lpop: " + jedis.lpop(channel));
 	}
 
-	/*
-	 * @param maximumNumberOfPolls the maximum number of polls on the Redis key. If null,
-	 * this will poll forever.
+	/**
+	 * Redis synchronous polling.
 	 * 
-	 * @param sleepTime the number of second to sleep
+	 * @param requestingSystemType
+	 *            the requesting system
+	 * @param redisKey
+	 *            the redis key
+	 * @param sleepTime
+	 *            the number of second to sleep
+	 * @param maximumNumberOfPolls
+	 *            the maximum number of polls on the Redis key. If null, this will poll
+	 *            forever.
+	 * @return the string
 	 */
-	public String redisSynchronousPolling(SYSTEM_TYPE requestingSystem, String redisKey,
-			Double sleepTime, Long maximumNumberOfPolls) {
+	public String redisSynchronousPolling(final SYSTEM_TYPE requestingSystemType,
+			final String redisKey, final Double sleepTime, Long maximumNumberOfPolls) {
 		String value = null;
 		long i = 0;
 		long printCount = 0;
-		System.out.println("[" + requestingSystem + "]" + "Attempting Redis lpop on: "
-				+ redisKey);
+		System.out.println("[" + requestingSystemType + "]"
+				+ "Attempting Redis lpop on: " + redisKey);
 		while (maximumNumberOfPolls == null || maximumNumberOfPolls > 0) {
 			if (printCount == 0) {
-				if (requestingSystem == SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
+				if (requestingSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
 					System.out.print("+");
 				else
 					System.out.print(".");
@@ -74,9 +122,9 @@ public class RedisConnectionManager {
 				try {
 					// System.out.println("sleeping: " + sleepTime * 1000);
 					// TODO: make the time configurable?
-					Long sleepLong = (long) (sleepTime * 1000);
+					final Long sleepLong = (long) (sleepTime * 1000);
 					Thread.sleep(sleepLong);
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 					Thread.currentThread().interrupt(); // set interrupt flag
 					throw new RuntimeException(
 							"Sleep (or wait) in synchronous polling of Redis has been interrupted.",
@@ -96,13 +144,5 @@ public class RedisConnectionManager {
 		}
 
 		return value;
-	}
-
-	public Jedis getJedis() {
-		return jedis;
-	}
-
-	public void closePool() {
-		jedisPool.destroy();
 	}
 }

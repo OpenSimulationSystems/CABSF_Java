@@ -1,26 +1,41 @@
 package org.simulationsystems.csf.sim.adapters.simengines.repastS.api;
 
-import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunState;
-
+/**
+ * The Repast Simphony Agent API
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
+ */
 public class RepastS_AgentAdapterAPI {
+
+	/** The instance. */
 	private static RepastS_AgentAdapterAPI instance = new RepastS_AgentAdapterAPI();
 
-	/*
-	 * Use getInstance() instead.
+	/**
+	 * Gets the single instance of RepastS_AgentAdapterAPI.
+	 * 
+	 * @return single instance of RepastS_AgentAdapterAPI
+	 */
+	public static RepastS_AgentAdapterAPI getInstance() {
+		return instance;
+	}
+
+	/**
+	 * Disabled constructor
 	 */
 	private RepastS_AgentAdapterAPI() {
 		super();
 	}
 
-	
-	public static RepastS_AgentAdapterAPI getInstance() {
-		return instance;
-	}
-
+	/**
+	 * Gets the agent context.
+	 * 
+	 * @return the agent context
+	 */
 	public RepastS_AgentContext getAgentContext() {
 		return new RepastS_AgentContext();
-		
+
 	}
 
 }

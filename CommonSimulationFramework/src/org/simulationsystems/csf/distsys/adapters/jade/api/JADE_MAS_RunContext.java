@@ -1,68 +1,45 @@
 package org.simulationsystems.csf.distsys.adapters.jade.api;
 
-import jade.core.AID;
-import jade.core.Agent;
-import jade.lang.acl.ACLMessage;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
-import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentModel;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAutonomousAgent;
-import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
-import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
-import repast.simphony.context.Context;
-
-/*
- * Provides the context for the Common Simulation Framework. This Simulation-Toolkit-specific
- * context mirrors the generic DistSysRunContext provided by the Common Framework API. It enables
- * API users to get native Simulation-Toolkit objects instead of generic "Object"s. This aids the
- * API client at compile time. The simulation context is created for the entire simulation run
- * group, unlike in Repast where the simulation context exists per simulation run. Adapter
- * developers should first instantiate DistSysRunContext, before instantiating a
- * Simulation-Toolkit-specific Context such as this class.
+/**
+ * The simulation run context for the JADE MAS. Provides the mechanism for the JADE MAS to
+ * communicate with with ABMS systems (like RepastS) for a simulation run.
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
  */
 public class JADE_MAS_RunContext {
+
+	/** The DistSysRunContext context. */
 	private DistSysRunContext distSysRunContext;
+
+	/** The jade_ context for this run. */
 	Object jade_ContextForThisRun;
+
+	/** The dam. */
 	private DistributedAgentsManager dam;
+
+	/** The jade controller mock. */
 	private JadeControllerMock jadeControllerMock;
 
-	public void setDam(DistributedAgentsManager dam) {
-		this.dam = dam;
-	}
-
-	public DistSysRunContext getDistSysRunContext() {
-		return distSysRunContext;
-	}
-
-	public Element getCachedAgentModelActorTemplate() {
-		return this.getDistSysRunContext().getDistSysRunGroupContext()
-				.getCachedAgentModelActorTemplate();
-	}
-
-	public Element getCachedLocationTemplate() {
-		return this.getDistSysRunContext().getDistSysRunGroupContext()
-				.getCachedLocationTemplate();
-	}
-
-	/*
-	 * Use the other constructor
+	/**
+	 * Instantiates a new JADE_MAS_RunContext.
 	 */
 	@SuppressWarnings("unused")
 	private JADE_MAS_RunContext() {
@@ -73,19 +50,146 @@ public class JADE_MAS_RunContext {
 	 * Uses the decorator pattern to set up a custom JADE MAS RunContext using the general
 	 * DistSystRunContext object.
 	 */
-	public JADE_MAS_RunContext(DistSysRunContext distSysRunContext) {
+	/**
+	 * Instantiates a new JADE_MAS_RunContext.
+	 * 
+	 * @param distSysRunContext
+	 *            the dist sys run context
+	 */
+	public JADE_MAS_RunContext(final DistSysRunContext distSysRunContext) {
 		this.distSysRunContext = distSysRunContext;
 
 		// TODO: Make initialized based on configuration. For now, hard code one
 		// distributed system.
 	}
 
+	/**
+	 * Close interface.
+	 * 
+	 * @param distSysRunContext
+	 *            the dist sys run context
+	 */
+	public void closeInterface(final DistSysRunContext distSysRunContext) {
+		distSysRunContext.closeInterface();
+	}
+
+	/**
+	 * Gets the cached agent model actor template.
+	 * 
+	 * @return the cached agent model actor template
+	 */
+	public Element getCachedAgentModelActorTemplate() {
+		return this.getDistSysRunContext().getDistSysRunGroupContext()
+				.getCachedAgentModelActorTemplate();
+	}
+
+	/**
+	 * Gets the cached location template.
+	 * 
+	 * @return the cached location template
+	 */
+	public Element getCachedLocationTemplate() {
+		return this.getDistSysRunContext().getDistSysRunGroupContext()
+				.getCachedLocationTemplate();
+	}
+
+	/**
+	 * Gets the cached message exchange template.
+	 * 
+	 * @return the cached message exchange template
+	 */
+	public Document getCachedMessageExchangeTemplate() {
+		return this.getDistSysRunContext().getDistSysRunGroupContext()
+				.getBlankCachedMessageExchangeTemplate();
+	}
+
+	/**
+	 * Gets the current JADE_Context.
+	 * 
+	 * @return the current JADE_Context
+	 */
+	public Object getCurrentJADE_Context() {
+		return jade_ContextForThisRun;
+	}
+
+	/**
+	 * Gets the dist sys run context.
+	 * 
+	 * @return the dist sys run context
+	 */
+	public DistSysRunContext getDistSysRunContext() {
+		return distSysRunContext;
+	}
+
+	/**
+	 * Gets the DistSysRunGroup configuration.
+	 * 
+	 * @return the DistSysRunGroup configuration
+	 */
 	public DistSysRunGroupConfiguration getDistSysRunGroupConfiguration() {
 		return distSysRunContext.getDistributedSystemRunGroupConfiguration();
 	}
 
+	/**
+	 * Gets the simulation run group.
+	 * 
+	 * @return the simulation run group
+	 */
 	public SimulationRunGroup getSimulationRunGroup() {
 		return distSysRunContext.getSimulationRunGroup();
+	}
+
+	/**
+	 * Initialize agent mappings.
+	 */
+	public void initializeAgentMappings() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Listen for message from simulation engine.
+	 * 
+	 * @return the framework message
+	 */
+	public FrameworkMessage listenForMessageFromSimulationEngine() {
+		return getDistSysRunContext().listenForMessageFromSimulationEngine();
+
+	}
+
+	/**
+	 * Message the simulation engine.
+	 * 
+	 * @param frameworkMessage
+	 *            the framework message
+	 * @param distSysRunContext
+	 *            the dist sys run context
+	 */
+	public void messageSimulationEngine(final FrameworkMessage frameworkMessage,
+			final DistSysRunContext distSysRunContext) {
+		distSysRunContext.messageSimulationEngine(frameworkMessage);
+	}
+
+	// FIXME: Need this?
+	/**
+	 * Request environment information.
+	 * 
+	 * @return the framework message
+	 */
+	public FrameworkMessage requestEnvironmentInformation() {
+		getDistSysRunContext().requestEnvironmentInformation();
+		return null;
+
+	}
+
+	/**
+	 * Sets the DistributedAgentsManager
+	 * 
+	 * @param dam
+	 *            the DistributedAgentsManager
+	 */
+	public void setDam(final DistributedAgentsManager dam) {
+		this.dam = dam;
 	}
 
 	/*
@@ -94,58 +198,42 @@ public class JADE_MAS_RunContext {
 	/*
 	 * LOW: Add the ability to support many simultaneous "Context"s
 	 */
-	public void setJadeContextForThisRun(Object jade_ContextForThisRun) {
+	/**
+	 * Sets the jade context for this run.
+	 * 
+	 * @param jade_ContextForThisRun
+	 *            the new jade context for this run
+	 */
+	public void setJadeContextForThisRun(final Object jade_ContextForThisRun) {
 		this.jade_ContextForThisRun = jade_ContextForThisRun;
 
 	}
 
-	public Object getCurrentJADE_Context() {
-		return jade_ContextForThisRun;
-	}
-
-	/*
-	 * Convenience method to get the cached messgae exchange template
+	/**
+	 * Sets the jade controller.
+	 * 
+	 * @param jadeControllerMock
+	 *            the new jade controller
 	 */
-	public Document getCachedMessageExchangeTemplate() {
-		return this.getDistSysRunContext().getDistSysRunGroupContext()
-				.getBlankCachedMessageExchangeTemplate();
-	}
-
-	public void messageSimulationEngine(FrameworkMessage frameworkMessage,
-			DistSysRunContext distSysRunContext) {
-		distSysRunContext.messageSimulationEngine(frameworkMessage);
-	}
-
-	public FrameworkMessage listenForMessageFromSimulationEngine() {
-		return getDistSysRunContext().listenForMessageFromSimulationEngine();
+	public void setJadeController(final JadeControllerMock jadeControllerMock) {
+		this.jadeControllerMock = jadeControllerMock;
 
 	}
 
-	public void closeInterface(DistSysRunContext distSysRunContext) {
-		distSysRunContext.closeInterface();
-	}
-
-	// FIXME: Need this?
-	public FrameworkMessage requestEnvironmentInformation() {
-		getDistSysRunContext().requestEnvironmentInformation();
-		return null;
-
-	}
-
-	public void initializeAgentMappings() {
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * Wait for and process simulation engine message after handshake.
+	 * 
+	 * @return the framework command
+	 */
 	public FRAMEWORK_COMMAND waitForAndProcessSimulationEngineMessageAfterHandshake() {
 		// Now listen for the messages from the simulation engine
 		FrameworkMessage fm = listenForMessageFromSimulationEngine();
-		List<Element> distributedAutonomousAgentElements = fm
+		final List<Element> distributedAutonomousAgentElements = fm
 				.getDistributedAutonomousAgentElements(fm.getDocument());
 
 		// check whether to terminate the simulation
 		// Listen for START_SIMULATION command from the simulation engine
-		FRAMEWORK_COMMAND fc = fm.getFrameworkToDistributedSystemCommand();
+		final FRAMEWORK_COMMAND fc = fm.getFrameworkToDistributedSystemCommand();
 		// TODO: Better error handling. Send a message back to the simulation engine that
 		// this distributed system is terminating
 
@@ -155,14 +243,14 @@ public class JADE_MAS_RunContext {
 
 		// TODO: better validation
 		assert (distributedAutonomousAgentElements.size() != 0);
-		for (Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
-			String distributedAutonomousAgentID = fm
+		for (final Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
+			final String distributedAutonomousAgentID = fm
 					.getDistributedAutonomousAgentID(distributedAutonomousAgentElement);
-			DistributedAutonomousAgent distAutAgent = dam
+			final DistributedAutonomousAgent distAutAgent = dam
 					.getDistributedAutonomousAgent(distributedAutonomousAgentID);
 			// TODO: better validation
 			assert (distAutAgent != null);
-			List<Element> agentModelElements = fm
+			final List<Element> agentModelElements = fm
 					.getAgentModels(distributedAutonomousAgentElement); // TODO: better
 																		// validation
 			assert (agentModelElements.size() != 0);
@@ -173,10 +261,10 @@ public class JADE_MAS_RunContext {
 
 			// Agent Model Assertions. We don't actually message the modesl from here,
 			// only the distributed autonomous agents
-			for (Element agentModelElement : agentModelElements) {
-				String agentModelIDfromMessage = fm
+			for (final Element agentModelElement : agentModelElements) {
+				final String agentModelIDfromMessage = fm
 						.getFirstAgentModelActorAgentModelID(agentModelElement);
-				DistributedAgentModel distAgentModel = distAutAgent
+				final DistributedAgentModel distAgentModel = distAutAgent
 						.getDistributedAgentModelIDStoAgentModels().get(
 								agentModelIDfromMessage);
 				// TODO: add better validation
@@ -187,7 +275,7 @@ public class JADE_MAS_RunContext {
 
 			// FIXME: Need to keep this case on the JADE API side, everything else in
 			// the main DistaSys API
-			NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = (NativeDistributedAutonomousAgent) distAutAgent
+			final NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = (NativeDistributedAutonomousAgent) distAutAgent
 					.getNativeDistributedAutonomousAgent();
 			assert (nativeDistributedAutonomousAgent != null);
 
@@ -200,7 +288,7 @@ public class JADE_MAS_RunContext {
 
 			assert (nativeDistributedAutonomousAgent.getDistributedAutonomousAgentID()
 					.equals(distributedAutonomousAgentID));
-			String messageID = UUID.randomUUID().toString();
+			final String messageID = UUID.randomUUID().toString();
 			nativeDistributedAutonomousAgent.receiveMessage(fm, messageID, null,
 					jadeControllerMock);
 
@@ -211,10 +299,5 @@ public class JADE_MAS_RunContext {
 		}
 
 		return null;
-	}
-
-	public void setJadeController(JadeControllerMock jadeControllerMock) {
-		this.jadeControllerMock = jadeControllerMock;
-
 	}
 }

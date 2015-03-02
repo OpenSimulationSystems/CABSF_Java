@@ -1,8 +1,7 @@
 /**
+ * The internal messaging classes.
  * 
- */
-/**
- * @author jorge
+ * @author Jorge Calderon
  * 
  */
 package org.simulationsystems.csf.common.internal.messaging;

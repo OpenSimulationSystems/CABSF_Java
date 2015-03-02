@@ -2,22 +2,45 @@ package prisonersdilemma;
 
 import org.simulationsystems.csf.common.csfmodel.SIMULATION_TYPE;
 
+/**
+ * A temporary Player (subclass of Player) created in place of the parent Player object.
+ * Once the pairing completes, this object instance is no longer used and is removed from
+ * the Repast Context.The Class PlayerB.
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
+ */
 public class PlayerB extends Player {
 
+	/**
+	 * Disabled constructor
+	 */
 	private PlayerB() {
 		super(null);
 	}
 
-	public PlayerB(GameAdministrator gameAdministrator) {
+	/**
+	 * Instantiates a new player B.
+	 * 
+	 * @param gameAdministrator
+	 *            the game administrator
+	 */
+	public PlayerB(final GameAdministrator gameAdministrator) {
 		super(gameAdministrator);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see prisonersdilemma.Player#decide()
+	 */
 	@Override
 	public DECISION decide() {
 		if (this.gameAdministrator.getSimulationType() == SIMULATION_TYPE.CSF_SIMULATION) {
 			return sendRoundInformationToAndGetDecisionFromDistributedAgent(
 					this.gameAdministrator.getRound(),
-					this.gameAdministrator.getLastPlayer0Decision(), null);
+					this.gameAdministrator.getLastPlayerADecision(), null);
 		} else {
 			return DECISION.DEFECT;
 		}

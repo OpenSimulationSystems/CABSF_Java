@@ -16,15 +16,15 @@ import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
 import repast.simphony.context.Context;
 
 /**
- * The Repast Simphony Adapter API context factory. This class is the entry
- * point for RepastS simulations to use the Common Simulation Framework.
+ * The Repast Simphony Adapter API context factory. This class is the entry point for
+ * RepastS simulations to use the Common Simulation Framework.
  * 
- * Note: This API was originally intended to only be used at the RepastS
- * simulation-level, not at the individual RepastS agent-level. However, in the
- * current version, the individual agents do use this API directly in addition
- * to the agent-level API (RepastS Agent API). This may change in newer versions
- * so that agents only use instantiate the agent-level API.
- *
+ * Note: This API was originally intended to only be used at the RepastS simulation-level,
+ * not at the individual RepastS agent-level. However, in the current version, the
+ * individual agents do use this API directly in addition to the agent-level API (RepastS
+ * Agent API). This may change in newer versions so that agents only use instantiate the
+ * agent-level API.
+ * 
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -32,8 +32,8 @@ import repast.simphony.context.Context;
 public class RepastS_SimulationAdapterAPI {
 
 	/**
-	 * The API singleton for adaptor
-	 *
+	 * The API singleton for adaptor.
+	 * 
 	 * @return single instance of RepastS_SimulationAdapterAPI
 	 */
 	public static RepastS_SimulationAdapterAPI getInstance() {
@@ -41,10 +41,10 @@ public class RepastS_SimulationAdapterAPI {
 	}
 
 	/** The CSF-wide Simulation API. Intended to be used across ABMS systems. */
-	private SimulationAPI simulationAPI = SimulationAPI.getInstance();
+	private final SimulationAPI simulationAPI = SimulationAPI.getInstance();
 
 	/** The simulation tool name to set in simulation API. */
-	private String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
+	private final String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
 
 	/** The instance. */
 	private static RepastS_SimulationAdapterAPI instance = new RepastS_SimulationAdapterAPI();
@@ -57,17 +57,16 @@ public class RepastS_SimulationAdapterAPI {
 	}
 
 	/**
-	 * Initializes the Common Simulation Framework on the RepastS simulation
-	 * side, based on the supplied CSF configuration property file. Calls the
-	 * simulation-adaptor-wide Simulation API to initialize the simulation run
-	 * group.
+	 * Initializes the Common Simulation Framework on the RepastS simulation side, based
+	 * on the supplied CSF configuration property file. Calls the simulation-adaptor-wide
+	 * Simulation API to initialize the simulation run group.
 	 * 
-	 * NOTE: The current version initialization is hard coded to only work with
-	 * the two reference implementation simulations. The CSF configuration
-	 * filename is used to switch the configuration based on the simulation. In
-	 * the future, this filename will be used to read an XML configuration file
-	 * from the file system so that the CSF can be used for any simulation.
-	 *
+	 * NOTE: The current version initialization is hard coded to only work with the two
+	 * reference implementation simulations. The CSF configuration filename is used to
+	 * switch the configuration based on the simulation. In the future, this filename will
+	 * be used to read an XML configuration file from the file system so that the CSF can
+	 * be used for any simulation.
+	 * 
 	 * @param csfConfigurationFileName
 	 *            the framework configuration file name
 	 * @return the repast s_ simulation run group context
@@ -75,14 +74,13 @@ public class RepastS_SimulationAdapterAPI {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public RepastS_SimulationRunGroupContext initializeAPI(
-			String csfConfigurationFileName) throws IOException {
+			final String csfConfigurationFileName) throws IOException {
 
-		SimulationRunGroupContext simulationRunGroupContext = simulationAPI
-				.initializeAPI(csfConfigurationFileName,
-						simToolNameToSetInSimulationAPI);
+		final SimulationRunGroupContext simulationRunGroupContext = simulationAPI
+				.initializeAPI(csfConfigurationFileName, simToolNameToSetInSimulationAPI);
 
 		// Set the Repast-Simphony-specific objects, using the Decorator Pattern
-		RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
+		final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
 				simulationRunGroupContext);
 
 		return repastS_SimulationRunGroupContext;
@@ -91,10 +89,9 @@ public class RepastS_SimulationAdapterAPI {
 	// LOW: Allow the same simulation agent class to be both distributed and
 	// non-distributed.
 	/**
-	 * Initializes a single CSF Repast Simphony simulation run. This method
-	 * configures the (already-created in the simulation API initialization)
-	 * AgentMapping objects.
-	 *
+	 * Initializes a single CSF Repast Simphony simulation run. This method configures the
+	 * (already-created in the simulation API initialization) AgentMapping objects.
+	 * 
 	 * @param nativeRepastScontextForThisRun
 	 *            the native repast context for this run
 	 * @param repastS_SimulationRunGroupContext
@@ -102,21 +99,20 @@ public class RepastS_SimulationAdapterAPI {
 	 * @return the repast s_ simulation run context
 	 */
 	public RepastS_SimulationRunContext initializeSimulationRun(
-			Context<Object> nativeRepastScontextForThisRun,
-			RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
-		SimulationRunContext simulationRunContext = simulationAPI
+			final Context<Object> nativeRepastScontextForThisRun,
+			final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
+		final SimulationRunContext simulationRunContext = simulationAPI
 				.initializeSimulationRun(nativeRepastScontextForThisRun,
-						repastS_SimulationRunGroupContext
-						.getSimulationRunGroupContext());
+						repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
 
 		// User Decorator Pattern for RepastS_SimulationRunContext
-		RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
+		final RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
 				simulationRunContext);
 		repastS_SimulationRunContext
-		.setRepastContextForThisRun(nativeRepastScontextForThisRun);
+				.setRepastContextForThisRun(nativeRepastScontextForThisRun);
 
 		repastS_SimulationRunContext
-		.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
+				.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
 		// Make the context available to the agents in the Repast model
 		nativeRepastScontextForThisRun.add(repastS_SimulationRunContext);
 
@@ -125,8 +121,8 @@ public class RepastS_SimulationAdapterAPI {
 		// LOW: Handle multiple distributed systems
 		// TODO: Move distributed system manager to main level? same for on the
 		// distributed side (simulation engine manager)
-		repastS_SimulationRunContext.getSimulationDistributedSystemManagers()
-		.iterator().next().initializeAgentMappings();
+		repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
+				.next().initializeAgentMappings();
 
 		boolean atLeastOneMappingPerformed = false;
 
@@ -136,40 +132,37 @@ public class RepastS_SimulationAdapterAPI {
 		// code.
 		// (Same for JADE API side)
 		@SuppressWarnings({ "rawtypes" })
-		Iterable<Class> simulationAgentsClasses = nativeRepastScontextForThisRun
-		.getAgentTypes();
+		final Iterable<Class> simulationAgentsClasses = nativeRepastScontextForThisRun
+				.getAgentTypes();
 
 		// For each simulation agent class
 		for (@SuppressWarnings("rawtypes")
-		Class simulationAgentClass : simulationAgentsClasses) {
+		final Class simulationAgentClass : simulationAgentsClasses) {
 			// LOW: Allow individual simulation agent classes to be either
 			// simulation-only
 			// or
 			// representations of distributed agents.
 			// TODO: Handle multiple distributed systems
-			if (repastS_SimulationRunContext
-					.getSimulationDistributedSystemManagers().iterator().next()
-					.isAgentClassDistributedType(simulationAgentClass)) {
+			if (repastS_SimulationRunContext.getSimulationDistributedSystemManagers()
+					.iterator().next().isAgentClassDistributedType(simulationAgentClass)) {
 				@SuppressWarnings("unchecked")
-				Class<Object> simulationAgentClazz = simulationAgentClass;
-				Iterable<Object> simulationAgentsInSingleClass = nativeRepastScontextForThisRun
+				final Class<Object> simulationAgentClazz = simulationAgentClass;
+				final Iterable<Object> simulationAgentsInSingleClass = nativeRepastScontextForThisRun
 						.getAgentLayer(simulationAgentClazz);
 
 				// TODO: Look into handling multiple classes in the mapping
 				/*
 				 * if (repastS_SimulationRunContext.getSimulationRunContext()
-				 * .getSimulationRunGroupContext()
-				 * .getSimulationRunGroupConfiguration()
+				 * .getSimulationRunGroupContext() .getSimulationRunGroupConfiguration()
 				 * .getSimulationAgentsBelongToOneClass()) {
 				 */
 
 				// For an agent class type, for each individual simulation
 				// agent, map to an existing free AgentMapping object
-				for (Object simulationAgent : simulationAgentsInSingleClass) {
+				for (final Object simulationAgent : simulationAgentsInSingleClass) {
 					atLeastOneMappingPerformed = true;
 					mapSimulationSideAgent(simulationAgent,
-							repastS_SimulationRunContext
-							.getSimulationRunContext());
+							repastS_SimulationRunContext.getSimulationRunContext());
 				}
 				/*
 				 * } else {
@@ -187,7 +180,7 @@ public class RepastS_SimulationAdapterAPI {
 		// TODO: Move this whole section to the main simulation API?
 		// 1 - Wait for the command from the simulation administrator to start
 		// the simulation
-		FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
+		final FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
 				.readFrameworkMessageFromSimulationAdministrator()
 				.getFrameworkToSimulationEngineCommand();
 		if (fc != FRAMEWORK_COMMAND.START_SIMULATION)
@@ -196,10 +189,9 @@ public class RepastS_SimulationAdapterAPI {
 
 		// 2 - Message the distributed systems that the simulation has started
 		// and is ready to accept messages from the distributed agents.
-		FrameworkMessage msg = new FrameworkMessageImpl(
+		final FrameworkMessage msg = new FrameworkMessageImpl(
 				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				repastS_SimulationRunContext
-				.getBlankCachedMessageExchangeTemplate());
+				repastS_SimulationRunContext.getBlankCachedMessageExchangeTemplate());
 		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
 		// TODO: Loop through the multiple distributed systems
 		repastS_SimulationRunContext.messageDistributedSystems(msg,
@@ -207,7 +199,7 @@ public class RepastS_SimulationAdapterAPI {
 
 		// Wait for distributed system to confirm that simulation is ready
 		// to begin
-		STATUS st = repastS_SimulationRunContext
+		final STATUS st = repastS_SimulationRunContext
 				.readFrameworkMessageFromDistributedSystem().getStatus();
 		// TODO: Identify which distributed system caused the error.
 		// TODO: Set these up as checked exceptions?
@@ -221,27 +213,25 @@ public class RepastS_SimulationAdapterAPI {
 	}
 
 	/**
-	 * After the Simulation and Common Framework are initialized, the Simulation
-	 * Adaptor API (or child class) is initialized, and prior to executing a
-	 * simulation run, this method must be called to configure the
-	 * simulation-side of the AgentMappings for one type (class) of simulation
-	 * agent. If multiple agent classes are distributed, this method must be
-	 * called for each type.
-	 *
+	 * After the Simulation and Common Framework are initialized, the Simulation Adaptor
+	 * API (or child class) is initialized, and prior to executing a simulation run, this
+	 * method must be called to configure the simulation-side of the AgentMappings for one
+	 * type (class) of simulation agent. If multiple agent classes are distributed, this
+	 * method must be called for each type.
+	 * 
 	 * @param simulationAgent
 	 *            the simulation agent
 	 * @param simulationRunContext
 	 *            the simulation run context
 	 */
-	private void mapSimulationSideAgent(Object simulationAgent,
-			SimulationRunContext simulationRunContext) {
-		simulationAPI.mapSimulationSideAgent(simulationAgent,
-				simulationRunContext);
+	private void mapSimulationSideAgent(final Object simulationAgent,
+			final SimulationRunContext simulationRunContext) {
+		simulationAPI.mapSimulationSideAgent(simulationAgent, simulationRunContext);
 	}
 
 	/**
 	 * Map simulation side agents.
-	 *
+	 * 
 	 * @param agentsOfOneType
 	 *            the agents of one type
 	 * @param simulationRunContext
@@ -249,9 +239,9 @@ public class RepastS_SimulationAdapterAPI {
 	 * @see mapSimulationSideAgent
 	 */
 	@SuppressWarnings("unused")
-	private void mapSimulationSideAgents(Iterable<Object> agentsOfOneType,
-			SimulationRunContext simulationRunContext) {
-		for (Object simulationAgent : agentsOfOneType) {
+	private void mapSimulationSideAgents(final Iterable<Object> agentsOfOneType,
+			final SimulationRunContext simulationRunContext) {
+		for (final Object simulationAgent : agentsOfOneType) {
 			mapSimulationSideAgent(simulationAgent, simulationRunContext);
 		}
 	}

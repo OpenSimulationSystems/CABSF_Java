@@ -8,19 +8,13 @@ package org.simulationsystems.csf.distsys.core.api;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.SimulationRunGroup;
 import org.simulationsystems.csf.common.csfmodel.context.CsfRunContext;
-import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunConfiguration;
 import org.simulationsystems.csf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
-import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.core.api.simulationruntime.SimulationEngineManager;
-import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
-import org.simulationsystems.csf.sim.core.api.configuration.SimulationRunConfiguration;
-import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 /*
  * Provides the context for the Common Simulation Framework. Adapter developers may use this context
@@ -33,135 +27,140 @@ import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistr
  * Context object.
  */
 public class DistSysRunContext extends CsfRunContext {
-/**
-    * <pre>
-    *           0..*     0..*
-    * DistSysRunContext ------------------------- DistSysRunContext
-    *           distSysRunContext1        &lt;       distSysRunContext
-    * </pre>
-    */
-   private Set<DistSysRunContext> distSysRunContext;
-   
-   public Set<DistSysRunContext> getDistSysRunContext() {
-      if (this.distSysRunContext == null) {
-         this.distSysRunContext = new HashSet<DistSysRunContext>();
-      }
-      return this.distSysRunContext;
-   }
-   
-   /**
-    * <pre>
-    *           0..*     0..*
-    * DistSysRunContext ------------------------- DistSysRunContext
-    *           distSysRunContext        &gt;       distSysRunContext1
-    * </pre>
-    */
-   private Set<DistSysRunContext> distSysRunContext1;
-   
-   public Set<DistSysRunContext> getDistSysRunContext1() {
-      if (this.distSysRunContext1 == null) {
-         this.distSysRunContext1 = new HashSet<DistSysRunContext>();
-      }
-      return this.distSysRunContext1;
-   }
-   
+	/**
+	 * <pre>
+	 *           0..*     0..*
+	 * DistSysRunContext ------------------------- DistSysRunContext
+	 *           distSysRunContext1        &lt;       distSysRunContext
+	 * </pre>
+	 */
+	private Set<DistSysRunContext> distSysRunContext;
+
+	/**
+	 * <pre>
+	 *           0..*     0..*
+	 * DistSysRunContext ------------------------- DistSysRunContext
+	 *           distSysRunContext        &gt;       distSysRunContext1
+	 * </pre>
+	 */
+	private Set<DistSysRunContext> distSysRunContext1;
+
 	protected DistSysRunGroupConfiguration distSysRunGroupConfiguration; // Simulation
 	// Run-group-wide
 
 	private SimulationEngineManager simulationEngineManager;
-	private SimulationRunGroup simulationRunGroup;
+
+	private final SimulationRunGroup simulationRunGroup;
+
 	private DistSysRunConfiguration distSysRunConfiguration;
 	private DistributedAgentsManager distributedAgentsManager;
-
 	private DistSysRunGroupContext distSysRunGroupContext;
-
-	public DistributedAgentsManager getDistributedAgentsManager() {
-		return distributedAgentsManager;
-	}
-
-	public void setDistributedAgentsManager(DistributedAgentsManager distributedAgentsManager) {
-		this.distributedAgentsManager = distributedAgentsManager;
-	}
-
-	public DistSysRunConfiguration getDistSysRunConfiguration() {
-		return distSysRunConfiguration;
-	}
-
-	public DistSysRunGroupContext getDistSysRunGroupContext() {
-		return distSysRunGroupContext;
-	}
-
-	public void setDistSysRunConfiguration(DistSysRunConfiguration distSysRunConfiguration) {
-		this.distSysRunConfiguration = distSysRunConfiguration;
-	}
 
 	/*
 	 * Creates the context for the Common Simulation Framework.
 	 */
 	// protected DistSysRunContext(String
 	// fullyQualifiedClassNameForDistributedAgentManager) {
-	protected DistSysRunContext(SimulationRunGroup simulationRunGroup, DistSysRunGroupContext distSysRunGroupContext) {
+	protected DistSysRunContext(final SimulationRunGroup simulationRunGroup,
+			final DistSysRunGroupContext distSysRunGroupContext) {
 		this.simulationRunGroup = simulationRunGroup;
 		this.distSysRunGroupContext = distSysRunGroupContext;
+	}
+
+	public void cleanup() {
+
+	}
+
+	public void closeInterface() {
+		simulationEngineManager.closeInterface();
+	}
+
+	public DistributedAgentsManager getDistributedAgentsManager() {
+		return distributedAgentsManager;
 	}
 
 	public DistSysRunGroupConfiguration getDistributedSystemRunGroupConfiguration() {
 		return distSysRunGroupConfiguration;
 	}
 
-	public SimulationRunGroup getSimulationRunGroup() {
-		return simulationRunGroup;
+	public DistSysRunConfiguration getDistSysRunConfiguration() {
+		return distSysRunConfiguration;
 	}
 
-	protected void setDistSysConfiguration(
-			DistSysRunGroupConfiguration distSysRunGroupConfiguration) {
-		this.distSysRunGroupConfiguration = distSysRunGroupConfiguration;
+	public Set<DistSysRunContext> getDistSysRunContext() {
+		if (this.distSysRunContext == null) {
+			this.distSysRunContext = new HashSet<DistSysRunContext>();
+		}
+		return this.distSysRunContext;
 	}
 
+	public Set<DistSysRunContext> getDistSysRunContext1() {
+		if (this.distSysRunContext1 == null) {
+			this.distSysRunContext1 = new HashSet<DistSysRunContext>();
+		}
+		return this.distSysRunContext1;
+	}
 
-	public void cleanup() {
+	public DistSysRunGroupConfiguration getDistSysRunGroupConfiguration() {
+		return distSysRunGroupConfiguration;
+	}
 
+	public DistSysRunGroupContext getDistSysRunGroupContext() {
+		return distSysRunGroupContext;
 	}
 
 	public SimulationEngineManager getSimulationEngineManager() {
 		return simulationEngineManager;
 	}
 
-	protected void setSimulationEngine(SimulationEngineManager simulationEngineManager) {
-		this.simulationEngineManager = simulationEngineManager;
-
+	public SimulationRunGroup getSimulationRunGroup() {
+		return simulationRunGroup;
 	}
 
-	protected void setSimulationRunConfiguration(
-			DistSysRunConfiguration distributedSystemSimulationRunConfigurationSimulationRunConfiguration) {
-		this.distSysRunConfiguration = distributedSystemSimulationRunConfigurationSimulationRunConfiguration;
-	}
-	
-	public void messageSimulationEngine(FrameworkMessage frameworkMessage) {
-		simulationEngineManager.sendMessage(frameworkMessage, this, distSysRunConfiguration.getSimulationEngineID());
-	}
-	
-	public void closeInterface() {
-		simulationEngineManager.closeInterface();
-	}
-
-	
 	public FrameworkMessage listenForMessageFromSimulationEngine() {
 		return simulationEngineManager.listenForMessageFromSimulationEngine();
 
 	}
 
-	public FrameworkMessage requestEnvironmentInformation() {
-		return simulationEngineManager.requestEnvironmentInformation();
-		
+	public void messageSimulationEngine(final FrameworkMessage frameworkMessage) {
+		simulationEngineManager.sendMessage(frameworkMessage, this,
+				distSysRunConfiguration.getSimulationEngineID());
 	}
 
-	public void setDistSysRunGroupContext(DistSysRunGroupContext distSysRunGroupContext) {
+	public FrameworkMessage requestEnvironmentInformation() {
+		return simulationEngineManager.requestEnvironmentInformation();
+
+	}
+
+	public void setDistributedAgentsManager(
+			final DistributedAgentsManager distributedAgentsManager) {
+		this.distributedAgentsManager = distributedAgentsManager;
+	}
+
+	protected void setDistSysConfiguration(
+			final DistSysRunGroupConfiguration distSysRunGroupConfiguration) {
+		this.distSysRunGroupConfiguration = distSysRunGroupConfiguration;
+	}
+
+	public void setDistSysRunConfiguration(
+			final DistSysRunConfiguration distSysRunConfiguration) {
+		this.distSysRunConfiguration = distSysRunConfiguration;
+	}
+
+	public void setDistSysRunGroupContext(
+			final DistSysRunGroupContext distSysRunGroupContext) {
 		this.distSysRunGroupContext = distSysRunGroupContext;
 	}
 
-	public DistSysRunGroupConfiguration getDistSysRunGroupConfiguration() {
-		return distSysRunGroupConfiguration;
+	protected void setSimulationEngine(
+			final SimulationEngineManager simulationEngineManager) {
+		this.simulationEngineManager = simulationEngineManager;
+
+	}
+
+	protected void setSimulationRunConfiguration(
+			final DistSysRunConfiguration distributedSystemSimulationRunConfigurationSimulationRunConfiguration) {
+		this.distSysRunConfiguration = distributedSystemSimulationRunConfigurationSimulationRunConfiguration;
 	}
 
 }

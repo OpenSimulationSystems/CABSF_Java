@@ -1,7 +1,6 @@
 package prisonersdilemma;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Element;
@@ -17,64 +16,193 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock;
 import org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
 import org.simulationsystems.csf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
-import repast.simphony.space.grid.GridPoint;
-
-/*
- * Convenience class provided to the simulation and agent authors.  Unlike all other classes, this class has references to both the Repast Agent Context and JADE Agent Context. This allows all JZombies-specific code to be in one place.
+/**
+ * Convenience class provided to the simulation and agent authors. Unlike all other
+ * classes, this class has references to both the Repast Agent Context and JADE Agent
+ * Context. This allows all common shared JZombies-specific code to be in one place.
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
  */
 public class PrisonersDilemma_CSF {
-	private Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
+
+	/** The element filter used when querying the XML. */
+	private final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
+
+	/** The RepastS_AgentContext context. */
 	private RepastS_AgentContext repastS_AgentContext;
 
-	// TODO: Get this from the configuration
-	private String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
-	private Namespace namespace = Namespace.getNamespace("x", namespaceStr);
+	/** The namespace string. */
+	private final String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
+
+	// LOW: Add support in the API for only needing to specify either the namespace or
+	// namespace string.
+	/** The namespace. */
+	private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
+
+	/** The JADE_MAS_AgentContext context. */
 	private JADE_MAS_AgentContext jade_MAS_AgentContext;
 
-	private AgentContext agentContext;
+	/** The agent context. */
+	private final AgentContext agentContext;
 
-	public PrisonersDilemma_CSF(JADE_MAS_AgentContext jade_MAS_AgentContext) {
+	/**
+	 * Instantiates a new PrisonersDilemma_CSF.
+	 * 
+	 * @param jade_MAS_AgentContext
+	 *            the JADE_MAS_AgentContext context
+	 */
+	public PrisonersDilemma_CSF(final JADE_MAS_AgentContext jade_MAS_AgentContext) {
 		this.jade_MAS_AgentContext = jade_MAS_AgentContext;
-		agentContext = (AgentContext) jade_MAS_AgentContext;
+		agentContext = jade_MAS_AgentContext;
 		try {
 			jade_MAS_AgentContext.initializeCsfAgent("TEST");
-		} catch (JDOMException e) {
+		} catch (final JDOMException e) {
 			// TODO Auto-generated catch block
-
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public PrisonersDilemma_CSF(RepastS_AgentContext repastS_AgentContext) {
+	/**
+	 * Instantiates a new PrisonersDilemma_CSF.
+	 * 
+	 * @param repastS_AgentContext
+	 *            the RepastS_AgentContext context
+	 */
+	public PrisonersDilemma_CSF(final RepastS_AgentContext repastS_AgentContext) {
 		this.repastS_AgentContext = repastS_AgentContext;
-		agentContext = (AgentContext) repastS_AgentContext;
+		agentContext = repastS_AgentContext;
 	}
 
-	public Element populatePrisonersDilemmaDecisionAndRoundElements(FrameworkMessage msg,
-			Element agentModelActor, int round, DECISION otherPlayerLastDecision,
-			DECISION myDecision) {
-		Element simulationDefinedEnvironmentChange = msg
+	/**
+	 * Gets the other player's decision from the XML.
+	 * 
+	 * @param distributedAutonomousAgentElement
+	 *            the distributed autonomous agent element
+	 * @param msg
+	 *            the msg
+	 * @return the other player decision
+	 */
+	public DECISION getOtherPlayerDecision(
+			final Element distributedAutonomousAgentElement, final FrameworkMessage msg) {
+		// FIXME: Why does this have to be an element, and not Document?
+		final Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutonomousAgentElement, null);
+		final List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
+				.executeXPath(agentModelActor,
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
+						namespaceStr, elementFilter);
+
+		final Element otherPlayerDecisionElement = simulationDefinedEnvironmentChanges
+				.get(0).getChild("OtherPlayerDecision", namespace);
+		String decisionStr = null;
+		if (otherPlayerDecisionElement != null)
+			decisionStr = otherPlayerDecisionElement.getText();
+		else
+			return null;
+
+		return DECISION.valueOf(decisionStr);
+	}
+
+	/**
+	 * Gets the current round number.
+	 * 
+	 * @param distributedAutonomousAgentElement
+	 *            the distributed autonomous agent element
+	 * @param msg
+	 *            the msg
+	 * @return the round number
+	 */
+	public Integer getRoundNumber(final Element distributedAutonomousAgentElement,
+			final FrameworkMessage msg) {
+		// FIXME: Why does this have to be an element, and not Document?
+		final Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutonomousAgentElement, null);
+		final List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
+				.executeXPath(agentModelActor,
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
+						namespaceStr, elementFilter);
+
+		final String roundNumberStr = simulationDefinedEnvironmentChanges.get(0)
+				.getChild("RoundNumber", namespace).getText();
+
+		return Integer.parseInt(roundNumberStr);
+	}
+
+	// Used by the mock. This code is left here for now as the mock code may be migrated
+	// to a generic Java adapter for the CSF.
+	/*
+	 * public void sendMessageToSimulationAgent(JadeControllerMock jade_Controller_Agent,
+	 * FrameworkMessage msg, String messageID, String inReplyToMessageID) {
+	 * jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID); }
+	 */
+
+	/**
+	 * Gets the this player decision from the XML.
+	 * 
+	 * @param distributedAutonomousAgentElement
+	 *            the distributed autonomous agent element
+	 * @param msg
+	 *            the FrameworkMessage wrapping the XML message
+	 * @return the this player decision
+	 */
+	public DECISION getThisPlayerDecision(
+			final Element distributedAutonomousAgentElement, final FrameworkMessage msg) {
+		// FIXME: Why does this have to be an element, and not Document?
+		final Element agentModelActor = msg.getNextAgentModelActor(
+				distributedAutonomousAgentElement, null);
+		final List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
+				.executeXPath(agentModelActor,
+						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
+						namespaceStr, elementFilter);
+
+		final String decisionStr = simulationDefinedEnvironmentChanges.get(0)
+				.getChild("ThisPlayerDecision", namespace).getText();
+
+		return DECISION.valueOf(decisionStr);
+	}
+
+	/**
+	 * Populate prisoners dilemma decision and round elements.
+	 * 
+	 * @param msg
+	 *            the FrameworkMessage wrapping the XML
+	 * @param agentModelActor
+	 *            the agent model actor XML element
+	 * @param round
+	 *            the round number
+	 * @param otherPlayerLastDecision
+	 *            the other player's last decision
+	 * @param myDecision
+	 *            this agent's decision
+	 * @return the simulationDefinedEnvironmentChange parent element that holds the
+	 *         Prisoner's-Dilemma-specific DECISION values.
+	 */
+	public Element populatePrisonersDilemmaDecisionAndRoundElements(
+			final FrameworkMessage msg, final Element agentModelActor, final int round,
+			final DECISION otherPlayerLastDecision, final DECISION myDecision) {
+		final Element simulationDefinedEnvironmentChange = msg
 				.getSimulationDefinedEnvironmentChangesElement(agentModelActor);
 
-		Element roundElement = new Element("RoundNumber", namespace);
+		final Element roundElement = new Element("RoundNumber", namespace);
 		roundElement.setText(String.valueOf(round));
 		simulationDefinedEnvironmentChange.addContent(roundElement);
 
 		if (otherPlayerLastDecision != null) {
-			Element decisionElement = new Element("OtherPlayerDecision", namespace);
+			final Element decisionElement = new Element("OtherPlayerDecision", namespace);
 			decisionElement.setText(otherPlayerLastDecision.toString());
 			simulationDefinedEnvironmentChange.addContent(decisionElement);
 
 		}
 		if (myDecision != null) {
-			Element decisionElement = new Element("ThisPlayerDecision", namespace);
+			final Element decisionElement = new Element("ThisPlayerDecision", namespace);
 			decisionElement.setText(myDecision.toString());
 			simulationDefinedEnvironmentChange.addContent(decisionElement);
 		}
@@ -82,34 +210,77 @@ public class PrisonersDilemma_CSF {
 		return simulationDefinedEnvironmentChange;
 	}
 
+	/**
+	 * Populate Prisonér's Dilemma FrameworkMessage which wraps the XML message
+	 * 
+	 * @param msg
+	 *            the FrameworkMessage to update
+	 * @param agentModelActor
+	 *            the agent model actor
+	 * @param round
+	 *            the round
+	 * @param otherPlayerLastDecision
+	 *            the other player last decision
+	 * @param myDecision
+	 *            this agent's decision
+	 * @return the updated FrameworkMessage
+	 */
+	public FrameworkMessage populatePrisonersDilemmaFrameworkMessage(
+			final FrameworkMessage msg, final Element agentModelActor, final int round,
+			final DECISION otherPlayerLastDecision, final DECISION myDecision) {
+
+		populatePrisonersDilemmaDecisionAndRoundElements(msg, agentModelActor, round,
+				otherPlayerLastDecision, myDecision);
+
+		final XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+		final String xmlString = outputter.outputString(msg.getDocument());
+		System.out.println("Populated Prisoner's Dilemma Message: " + xmlString);
+
+		return msg;
+	}
+
+	/**
+	 * Send message to distributed autonomous agent model from simulation agent.
+	 * 
+	 * @param loggingPrefix
+	 *            the logging prefix
+	 * @param obj
+	 *            the native agent object (RepastS agent) that was mapped by the CSF.
+	 * @param round
+	 *            the round
+	 * @param otherPlayerLastDecision
+	 *            the other player last decision
+	 * @param myDecision
+	 *            the my decision
+	 */
 	public void sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
-			String loggingPrefix, Object obj, int round,
-			DECISION otherPlayerLastDecision, DECISION myDecision) {
+			final String loggingPrefix, final Object obj, final int round,
+			final DECISION otherPlayerLastDecision, final DECISION myDecision) {
 		// TODO: Add support for multiple distributed systems
 		// Get the Agent Mapping
-		SimulationDistributedSystemManager dsm = repastS_AgentContext
+		final SimulationDistributedSystemManager dsm = repastS_AgentContext
 				.getRepastS_SimulationRunContext()
 				.getSimulationDistributedSystemManagers().iterator().next();
-		AgentMapping am = dsm.getAgentMappingForObject(obj);
+		final AgentMapping am = dsm.getAgentMappingForObject(obj);
 		// TODO: Add validation here
 		assert (am != null);
 
 		// Construct FrameworkMessage to send to the distributed agent
-		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
-				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+		final FrameworkMessage msg = new FrameworkMessageImpl(
+				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 				agentContext.getBlankCachedMessageExchangeTemplate());
 		assert (repastS_AgentContext.getRepastS_SimulationRunContext()
 				.getCachedDistributedAutonomousAgentTemplate() != null);
 
 		// Get the distributed autonomous agent and set the ID
-		Element distributedAutonomousAgentElement = msg
+		final Element distributedAutonomousAgentElement = msg
 				.getNextDistributedAutonomousAgent(msg.getDocument(),
 						agentContext.getCachedDistributedAutonomousAgentTemplate());
 		msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
 				am.getDistributedAutonomousAgentID());
 
 		// Get the agent model actor and set the ID
-		Element agentModelActor = msg.getNextAgentModelActor(
+		final Element agentModelActor = msg.getNextAgentModelActor(
 				distributedAutonomousAgentElement,
 				agentContext.getCachedAgentModelActorTemplate());
 		msg.setIDForActorInAgentModel(agentModelActor,
@@ -133,79 +304,6 @@ public class PrisonersDilemma_CSF {
 				msg,
 				repastS_AgentContext.getRepastS_SimulationRunContext()
 						.getSimulationRunContext());
-	}
-
-	/*
-	 * public void sendMessageToSimulationAgent(JadeControllerMock jade_Controller_Agent,
-	 * FrameworkMessage msg, String messageID, String inReplyToMessageID) {
-	 * jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID); }
-	 */
-
-	public DECISION getThisPlayerDecision(Element distributedAutonomousAgentElement,
-			FrameworkMessage msg) {
-		// FIXME: Why does this have to be an element, and not Document?
-		Element agentModelActor = msg.getNextAgentModelActor(
-				distributedAutonomousAgentElement, null);
-		List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
-				.executeXPath(agentModelActor,
-						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
-						namespaceStr, elementFilter);
-
-		String decisionStr = simulationDefinedEnvironmentChanges.get(0)
-				.getChild("ThisPlayerDecision", namespace).getText();
-
-		return DECISION.valueOf(decisionStr);
-	}
-
-	public DECISION getOtherPlayerDecision(Element distributedAutonomousAgentElement,
-			FrameworkMessage msg) {
-		// FIXME: Why does this have to be an element, and not Document?
-		Element agentModelActor = msg.getNextAgentModelActor(
-				distributedAutonomousAgentElement, null);
-		List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
-				.executeXPath(agentModelActor,
-						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
-						namespaceStr, elementFilter);
-
-		Element otherPlayerDecisionElement = simulationDefinedEnvironmentChanges.get(0)
-				.getChild("OtherPlayerDecision", namespace);
-		String decisionStr = null;
-		if (otherPlayerDecisionElement != null)
-			decisionStr = otherPlayerDecisionElement.getText();
-		else
-			return null;
-
-		return DECISION.valueOf(decisionStr);
-	}
-
-	public Integer getRoundNumber(Element distributedAutonomousAgentElement,
-			FrameworkMessage msg) {
-		// FIXME: Why does this have to be an element, and not Document?
-		Element agentModelActor = msg.getNextAgentModelActor(
-				distributedAutonomousAgentElement, null);
-		List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
-				.executeXPath(agentModelActor,
-						"./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
-						namespaceStr, elementFilter);
-
-		String roundNumberStr = simulationDefinedEnvironmentChanges.get(0)
-				.getChild("RoundNumber", namespace).getText();
-
-		return Integer.parseInt(roundNumberStr);
-	}
-
-	public FrameworkMessage populatePrisonersDilemmaFrameworkMessage(
-			FrameworkMessage msg, Element agentModelActor, int round,
-			DECISION otherPlayerLastDecision, DECISION myDecision) {
-
-		populatePrisonersDilemmaDecisionAndRoundElements(msg, agentModelActor, round,
-				otherPlayerLastDecision, myDecision);
-
-		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-		String xmlString = outputter.outputString(msg.getDocument());
-		System.out.println("Populated Prisoner's Dilemma Message: " + xmlString);
-
-		return msg;
 	}
 
 }

@@ -33,22 +33,21 @@ import repast.simphony.util.SimUtilities;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Human in the JZombies simulation. We modified this Repast Simphony
- * simulation from the tutorial to integrated with the Common Simulation
- * Framework (CSF). The humans are distributed to a JADE MAS. This Human RepastS
- * class is the representational agent within RepastS of the distributed JADE
- * Human agent.
- *
+ * The Human in the JZombies simulation. We modified this Repast Simphony simulation from
+ * the tutorial to integrated with the Common Simulation Framework (CSF). The humans are
+ * distributed to a JADE MAS. This Human RepastS class is the representational agent
+ * within RepastS of the distributed JADE Human agent.
+ * 
  * @author nick
- * @author Jorge Calderon (modified Human class for integrating to the CSF)
+ * @author Jorge Calderon (modified Human class for integrating with the CSF)
  */
 public class Human {
 
 	/** The space. */
-	private ContinuousSpace<Object> space;
+	private final ContinuousSpace<Object> space;
 
 	/** The grid. */
-	private Grid<Object> grid;
+	private final Grid<Object> grid;
 
 	/** The starting energy. */
 	private int energy, startingEnergy;
@@ -56,7 +55,7 @@ public class Human {
 	// /////////////////////////////
 	// Section Added to the CSF version of this simulation
 	/** The repast s_ agent context. */
-	private RepastS_AgentContext repastS_AgentContext = RepastS_AgentAdapterAPI
+	private final RepastS_AgentContext repastS_AgentContext = RepastS_AgentAdapterAPI
 			.getInstance().getAgentContext();
 
 	/** The simulation type. */
@@ -72,7 +71,7 @@ public class Human {
 
 	/**
 	 * Instantiates a new Human.
-	 *
+	 * 
 	 * @param space
 	 *            the space
 	 * @param grid
@@ -80,7 +79,8 @@ public class Human {
 	 * @param energy
 	 *            the energy
 	 */
-	public Human(ContinuousSpace<Object> space, Grid<Object> grid, int energy) {
+	public Human(final ContinuousSpace<Object> space, final Grid<Object> grid,
+			final int energy) {
 		this.space = space;
 		this.grid = grid;
 		this.energy = startingEnergy = energy;
@@ -88,7 +88,7 @@ public class Human {
 
 	/**
 	 * Gets the RepastS_AgentContext context.
-	 *
+	 * 
 	 * @return the repast s_ agent context
 	 */
 	public RepastS_AgentContext getRepastS_AgentContext() {
@@ -96,21 +96,21 @@ public class Human {
 	}
 
 	/**
-	 * This class is only used when this simulation is run with the CSF
-	 * functionality turned off. It moves the agent to a particular Gridpoint.
-	 * By using this method when CSF is turned off, we can "plugin" in the move
-	 * decision of this agent into the simulation so that this agent does not
-	 * have to rely on a corresponding distributed JADE agent.
-	 *
+	 * This class is only used when this simulation is run with the CSF functionality
+	 * turned off. It moves the agent to a particular Gridpoint. By using this method when
+	 * CSF is turned off, we can "plugin" in the move decision of this agent into the
+	 * simulation so that this agent does not have to rely on a corresponding distributed
+	 * JADE agent.
+	 * 
 	 * @param pt
 	 *            the GridPoint
 	 */
-	public void moveTowards(GridPoint pt) {
+	public void moveTowards(final GridPoint pt) {
 		// only move if we are not already in this grid location
 		if (!pt.equals(grid.getLocation(this))) {
 			NdPoint myPoint = space.getLocation(this);
-			NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-			double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint,
+			final NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+			final double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint,
 					otherPoint);
 			space.moveByVector(this, 2, angle, 0);
 			myPoint = space.getLocation(this);
@@ -132,19 +132,19 @@ public class Human {
 				repastContext = RunState.getInstance().getMasterContext();
 				jZombies_Csf = new JZombies_Csf(repastS_AgentContext);
 
-				Iterable<Class> simulationAgentsClasses = RunState
-						.getInstance().getMasterContext().getAgentTypes();
-				Iterable<Object> csfRepastContextIterable = RunState
-						.getInstance().getMasterContext()
+				final Iterable<Class> simulationAgentsClasses = RunState.getInstance()
+						.getMasterContext().getAgentTypes();
+				final Iterable<Object> csfRepastContextIterable = RunState.getInstance()
+						.getMasterContext()
 						.getAgentLayer(RepastS_SimulationRunContext.class);
 				simulationType = repastS_AgentContext.initializeCsfAgent(
 						simulationAgentsClasses, csfRepastContextIterable);
 			}
-		} catch (JDOMException e) {
+		} catch (final JDOMException e) {
 			throw new CsfInitializationRuntimeException(
 					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
 					e);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new CsfInitializationRuntimeException(
 					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
 					e);
@@ -153,17 +153,17 @@ public class Human {
 
 		// ////////////////////////////////
 		// Back to the original JZombies code
-		GridPoint pt = grid.getLocation(this);
+		final GridPoint pt = grid.getLocation(this);
 		// use the GridCellNgh class to create GridCells for
 		// the surrounding neighborhood.
-		GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid, pt,
+		final GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid, pt,
 				Zombie.class, 1, 1);
-		List<GridCell<Zombie>> gridCells = nghCreator.getNeighborhood(true);
+		final List<GridCell<Zombie>> gridCells = nghCreator.getNeighborhood(true);
 		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 
 		GridPoint pointWithLeastZombies = null;
 		int minCount = Integer.MAX_VALUE;
-		for (GridCell<Zombie> cell : gridCells) {
+		for (final GridCell<Zombie> cell : gridCells) {
 			if (cell.size() < minCount) {
 				pointWithLeastZombies = cell.getPoint();
 				minCount = cell.size();
@@ -181,17 +181,17 @@ public class Human {
 		// for getting
 		// the appropriate one.
 		if (simulationType == SIMULATION_TYPE.CSF_SIMULATION) {
-			SimulationDistributedSystemManager dsm = repastS_AgentContext
+			final SimulationDistributedSystemManager dsm = repastS_AgentContext
 					.getRepastS_SimulationRunContext()
 					.getSimulationDistributedSystemManagers().iterator().next();
-			AgentMapping am = dsm.getAgentMappingForObject(this);
+			final AgentMapping am = dsm.getAgentMappingForObject(this);
 
-			String distributedSystemID = am.getDistributedSystemID();
-			String distributedAutonomousAgentID = am
+			final String distributedSystemID = am.getDistributedSystemID();
+			final String distributedAutonomousAgentID = am
 					.getDistributedAutonomousAgentID();
-			String distributedAutonomousAgentModelID = am
+			final String distributedAutonomousAgentModelID = am
 					.getDistributedAutonomousAgentModelID();
-			String loggingPrefix = "[Human " + distributedSystemID + " "
+			final String loggingPrefix = "[Human " + distributedSystemID + " "
 					+ distributedAutonomousAgentID + " "
 					+ distributedAutonomousAgentModelID + "] ";
 
@@ -200,11 +200,10 @@ public class Human {
 			// distributed agent (agent model)
 			// LOW: Add support for merging multiple messages bound for
 			// different agents
-			jZombies_Csf
-			.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
+			jZombies_Csf.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
 					loggingPrefix, this, pt, pointWithLeastZombies);
 			// FIXME: Move to simultaneous processing of these messages?
-			FrameworkMessage msg = repastS_AgentContext
+			final FrameworkMessage msg = repastS_AgentContext
 					.getRepastS_SimulationRunContext()
 					.readFrameworkMessageFromDistributedSystem();
 
@@ -213,18 +212,16 @@ public class Human {
 					+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
 							.getRootElement(), true));
 
-			List<String> selfPoint = msg.getSelfLocation(msg);
+			final List<String> selfPoint = msg.getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(msg);
 			for (int i = 0; i < selfPoint.size(); i++) {
 				System.out.println(loggingPrefix + "Move Towards Location:"
-						+ String.valueOf(i) + " : "
-						+ String.valueOf(selfPoint.get(i)));
+						+ String.valueOf(i) + " : " + String.valueOf(selfPoint.get(i)));
 			}
-			int xValue = Integer.parseInt(selfPoint.get(0));
-			int yValue = Integer.parseInt(selfPoint.get(1));
+			final int xValue = Integer.parseInt(selfPoint.get(0));
+			final int yValue = Integer.parseInt(selfPoint.get(1));
 
-			for (GridCell<Zombie> cell : gridCells) {
-				if (cell.getPoint().getX() == xValue
-						&& cell.getPoint().getY() == yValue) {
+			for (final GridCell<Zombie> cell : gridCells) {
+				if (cell.getPoint().getX() == xValue && cell.getPoint().getY() == yValue) {
 					moveToPoint = cell.getPoint();
 				}
 			}

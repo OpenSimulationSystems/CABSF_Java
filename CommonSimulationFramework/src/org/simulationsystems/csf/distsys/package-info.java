@@ -1,8 +1,7 @@
 /**
- * The API and related classes for the Common Simulation Framework Distributed System API.
- */
-/**
- * @author jorge
+ * The APIs related to the distributed systems
+ * 
+ * @author Jorge Calderon
  * 
  */
 package org.simulationsystems.csf.distsys;

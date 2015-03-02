@@ -4,24 +4,38 @@ import java.util.HashSet;
 
 import org.simulationsystems.csf.common.csfmodel.AgentMapping;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
-import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingAbstraction;
 import org.simulationsystems.csf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.simulationsystems.csf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
-import org.simulationsystems.csf.common.internal.systems.AgentMappingHelper;
-import org.simulationsystems.csf.common.internal.systems.DistributedSystem;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
-import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
 
+/**
+ * The Class SimulationEngineManager.
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
+ */
 public class SimulationEngineManager {
 
-	private DistSysRunContext distSysRunContext;
+	/** The dist sys run context. */
+	private final DistSysRunContext distSysRunContext;
+
+	/** The common messaging abstraction. */
 	private CommonMessagingAbstraction commonMessagingAbstraction = null;
+
+	/** The common messaging implementation api. */
 	private CommonMessagingImplementationAPI commonMessagingImplementationAPI;
+
+	/** The this distributed system id. */
 	private String thisDistributedSystemID = null;
-	private HashSet<AgentMapping> agentsReadyForDistributedAutonomousAgentMapping = new HashSet<AgentMapping>();
-	private HashSet<AgentMapping> fullyInitializedAgentMappings = new HashSet<AgentMapping>();
+
+	/** The agents ready for distributed autonomous agent mapping. */
+	private final HashSet<AgentMapping> agentsReadyForDistributedAutonomousAgentMapping = new HashSet<AgentMapping>();
+
+	/** The fully initialized agent mappings. */
+	private final HashSet<AgentMapping> fullyInitializedAgentMappings = new HashSet<AgentMapping>();
 
 	/*
 	 * @param simulationRuntimeID An optional ID to identify the simulation runtime
@@ -32,8 +46,19 @@ public class SimulationEngineManager {
 	 * group instance.
 	 */
 
-	public SimulationEngineManager(DistSysRunContext distSysRunContext,
-			String getCommonMessagingConcreteImplStr, String thisDistributedSystemID) {
+	/**
+	 * Instantiates a new simulation engine manager.
+	 * 
+	 * @param distSysRunContext
+	 *            the dist sys run context
+	 * @param getCommonMessagingConcreteImplStr
+	 *            the get common messaging concrete impl str
+	 * @param thisDistributedSystemID
+	 *            the this distributed system id
+	 */
+	public SimulationEngineManager(final DistSysRunContext distSysRunContext,
+			final String getCommonMessagingConcreteImplStr,
+			final String thisDistributedSystemID) {
 		this.distSysRunContext = distSysRunContext;
 		this.thisDistributedSystemID = thisDistributedSystemID;
 
@@ -60,21 +85,21 @@ public class SimulationEngineManager {
 		// TODO: Handle exception when unable to instantiate class
 		// TODO: ?Handle configuration/reflection for Bridge Refined Abstraction?
 		try {
-			Class<?> cl = Class.forName(getCommonMessagingConcreteImplStr);
+			final Class<?> cl = Class.forName(getCommonMessagingConcreteImplStr);
 			// Constructor<?> cons = cl.getConstructor(cl.getClass());
 			// commonMessagingImplementationAPI =
 			// (commonMessagingImplementationAPI) cons.newInstance();
 			commonMessagingImplementationAPI = (CommonMessagingImplementationAPI) cl
 					.newInstance();
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			e.printStackTrace();
-		} catch (SecurityException e) {
+		} catch (final SecurityException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (final ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
@@ -89,11 +114,49 @@ public class SimulationEngineManager {
 						.getDistSysRunConfiguration().getRedisConnectionString());
 	}
 
-	public void sendMessage(FrameworkMessage frameworkMessage,
-			DistSysRunContext distSysRunContext, String simulationEngineID) {
-		commonMessagingAbstraction.sendMessageToSimulationEngine(frameworkMessage,
-				distSysRunContext, simulationEngineID);
-
+	// TODO: Determine whether this can be removed
+	/*
+	 * public void initializeAgentMappings() {
+	 * 
+	 * AgentMappingHelper.createAgentMapping(
+	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
+	 * "DistributedSystemAutonomousAgent1", "DistributedSystemAutonomousAgent1MODEL",
+	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
+	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
+	 * "DistributedSystemAutonomousAgent2", "DistributedSystemAutonomousAgent2MODEL",
+	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
+	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
+	 * "DistributedSystemAutonomousAgent3", "DistributedSystemAutonomousAgent3MODEL",
+	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
+	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
+	 * "DistributedSystemAutonomousAgent4", "DistributedSystemAutonomousAgent4MODEL",
+	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
+	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
+	 * "DistributedSystemAutonomousAgent5", "DistributedSystemAutonomousAgent5MODEL",
+	 * "jzombies.Human"); } ageToSimulationEngine(frameworkMessage, distSysRunContext,
+	 * simulationEngineID);
+	 * 
+	 * }
+	 * 
+	 * public FrameworkMessage listenForMessageFromSimulationEngine() { return
+	 * commonMessagingAbstraction.listenForMessageFromSimulationEngine(
+	 * SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
+	 * 
+	 * }
+	 * 
+	 * public FrameworkMessage requestEnvironmentInformation() { return
+	 * commonMessagingAbstraction.requestEnvir
+	 * .getDistSysRunConfiguration().getRedisConnectionString()); }
+	 * 
+	 * public void sendMessage(final FrameworkMessage frameworkMessage, final
+	 * DistSysRunContext distSysRunContext, final String simulationEngineID) {
+	 * commonMessagingAbstraction.sendMess
+	 */
+	/**
+	 * Close interface.
+	 */
+	public void closeInterface() {
+		commonMessagingAbstraction.closeInterface();
 	}
 
 	public FrameworkMessage listenForMessageFromSimulationEngine() {
@@ -107,32 +170,11 @@ public class SimulationEngineManager {
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
 	}
 
-/*	public void initializeAgentMappings() {
+	public void sendMessage(final FrameworkMessage frameworkMessage,
+			final DistSysRunContext distSysRunContext, final String simulationEngineID) {
+		commonMessagingAbstraction.sendMessageToSimulationEngine(frameworkMessage,
+				distSysRunContext, simulationEngineID);
 
-		AgentMappingHelper.createAgentMapping(
-				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent1", "DistributedSystemAutonomousAgent1MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(
-				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent2", "DistributedSystemAutonomousAgent2MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(
-				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent3", "DistributedSystemAutonomousAgent3MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(
-				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent4", "DistributedSystemAutonomousAgent4MODEL",
-				"jzombies.Human");
-		AgentMappingHelper.createAgentMapping(
-				agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-				"DistributedSystemAutonomousAgent5", "DistributedSystemAutonomousAgent5MODEL",
-				"jzombies.Human");
-	}
-*/
-	public void closeInterface() {
-		commonMessagingAbstraction.closeInterface();
 	}
 
 }

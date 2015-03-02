@@ -1,15 +1,10 @@
 package org.simulationsystems.csf.distsys.adapters.jade.api;
 
-import jade.core.AID;
 import jade.core.Agent;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
@@ -17,117 +12,133 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.STATUS;
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
-import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.CsfDistributedJADEagentWrapper;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunContext;
 import org.simulationsystems.csf.distsys.core.api.DistSysRunGroupContext;
 import org.simulationsystems.csf.distsys.core.api.DistributedSystemAPI;
-import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentModel;
-import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
-import org.simulationsystems.csf.distsys.core.api.distributedautonomousagents.DistributedAutonomousAgent;
-
-import repast.simphony.context.Context;
 
 /**
- * This API is only for use by developers of adapters to connect simulation tools (such as
- * Repast) and agent-based systems (such as JADE) into the common simulation framework.
- * Simulation and Agent developers using such systems should use the appropriate
- * adapter(s). The following highlights the where in the overall system this code sits:<br/>
- * <br/>
- * 
- * Common Framework---> ***COMMON FRAMEWORK API*** --> Simulation and Agent
- * RepastSimphonyRepastSimphonySimulationAdapterAPI(s) --> Simulations and Agents (Such as
- * Repast simulations and JADE agents) --> End Users of Simulation<br/>
- * <br/>
- * 
- * Currently supported Adaptors (Implementors of this API):<br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repast - Via the
- * "Repast Simulation RepastS_SimulationRunnerMain" Application, which is both an
- * RepastSimphonyRepastSimphonySimulationAdapterAPI into the common simulation framework
- * and its own application programmatically running Repast as a library.<br/>
- * <br/>
- * 
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JADE - Via the
- * "Common Simulation Framework RepastSimphonyRepastSimphonySimulationAdapterAPI JADE Agent"
- * .<br/>
- * <br/>
- * 
- * THIS PACKAGE WILL BE MOVED TO A SEPARATE JAR. TEMPORARILY HERE WIH THE REPAST
- * SIMULATION WRAPPER (RSW)<br/>
+ * The JADE MAS Adapter context factory. Part of the JADE MAS Adapter API
  * 
  * @author Jorge Calderon
  */
 public class JADE_MAS_AdapterAPI {
-	private DistributedSystemAPI distributedSystemAPI = DistributedSystemAPI
+
+	// private DistSysRunContext
+	/**
+	 * The singleton
+	 * 
+	 * @return single instance of JADE_MAS_AdapterAPI
+	 */
+	public static JADE_MAS_AdapterAPI getInstance() {
+		return instance;
+	}
+
+	/** The Distributed System Adapter context factory. */
+	private final DistributedSystemAPI distributedSystemAPI = DistributedSystemAPI
 			.getInstance();
-	private String distributedSystemNameToSetInDistributedSystemAPI = "JADE";
-	// private String fullyQualifiedClassNameForDistributedAgentManager =
-	// "org.simulationsystems.csf.sim.adapters.simengines.repastS.api.distributedagents.RepastSimphonySimulationDistributedAgentManager";
+	/** The distributed system name to set in distributed system api. */
+	private final String distributedSystemNameToSetInDistributedSystemAPI = "JADE";
+
+	/** The jade_ ma s_ run context. */
 	private JADE_MAS_RunContext jade_MAS_RunContext;
+
+	/** The jade controller mock. */
 	private JadeControllerMock jadeControllerMock;
+
+	/** The jade controller agent. */
 	private Agent jadeControllerAgent;
-	
+
+	/** The instance. */
 	private static JADE_MAS_AdapterAPI instance = new JADE_MAS_AdapterAPI();
 
-	/*
-	 * Use JADE_DistributedSystemAdapterAPI.getInstance().
+	/**
+	 * Instantiates a new JADE_MAS_AdapterAPI.
 	 */
 	private JADE_MAS_AdapterAPI() {
 		super();
 	}
 
-	/*
-	 * This method should be called afterRepastSimphonySimulationAdapterAPI.getInstance()
-	 * to initialize the common framework simulation based on the supplied configuration
-	 * properties.
+	/**
+	 * Assign jade agents to distributed autonomous agents.
 	 * 
-	 * @ param String The path to the Common Simulation Configuration File
+	 * @param jadeAgents
+	 *            the jade agents
+	 * @param jade_MAS_RunContext
+	 *            the jade_ ma s_ run context
+	 * @see assignJadeAgentToDistributedAutonomousAgent
 	 */
-	public JADE_MAS_RunGroupContext initializeAPI(String frameworkConfigurationFileName)
-			throws IOException {
+	@SuppressWarnings("unused")
+	private void assignJadeAgentsToDistributedAutonomousAgents(
+			final Set<NativeDistributedAutonomousAgent> jadeAgents,
+			final JADE_MAS_RunContext jade_MAS_RunContext) {
+		for (final NativeDistributedAutonomousAgent jadeAgent : jadeAgents) {
+			assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
+		}
+	}
 
-		DistSysRunGroupContext distSysRunGroupContext = distributedSystemAPI
+	/**
+	 * Assign jade agent to distributed autonomous agent.
+	 * 
+	 * @param jadeAgent
+	 *            the jade agent
+	 * @param jade_MAS_RunContext
+	 *            the jade_ ma s_ run context
+	 * @see assignJadeAgentsToDistributedAutonomousAgents
+	 */
+	private void assignJadeAgentToDistributedAutonomousAgent(
+			final NativeDistributedAutonomousAgent jadeAgent,
+			final JADE_MAS_RunContext jade_MAS_RunContext) {
+		distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent,
+				jade_MAS_RunContext.getDistSysRunContext());
+	}
+
+	/**
+	 * Initialize the API and create the JADE MAS Run Group Context.
+	 * 
+	 * @param frameworkConfigurationFileName
+	 *            the framework configuration file name
+	 * @return the JAD e_ ma s_ run group context
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	public JADE_MAS_RunGroupContext initializeAPI(
+			final String frameworkConfigurationFileName) throws IOException {
+
+		final DistSysRunGroupContext distSysRunGroupContext = distributedSystemAPI
 				.initializeAPI(frameworkConfigurationFileName,
 						distributedSystemNameToSetInDistributedSystemAPI);
 
 		// Set the JADE-specific objects, using the Decorator Pattern
-		JADE_MAS_RunGroupContext jade_MAS_RunGroupContext = new JADE_MAS_RunGroupContext(
+		final JADE_MAS_RunGroupContext jade_MAS_RunGroupContext = new JADE_MAS_RunGroupContext(
 				distSysRunGroupContext);
 
 		return jade_MAS_RunGroupContext;
 	}
 
-	// private DistSysRunContext
 	/**
+	 * Initialize simulation run and creates the JADE MAS Run Context. This method must be
+	 * called after the JADE_MAS_RunGroupContext has been created.
 	 * 
-	 * The API singleton for clients that are simulation systems adapters to into the
-	 * common simulation framework
-	 * 
+	 * @param nativeJadeContextForThisRun
+	 *            the native jade context for this run
+	 * @param jade_MAS_RunGroupContext
+	 *            the jade_ ma s_ run group context
+	 * @param jadeControllerMock
+	 *            the jade controller mock
+	 * @param nativeAgentsSet
+	 *            the native agents set
+	 * @return the JAD e_ ma s_ run context
 	 */
-	public static JADE_MAS_AdapterAPI getInstance() {
-		return instance;
-	}
-	
-	/*
-	 * Initialize the simulation run in Repast Simphony. This method configures the
-	 * (already-created in the simulation API initialization) AgentMapping objects. Repast
-	 * Simphony-specific simulation run initialization
-	 * 
-	 * JADE_DistSysRunContext result from initializing the API is passed in, in this
-	 * method.
-	 */
-	// TODO: Wait for all distributed agents to join. For now, all need to be running by
-	// the time
-	// that this agent receives the message that the simulation has started.
 	public JADE_MAS_RunContext initializeSimulationRun(
-			NativeJADEMockContext nativeJadeContextForThisRun,
-			JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
-			JadeControllerMock jadeControllerMock,
-			Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
+			final NativeJADEMockContext nativeJadeContextForThisRun,
+			final JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
+			final JadeControllerMock jadeControllerMock,
+			final Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
 		this.jadeControllerMock = jadeControllerMock;
 
-		DistSysRunContext distSysRunContext = distributedSystemAPI
+		final DistSysRunContext distSysRunContext = distributedSystemAPI
 				.initializeSimulationRun(nativeJadeContextForThisRun,
 						jade_MAS_RunGroupContext.getDistSysRunGroupContext());
 
@@ -145,18 +156,13 @@ public class JADE_MAS_AdapterAPI {
 				.initializeDistributedAutonomousAgents(nativeJadeContextForThisRun,
 						nativeAgentsSet);
 
-		// TODO: Remove these old set of assign methods
-		/*
-		 * assignJadeAgentsToDistributedAutonomousAgents(
-		 * nativeJadeContextForThisRun.getMockJADE_Agents(), jade_MAS_RunContext)
-		 */;
-
 		// Listen for START_SIMULATION command from the simulation engine
-		FrameworkMessage msg = jade_MAS_RunContext.listenForMessageFromSimulationEngine();
+		final FrameworkMessage msg = jade_MAS_RunContext
+				.listenForMessageFromSimulationEngine();
 		System.out
 				.println("[JADE Controller Agent] Received framework message from the simulation engine: "
 						+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
-		FRAMEWORK_COMMAND fc = msg.getFrameworkToDistributedSystemCommand();
+		final FRAMEWORK_COMMAND fc = msg.getFrameworkToDistributedSystemCommand();
 		// TODO: Better error handling. Send a message back to the simulation engine that
 		// this distributed system is terminating
 
@@ -171,8 +177,8 @@ public class JADE_MAS_AdapterAPI {
 		}
 
 		// Push Status of Ready back to the simulation engine
-		FrameworkMessage fm = new FrameworkMessageImpl(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				SYSTEM_TYPE.SIMULATION_ENGINE,
+		final FrameworkMessage fm = new FrameworkMessageImpl(
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_ENGINE,
 				jade_MAS_RunContext.getCachedMessageExchangeTemplate());
 		fm.setStatus(STATUS.READY_TO_START_SIMULATION);
 		jade_MAS_RunContext.messageSimulationEngine(fm,
@@ -187,37 +193,6 @@ public class JADE_MAS_AdapterAPI {
 		jade_MAS_RunContext.setJadeController(jadeControllerMock);
 
 		return jade_MAS_RunContext;
-	}
-
-	/*
-	 * @see mapSimulationSideAgent
-	 */
-	@SuppressWarnings("unused")
-	private void assignJadeAgentsToDistributedAutonomousAgents(
-			Set<NativeDistributedAutonomousAgent> jadeAgents,
-			JADE_MAS_RunContext jade_MAS_RunContext) {
-		for (NativeDistributedAutonomousAgent jadeAgent : jadeAgents) {
-			assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
-		}
-	}
-
-	/*
-	 * After the Simulation and Common Framework are initialized, the Simulation Adaptor
-	 * API (or child class) is initialized, and prior to executing a simulation run, this
-	 * method must be called to configure the simulation-side of the AgentMappings for one
-	 * type (class) of simulation agent. If multiple agent classes are distributed, this
-	 * method must be called for each type. This is done prior to the distributed
-	 * agent-side mappings.
-	 * 
-	 * Use this method to send a single Simulation Agent object.
-	 * 
-	 * @see mapSimulationSideAgents
-	 */
-	private void assignJadeAgentToDistributedAutonomousAgent(
-			NativeDistributedAutonomousAgent jadeAgent,
-			JADE_MAS_RunContext jade_MAS_RunContext) {
-		distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent,
-				jade_MAS_RunContext.getDistSysRunContext());
 	}
 
 }

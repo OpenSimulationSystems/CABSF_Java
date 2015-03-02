@@ -4,6 +4,7 @@ org.simulationsystems.csf.common.csfmodel.csfexceptions
 org.simulationsystems.csf.common.csfmodel.messaging.messages
 org.simulationsystems.csf.common.internal
 org.simulationsystems.csf.common.internal.messaging
+org.simulationsystems.csf.common.internal.messaging.bridge
 org.simulationsystems.csf.common.internal.messaging.bridge.abstraction
 org.simulationsystems.csf.common.internal.messaging.bridge.implementation
 org.simulationsystems.csf.common.internal.messaging.dao

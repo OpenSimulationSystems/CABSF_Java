@@ -9,18 +9,54 @@ import java.util.UUID;
 import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock;
 
+/**
+ * The wrapper for holding on to the IDs to uniquely identify a distributed autonomous
+ * agent within a distributed system.
+ * 
+ * @author Jorge Calderon
+ * @version 0.1
+ * @since 0.1
+ */
 public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomousAgent {
 
-	private AID aid;
-	private String distributedSystemID;
-	private String distributedAutonomousAgentID;
-	private String distAutAgentModelID;
-	private String modelName;
-	private Agent jadeControllerAgent;
+	/** The aid. */
+	private final AID aid;
 
-	public CsfDistributedJADEagentWrapper(AID aid, String distributedSystemID,
-			String distributedAutonomousAgentID, String distAutAgentModelID,
-			String modelName, Agent jadeControllerAgent) {
+	/** The distributed system id. */
+	private final String distributedSystemID;
+
+	/** The distributed autonomous agent id. */
+	private final String distributedAutonomousAgentID;
+
+	/** The dist aut agent model id. */
+	private final String distAutAgentModelID;
+
+	/** The model name. */
+	private final String modelName;
+
+	/** The jade controller agent. */
+	private final Agent jadeControllerAgent;
+
+	/**
+	 * Instantiates a new csf distributed jad eagent wrapper.
+	 * 
+	 * @param aid
+	 *            the aid
+	 * @param distributedSystemID
+	 *            the distributed system id
+	 * @param distributedAutonomousAgentID
+	 *            the distributed autonomous agent id
+	 * @param distAutAgentModelID
+	 *            the dist aut agent model id
+	 * @param modelName
+	 *            the model name
+	 * @param jadeControllerAgent
+	 *            the jade controller agent
+	 */
+	public CsfDistributedJADEagentWrapper(final AID aid,
+			final String distributedSystemID, final String distributedAutonomousAgentID,
+			final String distAutAgentModelID, final String modelName,
+			final Agent jadeControllerAgent) {
 		this.aid = aid;
 		this.distributedSystemID = distributedSystemID;
 		this.distributedAutonomousAgentID = distributedAutonomousAgentID;
@@ -29,30 +65,52 @@ public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomo
 		this.jadeControllerAgent = jadeControllerAgent;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.
+	 * NativeDistributedAutonomousAgent#getDistributedAutonomousAgentID()
+	 */
+	@Override
 	public String getDistributedAutonomousAgentID() {
 		return distributedAutonomousAgentID;
 	}
 
-	public String getModelName() {
-		return modelName;
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.
+	 * NativeDistributedAutonomousAgent#getDistributedAutonomousAgentModelID()
+	 */
+	@Override
 	public String getDistributedAutonomousAgentModelID() {
 		return distAutAgentModelID;
 	}
 
-	@Override
 	/*
-	 * Takes a message submitted by the JADE Controller Agent (via the JADE-CSF API)
-	 * whichs is bound for a JADE agent, and actually sends it to the correct JADE agent
-	 * using native JADE communication. It is important to note that while this object
-	 * represents a distributed JADE agent, it is really an object contained within the
-	 * JADE Controller Agent's memory. Therefore, any references to the JADE agent or
-	 * myAgent is the JADE Controller agent. JadeControllerMock is only used with mocks.
+	 * (non-Javadoc)
+	 * 
+	 * @see org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.
+	 * NativeDistributedAutonomousAgent#getModelName()
 	 */
-	public void receiveMessage(FrameworkMessage msg, String messageID,
-			String inReplyToMessageID, JadeControllerMock jade_ControllerMock) {
-		ACLMessage aclMsg = new ACLMessage(ACLMessage.INFORM);
+	@Override
+	public String getModelName() {
+		return modelName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.
+	 * NativeDistributedAutonomousAgent
+	 * #receiveMessage(org.simulationsystems.csf.common.csfmodel
+	 * .messaging.messages.FrameworkMessage, java.lang.String, java.lang.String,
+	 * org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock)
+	 */
+	@Override
+	public void receiveMessage(final FrameworkMessage msg, final String messageID,
+			final String inReplyToMessageID, final JadeControllerMock jade_ControllerMock) {
+		final ACLMessage aclMsg = new ACLMessage(ACLMessage.INFORM);
 		aclMsg.addReceiver(aid);
 		aclMsg.setContent(msg.toPrettyPrintedXMLString());
 		aclMsg.setConversationId("jade-controller");

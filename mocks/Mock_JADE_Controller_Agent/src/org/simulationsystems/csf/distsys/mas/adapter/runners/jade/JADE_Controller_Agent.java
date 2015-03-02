@@ -124,7 +124,7 @@ public class JADE_Controller_Agent implements JadeControllerMock {
 
 	public void receiveMessage(FrameworkMessage message, String messageID,
 			String inReplyToMessageID) {
-		List<String> location = message.getSelfLocation(
+		List<String> location = message.getSelfLocationFromFirstAgentModel(
 				message.getNextDistributedAutonomousAgent(message.getDocument(), null),
 				message);
 		assert (location.size() == 2);

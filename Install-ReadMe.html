@@ -346,8 +346,9 @@ variable if it's not done automatically in your installation.
         can be installed as a service. </li>
       <li>Optionally, run a separate terminal window for the redis command line
         "redis-cli".  This allows you to inspect messages.  For example, if you
-        shut down or pause the distributed system(s), you can check Run As see what
-        message the simulation engine (Repast) is trying to send those systems. 
+        shut down or pause the distributed system(s), you can check Run As see
+        what message the simulation engine (Repast) is trying to send those
+        systems. 
         <ol>
           <li>Useful commands include "KEYS *" to see all messages, "lpop
             thechannelname" to pop a value from the list.  Note, that these
@@ -368,10 +369,13 @@ variable if it's not done automatically in your installation.
         would be best to change the .launch file, delete the run configuration,
         and right click again.</li>
       <li>Click on the drop down next to the run button and select
-        RepastSimulationRunner - CSF - JZombies.launch.  You should see in the
-        console that the Common Simulation Framework is polling the Redis
-        in-memory cache for commands from you, the simulation
-      administrator.</li>
+        RepastSimulationRunner - CSF - JZombies.launch.  You may receive a
+        message warning about errors in the project(s). If so, hit the Proceed
+        button. These errrors are probably related to unit test compilation
+        errors, but shouldn't affect the execution of the simulation. You
+        should see in the console that the Common Simulation Framework is
+        polling the Redis in-memory cache for commands from you, the simulation
+        administrator.</li>
       <li>Start up the distributed system(s). 
         <ol>
           <li>In our case we need to start the JADE agents, including the JADE

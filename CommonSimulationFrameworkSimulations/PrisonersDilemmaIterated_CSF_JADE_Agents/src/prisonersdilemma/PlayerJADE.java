@@ -1,4 +1,4 @@
-package jzombies;
+package prisonersdilemma;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -10,8 +10,6 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-import java.util.List;
-
 import org.jdom2.Element;
 import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
 import org.simulationsystems.csf.common.csfmodel.csfexceptions.CsfCheckedException;
@@ -20,16 +18,16 @@ import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMes
 import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
 import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 
-// TODO: Auto-generated Javadoc
 /**
- * The JADE class representing the Human in a CSF-administered
- * JADE-Repast-Simphony-integrated JZombies simulation.
+ * The JADE class representing the Player in a CSF-administered
+ * JADE-Repast-Simphony-integrated Prisoner's Dilemma game theory tournament.
  *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
  */
-public class HumanJADE extends Agent {
+public class PlayerJADE extends Agent {
+
 	/**
 	 * Inner class that specifies the behavior for this agent. See the JADE
 	 * documentation to an explanation of the JADE behaviors.
@@ -38,7 +36,7 @@ public class HumanJADE extends Agent {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	private class HumanJADE_Server extends CyclicBehaviour {
+	private class PrisonersDilemmaJADE_Server extends CyclicBehaviour {
 		/*
 		 * Called every time a message comes into the queue to this agent. This
 		 * is done sequentially due to the fact that a JADE agent only runs a
@@ -79,65 +77,77 @@ public class HumanJADE extends Agent {
 						+ aclMsg.getConversationId() + " "
 						+ aclMsg.getReplyWith() + " Message:" + msgStr);
 
-				// Get the current grid location of this agent from the
-				// simulation engine/runtime. The result is a list (X, Y)
-				List<String> selfPoint = msg.getSelfLocation(msg);
-				assert (selfPoint.size() == 2);
-				for (int i = 0; i < selfPoint.size(); i++) {
-					System.out.println(logPrefix + " Self Location: "
-							+ String.valueOf(i) + " : "
-							+ String.valueOf(selfPoint.get(i)));
-				}
-
-				// Get the part of the XML message dealing with this JADE agent
-				// (distributed autonomous agent)
+				// Get the distributed autonomous agent element and set the ID
 				Element distributedAutonomousAgentElement = msg
 						.getNextDistributedAutonomousAgent(msg.getDocument(),
 								null);
+				msg.setDistributedAutonomousAgentID(
+						distributedAutonomousAgentElement,
+						distributedAutonomousAgentID);
 
-				// Uses a convenience method that is specific to the JZombies
-				// simulation
-				// to get the location of the zombies. This convenience method
-				// is
-				// located in
-				// the Repast Simphony project, hence why we created a
-				// dependency on that
-				// project.
-				// However, there is no direct use of RepastS code from JADE
-				// agents in a CSF MAS-ABMS-systems integrated simulation.
-				List<String> pointWithLeastZombiesPoint = jzombies_CSF
-						.getPointWithLeastZombies(
+				// Get the agent model actor and set the ID
+				Element agentModelActor = msg.getNextAgentModelActor(
+						distributedAutonomousAgentElement, null);
+				msg.setIDForActorInAgentModel(agentModelActor,
+						distributedAutonomousAgentModelID);
+
+				int round = prisonersDilemma_CSF.getRoundNumber(
+						distributedAutonomousAgentElement, msg);
+				DECISION otherPlayerLastRoundDecision = prisonersDilemma_CSF
+						.getOtherPlayerDecision(
 								distributedAutonomousAgentElement, msg);
 
-				for (int i = 0; i < pointWithLeastZombiesPoint.size(); i++) {
-					System.out
-					.println(logPrefix
-							+ " Received Zombie location "
-							+ String.valueOf(i)
-							+ " : "
-							+ String.valueOf(pointWithLeastZombiesPoint
-									.get(i)));
-				}
+				System.out.println(logPrefix + " Round: "
+						+ String.valueOf(round)
+						+ " Received Last Round's Other Player's Decision: "
+						+ otherPlayerLastRoundDecision);
 
-				List<String> pointToMoveTo = chooseMoveTowardsLocation(
-						selfPoint, pointWithLeastZombiesPoint);
+				DECISION myDecision = makeDecision(round,
+						otherPlayerLastRoundDecision);
+				System.out.println(logPrefix + " Decided: "
+						+ myDecision.toString());
 
-				// Send the decision on where to move to
-				msg = jzombies_CSF.convertMoveToPointToFrameworkMessage(
-						pointToMoveTo, distributedAutonomousAgentID,
+				FrameworkMessage replyMsg = new FrameworkMessageImpl(
+						SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+						SYSTEM_TYPE.SIMULATION_ENGINE,
+						jade_MAS_AgentContext
+						.getBlankCachedMessageExchangeTemplate());
+
+				// Get the distributed autonomous agent and set the ID
+				distributedAutonomousAgentElement = replyMsg
+						.getNextDistributedAutonomousAgent(replyMsg
+								.getDocument(), jade_MAS_AgentContext
+								.getCachedDistributedAutonomousAgentTemplate());
+				replyMsg.setDistributedAutonomousAgentID(
+						distributedAutonomousAgentElement,
+						distributedAutonomousAgentID);
+
+				// Get the agent model actor and set the ID
+				agentModelActor = replyMsg.getNextAgentModelActor(
+						distributedAutonomousAgentElement,
+						jade_MAS_AgentContext
+						.getCachedAgentModelActorTemplate());
+				replyMsg.setIDForActorInAgentModel(agentModelActor,
 						distributedAutonomousAgentModelID);
+
+				replyMsg = prisonersDilemma_CSF
+						.populatePrisonersDilemmaFrameworkMessage(replyMsg,
+								agentModelActor, round, null, myDecision);
+
 				System.out
 				.println(logPrefix
 						+ " Sending move decision to the JADE Controller Agent: "
 						+ aclMsg.getConversationId()
 						+ " Message:"
-						+ XMLUtilities.convertDocumentToXMLString(msg
-								.getDocument().getRootElement(), true));
+						+ XMLUtilities
+						.convertDocumentToXMLString(
+								replyMsg.getDocument()
+								.getRootElement(), true));
 
 				// Send message to the JADE Controller Agent
 				ACLMessage response = aclMsg.createReply();
 				response.setPerformative(ACLMessage.INFORM);
-				response.setContent(msg.toPrettyPrintedXMLString());
+				response.setContent(replyMsg.toPrettyPrintedXMLString());
 				myAgent.send(response);
 
 			} else {
@@ -149,18 +159,21 @@ public class HumanJADE extends Agent {
 		}
 
 		/**
-		 * Choose move towards location.
+		 * The method called to determine whether the Player should COOPERATE or
+		 * DEFECT for a given round. JADE agent authors should use this method
+		 * to store the decision history of their opponent and to make the new
+		 * decision.
 		 *
-		 * @param selfPoint
-		 *            the self point
-		 * @param pointWithLeastZombiesPoint
-		 *            the point with least zombies point
-		 * @return the list
+		 * @param round
+		 *            the round
+		 * @param otherPlayerLastRoundDecision
+		 *            the other player last round decision
+		 * @return the decision
 		 */
-		private List<String> chooseMoveTowardsLocation(List<String> selfPoint,
-				List<String> pointWithLeastZombiesPoint) {
+		private DECISION makeDecision(int round,
+				DECISION otherPlayerLastRoundDecision) {
 
-			return pointWithLeastZombiesPoint;
+			return DECISION.COOPERATE;
 
 		}
 	}
@@ -168,11 +181,11 @@ public class HumanJADE extends Agent {
 	/** The log prefix. */
 	private String logPrefix;
 
-	/** The jade_ ma s_ agent context. */
+	/** The JADE_MAS_AgentContext context. */
 	private JADE_MAS_AgentContext jade_MAS_AgentContext;
 
-	/** The jzombies_ csf. */
-	private JZombies_Csf jzombies_CSF;
+	/** The PrisonersDilemma_CSF. */
+	private PrisonersDilemma_CSF prisonersDilemma_CSF;
 
 	/** The distributed autonomous agent id. */
 	private String distributedAutonomousAgentID;
@@ -190,8 +203,8 @@ public class HumanJADE extends Agent {
 	 */
 	@Override
 	protected void setup() {
-		logPrefix = "[HumanJADE " + getAID().getName() + "]";
-		addBehaviour(new HumanJADE_Server());
+		logPrefix = "[PlayerJADE " + getAID().getName() + "]";
+		addBehaviour(new PrisonersDilemmaJADE_Server());
 
 		/*
 		 * The Common Simulation Framework (CSF) context object specific to CSF
@@ -204,14 +217,14 @@ public class HumanJADE extends Agent {
 		 * This class contains convenience methods specific to this one
 		 * simulation.
 		 */
-		jzombies_CSF = new JZombies_Csf(jade_MAS_AgentContext);
+		prisonersDilemma_CSF = new PrisonersDilemma_CSF(jade_MAS_AgentContext);
+		// TODO: Support global JADE naming
 		/*
 		 * The mapping between the JADE agent and RepastS agent actually happens
 		 * on the "distributed autonomous agent model" level. So a JADE agent
 		 * can theoretically in the future run several "agent models". For now
 		 * only 1 to 1 is supported, however, the model must still be identified
 		 */
-		// TODO: Support global JADE naming
 		distributedAutonomousAgentModelID = getAID().getLocalName() + "MODEL";
 
 		/*
@@ -247,7 +260,8 @@ public class HumanJADE extends Agent {
 			assert (result.length == 1);
 			System.out.println(logPrefix + " Found the JADE Controller Agent: "
 					+ result[0].getName().getName());
-			jadeControllerAgent = result[0].getName();
+			jadeControllerAgent = result[0].getName(); // Only one JADE
+			// Controller Agent should exist.
 
 		} catch (FIPAException fe) {
 			System.out

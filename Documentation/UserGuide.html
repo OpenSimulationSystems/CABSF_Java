@@ -61,7 +61,7 @@ The Common Simulation Framework has several goals:<br>
 It's essential that all of the steps in the <a
 href="../Install-ReadMe.html">Installation Instructions</a> be followed to
 ensure proper installation of the CSF. The installation instructions are at the
-root directory of the overall CSF project.
+root directory of the overall CSF project. 
 
 <h2>Basic Concepts - Agent-based Modeling and Simulation</h2>
 
@@ -103,14 +103,14 @@ style="font-style: italic;">software agents</span>.  From a multi-agent systems
 standpoint, the agents in Repast Simphony are not truly autonomous <span
 style="font-style: italic;">software agents </span>as they are not autonomous
 at the software implementation level, even though they represent autonomous
-entities in an ABM model.   JADE agents, however, are truly autonomous
-software agents.  They send out messages at will, receive messages, can even
-decide not respond to messages received, and execute in their own threads
-of control. They are subservient only to the administrative agents that are
-controlled by the MAS administrator.  Sometimes Repast has been incorrectly
-referred to as multi-agent system and it is important that we be precise here in
-our terminology as we are attempting to combine both types of systems and wish
-to avoid confusion.<br>
+entities in an ABM model.   JADE agents, however, are truly autonomous software
+agents.  They send out messages at will, receive messages, can even decide not
+respond to messages received, and execute in their own threads of control. They
+are subservient only to the administrative agents that are controlled by the
+MAS administrator.  Sometimes Repast has been incorrectly referred to as
+multi-agent system and it is important that we be precise here in our
+terminology as we are attempting to combine both types of systems and wish to
+avoid confusion.<br>
 <br>
 <span style="font-style: italic;">Terms in the Common Simulation
 Framework</span><br>
@@ -120,7 +120,7 @@ style="font-style: italic; font-weight: bold;">simulation agent"</span> to mean
 an agent that runs in the simulation runtime, such as Repast agents.  Outside
 of the simulation runtime, we have one to many<span
 style="font-weight: bold;"></span><span style="font-style: italic;"><span
-style="font-weight: bold;"> distributed systems</span>.</span>  Distributed
+style="font-weight: bold;">distributed systems</span>.</span>  Distributed
 systems can be thought of as synonymous with Multi-agent systems (MAS).  The
 distinction in terms here is due to the fact that we are in the future striving
 to support distributed systems that are not necessarily a MAS, in addition to
@@ -139,7 +139,7 @@ CSF will be supporting other types of MASs/distributed systems in the future
 besides JADE, and so we prefer to use a standard term from the beginning.<br>
 <br>
 Typically, a distributed autonomous software agent or JADE agent would
-correspond to one (simulation) agent on the Repast side.  For example, in a
+correspond to one (simulation) agent on the Repast side. For example, in a
 Prisoner's Dilemma, a participants creates a JADE agent to represent a Human
 prisoner.  Repast doesn't understand JADE agent terminology and so there is a
 representation of the JADE agent, implemented as a Human Repast (simulation)
@@ -172,18 +172,18 @@ We can think of these two entities as jointly composing the <span
 style="font-style: italic;">agent</span> in an ABM.  In a Common Simulation
 Framework simulation, the simulation agent is dependent on its corresponding
 distributed agent model for the decision making part of its behavior.  The
-distributed autonomous agent model is dependent on its corresponding
-simulation agent to retrieve the local environment information from the
-simulation runtime, and to interact with other entities in the simulation
-runtime. Therefore, the simulation agent and the distributed autonomous agent
-model on their own form an incomplete ABM agent in CSF simulations.  On the
-other hand, in a non-CSF simulation (JADE is not used), the simulation agent
-contains all information in the model and is therefore a complete ABM agent.<br>
+distributed autonomous agent model is dependent on its corresponding simulation
+agent to retrieve the local environment information from the simulation
+runtime, and to interact with other entities in the simulation runtime.
+Therefore, the simulation agent and the distributed autonomous agent model on
+their own form an incomplete ABM agent in CSF simulations.  On the other hand,
+in a non-CSF simulation (JADE is not used), the simulation agent contains all
+information in the model and is therefore a complete ABM agent.<br>
 <br>
 For a more thorough discussion of these concepts and the theoretical basis of
 the Common Simulation Framework, please see the master's thesis proposal here.
 (to be added as a link from GitHub)<br>
- 
+
 
 <h2>Redis - The Common Interface and XML - The Platform Independent Data Format
 for Message Exchange</h2>
@@ -247,7 +247,7 @@ theory competitions for all (distributed) agent authors.<br>
     communicate with each other only if the students first SSHed to the same
     Linux host.  Of course this is not guaranteed to be the case for all
     environments, but the scenarios above may provide the reader with some
-    options.
+    options. 
     <ul>
       <li>Note on running the JADE agents on shared Linux hosts, if each
         student were to run his/her agent under his/her own account, a new
@@ -308,6 +308,9 @@ theory competitions for all (distributed) agent authors.<br>
     scenario has been tested)</li>
   <li>The JADE Controller agent should run on in the main JADE container. (Only
     the first scenario has been tested)</li>
+  <li>In programming game tournaments, if all JADE agents will be run in the
+    same container, then each agent must use a different Java class name,
+    otherwise there will be collision with the other players' JADE agents.</li>
   <li>Limitations to be removed shortly post March 2015: 
     <ol>
       <li>The number of corresponding JADE and Repast agents is fixed at 6 for
@@ -338,10 +341,10 @@ problem. <br>
 <p>While most elements do not have a namespace qualifier, at times, when CSF
 <span style="text-decoration: underline;">populates </span>sections of the XML,
 it does add an "x:" qualifier and repeats the default namespace.  While this is
-unnecessary in XML as it is semantically equivalent to leaving off the qualifier
-and repeated namespace attribute, because all elements already belong to the
-default namespace by default.  Again, if you follow the examples in the sample
-simulations, you should be fine.  If you choose to use your own parsing
+unnecessary in XML as it is semantically equivalent to leaving off the
+qualifier and repeated namespace attribute, because all elements already belong
+to the default namespace by default.  Again, if you follow the examples in the
+sample simulations, you should be fine.  If you choose to use your own parsing
 library, make sure your library is set to be namespace-aware.  CSF uses JDOM 2
 for XML creation and parsing. </p>
 

@@ -1,8 +1,7 @@
 /**
+ * The JADE-specific CSF adapter implementation.
  * 
- */
-/**
- * @author jorge
+ * @author Jorge Calderon
  * 
  */
 package org.simulationsystems.csf.distsys.mas.runners.jade;

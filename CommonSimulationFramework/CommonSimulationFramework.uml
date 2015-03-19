@@ -4,7 +4,7 @@
     <eAnnotations xmi:id="_JUkF8KtVEeSb7-jUi2rLpg" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_JUkF8atVEeSb7-jUi2rLpg" source="codegen">
         <details xmi:id="_JUkF8qtVEeSb7-jUi2rLpg" key="codegenDirectory" value="/CommonSimulationFramework/src"/>
-        <details xmi:id="_P-ve8KtVEeSb7-jUi2rLpg" key="AssociatedSourceCode" value="/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/AgentMapping.java;759008630/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SIMULATION_TYPE.java;1559420036/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SYSTEM_TYPE.java;4234072832/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SimulationRunGroup.java;3117728862/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AbstractContext.java;4209977774/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AgentContext.java;3141592117/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunContext.java;1691604787/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunGroupContext.java;782798452/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfCheckedException.java;415388482/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfInitializationRuntimeException.java;2789990652/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfMessagingRuntimeException.java;2059312893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfRuntimeException.java;1978746924/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FRAMEWORK_COMMAND.java;1650210909/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessage.java;1424560369/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessageImpl.java;4127490706/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/STATUS.java;3533373896/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/MessagingUtilities.java;4280592877/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingAbstraction.java;1410138903/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingRefinedAbstractionAPI.java;1328553118/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/CommonMessagingImplementationAPI.java;837527433/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/RedisMessagingConcreteImplementation.java;1802150801/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/CommonMessagingDao.java;3352715707/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/RedisDaoImpl.java;3343081834/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/interfaces/redis/RedisConnectionManager.java;2953901171/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/XMLUtilities.java;1174092979/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/transformers/FrameworkMessageDocumentHelper.java;2556523941/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/AgentMappingHelper.java;1927010188/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/DistributedSystem.java;947440138/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AdapterAPI.java;3886115082/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AgentContext.java;2139417651/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunContext.java;3750822353/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunGroupContext.java;1128553747/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JadeControllerMock.java;561648807/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/CsfDistributedJADEagentWrapper.java;229763079/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeDistributedAutonomousAgent.java;1095643326/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeJADEMockContext.java;3674348158/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysInitializationHelper.java;71665886/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunContext.java;2094832678/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunGroupContext.java;3117824750/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistributedSystemAPI.java;3546920281/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunConfiguration.java;2634529670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunGroupConfiguration.java;3450817928/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentModel.java;1693472448/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentsManager.java;4270847513/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAutonomousAgent.java;1967923745/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/simulationruntime/SimulationEngineManager.java;1522540727/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentAdapterAPI.java;1320389027/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentContext.java;1968437434/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationAdapterAPI.java;1740242688/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunContext.java;2158755670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunGroupContext.java;758445775/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationAPI.java;3129962893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationInitializationHelper.java;1552759204/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunContext.java;2650777746/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunGroupContext.java;2326374792/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunConfiguration.java;146394112/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunGroupConfiguration.java;339347761/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/distributedsystems/SimulationDistributedSystemManager.java;2948522945/1;"/>
+        <details xmi:id="_P-ve8KtVEeSb7-jUi2rLpg" key="AssociatedSourceCode" value="/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/AgentMapping.java;1332957175/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SIMULATION_TYPE.java;1559420036/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SYSTEM_TYPE.java;4234072832/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/SimulationRunGroup.java;3117728862/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AbstractContext.java;4209977774/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/AgentContext.java;3141592117/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunContext.java;1691604787/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/context/CsfRunGroupContext.java;782798452/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfCheckedException.java;415388482/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfInitializationRuntimeException.java;2789990652/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfMessagingRuntimeException.java;2059312893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/csfexceptions/CsfRuntimeException.java;1978746924/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FRAMEWORK_COMMAND.java;1650210909/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessage.java;1424560369/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/FrameworkMessageImpl.java;4127490706/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/csfmodel/messaging/messages/STATUS.java;3533373896/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/MessagingUtilities.java;4280592877/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingAbstraction.java;1410138903/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/abstraction/CommonMessagingRefinedAbstractionAPI.java;1328553118/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/CommonMessagingImplementationAPI.java;837527433/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/bridge/implementation/RedisMessagingConcreteImplementation.java;1802150801/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/CommonMessagingDao.java;3352715707/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/dao/RedisDaoImpl.java;3343081834/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/interfaces/redis/RedisConnectionManager.java;2953901171/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/XMLUtilities.java;1174092979/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/messaging/xml/transformers/FrameworkMessageDocumentHelper.java;2556523941/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/AgentMappingHelper.java;1927010188/1;/CommonSimulationFramework/src/org/simulationsystems/csf/common/internal/systems/DistributedSystem.java;947440138/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AdapterAPI.java;3886115082/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_AgentContext.java;2139417651/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunContext.java;3750822353/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JADE_MAS_RunGroupContext.java;1128553747/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/JadeControllerMock.java;561648807/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/CsfDistributedJADEagentWrapper.java;229763079/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeDistributedAutonomousAgent.java;1095643326/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/adapters/jade/api/nativeagents/NativeJADEMockContext.java;3674348158/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysInitializationHelper.java;71665886/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunContext.java;2094832678/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistSysRunGroupContext.java;3117824750/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/DistributedSystemAPI.java;3546920281/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunConfiguration.java;2634529670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/configuration/DistSysRunGroupConfiguration.java;3450817928/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentModel.java;1693472448/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAgentsManager.java;4270847513/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/distributedautonomousagents/DistributedAutonomousAgent.java;1967923745/1;/CommonSimulationFramework/src/org/simulationsystems/csf/distsys/core/api/simulationruntime/SimulationEngineManager.java;1522540727/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentAdapterAPI.java;1320389027/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_AgentContext.java;1968437434/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationAdapterAPI.java;1740242688/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunContext.java;2158755670/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/adapters/simengines/repastS/api/RepastS_SimulationRunGroupContext.java;758445775/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationAPI.java;3129962893/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationInitializationHelper.java;1552759204/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunContext.java;2650777746/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/SimulationRunGroupContext.java;2326374792/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunConfiguration.java;146394112/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/configuration/SimulationRunGroupConfiguration.java;339347761/1;/CommonSimulationFramework/src/org/simulationsystems/csf/sim/core/api/distributedsystems/SimulationDistributedSystemManager.java;2948522945/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_K_QtMatVEeSb7-jUi2rLpg">
@@ -1280,9 +1280,17 @@
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_K_QtMKtVEeSb7-jUi2rLpg" name="AgentMapping">
                 <ownedComment xmi:id="_Lpk1hatVEeSb7-jUi2rLpg">
-                  <body>A mapping of a Simulation Agent Prototype to a Concrete Distributed Agent.  For example, the Simulation Agent could be a Repast Agent, and the distributed again could be a JADE agent.</body>
+                  <body>Stores the mapping of a simulation agent such as Repast Simphony agent with the&#xD;
+CSF-wide IDs which jointly uniquely identify an agent across the CSF: Distributed&#xD;
+System ID (Such as for a JADE MAS), Distributed Autonomous Agent ID (such as for a JADE&#xD;
+Agent), and Distributed Autonomous Agent Model ID (ID for the part of the JADE agent&#xD;
+that corresponds to the RepastS representational agent).&#xD;
+&#xD;
+@author Jorge Calderon&#xD;
+@version 0.1&#xD;
+@since 0.1</body>
                 </ownedComment>
-                <ownedAttribute xmi:id="_LlGlMKtVEeSb7-jUi2rLpg" name="distributedSystemID" isReadOnly="true">
+                <ownedAttribute xmi:id="_LlGlMKtVEeSb7-jUi2rLpg" name="distributedSystemID" visibility="private" isReadOnly="true">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_LlGlMatVEeSb7-jUi2rLpg" name="distributedAutonomousAgentID">
@@ -1331,8 +1339,8 @@
 		int result = 1;&#xD;
 		result = prime&#xD;
 				* result&#xD;
-				+ ((distributedAutonomousAgentModelID == null) ? 0 : distributedAutonomousAgentModelID&#xD;
-						.hashCode());&#xD;
+				+ ((distributedAutonomousAgentModelID == null) ? 0&#xD;
+						: distributedAutonomousAgentModelID.hashCode());&#xD;
 		result = prime&#xD;
 				* result&#xD;
 				+ ((distributedAutonomousAgentID == null) ? 0&#xD;
@@ -1355,11 +1363,12 @@
 			return false;&#xD;
 		if (getClass() != obj.getClass())&#xD;
 			return false;&#xD;
-		AgentMapping other = (AgentMapping) obj;&#xD;
+		final AgentMapping other = (AgentMapping) obj;&#xD;
 		if (distributedAutonomousAgentModelID == null) {&#xD;
 			if (other.distributedAutonomousAgentModelID != null)&#xD;
 				return false;&#xD;
-		} else if (!distributedAutonomousAgentModelID.equals(other.distributedAutonomousAgentModelID))&#xD;
+		} else if (!distributedAutonomousAgentModelID&#xD;
+				.equals(other.distributedAutonomousAgentModelID))&#xD;
 			return false;&#xD;
 		if (distributedAutonomousAgentID == null) {&#xD;
 			if (other.distributedAutonomousAgentID != null)&#xD;
@@ -1389,6 +1398,14 @@
                   <body>this.simulationAgent = simulationAgent;&#xD;
 	</body>
                 </ownedBehavior>
+                <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_aB5rsM3gEeS6xbq-OftQkw" name="getDistributedSystemID" specification="_aBIPoM3gEeS6xbq-OftQkw">
+                  <ownedParameter xmi:id="_aB5rsc3gEeS6xbq-OftQkw" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+                  </ownedParameter>
+                  <language>java</language>
+                  <body>return distributedSystemID;&#xD;
+	</body>
+                </ownedBehavior>
                 <ownedOperation xmi:id="_K_QtOqtVEeSb7-jUi2rLpg" name="AgentMapping" visibility="private">
                   <eAnnotations xmi:id="_K_QtO6tVEeSb7-jUi2rLpg" source="http://www.eclipse.org/uml2/2.0.0/UML">
                     <details xmi:id="_K_QtPKtVEeSb7-jUi2rLpg" key="create"/>
@@ -1399,16 +1416,40 @@
                   <eAnnotations xmi:id="_K_QtR6tVEeSb7-jUi2rLpg" source="http://www.eclipse.org/uml2/2.0.0/UML">
                     <details xmi:id="_K_QtSKtVEeSb7-jUi2rLpg" key="create"/>
                   </eAnnotations>
+                  <ownedComment xmi:id="_aCDcsM3gEeS6xbq-OftQkw">
+                    <body>Instantiates a new agent mapping.&#xD;
+	 * &#xD;
+	 * @param distributedSystemID&#xD;
+	 *            the distributed system id&#xD;
+	 * @param distributedAutonomousAgentID&#xD;
+	 *            the distributed autonomous agent id&#xD;
+	 * @param distributedAgentModelID&#xD;
+	 *            the distributed agent model id&#xD;
+	 * @param fullyQualifiedSimulationAgentName&#xD;
+	 *            the fully qualified simulation agent name</body>
+                  </ownedComment>
                   <ownedParameter xmi:id="_K_QtQ6tVEeSb7-jUi2rLpg" name="distributedSystemID">
+                    <eAnnotations xmi:id="_aA1UsM3gEeS6xbq-OftQkw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                      <details xmi:id="_aA17wM3gEeS6xbq-OftQkw" key="final"/>
+                    </eAnnotations>
                     <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                   </ownedParameter>
                   <ownedParameter xmi:id="_K_QtRKtVEeSb7-jUi2rLpg" name="distributedAutonomousAgentID">
+                    <eAnnotations xmi:id="_aA17wc3gEeS6xbq-OftQkw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                      <details xmi:id="_aA2i0M3gEeS6xbq-OftQkw" key="final"/>
+                    </eAnnotations>
                     <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                   </ownedParameter>
                   <ownedParameter xmi:id="_K_QtRatVEeSb7-jUi2rLpg" name="distributedAgentModelID">
+                    <eAnnotations xmi:id="_aA2i0c3gEeS6xbq-OftQkw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                      <details xmi:id="_aA2i0s3gEeS6xbq-OftQkw" key="final"/>
+                    </eAnnotations>
                     <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                   </ownedParameter>
                   <ownedParameter xmi:id="_K_QtRqtVEeSb7-jUi2rLpg" name="fullyQualifiedSimulationAgentName">
+                    <eAnnotations xmi:id="_aA3J4M3gEeS6xbq-OftQkw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                      <details xmi:id="_aA3J4c3gEeS6xbq-OftQkw" key="final"/>
+                    </eAnnotations>
                     <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                   </ownedParameter>
                   <ownedParameter xmi:id="_K_QtSatVEeSb7-jUi2rLpg" type="_K_QtMKtVEeSb7-jUi2rLpg" direction="return"/>
@@ -1419,16 +1460,45 @@
                   </ownedParameter>
                 </ownedOperation>
                 <ownedOperation xmi:id="_K_Z3IKtVEeSb7-jUi2rLpg" name="getSimulationAgent" method="_LoYiu6tVEeSb7-jUi2rLpg">
+                  <ownedComment xmi:id="_aCDcss3gEeS6xbq-OftQkw">
+                    <body>Gets the simulation agent.&#xD;
+	 * &#xD;
+	 * @return the simulation agent</body>
+                  </ownedComment>
                   <ownedParameter xmi:id="_LeGlWKtVEeSb7-jUi2rLpg" type="_LeGlUKtVEeSb7-jUi2rLpg" direction="return"/>
                 </ownedOperation>
                 <ownedOperation xmi:id="_LeGlUqtVEeSb7-jUi2rLpg" name="equals" method="_LoYiuKtVEeSb7-jUi2rLpg">
-                  <ownedParameter xmi:id="_LeGlU6tVEeSb7-jUi2rLpg" name="obj" type="_LeGlUKtVEeSb7-jUi2rLpg"/>
+                  <ownedParameter xmi:id="_LeGlU6tVEeSb7-jUi2rLpg" name="obj" type="_LeGlUKtVEeSb7-jUi2rLpg">
+                    <eAnnotations xmi:id="_aA7bUM3gEeS6xbq-OftQkw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                      <details xmi:id="_aA7bUc3gEeS6xbq-OftQkw" key="final"/>
+                    </eAnnotations>
+                  </ownedParameter>
                   <ownedParameter xmi:id="_LeGlVKtVEeSb7-jUi2rLpg" direction="return">
                     <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
                   </ownedParameter>
                 </ownedOperation>
                 <ownedOperation xmi:id="_LeGlWatVEeSb7-jUi2rLpg" name="setSimulationAgent" method="_LoYivatVEeSb7-jUi2rLpg">
-                  <ownedParameter xmi:id="_LeGlWqtVEeSb7-jUi2rLpg" name="simulationAgent" type="_LeGlUKtVEeSb7-jUi2rLpg"/>
+                  <ownedComment xmi:id="_aCNNsM3gEeS6xbq-OftQkw">
+                    <body>Sets the simulation agent.&#xD;
+	 * &#xD;
+	 * @param simulationAgent&#xD;
+	 *            the new simulation agent</body>
+                  </ownedComment>
+                  <ownedParameter xmi:id="_LeGlWqtVEeSb7-jUi2rLpg" name="simulationAgent" type="_LeGlUKtVEeSb7-jUi2rLpg">
+                    <eAnnotations xmi:id="_aBElQM3gEeS6xbq-OftQkw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                      <details xmi:id="_aBFMUM3gEeS6xbq-OftQkw" key="final"/>
+                    </eAnnotations>
+                  </ownedParameter>
+                </ownedOperation>
+                <ownedOperation xmi:id="_aBIPoM3gEeS6xbq-OftQkw" name="getDistributedSystemID" method="_aB5rsM3gEeS6xbq-OftQkw">
+                  <ownedComment xmi:id="_aCDcsc3gEeS6xbq-OftQkw">
+                    <body>Gets the distributed system id.&#xD;
+	 * &#xD;
+	 * @return the distributed system id</body>
+                  </ownedComment>
+                  <ownedParameter xmi:id="_aBmwwM3gEeS6xbq-OftQkw" direction="return">
+                    <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+                  </ownedParameter>
                 </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Enumeration" xmi:id="_K_Z3IatVEeSb7-jUi2rLpg" name="SIMULATION_TYPE">
@@ -8217,4 +8287,5 @@ Simulation-Toolkit-specific Context such as this class.</body>
   <UMLLabProfile:Reference xmi:id="_Lsj4PatVEeSb7-jUi2rLpg" base_Element="_Lsj4O6tVEeSb7-jUi2rLpg"/>
   <UMLLabProfile:Reference xmi:id="_Lsj4QKtVEeSb7-jUi2rLpg" base_Element="_Lsj4PqtVEeSb7-jUi2rLpg"/>
   <UMLLabProfile:Reference xmi:id="_Lsj4Q6tVEeSb7-jUi2rLpg" base_Element="_Lsj4QatVEeSb7-jUi2rLpg"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_aBZ8cM3gEeS6xbq-OftQkw" base_Element="_LlGlMKtVEeSb7-jUi2rLpg"/>
 </xmi:XMI>

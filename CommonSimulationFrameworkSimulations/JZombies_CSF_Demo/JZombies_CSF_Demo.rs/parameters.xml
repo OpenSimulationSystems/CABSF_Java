@@ -9,11 +9,11 @@
 		/> -->
 
 	<parameter name="human_count" displayName="Human Count" type="int"
-		defaultValue="200" isReadOnly="false"
+		defaultValue="6" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 
 	<parameter name="zombie_count" displayName="Zombie Count"
-		type="int" defaultValue="5" isReadOnly="false"
+		type="int" defaultValue="6" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 </parameters>
 

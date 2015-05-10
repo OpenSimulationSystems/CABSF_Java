@@ -515,7 +515,7 @@ public class FrameworkMessageDocumentHelper {
 	 * @return the element
 	 */
 	public Element setDistributedAutonomousAgentID(
-			final Element distributedAutonomousAgent, final String ID) {
+Element distributedAutonomousAgent, String ID) {
 		setIDinDistributedAutononomousAgent(distributedAutonomousAgent, ID);
 		return distributedAutonomousAgent;
 	}

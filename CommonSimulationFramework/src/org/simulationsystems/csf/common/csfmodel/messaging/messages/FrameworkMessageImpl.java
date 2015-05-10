@@ -151,8 +151,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 * @see org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage#
 	 * getDocument()
 	 */
-	@Override
-	public Document getDocument() {
+@Override
+public Document getDocument() {
 		return document;
 	}
 

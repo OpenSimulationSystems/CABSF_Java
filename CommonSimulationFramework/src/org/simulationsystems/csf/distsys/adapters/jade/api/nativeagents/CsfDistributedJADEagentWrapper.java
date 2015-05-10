@@ -71,8 +71,7 @@ public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomo
 	 * @see org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.
 	 * NativeDistributedAutonomousAgent#getDistributedAutonomousAgentID()
 	 */
-	@Override
-	public String getDistributedAutonomousAgentID() {
+public String getDistributedAutonomousAgentID() {
 		return distributedAutonomousAgentID;
 	}
 

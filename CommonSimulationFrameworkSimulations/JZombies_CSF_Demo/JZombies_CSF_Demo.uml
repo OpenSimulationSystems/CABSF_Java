@@ -1,0 +1,1089 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLLabProfile="http:///schemas/UMLLabProfile/NS/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/UMLLabProfile/NS/0 pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile">
+  <uml:Model xmi:id="_WXhRUNrpEeSkp_ZAzkxnjw" name="JZombies_CSF_Demo">
+    <eAnnotations xmi:id="_XHy3sNrpEeSkp_ZAzkxnjw" source="http://ns.yatta.de/umllab">
+      <contents xmi:type="ecore:EAnnotation" xmi:id="_XHy3sdrpEeSkp_ZAzkxnjw" source="codegen">
+        <details xmi:id="_XHy3strpEeSkp_ZAzkxnjw" key="codegenDirectory" value="/JZombies_CSF_Demo/src"/>
+        <details xmi:id="_XtzHwNrpEeSkp_ZAzkxnjw" key="AssociatedSourceCode" value="/JZombies_CSF_Demo/src/jzombies/Human.java;3531184568/1;/JZombies_CSF_Demo/src/jzombies/JZombiesBuilder.java;2786703846/1;/JZombies_CSF_Demo/src/jzombies/JZombies_Csf.java;3831918528/1;/JZombies_CSF_Demo/src/jzombies/Zombie.java;634411090/1;"/>
+      </contents>
+    </eAnnotations>
+    <elementImport xmi:id="_XXSsQNrpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsQdrpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsQtrpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsQ9rpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsRNrpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsRdrpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsRtrpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsR9rpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+    </elementImport>
+    <elementImport xmi:id="_XXSsSNrpEeSkp_ZAzkxnjw">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </elementImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_XXSsSdrpEeSkp_ZAzkxnjw" name="java">
+      <packagedElement xmi:type="uml:Package" xmi:id="_XXSsStrpEeSkp_ZAzkxnjw" name="io">
+        <packagedElement xmi:type="uml:Class" xmi:id="_XfV1ANrpEeSkp_ZAzkxnjw" name="IOException"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_XXSsS9rpEeSkp_ZAzkxnjw" name="util">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_XfV1AtrpEeSkp_ZAzkxnjw" name="List"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_XgiH1drpEeSkp_ZAzkxnjw" name="ArrayList"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_XiU3nNrpEeSkp_ZAzkxnjw" name="lang">
+        <packagedElement xmi:type="uml:Class" xmi:id="_XiU3ndrpEeSkp_ZAzkxnjw" name="Object"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_XXcdQNrpEeSkp_ZAzkxnjw" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_XXcdQdrpEeSkp_ZAzkxnjw" name="jdom2">
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXvYNtrpEeSkp_ZAzkxnjw" name="filter">
+          <packagedElement xmi:type="uml:Interface" xmi:id="_Xgr41NrpEeSkp_ZAzkxnjw" name="Filter"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXvYN9rpEeSkp_ZAzkxnjw" name="output">
+          <packagedElement xmi:type="uml:Class" xmi:id="_Xgr41trpEeSkp_ZAzkxnjw" name="Format"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_Xg1CwdrpEeSkp_ZAzkxnjw" name="XMLOutputter"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_XfV1BNrpEeSkp_ZAzkxnjw" name="JDOMException"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Xgr40NrpEeSkp_ZAzkxnjw" name="Element"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Xgr40trpEeSkp_ZAzkxnjw" name="Namespace"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_XXcdQtrpEeSkp_ZAzkxnjw" name="simulationsystems">
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXcdQ9rpEeSkp_ZAzkxnjw" name="csf">
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXcdRNrpEeSkp_ZAzkxnjw" name="common">
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXcdRdrpEeSkp_ZAzkxnjw" name="csfmodel">
+              <packagedElement xmi:type="uml:Package" xmi:id="_XXcdRtrpEeSkp_ZAzkxnjw" name="csfexceptions">
+                <packagedElement xmi:type="uml:Class" xmi:id="_XffmBdrpEeSkp_ZAzkxnjw" name="CsfInitializationRuntimeException"/>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Package" xmi:id="_XXcdR9rpEeSkp_ZAzkxnjw" name="messaging">
+                <packagedElement xmi:type="uml:Package" xmi:id="_XXcdSNrpEeSkp_ZAzkxnjw" name="messages">
+                  <packagedElement xmi:type="uml:Interface" xmi:id="_XffmB9rpEeSkp_ZAzkxnjw" name="FrameworkMessage"/>
+                  <packagedElement xmi:type="uml:Class" xmi:id="_Xg1Cx9rpEeSkp_ZAzkxnjw" name="FrameworkMessageImpl"/>
+                </packagedElement>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Package" xmi:id="_XXvYONrpEeSkp_ZAzkxnjw" name="context">
+                <packagedElement xmi:type="uml:Class" xmi:id="_Xg1CxdrpEeSkp_ZAzkxnjw" name="AgentContext"/>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_XffmAdrpEeSkp_ZAzkxnjw" name="AgentMapping"/>
+              <packagedElement xmi:type="uml:Enumeration" xmi:id="_XffmA9rpEeSkp_ZAzkxnjw" name="SIMULATION_TYPE"/>
+              <packagedElement xmi:type="uml:Enumeration" xmi:id="_Xg1Cw9rpEeSkp_ZAzkxnjw" name="SYSTEM_TYPE"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXcdSdrpEeSkp_ZAzkxnjw" name="internal">
+              <packagedElement xmi:type="uml:Package" xmi:id="_XXcdStrpEeSkp_ZAzkxnjw" name="messaging">
+                <packagedElement xmi:type="uml:Package" xmi:id="_XXcdS9rpEeSkp_ZAzkxnjw" name="xml">
+                  <packagedElement xmi:type="uml:Class" xmi:id="_XffmCdrpEeSkp_ZAzkxnjw" name="XMLUtilities"/>
+                </packagedElement>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXcdTNrpEeSkp_ZAzkxnjw" name="sim">
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXcdTdrpEeSkp_ZAzkxnjw" name="adapters">
+              <packagedElement xmi:type="uml:Package" xmi:id="_XXcdTtrpEeSkp_ZAzkxnjw" name="simengines">
+                <packagedElement xmi:type="uml:Package" xmi:id="_XXcdT9rpEeSkp_ZAzkxnjw" name="repastS">
+                  <packagedElement xmi:type="uml:Package" xmi:id="_XXcdUNrpEeSkp_ZAzkxnjw" name="api">
+                    <packagedElement xmi:type="uml:Class" xmi:id="_Xfov8NrpEeSkp_ZAzkxnjw" name="RepastS_AgentAdapterAPI"/>
+                    <packagedElement xmi:type="uml:Class" xmi:id="_Xfov8trpEeSkp_ZAzkxnjw" name="RepastS_AgentContext"/>
+                    <packagedElement xmi:type="uml:Class" xmi:id="_Xfov9NrpEeSkp_ZAzkxnjw" name="RepastS_SimulationRunContext"/>
+                  </packagedElement>
+                </packagedElement>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXcdUdrpEeSkp_ZAzkxnjw" name="core">
+              <packagedElement xmi:type="uml:Package" xmi:id="_XXcdUtrpEeSkp_ZAzkxnjw" name="api">
+                <packagedElement xmi:type="uml:Package" xmi:id="_XXcdU9rpEeSkp_ZAzkxnjw" name="distributedsystems">
+                  <packagedElement xmi:type="uml:Class" xmi:id="_Xfov9trpEeSkp_ZAzkxnjw" name="SimulationDistributedSystemManager"/>
+                </packagedElement>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXvYOdrpEeSkp_ZAzkxnjw" name="distsys">
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXvYOtrpEeSkp_ZAzkxnjw" name="adapters">
+              <packagedElement xmi:type="uml:Package" xmi:id="_XX5JMNrpEeSkp_ZAzkxnjw" name="jade">
+                <packagedElement xmi:type="uml:Package" xmi:id="_XX5JMdrpEeSkp_ZAzkxnjw" name="api">
+                  <packagedElement xmi:type="uml:Class" xmi:id="_Xg-zwdrpEeSkp_ZAzkxnjw" name="JADE_MAS_AgentContext"/>
+                  <packagedElement xmi:type="uml:Interface" xmi:id="_Xg-zw9rpEeSkp_ZAzkxnjw" name="JadeControllerMock"/>
+                </packagedElement>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_XXcdVNrpEeSkp_ZAzkxnjw" name="repast">
+      <packagedElement xmi:type="uml:Package" xmi:id="_XXcdVdrpEeSkp_ZAzkxnjw" name="simphony">
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXcdVtrpEeSkp_ZAzkxnjw" name="context">
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXvYMNrpEeSkp_ZAzkxnjw" name="space">
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXvYMdrpEeSkp_ZAzkxnjw" name="continuous">
+              <packagedElement xmi:type="uml:Class" xmi:id="_XgPM4drpEeSkp_ZAzkxnjw" name="ContinuousSpaceFactory"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_XgPM49rpEeSkp_ZAzkxnjw" name="ContinuousSpaceFactoryFinder"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXvYMtrpEeSkp_ZAzkxnjw" name="graph">
+              <packagedElement xmi:type="uml:Class" xmi:id="_XgPM5drpEeSkp_ZAzkxnjw" name="NetworkBuilder"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXvYM9rpEeSkp_ZAzkxnjw" name="grid">
+              <packagedElement xmi:type="uml:Class" xmi:id="_XgPM59rpEeSkp_ZAzkxnjw" name="GridFactory"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_XgPM6drpEeSkp_ZAzkxnjw" name="GridFactoryFinder"/>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_Xfov-NrpEeSkp_ZAzkxnjw" name="Context"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_XgFb4NrpEeSkp_ZAzkxnjw" name="DefaultContext"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXcdV9rpEeSkp_ZAzkxnjw" name="engine">
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXcdWNrpEeSkp_ZAzkxnjw" name="environment">
+            <packagedElement xmi:type="uml:Class" xmi:id="_Xfov-trpEeSkp_ZAzkxnjw" name="RunState"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_XgYW0drpEeSkp_ZAzkxnjw" name="RunEnvironment"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXcdWdrpEeSkp_ZAzkxnjw" name="watcher">
+            <packagedElement xmi:type="uml:Class" xmi:id="_Xfyg8drpEeSkp_ZAzkxnjw" name="Watch"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_Xfyg89rpEeSkp_ZAzkxnjw" name="WatcherTriggerSchedule"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_XYCTINrpEeSkp_ZAzkxnjw" name="schedule">
+            <packagedElement xmi:type="uml:Class" xmi:id="_XhbfsNrpEeSkp_ZAzkxnjw" name="ScheduledMethod"/>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXcdWtrpEeSkp_ZAzkxnjw" name="query">
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXcdW9rpEeSkp_ZAzkxnjw" name="space">
+            <packagedElement xmi:type="uml:Package" xmi:id="_XXcdXNrpEeSkp_ZAzkxnjw" name="grid">
+              <packagedElement xmi:type="uml:Class" xmi:id="_Xfyg9drpEeSkp_ZAzkxnjw" name="GridCell"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_Xfyg99rpEeSkp_ZAzkxnjw" name="GridCellNgh"/>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXcdXdrpEeSkp_ZAzkxnjw" name="random">
+          <packagedElement xmi:type="uml:Class" xmi:id="_Xfyg-drpEeSkp_ZAzkxnjw" name="RandomHelper"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXcdXtrpEeSkp_ZAzkxnjw" name="space">
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXcdX9rpEeSkp_ZAzkxnjw" name="continuous">
+            <packagedElement xmi:type="uml:Class" xmi:id="_Xf8R8trpEeSkp_ZAzkxnjw" name="ContinuousSpace"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_Xf8R9NrpEeSkp_ZAzkxnjw" name="NdPoint"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_XgYW1drpEeSkp_ZAzkxnjw" name="RandomCartesianAdder"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_XXmOQNrpEeSkp_ZAzkxnjw" name="grid">
+            <packagedElement xmi:type="uml:Class" xmi:id="_Xf8R9trpEeSkp_ZAzkxnjw" name="Grid"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_Xf8R-NrpEeSkp_ZAzkxnjw" name="GridPoint"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_XgYW19rpEeSkp_ZAzkxnjw" name="GridBuilderParameters"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_XgiH0drpEeSkp_ZAzkxnjw" name="SimpleGridAdder"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_XgiH09rpEeSkp_ZAzkxnjw" name="WrapAroundBorders"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_XYMEINrpEeSkp_ZAzkxnjw" name="graph">
+            <packagedElement xmi:type="uml:Class" xmi:id="_XhbfstrpEeSkp_ZAzkxnjw" name="Network"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_Xf8R8NrpEeSkp_ZAzkxnjw" name="SpatialMath"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXmOQdrpEeSkp_ZAzkxnjw" name="util">
+          <packagedElement xmi:type="uml:Class" xmi:id="_Xf8R-trpEeSkp_ZAzkxnjw" name="SimUtilities"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_XhbftNrpEeSkp_ZAzkxnjw" name="ContextUtils"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXvYNNrpEeSkp_ZAzkxnjw" name="dataLoader">
+          <packagedElement xmi:type="uml:Interface" xmi:id="_XgPM69rpEeSkp_ZAzkxnjw" name="ContextBuilder"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_XXvYNdrpEeSkp_ZAzkxnjw" name="parameter">
+          <packagedElement xmi:type="uml:Class" xmi:id="_XgYW09rpEeSkp_ZAzkxnjw" name="Parameters"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_XXmOQtrpEeSkp_ZAzkxnjw" name="jzombies">
+      <packagedElement xmi:type="uml:Class" xmi:id="_XYyhENrpEeSkp_ZAzkxnjw" name="Human">
+        <ownedComment xmi:id="_XjXZftrpEeSkp_ZAzkxnjw">
+          <body>The Human in the JZombies simulation. We modified this Repast Simphony simulation from&#xD;
+the tutorial to integrated with the Common Simulation Framework (CSF). The humans are&#xD;
+distributed to a JADE MAS. This Human RepastS class is the representational agent&#xD;
+within RepastS of the distributed JADE Human agent.&#xD;
+&#xD;
+@author nick&#xD;
+@author Jorge Calderon (modified Human class for integrating with the CSF)</body>
+        </ownedComment>
+        <ownedAttribute xmi:id="_Xi6tcNrpEeSkp_ZAzkxnjw" name="space" visibility="private" isLeaf="true" type="_Xf8R8trpEeSkp_ZAzkxnjw" isReadOnly="true" association="_XjhKYNrpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_Xi6tc9rpEeSkp_ZAzkxnjw" name="grid" visibility="private" isLeaf="true" type="_Xf8R9trpEeSkp_ZAzkxnjw" isReadOnly="true" association="_XjhKY9rpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_Xi6tdtrpEeSkp_ZAzkxnjw" name="energy" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_Xi6tedrpEeSkp_ZAzkxnjw" name="repastS_AgentContext" visibility="private" isLeaf="true" type="_Xfov8trpEeSkp_ZAzkxnjw" isReadOnly="true" association="_XjhKZtrpEeSkp_ZAzkxnjw">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_Xi6tetrpEeSkp_ZAzkxnjw" value="RepastS_AgentAdapterAPI&#xD;&#xA;&#x9;&#x9;&#x9;.getInstance().getAgentContext()"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_Xi6tfNrpEeSkp_ZAzkxnjw" name="simulationType" visibility="private" type="_XffmA9rpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_XjEecdrpEeSkp_ZAzkxnjw" name="jZombies_Csf" visibility="private" type="_XZrR4NrpEeSkp_ZAzkxnjw" association="_XjqUUdrpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_XjEec9rpEeSkp_ZAzkxnjw" name="repastContext" visibility="private" type="_Xfov-NrpEeSkp_ZAzkxnjw" association="_XjqUVNrpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_XjXZf9rpEeSkp_ZAzkxnjw" name="startingEnergy" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedAttribute>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNoaNrpEeSkp_ZAzkxnjw" name="Human" specification="_Xh4LoNrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjNoadrpEeSkp_ZAzkxnjw" name="space" type="_Xf8R8trpEeSkp_ZAzkxnjw">
+            <eAnnotations xmi:id="_XjNoatrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_XjNoa9rpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjNobNrpEeSkp_ZAzkxnjw" name="grid" type="_Xf8R9trpEeSkp_ZAzkxnjw">
+            <eAnnotations xmi:id="_XjNobdrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_XjNobtrpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjNob9rpEeSkp_ZAzkxnjw" name="energy">
+            <eAnnotations xmi:id="_XjNocNrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_XjNocdrpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjNoctrpEeSkp_ZAzkxnjw" type="_XYyhENrpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>this.space = space;&#xD;
+		this.grid = grid;&#xD;
+		this.energy = startingEnergy = energy;&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNoc9rpEeSkp_ZAzkxnjw" name="getRepastS_AgentContext" specification="_XY7rANrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjNodNrpEeSkp_ZAzkxnjw" type="_Xfov8trpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>return repastS_AgentContext;&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNoddrpEeSkp_ZAzkxnjw" name="moveTowards" specification="_XiBVkNrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjNodtrpEeSkp_ZAzkxnjw" name="pt" type="_Xf8R-NrpEeSkp_ZAzkxnjw">
+            <eAnnotations xmi:id="_XjNod9rpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_XjNoeNrpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+          </ownedParameter>
+          <language>java</language>
+          <body>// only move if we are not already in this grid location&#xD;
+		if (!pt.equals(grid.getLocation(this))) {&#xD;
+			NdPoint myPoint = space.getLocation(this);&#xD;
+			final NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());&#xD;
+			final double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint,&#xD;
+					otherPoint);&#xD;
+			space.moveByVector(this, 2, angle, 0);&#xD;
+			myPoint = space.getLocation(this);&#xD;
+			grid.moveTo(this, (int) myPoint.getX(), (int) myPoint.getY());&#xD;
+			// energy--;&#xD;
+		}&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNoedrpEeSkp_ZAzkxnjw" name="run" specification="_XY7rAdrpEeSkp_ZAzkxnjw">
+          <language>java</language>
+          <body>try {&#xD;
+			if (jZombies_Csf == null) {&#xD;
+				repastContext = RunState.getInstance().getMasterContext();&#xD;
+				jZombies_Csf = new JZombies_Csf(repastS_AgentContext);&#xD;
+&#xD;
+				final Iterable&lt;Class> simulationAgentsClasses = RunState.getInstance()&#xD;
+						.getMasterContext().getAgentTypes();&#xD;
+				final Iterable&lt;Object> csfRepastContextIterable = RunState.getInstance()&#xD;
+						.getMasterContext()&#xD;
+						.getAgentLayer(RepastS_SimulationRunContext.class);&#xD;
+				simulationType = repastS_AgentContext.initializeCsfAgent(&#xD;
+						simulationAgentsClasses, csfRepastContextIterable);&#xD;
+			}&#xD;
+		} catch (final JDOMException e) {&#xD;
+			throw new CsfInitializationRuntimeException(&#xD;
+					&quot;Failed to initialize the Common Simulation Framework in the Repast simulation agent&quot;,&#xD;
+					e);&#xD;
+		} catch (final IOException e) {&#xD;
+			throw new CsfInitializationRuntimeException(&#xD;
+					&quot;Failed to initialize the Common Simulation Framework in the Repast simulation agent&quot;,&#xD;
+					e);&#xD;
+		}&#xD;
+		// ////////////////////////////////&#xD;
+&#xD;
+		// ////////////////////////////////&#xD;
+		// Back to the original JZombies code&#xD;
+		final GridPoint pt = grid.getLocation(this);&#xD;
+		// use the GridCellNgh class to create GridCells for&#xD;
+		// the surrounding neighborhood.&#xD;
+		final GridCellNgh&lt;Zombie> nghCreator = new GridCellNgh&lt;Zombie>(grid, pt,&#xD;
+				Zombie.class, 1, 1);&#xD;
+		final List&lt;GridCell&lt;Zombie>> gridCells = nghCreator.getNeighborhood(true);&#xD;
+		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());&#xD;
+&#xD;
+		GridPoint pointWithLeastZombies = null;&#xD;
+		int minCount = Integer.MAX_VALUE;&#xD;
+		for (final GridCell&lt;Zombie> cell : gridCells) {&#xD;
+			if (cell.size() &lt; minCount) {&#xD;
+				pointWithLeastZombies = cell.getPoint();&#xD;
+				minCount = cell.size();&#xD;
+			}&#xD;
+		}&#xD;
+&#xD;
+		GridPoint moveToPoint = null;&#xD;
+		// /////////////////////////////////////////////&#xD;
+&#xD;
+		// /////////////////////////////////////////////&#xD;
+		// Section Added to the CSF version of this simulation&#xD;
+		// If it is part of a CSF simulation, move the decision-making to the&#xD;
+		// distributed&#xD;
+		// FIXME: Support multiple distributed system managers/provide method&#xD;
+		// for getting&#xD;
+		// the appropriate one.&#xD;
+		if (simulationType == SIMULATION_TYPE.CSF_SIMULATION) {&#xD;
+			final SimulationDistributedSystemManager dsm = repastS_AgentContext&#xD;
+					.getRepastS_SimulationRunContext()&#xD;
+					.getSimulationDistributedSystemManagers().iterator().next();&#xD;
+			final AgentMapping am = dsm.getAgentMappingForObject(this);&#xD;
+&#xD;
+			final String distributedSystemID = am.getDistributedSystemID();&#xD;
+			final String distributedAutonomousAgentID = am&#xD;
+					.getDistributedAutonomousAgentID();&#xD;
+			final String distributedAutonomousAgentModelID = am&#xD;
+					.getDistributedAutonomousAgentModelID();&#xD;
+			final String loggingPrefix = &quot;[Human &quot; + distributedSystemID + &quot; &quot;&#xD;
+					+ distributedAutonomousAgentID + &quot; &quot;&#xD;
+					+ distributedAutonomousAgentModelID + &quot;] &quot;;&#xD;
+&#xD;
+			// Communicate the local environment information for this agent to&#xD;
+			// the&#xD;
+			// distributed agent (agent model)&#xD;
+			// LOW: Add support for merging multiple messages bound for&#xD;
+			// different agents&#xD;
+			jZombies_Csf.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(&#xD;
+					loggingPrefix, this, pt, pointWithLeastZombies);&#xD;
+			// FIXME: Move to simultaneous processing of these messages?&#xD;
+			final FrameworkMessage msg = repastS_AgentContext&#xD;
+					.getRepastS_SimulationRunContext()&#xD;
+					.readFrameworkMessageFromDistributedSystem();&#xD;
+&#xD;
+			System.out.println(loggingPrefix&#xD;
+					+ &quot;Received distributed decision: &quot;&#xD;
+					+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()&#xD;
+							.getRootElement(), true));&#xD;
+&#xD;
+			final List&lt;String> selfPoint = msg.getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(msg);&#xD;
+			for (int i = 0; i &lt; selfPoint.size(); i++) {&#xD;
+				System.out.println(loggingPrefix + &quot;Move Towards Location:&quot;&#xD;
+						+ String.valueOf(i) + &quot; : &quot; + String.valueOf(selfPoint.get(i)));&#xD;
+			}&#xD;
+			final int xValue = Integer.parseInt(selfPoint.get(0));&#xD;
+			final int yValue = Integer.parseInt(selfPoint.get(1));&#xD;
+&#xD;
+			for (final GridCell&lt;Zombie> cell : gridCells) {&#xD;
+				if (cell.getPoint().getX() == xValue &amp;&amp; cell.getPoint().getY() == yValue) {&#xD;
+					moveToPoint = cell.getPoint();&#xD;
+				}&#xD;
+			}&#xD;
+			assert (moveToPoint != null);&#xD;
+&#xD;
+		} else&#xD;
+			moveToPoint = pointWithLeastZombies;&#xD;
+		// /////////////////////////////////////////////&#xD;
+&#xD;
+		// /////////////////////////////////////////////&#xD;
+		// Back to the original JZombies Code&#xD;
+		if (energy > 0) {&#xD;
+			moveTowards(moveToPoint);&#xD;
+		} else {&#xD;
+			energy = startingEnergy;&#xD;
+		}&#xD;
+		// /////////////////////////////////////////////&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedOperation xmi:id="_XY7rANrpEeSkp_ZAzkxnjw" name="getRepastS_AgentContext" method="_XjNoc9rpEeSkp_ZAzkxnjw">
+          <ownedComment xmi:id="_XjXZg9rpEeSkp_ZAzkxnjw">
+            <body>Gets the RepastS_AgentContext context.&#xD;
+	 * &#xD;
+	 * @return the repast s_ agent context</body>
+          </ownedComment>
+          <ownedParameter xmi:id="_Xh4Lr9rpEeSkp_ZAzkxnjw" type="_Xfov8trpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XY7rAdrpEeSkp_ZAzkxnjw" name="run" method="_XjNoedrpEeSkp_ZAzkxnjw"/>
+        <ownedOperation xmi:id="_Xh4LoNrpEeSkp_ZAzkxnjw" name="Human" method="_XjNoaNrpEeSkp_ZAzkxnjw">
+          <eAnnotations xmi:id="_Xh4LpNrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details xmi:id="_Xh4LpdrpEeSkp_ZAzkxnjw" key="create"/>
+          </eAnnotations>
+          <ownedComment xmi:id="_XjXZgtrpEeSkp_ZAzkxnjw">
+            <body>Instantiates a new Human.&#xD;
+	 * &#xD;
+	 * @param space&#xD;
+	 *            the space&#xD;
+	 * @param grid&#xD;
+	 *            the grid&#xD;
+	 * @param energy&#xD;
+	 *            the energy</body>
+          </ownedComment>
+          <ownedParameter xmi:id="_Xh4LodrpEeSkp_ZAzkxnjw" name="space" type="_Xf8R8trpEeSkp_ZAzkxnjw">
+            <eAnnotations xmi:id="_Xh4Lp9rpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_Xh4LqNrpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+          </ownedParameter>
+          <ownedParameter xmi:id="_Xh4LotrpEeSkp_ZAzkxnjw" name="grid" type="_Xf8R9trpEeSkp_ZAzkxnjw">
+            <eAnnotations xmi:id="_Xh4LqtrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_Xh4Lq9rpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+          </ownedParameter>
+          <ownedParameter xmi:id="_Xh4Lo9rpEeSkp_ZAzkxnjw" name="energy">
+            <eAnnotations xmi:id="_Xh4LrdrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_Xh4LrtrpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_Xh4LptrpEeSkp_ZAzkxnjw" type="_XYyhENrpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XiBVkNrpEeSkp_ZAzkxnjw" name="moveTowards" method="_XjNoddrpEeSkp_ZAzkxnjw">
+          <ownedComment xmi:id="_XjXZhNrpEeSkp_ZAzkxnjw">
+            <body>This class is only used when this simulation is run with the CSF functionality&#xD;
+	 * turned off. It moves the agent to a particular Gridpoint. By using this method when&#xD;
+	 * CSF is turned off, we can &quot;plugin&quot; in the move decision of this agent into the&#xD;
+	 * simulation so that this agent does not have to rely on a corresponding distributed&#xD;
+	 * JADE agent.&#xD;
+	 * &#xD;
+	 * @param pt&#xD;
+	 *            the GridPoint</body>
+          </ownedComment>
+          <ownedParameter xmi:id="_XiBVkdrpEeSkp_ZAzkxnjw" name="pt" type="_Xf8R-NrpEeSkp_ZAzkxnjw">
+            <eAnnotations xmi:id="_XiBVktrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details xmi:id="_XiBVk9rpEeSkp_ZAzkxnjw" key="final"/>
+            </eAnnotations>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_XZYW8NrpEeSkp_ZAzkxnjw" name="JZombiesBuilder">
+        <interfaceRealization xmi:id="_XiBVlNrpEeSkp_ZAzkxnjw" client="_XZYW8NrpEeSkp_ZAzkxnjw" supplier="_XgPM69rpEeSkp_ZAzkxnjw" contract="_XgPM69rpEeSkp_ZAzkxnjw"/>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNoetrpEeSkp_ZAzkxnjw" name="build" specification="_XiBVltrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjNoe9rpEeSkp_ZAzkxnjw" name="context" type="_Xfov-NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjNofNrpEeSkp_ZAzkxnjw" type="_Xfov-NrpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>double MAX_ITERATIONS = 300;
+		RunEnvironment runEnvironment = RunEnvironment.getInstance();
+		runEnvironment.endAt(MAX_ITERATIONS);
+		
+		context.setId(&quot;jzombies&quot;);
+
+		NetworkBuilder&lt;Object> netBuilder = new NetworkBuilder&lt;Object>(
+				&quot;infection network&quot;, context, true);
+		netBuilder.buildNetwork();
+
+		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder
+				.createContinuousSpaceFactory(null);
+		ContinuousSpace&lt;Object> space = spaceFactory.createContinuousSpace(
+				&quot;space&quot;, context, new RandomCartesianAdder&lt;Object>(),
+				new repast.simphony.space.continuous.WrapAroundBorders(), 50,
+				50);
+
+		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+		Grid&lt;Object> grid = gridFactory.createGrid(&quot;grid&quot;, context,
+				new GridBuilderParameters&lt;Object>(new WrapAroundBorders(),
+						new SimpleGridAdder&lt;Object>(), true, 50, 50));
+
+		Parameters params = RunEnvironment.getInstance().getParameters();
+		int zombieCount = (Integer) params.getValue(&quot;zombie_count&quot;);
+		for (int i = 0; i &lt; zombieCount; i++) {
+			context.add(new Zombie(space, grid));
+		}
+
+		int humanCount = (Integer) params.getValue(&quot;human_count&quot;);
+		for (int i = 0; i &lt; humanCount; i++) {
+			int energy = RandomHelper.nextIntFromTo(4, 10);
+			context.add(new Human(space, grid, energy));
+		}
+
+		for (Object obj : context) {
+			NdPoint pt = space.getLocation(obj);
+			grid.moveTo(obj, (int) pt.getX(), (int) pt.getY());
+		}
+		
+/*		if (RunEnvironment.getInstance().isBatch()) {
+			RunEnvironment.getInstance().endAt(20);
+		}*/
+		
+		return context;
+	</body>
+        </ownedBehavior>
+        <ownedOperation xmi:id="_XiBVltrpEeSkp_ZAzkxnjw" name="build" method="_XjNoetrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XiBVl9rpEeSkp_ZAzkxnjw" name="context" type="_Xfov-NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XiLGkNrpEeSkp_ZAzkxnjw" type="_Xfov-NrpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_XZrR4NrpEeSkp_ZAzkxnjw" name="JZombies_Csf">
+        <ownedComment xmi:id="_XjXZitrpEeSkp_ZAzkxnjw">
+          <body>Convenience class provided to the simulation and agent authors.  Unlike all other classes, this class has references to both the Repast Agent Context and JADE Agent Context. This allows all JZombies-specific code to be in one place.</body>
+        </ownedComment>
+        <ownedAttribute xmi:id="_XjEedtrpEeSkp_ZAzkxnjw" name="elementFilter" visibility="private" type="_Xgr41NrpEeSkp_ZAzkxnjw" association="_XjqUV9rpEeSkp_ZAzkxnjw">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_XjEeeNrpEeSkp_ZAzkxnjw" value="new org.jdom2.filter.ElementFilter()"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_XjEeetrpEeSkp_ZAzkxnjw" name="repastS_AgentContext" visibility="private" type="_Xfov8trpEeSkp_ZAzkxnjw" association="_XjqUWtrpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_XjEefNrpEeSkp_ZAzkxnjw" name="namespaceStr" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_XjEefdrpEeSkp_ZAzkxnjw" value="&quot;http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0&quot;"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_XjEef9rpEeSkp_ZAzkxnjw" name="namespace" visibility="private" type="_Xgr40trpEeSkp_ZAzkxnjw" association="_XjqUXdrpEeSkp_ZAzkxnjw">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_XjEegNrpEeSkp_ZAzkxnjw" value="Namespace.getNamespace(&quot;x&quot;, namespaceStr)"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_XjEegtrpEeSkp_ZAzkxnjw" name="jade_MAS_AgentContext" visibility="private" type="_Xg-zwdrpEeSkp_ZAzkxnjw" association="_XjqUYNrpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_XjEehNrpEeSkp_ZAzkxnjw" name="agentContext" visibility="private" type="_Xg1CxdrpEeSkp_ZAzkxnjw" association="_XjqUY9rpEeSkp_ZAzkxnjw"/>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNofdrpEeSkp_ZAzkxnjw" name="JZombies_Csf" specification="_XiLGltrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjNoftrpEeSkp_ZAzkxnjw" name="jade_MAS_AgentContext" type="_Xg-zwdrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjNof9rpEeSkp_ZAzkxnjw" type="_XZrR4NrpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>this.jade_MAS_AgentContext = jade_MAS_AgentContext;&#xD;
+		agentContext = (AgentContext) jade_MAS_AgentContext;&#xD;
+		try {&#xD;
+			jade_MAS_AgentContext.initializeCsfAgent(&quot;TEST&quot;);&#xD;
+		} catch (JDOMException e) {&#xD;
+			// TODO Auto-generated catch block&#xD;
+&#xD;
+			e.printStackTrace();&#xD;
+		} catch (IOException e) {&#xD;
+			// TODO Auto-generated catch block&#xD;
+			e.printStackTrace();&#xD;
+		}&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNogNrpEeSkp_ZAzkxnjw" name="JZombies_Csf" specification="_XiU3kNrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjNogdrpEeSkp_ZAzkxnjw" name="repastS_AgentContext" type="_Xfov8trpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjNogtrpEeSkp_ZAzkxnjw" type="_XZrR4NrpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>this.repastS_AgentContext = repastS_AgentContext;&#xD;
+		agentContext = (AgentContext) repastS_AgentContext;&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjNog9rpEeSkp_ZAzkxnjw" name="populateLeastZombiesPointElement" specification="_XiU3ldrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjNohNrpEeSkp_ZAzkxnjw" name="msg" type="_XffmB9rpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjNohdrpEeSkp_ZAzkxnjw" name="agentModelActor" type="_Xgr40NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjNohtrpEeSkp_ZAzkxnjw" name="GridPointX">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjNoh9rpEeSkp_ZAzkxnjw" name="GridPointY">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjNoiNrpEeSkp_ZAzkxnjw" name="cachedLocationTemplate" type="_Xgr40NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjNoidrpEeSkp_ZAzkxnjw" type="_Xgr40NrpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>Element locationEnvironmentChange = msg&#xD;
+				.getNextNonSelfSimulationDefinedLocationForActor(agentModelActor,&#xD;
+						cachedLocationTemplate);&#xD;
+&#xD;
+		Element location = locationEnvironmentChange.getChild(&quot;Location&quot;, namespace);&#xD;
+		location.getChild(&quot;GridPointX&quot;, namespace).setText(GridPointX);&#xD;
+		location.getChild(&quot;GridPointY&quot;, namespace).setText(GridPointY);&#xD;
+		location.setAttribute(&quot;category&quot;, &quot;neighborhood&quot;);&#xD;
+		location.setAttribute(&quot;includecenter&quot;, &quot;true&quot;);&#xD;
+		location.setAttribute(&quot;entitytype&quot;, &quot;Zombie&quot;);&#xD;
+		return location;&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZYNrpEeSkp_ZAzkxnjw" name="sendMessageToDistributedAutonomousAgentModelFromSimulationAgent" specification="_XieBgdrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjXZYdrpEeSkp_ZAzkxnjw" name="loggingPrefix">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjXZYtrpEeSkp_ZAzkxnjw" name="obj" type="_XiU3ndrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZY9rpEeSkp_ZAzkxnjw" name="pt" type="_Xf8R-NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZZNrpEeSkp_ZAzkxnjw" name="pointWithLeastZombies" type="_Xf8R-NrpEeSkp_ZAzkxnjw"/>
+          <language>java</language>
+          <body>// TODO: Add support for multiple distributed systems&#xD;
+		// Get the Agent Mapping&#xD;
+		SimulationDistributedSystemManager dsm = repastS_AgentContext&#xD;
+				.getRepastS_SimulationRunContext()&#xD;
+				.getSimulationDistributedSystemManagers().iterator().next();&#xD;
+		AgentMapping am = dsm.getAgentMappingForObject(obj);&#xD;
+		// TODO: Add validation here&#xD;
+		assert (am != null);&#xD;
+&#xD;
+		// Construct FrameworkMessage to send to the distributed agent&#xD;
+		FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,&#xD;
+				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,&#xD;
+				agentContext.getBlankCachedMessageExchangeTemplate());&#xD;
+		assert (repastS_AgentContext.getRepastS_SimulationRunContext()&#xD;
+				.getCachedDistributedAutonomousAgentTemplate() != null);&#xD;
+		&#xD;
+		// Get the distributed autonomous agent element and set the ID&#xD;
+		Element distributedAutonomousAgentElement = msg&#xD;
+				.getNextDistributedAutonomousAgent(msg.getDocument(),&#xD;
+						agentContext.getCachedDistributedAutonomousAgentTemplate());&#xD;
+		msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,&#xD;
+				am.getDistributedAutonomousAgentID());&#xD;
+&#xD;
+		// Get the agent model actor and set the ID&#xD;
+		Element agentModelActor = msg.getNextAgentModelActor(&#xD;
+				distributedAutonomousAgentElement,&#xD;
+				agentContext.getCachedAgentModelActorTemplate());&#xD;
+		msg.setIDForActorInAgentModel(agentModelActor,&#xD;
+				am.getDistributedAutonomousAgentModelID());&#xD;
+		&#xD;
+		// TODO: First get the distributed system manager section.&#xD;
+		// TODO: Add validation here&#xD;
+		assert (am.getDistributedAutonomousAgentModelID() != null);&#xD;
+&#xD;
+		// Set up the self agent model actor&#xD;
+		msg.populateThisLocationInAgentModelActor(agentModelActor,&#xD;
+				String.valueOf(pt.getX()), String.valueOf(pt.getY()),&#xD;
+				agentContext.getCachedLocationTemplate());&#xD;
+&#xD;
+		// Populate the Zombies info&#xD;
+		populateLeastZombiesPointElement(msg, agentModelActor,&#xD;
+				String.valueOf(pointWithLeastZombies.getX()),&#xD;
+				String.valueOf(pointWithLeastZombies.getY()),&#xD;
+				agentContext.getCachedLocationTemplate());&#xD;
+		&#xD;
+		System.out.println(loggingPrefix&#xD;
+				+ &quot;Sending Message to Distributed System: &quot;&#xD;
+				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()&#xD;
+						.getRootElement(), true));&#xD;
+		&#xD;
+		// The message has been constructed, now send it over the wire&#xD;
+		repastS_AgentContext.getRepastS_SimulationRunContext().messageDistributedSystems(&#xD;
+				msg,&#xD;
+				repastS_AgentContext.getRepastS_SimulationRunContext()&#xD;
+						.getSimulationRunContext());&#xD;
+&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZZdrpEeSkp_ZAzkxnjw" name="convertMoveToPointToFrameworkMessage" specification="_XieBhtrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjXZZtrpEeSkp_ZAzkxnjw" name="pointMoveTo" type="_XfV1AtrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZZ9rpEeSkp_ZAzkxnjw" name="distAutAgentID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjXZaNrpEeSkp_ZAzkxnjw" name="distAutAgentModelID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjXZadrpEeSkp_ZAzkxnjw" type="_XffmB9rpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>FrameworkMessage msg = new FrameworkMessageImpl(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,&#xD;
+				SYSTEM_TYPE.SIMULATION_ENGINE,&#xD;
+				agentContext.getBlankCachedMessageExchangeTemplate());&#xD;
+		populateZombiesMessage(msg, distAutAgentID, distAutAgentModelID, pointMoveTo,&#xD;
+				new ArrayList&lt;String>());&#xD;
+&#xD;
+		return msg;&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZatrpEeSkp_ZAzkxnjw" name="getPointWithLeastZombies" specification="_XieBjNrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjXZa9rpEeSkp_ZAzkxnjw" name="distributedAutonomousAgentElement" type="_Xgr40NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZbNrpEeSkp_ZAzkxnjw" name="msg" type="_XffmB9rpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZbdrpEeSkp_ZAzkxnjw" isOrdered="true" direction="return">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XjXZbtrpEeSkp_ZAzkxnjw" value="*"/>
+          </ownedParameter>
+          <language>java</language>
+          <body>// FIXME: Why does this have to be an element, and not Document?&#xD;
+		Element agentModelActor = msg.getNextAgentModelActor(&#xD;
+				distributedAutonomousAgentElement, null);&#xD;
+		List&lt;Element> simulationDefinedEnvironmentChanges = (List&lt;Element>) XMLUtilities&#xD;
+				.executeXPath(agentModelActor,&#xD;
+						&quot;./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges&quot;,&#xD;
+						namespaceStr, elementFilter);&#xD;
+&#xD;
+		// FIXME: check the attributes&#xD;
+		List&lt;Element> locations = (List&lt;Element>) XMLUtilities&#xD;
+				.executeXPath(&#xD;
+						simulationDefinedEnvironmentChanges.get(0),&#xD;
+						&quot;./x:EnvironmentChange/x:Location[@category='neighborhood' and @entitytype='Zombie']&quot;,&#xD;
+						namespaceStr, elementFilter);&#xD;
+		XMLUtilities.convertElementToXMLString(distributedAutonomousAgentElement, true);&#xD;
+		Element location = locations.get(0);&#xD;
+&#xD;
+		String xValue = location.getChild(&quot;GridPointX&quot;, namespace).getText();&#xD;
+		String yValue = location.getChild(&quot;GridPointY&quot;, namespace).getText();&#xD;
+		System.out.println(&quot;Zombies Grid Point X: &quot; + xValue);&#xD;
+		System.out.println(&quot;Zombies Grid Point Y: &quot; + yValue);&#xD;
+		List&lt;String> coordinate = new ArrayList&lt;String>();&#xD;
+		coordinate.add(xValue);&#xD;
+		coordinate.add(yValue);&#xD;
+&#xD;
+		return coordinate;&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZb9rpEeSkp_ZAzkxnjw" name="populateZombiesMessage" specification="_XinygtrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjXZcNrpEeSkp_ZAzkxnjw" name="msg" type="_XffmB9rpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZcdrpEeSkp_ZAzkxnjw" name="distributedAutononmousAgentID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjXZctrpEeSkp_ZAzkxnjw" name="agentModelID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XjXZc9rpEeSkp_ZAzkxnjw" name="thisAgentModelPosition" type="_XfV1AtrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZdNrpEeSkp_ZAzkxnjw" name="pointLeastZombies" type="_XfV1AtrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZddrpEeSkp_ZAzkxnjw" type="_XffmB9rpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(&#xD;
+				msg.getDocument(),&#xD;
+				agentContext.getCachedDistributedAutonomousAgentTemplate());&#xD;
+		msg.setDistributedAutonomousAgentID(distributedAutonomousAgent,&#xD;
+				distributedAutononmousAgentID);&#xD;
+		Element agentModelActor = msg.getNextAgentModelActor(distributedAutonomousAgent,&#xD;
+				agentContext.getCachedAgentModelActorTemplate());&#xD;
+&#xD;
+		if (thisAgentModelPosition.size() >= 2) {&#xD;
+			msg.setIDForActorInAgentModel(agentModelActor, agentModelID);&#xD;
+			msg.populateThisLocationInAgentModelActor(agentModelActor,&#xD;
+					thisAgentModelPosition.get(0), thisAgentModelPosition.get(1),&#xD;
+					agentContext.getCachedLocationTemplate());&#xD;
+		}&#xD;
+&#xD;
+		// Use the shared class in the simulation for this.&#xD;
+		// FIXME: Move this to a common third project?&#xD;
+		if (pointLeastZombies.size() >= 2)&#xD;
+			populateLeastZombiesPointElement(msg, agentModelActor, pointLeastZombies.get(0),&#xD;
+					pointLeastZombies.get(1), agentContext.getCachedLocationTemplate());&#xD;
+&#xD;
+		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());&#xD;
+		String xmlString = outputter.outputString(msg.getDocument());&#xD;
+		System.out.println(&quot;Populated Zombie Message: &quot; + xmlString);&#xD;
+&#xD;
+		return msg;&#xD;
+	</body>
+        </ownedBehavior>
+        <ownedOperation xmi:id="_XiLGltrpEeSkp_ZAzkxnjw" name="JZombies_Csf" method="_XjNofdrpEeSkp_ZAzkxnjw">
+          <eAnnotations xmi:id="_XiLGmNrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details xmi:id="_XiLGmdrpEeSkp_ZAzkxnjw" key="create"/>
+          </eAnnotations>
+          <ownedParameter xmi:id="_XiLGl9rpEeSkp_ZAzkxnjw" name="jade_MAS_AgentContext" type="_Xg-zwdrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XiLGmtrpEeSkp_ZAzkxnjw" type="_XZrR4NrpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XiU3kNrpEeSkp_ZAzkxnjw" name="JZombies_Csf" method="_XjNogNrpEeSkp_ZAzkxnjw">
+          <eAnnotations xmi:id="_XiU3ktrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details xmi:id="_XiU3k9rpEeSkp_ZAzkxnjw" key="create"/>
+          </eAnnotations>
+          <ownedParameter xmi:id="_XiU3kdrpEeSkp_ZAzkxnjw" name="repastS_AgentContext" type="_Xfov8trpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XiU3lNrpEeSkp_ZAzkxnjw" type="_XZrR4NrpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XiU3ldrpEeSkp_ZAzkxnjw" name="populateLeastZombiesPointElement" method="_XjNog9rpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XiU3ltrpEeSkp_ZAzkxnjw" name="msg" type="_XffmB9rpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XiU3l9rpEeSkp_ZAzkxnjw" name="agentModelActor" type="_Xgr40NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XiU3mNrpEeSkp_ZAzkxnjw" name="GridPointX">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XiU3mdrpEeSkp_ZAzkxnjw" name="GridPointY">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XiU3mtrpEeSkp_ZAzkxnjw" name="cachedLocationTemplate" type="_Xgr40NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XiU3m9rpEeSkp_ZAzkxnjw" type="_Xgr40NrpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XieBgdrpEeSkp_ZAzkxnjw" name="sendMessageToDistributedAutonomousAgentModelFromSimulationAgent" method="_XjXZYNrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XieBgtrpEeSkp_ZAzkxnjw" name="loggingPrefix">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XieBg9rpEeSkp_ZAzkxnjw" name="obj" type="_XiU3ndrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XieBhNrpEeSkp_ZAzkxnjw" name="pt" type="_Xf8R-NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XieBhdrpEeSkp_ZAzkxnjw" name="pointWithLeastZombies" type="_Xf8R-NrpEeSkp_ZAzkxnjw"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XieBhtrpEeSkp_ZAzkxnjw" name="convertMoveToPointToFrameworkMessage" method="_XjXZZdrpEeSkp_ZAzkxnjw">
+          <ownedComment xmi:id="_XjXZi9rpEeSkp_ZAzkxnjw">
+            <body>public void sendMessageToSimulationAgent(JadeControllerMock jade_Controller_Agent,&#xD;
+	 * FrameworkMessage msg, String messageID, String inReplyToMessageID) {&#xD;
+	 * jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID); }</body>
+          </ownedComment>
+          <ownedParameter xmi:id="_XieBh9rpEeSkp_ZAzkxnjw" name="pointMoveTo" type="_XfV1AtrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XieBiNrpEeSkp_ZAzkxnjw" name="distAutAgentID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XieBidrpEeSkp_ZAzkxnjw" name="distAutAgentModelID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XieBitrpEeSkp_ZAzkxnjw" type="_XffmB9rpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XieBjNrpEeSkp_ZAzkxnjw" name="getPointWithLeastZombies" method="_XjXZatrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XieBjdrpEeSkp_ZAzkxnjw" name="distributedAutonomousAgentElement" type="_Xgr40NrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XieBjtrpEeSkp_ZAzkxnjw" name="msg" type="_XffmB9rpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XinygNrpEeSkp_ZAzkxnjw" isOrdered="true" direction="return">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XinygdrpEeSkp_ZAzkxnjw" value="*"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:id="_XinygtrpEeSkp_ZAzkxnjw" name="populateZombiesMessage" method="_XjXZb9rpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_Xinyg9rpEeSkp_ZAzkxnjw" name="msg" type="_XffmB9rpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XinyhNrpEeSkp_ZAzkxnjw" name="distributedAutononmousAgentID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XinyhdrpEeSkp_ZAzkxnjw" name="agentModelID">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedParameter>
+          <ownedParameter xmi:id="_XinyhtrpEeSkp_ZAzkxnjw" name="thisAgentModelPosition" type="_XfV1AtrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_Xinyh9rpEeSkp_ZAzkxnjw" name="pointLeastZombies" type="_XfV1AtrpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XinyiNrpEeSkp_ZAzkxnjw" type="_XffmB9rpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Xaa4wNrpEeSkp_ZAzkxnjw" name="Zombie">
+        <ownedComment xmi:id="_XjXZjNrpEeSkp_ZAzkxnjw">
+          <body>@author nick
+ *</body>
+        </ownedComment>
+        <ownedAttribute xmi:id="_XjNoYNrpEeSkp_ZAzkxnjw" name="space" visibility="private" type="_Xf8R8trpEeSkp_ZAzkxnjw" association="_Xj0FUdrpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_XjNoY9rpEeSkp_ZAzkxnjw" name="grid" visibility="private" type="_Xf8R9trpEeSkp_ZAzkxnjw" association="_Xj0FVNrpEeSkp_ZAzkxnjw"/>
+        <ownedAttribute xmi:id="_XjNoZtrpEeSkp_ZAzkxnjw" name="moved" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedAttribute>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZdtrpEeSkp_ZAzkxnjw" name="Zombie" specification="_Xiw8cNrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjXZd9rpEeSkp_ZAzkxnjw" name="space" type="_Xf8R8trpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZeNrpEeSkp_ZAzkxnjw" name="grid" type="_Xf8R9trpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_XjXZedrpEeSkp_ZAzkxnjw" type="_Xaa4wNrpEeSkp_ZAzkxnjw" direction="return"/>
+          <language>java</language>
+          <body>this.space = space;
+		this.grid = grid;
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZetrpEeSkp_ZAzkxnjw" name="step" specification="_XakpwNrpEeSkp_ZAzkxnjw">
+          <language>java</language>
+          <body>GridPoint pt = grid.getLocation(this);
+
+		// use the GridCellNgh class to create GridCells for
+		// the surrounding neighborhood.
+		GridCellNgh&lt;Human> nghCreator = new GridCellNgh&lt;Human>(grid, pt,
+				Human.class, 1, 1);
+		
+		List&lt;GridCell&lt;Human>> gridCells = nghCreator.getNeighborhood(true);
+		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
+
+		GridPoint pointWithMostHumans = null;
+		int maxCount = -1;
+		for (GridCell&lt;Human> cell : gridCells) {
+			if (cell.size() > maxCount) {
+				pointWithMostHumans = cell.getPoint();
+				maxCount = cell.size();
+			}
+		}
+		//Search the global environment
+/*		if (maxCount &lt;=0) {
+			System.out.println(&quot;No more Humans.  Ending Simulation&quot;);
+			RunEnvironment.getInstance().endRun();
+		}*/
+			
+		moveTowards(pointWithMostHumans);
+		infect();
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZe9rpEeSkp_ZAzkxnjw" name="moveTowards" specification="_Xiw8eNrpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_XjXZfNrpEeSkp_ZAzkxnjw" name="pt" type="_Xf8R-NrpEeSkp_ZAzkxnjw"/>
+          <language>java</language>
+          <body>// only move if we are not already in this grid location
+		if (!pt.equals(grid.getLocation(this))) {
+			NdPoint myPoint = space.getLocation(this);
+			NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+			double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint,
+					otherPoint);
+			space.moveByVector(this, 1, angle, 0);
+			myPoint = space.getLocation(this);
+			grid.moveTo(this, (int) myPoint.getX(), (int) myPoint.getY());
+			moved = true;
+		}
+	</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XjXZfdrpEeSkp_ZAzkxnjw" name="infect" specification="_XakpxtrpEeSkp_ZAzkxnjw">
+          <language>java</language>
+          <body>GridPoint pt = grid.getLocation(this);
+		List&lt;Object> humans = new ArrayList&lt;Object>();
+		for (Object obj : grid.getObjectsAt(pt.getX(), pt.getY())) {
+			if (obj instanceof Human) {
+				humans.add(obj);
+			}
+		}
+
+		if (humans.size() > 0) {
+			int index = RandomHelper.nextIntFromTo(0, humans.size() - 1);
+			Object obj = humans.get(index);
+			NdPoint spacePt = space.getLocation(obj);
+			Context&lt;Object> context = ContextUtils.getContext(obj);
+			context.remove(obj);
+			Zombie zombie = new Zombie(space, grid);
+			context.add(zombie);
+			space.moveTo(zombie, spacePt.getX(), spacePt.getY());
+			grid.moveTo(zombie, pt.getX(), pt.getY());
+			
+			Network&lt;Object> net = (Network&lt;Object>)context.getProjection(&quot;infection network&quot;);
+			net.addEdge(this, zombie);
+		}
+	</body>
+        </ownedBehavior>
+        <ownedOperation xmi:id="_XakpwNrpEeSkp_ZAzkxnjw" name="step" method="_XjXZetrpEeSkp_ZAzkxnjw"/>
+        <ownedOperation xmi:id="_XakpxtrpEeSkp_ZAzkxnjw" name="infect" method="_XjXZfdrpEeSkp_ZAzkxnjw"/>
+        <ownedOperation xmi:id="_Xiw8cNrpEeSkp_ZAzkxnjw" name="Zombie" method="_XjXZdtrpEeSkp_ZAzkxnjw">
+          <eAnnotations xmi:id="_Xiw8c9rpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details xmi:id="_Xiw8dNrpEeSkp_ZAzkxnjw" key="create"/>
+          </eAnnotations>
+          <ownedParameter xmi:id="_Xiw8cdrpEeSkp_ZAzkxnjw" name="space" type="_Xf8R8trpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_Xiw8ctrpEeSkp_ZAzkxnjw" name="grid" type="_Xf8R9trpEeSkp_ZAzkxnjw"/>
+          <ownedParameter xmi:id="_Xiw8ddrpEeSkp_ZAzkxnjw" type="_Xaa4wNrpEeSkp_ZAzkxnjw" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_Xiw8eNrpEeSkp_ZAzkxnjw" name="moveTowards" method="_XjXZe9rpEeSkp_ZAzkxnjw">
+          <ownedParameter xmi:id="_Xiw8edrpEeSkp_ZAzkxnjw" name="pt" type="_Xf8R-NrpEeSkp_ZAzkxnjw"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjhKYNrpEeSkp_ZAzkxnjw" name="" memberEnd="_XjhKYdrpEeSkp_ZAzkxnjw _Xi6tcNrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjhKYdrpEeSkp_ZAzkxnjw" name="" type="_XYyhENrpEeSkp_ZAzkxnjw" association="_XjhKYNrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjhKY9rpEeSkp_ZAzkxnjw" name="" memberEnd="_XjhKZNrpEeSkp_ZAzkxnjw _Xi6tc9rpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjhKZNrpEeSkp_ZAzkxnjw" name="" type="_XYyhENrpEeSkp_ZAzkxnjw" association="_XjhKY9rpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjhKZtrpEeSkp_ZAzkxnjw" name="" memberEnd="_XjhKZ9rpEeSkp_ZAzkxnjw _Xi6tedrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjhKZ9rpEeSkp_ZAzkxnjw" name="" type="_XYyhENrpEeSkp_ZAzkxnjw" association="_XjhKZtrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjqUUdrpEeSkp_ZAzkxnjw" name="" memberEnd="_XjqUUtrpEeSkp_ZAzkxnjw _XjEecdrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjqUUtrpEeSkp_ZAzkxnjw" name="" type="_XYyhENrpEeSkp_ZAzkxnjw" association="_XjqUUdrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjqUVNrpEeSkp_ZAzkxnjw" name="" memberEnd="_XjqUVdrpEeSkp_ZAzkxnjw _XjEec9rpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjqUVdrpEeSkp_ZAzkxnjw" name="" type="_XYyhENrpEeSkp_ZAzkxnjw" association="_XjqUVNrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjqUV9rpEeSkp_ZAzkxnjw" name="" memberEnd="_XjqUWNrpEeSkp_ZAzkxnjw _XjEedtrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjqUWNrpEeSkp_ZAzkxnjw" name="" type="_XZrR4NrpEeSkp_ZAzkxnjw" association="_XjqUV9rpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjqUWtrpEeSkp_ZAzkxnjw" name="" memberEnd="_XjqUW9rpEeSkp_ZAzkxnjw _XjEeetrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjqUW9rpEeSkp_ZAzkxnjw" name="" type="_XZrR4NrpEeSkp_ZAzkxnjw" association="_XjqUWtrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjqUXdrpEeSkp_ZAzkxnjw" name="" memberEnd="_XjqUXtrpEeSkp_ZAzkxnjw _XjEef9rpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjqUXtrpEeSkp_ZAzkxnjw" name="" type="_XZrR4NrpEeSkp_ZAzkxnjw" association="_XjqUXdrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjqUYNrpEeSkp_ZAzkxnjw" name="" memberEnd="_XjqUYdrpEeSkp_ZAzkxnjw _XjEegtrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjqUYdrpEeSkp_ZAzkxnjw" name="" type="_XZrR4NrpEeSkp_ZAzkxnjw" association="_XjqUYNrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_XjqUY9rpEeSkp_ZAzkxnjw" name="" memberEnd="_XjqUZNrpEeSkp_ZAzkxnjw _XjEehNrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_XjqUZNrpEeSkp_ZAzkxnjw" name="" type="_XZrR4NrpEeSkp_ZAzkxnjw" association="_XjqUY9rpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_Xj0FUdrpEeSkp_ZAzkxnjw" name="" memberEnd="_Xj0FUtrpEeSkp_ZAzkxnjw _XjNoYNrpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_Xj0FUtrpEeSkp_ZAzkxnjw" name="" type="_Xaa4wNrpEeSkp_ZAzkxnjw" association="_Xj0FUdrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_Xj0FVNrpEeSkp_ZAzkxnjw" name="" memberEnd="_Xj0FVdrpEeSkp_ZAzkxnjw _XjNoY9rpEeSkp_ZAzkxnjw">
+        <ownedEnd xmi:id="_Xj0FVdrpEeSkp_ZAzkxnjw" name="" type="_Xaa4wNrpEeSkp_ZAzkxnjw" association="_Xj0FVNrpEeSkp_ZAzkxnjw"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_XH8osNrpEeSkp_ZAzkxnjw">
+      <eAnnotations xmi:id="_XH8osdrpEeSkp_ZAzkxnjw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLLabProfile:TargetLanguage xmi:id="_XH8ostrpEeSkp_ZAzkxnjw" base_Package="_WXhRUNrpEeSkp_ZAzkxnjw">
+    <languageName>java</languageName>
+  </UMLLabProfile:TargetLanguage>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XZFcANrpEeSkp_ZAzkxnjw" base_Element="_XY7rAdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Annotations xmi:id="_XZFcAdrpEeSkp_ZAzkxnjw" base_Element="_XY7rAdrpEeSkp_ZAzkxnjw">
+    <annotations xmi:id="_XZFcAtrpEeSkp_ZAzkxnjw" name="Watch">
+      <annotationParameters xmi:id="_XZFcA9rpEeSkp_ZAzkxnjw" name="watcheeClassName" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_XjXZhdrpEeSkp_ZAzkxnjw" value="&quot;jzombies.Zombie&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_XZFcBNrpEeSkp_ZAzkxnjw" name="watcheeFieldNames" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_XjXZhtrpEeSkp_ZAzkxnjw" value="&quot;moved&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_XZFcBdrpEeSkp_ZAzkxnjw" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_XjXZh9rpEeSkp_ZAzkxnjw" value="&quot;within_vn 1&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_XZFcBtrpEeSkp_ZAzkxnjw" name="whenToTrigger" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_XjXZiNrpEeSkp_ZAzkxnjw" value="WatcherTriggerSchedule.IMMEDIATE"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XakpwdrpEeSkp_ZAzkxnjw" base_Element="_XakpwNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Annotations xmi:id="_XakpwtrpEeSkp_ZAzkxnjw" base_Element="_XakpwNrpEeSkp_ZAzkxnjw">
+    <annotations xmi:id="_Xakpw9rpEeSkp_ZAzkxnjw" name="ScheduledMethod">
+      <annotationParameters xmi:id="_XakpxNrpEeSkp_ZAzkxnjw" name="start" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_XjXZjdrpEeSkp_ZAzkxnjw" value="1"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_XakpxdrpEeSkp_ZAzkxnjw" name="interval" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_XjXZjtrpEeSkp_ZAzkxnjw" value="1"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Reference xmi:id="_XfV1AdrpEeSkp_ZAzkxnjw" base_Element="_XfV1ANrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XfV1A9rpEeSkp_ZAzkxnjw" base_Element="_XfV1AtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XffmANrpEeSkp_ZAzkxnjw" base_Element="_XfV1BNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XffmAtrpEeSkp_ZAzkxnjw" base_Element="_XffmAdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XffmBNrpEeSkp_ZAzkxnjw" base_Element="_XffmA9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XffmBtrpEeSkp_ZAzkxnjw" base_Element="_XffmBdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XffmCNrpEeSkp_ZAzkxnjw" base_Element="_XffmB9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XffmCtrpEeSkp_ZAzkxnjw" base_Element="_XffmCdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfov8drpEeSkp_ZAzkxnjw" base_Element="_Xfov8NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfov89rpEeSkp_ZAzkxnjw" base_Element="_Xfov8trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfov9drpEeSkp_ZAzkxnjw" base_Element="_Xfov9NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfov99rpEeSkp_ZAzkxnjw" base_Element="_Xfov9trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfov-drpEeSkp_ZAzkxnjw" base_Element="_Xfov-NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfyg8NrpEeSkp_ZAzkxnjw" base_Element="_Xfov-trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfyg8trpEeSkp_ZAzkxnjw" base_Element="_Xfyg8drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfyg9NrpEeSkp_ZAzkxnjw" base_Element="_Xfyg89rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfyg9trpEeSkp_ZAzkxnjw" base_Element="_Xfyg9drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfyg-NrpEeSkp_ZAzkxnjw" base_Element="_Xfyg99rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xfyg-trpEeSkp_ZAzkxnjw" base_Element="_Xfyg-drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xf8R8drpEeSkp_ZAzkxnjw" base_Element="_Xf8R8NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xf8R89rpEeSkp_ZAzkxnjw" base_Element="_Xf8R8trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xf8R9drpEeSkp_ZAzkxnjw" base_Element="_Xf8R9NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xf8R99rpEeSkp_ZAzkxnjw" base_Element="_Xf8R9trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xf8R-drpEeSkp_ZAzkxnjw" base_Element="_Xf8R-NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xf8R-9rpEeSkp_ZAzkxnjw" base_Element="_Xf8R-trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgPM4NrpEeSkp_ZAzkxnjw" base_Element="_XgFb4NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgPM4trpEeSkp_ZAzkxnjw" base_Element="_XgPM4drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgPM5NrpEeSkp_ZAzkxnjw" base_Element="_XgPM49rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgPM5trpEeSkp_ZAzkxnjw" base_Element="_XgPM5drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgPM6NrpEeSkp_ZAzkxnjw" base_Element="_XgPM59rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgPM6trpEeSkp_ZAzkxnjw" base_Element="_XgPM6drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgYW0NrpEeSkp_ZAzkxnjw" base_Element="_XgPM69rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgYW0trpEeSkp_ZAzkxnjw" base_Element="_XgYW0drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgYW1NrpEeSkp_ZAzkxnjw" base_Element="_XgYW09rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgYW1trpEeSkp_ZAzkxnjw" base_Element="_XgYW1drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgiH0NrpEeSkp_ZAzkxnjw" base_Element="_XgYW19rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgiH0trpEeSkp_ZAzkxnjw" base_Element="_XgiH0drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgiH1NrpEeSkp_ZAzkxnjw" base_Element="_XgiH09rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XgiH1trpEeSkp_ZAzkxnjw" base_Element="_XgiH1drpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xgr40drpEeSkp_ZAzkxnjw" base_Element="_Xgr40NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xgr409rpEeSkp_ZAzkxnjw" base_Element="_Xgr40trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xgr41drpEeSkp_ZAzkxnjw" base_Element="_Xgr41NrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xg1CwNrpEeSkp_ZAzkxnjw" base_Element="_Xgr41trpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xg1CwtrpEeSkp_ZAzkxnjw" base_Element="_Xg1CwdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xg1CxNrpEeSkp_ZAzkxnjw" base_Element="_Xg1Cw9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xg1CxtrpEeSkp_ZAzkxnjw" base_Element="_Xg1CxdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xg-zwNrpEeSkp_ZAzkxnjw" base_Element="_Xg1Cx9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xg-zwtrpEeSkp_ZAzkxnjw" base_Element="_Xg-zwdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xg-zxNrpEeSkp_ZAzkxnjw" base_Element="_Xg-zw9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XhbfsdrpEeSkp_ZAzkxnjw" base_Element="_XhbfsNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xhbfs9rpEeSkp_ZAzkxnjw" base_Element="_XhbfstrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XhbftdrpEeSkp_ZAzkxnjw" base_Element="_XhbftNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_Xh4LqdrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_Xh4LodrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_Xh4LrNrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_Xh4LotrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XiBVldrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_XiBVlNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XiLGkdrpEeSkp_ZAzkxnjw" base_Element="_XiBVltrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XiLGktrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_XiBVl9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Annotations xmi:id="_XiLGk9rpEeSkp_ZAzkxnjw" base_Element="_XiBVltrpEeSkp_ZAzkxnjw">
+    <annotations xmi:id="_XiLGlNrpEeSkp_ZAzkxnjw" name="SuppressWarnings">
+      <annotationParameters xmi:id="_XiLGldrpEeSkp_ZAzkxnjw" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_XjXZidrpEeSkp_ZAzkxnjw" value="&quot;rawtypes&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Reference xmi:id="_XieBgNrpEeSkp_ZAzkxnjw" base_Element="_XiU3ndrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XieBi9rpEeSkp_ZAzkxnjw" genericsValue="String" base_Element="_XieBh9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XinyidrpEeSkp_ZAzkxnjw" genericsValue="String" base_Element="_XinyhtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XinyitrpEeSkp_ZAzkxnjw" genericsValue="String" base_Element="_Xinyh9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_Xiw8dtrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_Xiw8cdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_Xiw8d9rpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_Xiw8ctrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_Xi6tcdrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_Xi6tcNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Xi6tctrpEeSkp_ZAzkxnjw" base_Element="_Xi6tcNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_Xi6tdNrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_Xi6tc9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Xi6tddrpEeSkp_ZAzkxnjw" base_Element="_Xi6tc9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:MultiDeclaration xmi:id="_Xi6td9rpEeSkp_ZAzkxnjw" base_Property="_Xi6tdtrpEeSkp_ZAzkxnjw" siblings="_XjXZf9rpEeSkp_ZAzkxnjw" root="true"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Xi6teNrpEeSkp_ZAzkxnjw" base_Element="_Xi6tdtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Xi6te9rpEeSkp_ZAzkxnjw" base_Element="_Xi6tedrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEecNrpEeSkp_ZAzkxnjw" base_Element="_Xi6tfNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEectrpEeSkp_ZAzkxnjw" base_Element="_XjEecdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XjEedNrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_XjEec9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEeddrpEeSkp_ZAzkxnjw" base_Element="_XjEec9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XjEed9rpEeSkp_ZAzkxnjw" genericsValue="Element" base_Element="_XjEedtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEeedrpEeSkp_ZAzkxnjw" base_Element="_XjEedtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEee9rpEeSkp_ZAzkxnjw" base_Element="_XjEeetrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEeftrpEeSkp_ZAzkxnjw" base_Element="_XjEefNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEegdrpEeSkp_ZAzkxnjw" base_Element="_XjEef9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEeg9rpEeSkp_ZAzkxnjw" base_Element="_XjEegtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjEehdrpEeSkp_ZAzkxnjw" base_Element="_XjEehNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XjNoYdrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_XjNoYNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjNoYtrpEeSkp_ZAzkxnjw" base_Element="_XjNoYNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Generics xmi:id="_XjNoZNrpEeSkp_ZAzkxnjw" genericsValue="Object" base_Element="_XjNoY9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjNoZdrpEeSkp_ZAzkxnjw" base_Element="_XjNoY9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjNoZ9rpEeSkp_ZAzkxnjw" base_Element="_XjNoZtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:MultiDeclaration xmi:id="_XjXZgNrpEeSkp_ZAzkxnjw" base_Property="_XjXZf9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_XjXZgdrpEeSkp_ZAzkxnjw" base_Element="_XjXZf9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjhKYtrpEeSkp_ZAzkxnjw" base_Element="_XjhKYNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjhKZdrpEeSkp_ZAzkxnjw" base_Element="_XjhKY9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjqUUNrpEeSkp_ZAzkxnjw" base_Element="_XjhKZtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjqUU9rpEeSkp_ZAzkxnjw" base_Element="_XjqUUdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjqUVtrpEeSkp_ZAzkxnjw" base_Element="_XjqUVNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjqUWdrpEeSkp_ZAzkxnjw" base_Element="_XjqUV9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjqUXNrpEeSkp_ZAzkxnjw" base_Element="_XjqUWtrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjqUX9rpEeSkp_ZAzkxnjw" base_Element="_XjqUXdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_XjqUYtrpEeSkp_ZAzkxnjw" base_Element="_XjqUYNrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xj0FUNrpEeSkp_ZAzkxnjw" base_Element="_XjqUY9rpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xj0FU9rpEeSkp_ZAzkxnjw" base_Element="_Xj0FUdrpEeSkp_ZAzkxnjw"/>
+  <UMLLabProfile:Reference xmi:id="_Xj0FVtrpEeSkp_ZAzkxnjw" base_Element="_Xj0FVNrpEeSkp_ZAzkxnjw"/>
+</xmi:XMI>

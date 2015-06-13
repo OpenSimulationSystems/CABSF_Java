@@ -9,11 +9,17 @@
 <h1><span style="font-weight: bold;">The Common Simulation Framework -
 Installation Instructions</span></h1>
 Author: <a href="mailto:jcald1@gmail.com">Jorge Calderon</a><br>
-Release 0.1.0-{build}<br>
-Feb 21, 2015<br>
+Release 0.1.1<br>
+June 13, 2015<br>
 
 
 <p></p>
+
+<p><span style="font-size: 16pt"><span style="font-weight:bold;">Release
+Overview</span></span></p>
+
+<p>This patch release updates the installation instructions to refer to the
+GitHub repository and updates the Repast Simphony version to 2.3.1.</p>
 
 <h2>User Guide</h2>
 Please start with the <a href="Documentation/UserGuide.html">User Guide</a> in
@@ -36,18 +42,16 @@ the Documentation directory under the overall CSF project repository.
 Download and install the following software 
 <ol>
   <li><a href="http://repast.sourceforge.net/download.html">Repast Simphony
-    (Java version)</a> This is a customized Eclipse IDE. It is possible run
+    (Version 2.3.1)</a> This is a customized Eclipse IDE. It is possible run
     Repast Simphony and the Common Simulation Framework without the full Repast
     Simphony IDE, either using the command line or with a general Eclipse
     distribution. However, the instructions here assume that the Repast
-    Simphony version of the eclipse IDE will be used to run the Common
-    Simulation framework, the distributed systems (Multi-agent systems) and
-    distributed agent models. 
+    Simphony version of the Eclipse IDE will be used to run the Common
+    Simulation Framework, the distributed systems (Multi-agent systems), and
+    distributed automous agents (JADE agents). 
     <p>NOTE: If you are using Linux, the Repast site suggests that you download
-    the standard version of Eclipse and add Repast from the Eclipse update
-    site. We only tested this with the Luna version of Eclipse and received
-    some Groovy errors. You should only use the version of Eclipse that is
-    suggested in the Repast instructions, currently Keplar.</p>
+    the standard version of Eclipse and add Repast Simphony from the Eclipse
+    update site.</p>
   </li>
   <li><a href="http://jade.tilab.com/download/jade/">JADE</a> The JADE library
     is already included in the third party libraries zip file below, but you
@@ -55,17 +59,15 @@ Download and install the following software
     documentation.</li>
   <li><a href="http://redis.io/download">Redis</a> There is a <a
     href="https://github.com/MSOpenTech/redis">Redis port for use in Windows 64
-    bit</a>, you will have to install Visual Studio Express and compile Redis.
-     It's possible to set up Redis as a Windows service.  In these instructions
-    we assume that Redis must be started from the command line.</li>
+    bit</a>. For the window port, there is an installer you can download.</li>
   <li><a href="http://www.git-scm.com/downloads">git</a> to pull the code</li>
-  <li>Download (no installation) these third party libraries used by the Common
-    Simulation Framework. For now just keep them in your Downloads
-    folder.  Currently there is no build tool set up for the framework (such as
-    Maven), and so you will have to add these libraries manually. You
-    can download a zip file from:
+  <li>Download these third party libraries used by the Common Simulation
+    Framework. For now just keep them in your Downloads folder.  Currently
+    there is no build tool set up for the framework (such as Maven), and so you
+    will have to add these libraries manually. You can download a zip file
+    from:
     https://drive.google.com/file/d/0B8tCWle1gJ9XcXk2MUdCM2F3MnM/view?usp=sharing
-    (click the down arrow) Alternatively, you can download the third party
+    (click the down arrow). Alternatively, you can download the third party
     binaries (JARs) directly the source locations: <br>
     <a href="http://www.jdom.org/downloads/index.html">JDOM 2.0.5 </a><br>
     <a href="https://github.com/xetorthio/jedis/releases">Jedis 2.4.2 </a><br>
@@ -75,24 +77,26 @@ Download and install the following software
     <a href="https://code.google.com/p/guava-libraries/">Java Guava
   18.0</a></li>
 </ol>
-You may want to add redis-server, redis-cli, and git to your environment path
-variable if it's not done automatically in your installation. 
+
+<p>You may want to add redis-server, redis-cli, and git to your environment
+path variable if it's not done automatically in your installation.</p>
 
 <p></p>
 
 <h2>Installation Instructions</h2>
 <ol>
-  <li>Download the Common Simulation Framework Code (To be moved to GitHub) 
+  <li>Get the Common Simulation Framework Code 
     <ol>
-      <li>Log on to code.seas.harvard.edu with your Harvard id.</li>
+      <li>The code is in GitHub at <a
+        href="https://github.com/OpenSimulationSystems/CABSF_Java">https://github.com/OpenSimulationSystems/CABSF_Java</a>.</li>
+      <li>You can either clone the repository to get the latest (unstable)
+        code, or get the latest release by clicking on the release link.</li>
       <li>In your Eclipse workspace directory (usually "workspace" under your
-        username), clone this SEAS repository:
-        git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
-      <li>Go to the project page: <a
-        href="https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis">https://code.seas.harvard.edu/jcalderon-thesis/jcalderon-thesis</a></li>
-      <li>Copy the git URL and clone it on your local machine using this
-        command: git clone
-        git@code.seas.harvard.edu:jcalderon-thesis/jcalderon-thesis.git</li>
+        username), clone the following repo. The master branch should contain
+        the latest stable release. The "develop" branch contains the latest
+        code for the upcoming release.
+        <p>https://github.com/OpenSimulationSystems/CABSF_Java.git</p>
+      </li>
     </ol>
   </li>
   <li>Install <span style="font-weight: bold;">JZombies_CSF_Demo</span> 
@@ -210,11 +214,11 @@ variable if it's not done automatically in your installation.
     following software be added to Eclipse to get rid of these errors and to
     make it easier to find errors in your code:  Help-About, get the version
     name of Eclispe. Then go to Help-Install New Software.  In the "Work with"
-    drop down, select the version name of Eclipse such as Kepler or Luna,
-    Select "Web, XML, Java EE, and OSGI Enterprise Development" and restart. 
-    Once JUnit is installed, you'll need to add the library to the individual
-    projects that have JUnits (explained later on). The Junit set up is not
-    required for the CSF to function.</li>
+    drop down, select the version name of Eclipse such as Luna, Select "Web,
+    XML, Java EE, and OSGI Enterprise Development" and restart.  Once JUnit is
+    installed, you'll need to add the library to the individual projects that
+    have JUnits (explained later on). The Junit set up is not required for the
+    CSF to function.</li>
   <li>Under the JADE_Controller_Agent and RepastS_SimulationRunner projects, go
     to Build Path, Configure Build Path, Select the Libraries button and select
     JUnit. If you don't see Junit, follow the instructions above to install it.

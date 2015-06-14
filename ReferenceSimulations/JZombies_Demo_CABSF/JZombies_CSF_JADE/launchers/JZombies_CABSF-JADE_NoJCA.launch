@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="edu.buffalo.cse.jive.preferences.common_filters">
+<listEntry value="antlr.*"/>
+<listEntry value="com.apple.*"/>
+<listEntry value="com.mysql.*"/>
+<listEntry value="com.sun.*"/>
+<listEntry value="java.*"/>
+<listEntry value="javax.*"/>
+<listEntry value="org.apache.*"/>
+<listEntry value="org.eclipse.*"/>
+<listEntry value="org.hibernate.*"/>
+<listEntry value="org.jcp.*"/>
+<listEntry value="org.junit.*"/>
+<listEntry value="org.postgresql.*"/>
+<listEntry value="org.w3c.*"/>
+<listEntry value="org.xml.*"/>
+<listEntry value="sun.*"/>
+<listEntry value="$Proxy*"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/CommonSimulationFramework/lib/jade.jar"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-container -agents DistributedSystemAutonomousAgent1:jzombies.HumanJADE;DistributedSystemAutonomousAgent2:jzombies.HumanJADE;DistributedSystemAutonomousAgent3:jzombies.HumanJADE;DistributedSystemAutonomousAgent4:jzombies.HumanJADE;DistributedSystemAutonomousAgent5:jzombies.HumanJADE;DistributedSystemAutonomousAgent6:jzombies.HumanJADE"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JZombies_CABSF_JADE"/>
+</launchConfiguration>

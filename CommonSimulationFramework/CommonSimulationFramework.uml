@@ -5923,7 +5923,7 @@ autonomous agent.&#xD;
                       </ownedParameter>
                       <language>java</language>
                       <body>// String to represent Redis or &quot;WebServices&quot;&#xD;
-		commonMessagingConcreateImplStr = &quot;org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;;&#xD;
+		commonMessagingConcreateImplStr = &quot;org.opensimulationsystems.cabsf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;;&#xD;
 		redisConnectionString = &quot;localhost&quot;;&#xD;
 		distributedSystemID = &quot;DistSys1&quot;;&#xD;
 		simulationEngineID = &quot;19def3fa-a1d4-4996-a1ac-22c3a041e6ff&quot;;&#xD;
@@ -6107,7 +6107,7 @@ autonomous agent.&#xD;
 		if (distSysRunContext&#xD;
 				.getDistSysRunConfiguration()&#xD;
 				.getCommonMessagingConcreteImplStr()&#xD;
-				.equals(&quot;org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;)) {&#xD;
+				.equals(&quot;org.opensimulationsystems.cabsf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;)) {&#xD;
 		} else {&#xD;
 			// TODO: Handle this better&#xD;
 			throw new IllegalStateException(&#xD;
@@ -6431,7 +6431,7 @@ autonomous agent.&#xD;
                   <ownedComment xmi:id="_Lp3wfqtVEeSb7-jUi2rLpg">
                     <body>Provides the context for the Common Simulation Framework. Adapter developers may use this context&#xD;
 directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g.,&#xD;
-org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastSimphonySimulationFrameworkContext). The benefit&#xD;
+org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastSimphonySimulationFrameworkContext). The benefit&#xD;
 is that the API client would be able to utilize native Simulation-Toolkit-specific objects&#xD;
 instead of the generic &quot;Object&quot; that is used by this generic Simulation Framework API.&#xD;
 &#xD;
@@ -7018,7 +7018,7 @@ agent within a distributed system.&#xD;
                         <ownedComment xmi:id="_T2uvmNrpEeSkp_ZAzkxnjw">
                           <body>(non-Javadoc)&#xD;
 	 * &#xD;
-	 * @see org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.&#xD;
+	 * @see org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.&#xD;
 	 * NativeDistributedAutonomousAgent#getDistributedAutonomousAgentID()</body>
                         </ownedComment>
                         <ownedParameter xmi:id="_JaQwsNrpEeSkp_ZAzkxnjw" direction="return">
@@ -7976,7 +7976,7 @@ common messaging.&#xD;
 		if (simulationRunContext&#xD;
 				.getSimulationRunConfiguration()&#xD;
 				.getCommonMessagingConcreteImplStr()&#xD;
-				.equals(&quot;org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;)) {&#xD;
+				.equals(&quot;org.opensimulationsystems.cabsf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;)) {&#xD;
 		} else {&#xD;
 			// TODO: Handle this better&#xD;
 			throw new IllegalStateException(&#xD;
@@ -8379,7 +8379,7 @@ common messaging.&#xD;
                       </ownedParameter>
                       <language>java</language>
                       <body>// String to represent Redis or &quot;WebServices&quot;&#xD;
-		commonMessagingConcreateImplStr = &quot;org.simulationsystems.csf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;;&#xD;
+		commonMessagingConcreateImplStr = &quot;org.opensimulationsystems.cabsf.common.internal.messaging.bridge.implementation.RedisMessagingConcreteImplementation&quot;;&#xD;
 		redisConnectionString = &quot;localhost&quot;;&#xD;
 		simulationEngineID = &quot;19def3fa-a1d4-4996-a1ac-22c3a041e6ff&quot;;&#xD;
 	</body>

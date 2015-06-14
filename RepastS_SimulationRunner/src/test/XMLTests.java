@@ -5,28 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import jzombies.JZombies_Csf;
+import jzombies.JZombies_CABSF_Helper;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.simulationsystems.csf.common.csfmodel.SYSTEM_TYPE;
-import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.simulationsystems.csf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
-import org.simulationsystems.csf.common.internal.messaging.xml.XMLUtilities;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JADE_MAS_RunContext;
-import org.simulationsystems.csf.distsys.adapters.jade.api.JadeControllerMock;
-import org.simulationsystems.csf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
-import org.simulationsystems.csf.distsys.mas.mocks.MockHumanJADE_Agent;
-import org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
-import org.simulationsystems.csf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunGroupContext;
-import org.simulationsystems.csf.sim.core.api.SimulationAPI;
-import org.simulationsystems.csf.sim.core.api.SimulationRunContext;
-import org.simulationsystems.csf.sim.core.api.SimulationRunGroupContext;
+import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
+import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_RunContext;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.mas.mocks.MockHumanJADE_Agent;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunGroupContext;
+import org.opensimulationsystems.cabsf.sim.core.api.SimulationAPI;
+import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
+import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunGroupContext;
 
 import prisonersdilemma.DECISION;
 import prisonersdilemma.PrisonersDilemma_CSF;
@@ -38,7 +38,7 @@ public class XMLTests implements JadeControllerMock {
 	static private SimulationRunGroupContext simulationRunGroupContext;
 	static private SimulationAPI simulationAPI;
 	static private String simToolNameToSetInSimulationAPI;
-	private static JZombies_Csf jZombies_CSF;
+	private static JZombies_CABSF_Helper jZombies_CABSF_Helper;
 	private static PrisonersDilemma_CSF prisonersDilemma_CSF;
 	static JADE_MAS_AgentContext jade_MAS_AgentContext;
 	static private RepastS_AgentContext repastS_AgentContext;
@@ -58,7 +58,7 @@ public class XMLTests implements JadeControllerMock {
 		// jade_MAS_RunGroupContext, instance);
 		jade_MAS_RunContext = new JADE_MAS_RunContext(null);
 
-		jZombies_CSF = new JZombies_Csf(repastS_AgentContext);
+		jZombies_CABSF_Helper = new JZombies_CABSF_Helper(repastS_AgentContext);
 		prisonersDilemma_CSF = new PrisonersDilemma_CSF(repastS_AgentContext);
 
 		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
@@ -80,7 +80,7 @@ public class XMLTests implements JadeControllerMock {
 		final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
 				simulationRunGroupContext);
 		repastS_AgentContext
-				.setRepastS_SimulationRunGroupContext(repastS_SimulationRunGroupContext);
+		.setRepastS_SimulationRunGroupContext(repastS_SimulationRunGroupContext);
 
 	}
 
@@ -92,75 +92,75 @@ public class XMLTests implements JadeControllerMock {
 	 * private Element agentModelTemplate = null; static private Element locationTemplate;
 	 * static private Filter<Element> elementFilter = new
 	 * org.jdom2.filter.ElementFilter();
-	 * 
+	 *
 	 * static Document getDocument() { return documentTemplateInstance.clone(); }
-	 * 
+	 *
 	 * static private void setupElementTemplates(Document doc) { // Agent Model Template
 	 * List<Element> agentModel = (List<Element>) XMLUtilities .executeXPath( doc,
 	 * "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel[1]"
 	 * , namespaceStr, elementFilter); agentModelTemplate = agentModel.get(0);
-	 * 
+	 *
 	 * // Location Template
-	 * 
+	 *
 	 * @SuppressWarnings("unchecked") // TODO: Support multiple actors List<Element>
 	 * agentLocation = (List<Element>) XMLUtilities .executeXPath( doc,
 	 * "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel/x:Actor/x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location"
 	 * , namespaceStr, elementFilter); locationTemplate = agentLocation.get(0).clone();
 	 * locationTemplate.setAttribute("id", ""); }
-	 * 
+	 *
 	 * @BeforeClass public static void setUpBeforeClass() throws Exception { try {
 	 * documentTemplateInstance = MessagingUtilities
 	 * .createCachedMessageExchangeTemplate();
 	 * setupElementTemplates(documentTemplateInstance); } catch (JDOMException e) {
-	 * 
+	 *
 	 * } catch (IOException e) {
-	 * 
+	 *
 	 * } }
-	 * 
+	 *
 	 * @AfterClass public static void tearDownAfterClass() throws Exception { }
-	 * 
+	 *
 	 * private boolean firstAgentModelActorPopulated;
-	 * 
+	 *
 	 * @Before public void setUp() throws Exception { }
-	 * 
+	 *
 	 * @After public void tearDown() throws Exception { }
-	 * 
+	 *
 	 * @Test
-	 * 
+	 *
 	 * @Ignore public void testCachedMessageExchangeTemplate() { Document doc =
 	 * getDocument();
-	 * 
+	 *
 	 * @SuppressWarnings("unchecked") List<Element> xPathSearchedNodes = (List<Element>)
 	 * XMLUtilities.executeXPath(doc, "/x:CsfMessageExchange/x:SendingEntity/x:Name",
 	 * namespaceStr, elementFilter);
 	 * System.out.println(xPathSearchedNodes.get(0).getValue());
-	 * 
+	 *
 	 * xPathSearchedNodes.get(0).setText("new"); System.out.println("New Document: " + new
 	 * XMLOutputter().outputString(doc)); }
-	 * 
+	 *
 	 * // TODO: Extents/multiple dimensions public Element
 	 * populateThisActorLocationInAgentModel(Element actor, String gridPointX, String
 	 * gridPointY) {
-	 * 
+	 *
 	 * @SuppressWarnings("unchecked") // TODO: Support multiple actors List<Element>
 	 * thisAgentLocation = (List<Element>) XMLUtilities .executeXPath( actor,
 	 * "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location[@id='self']"
 	 * , namespaceStr, elementFilter);
-	 * 
+	 *
 	 * thisAgentLocation.get(0).getChild("GridPointX", namespace).setText(gridPointX);
 	 * thisAgentLocation.get(0).getChild("GridPointY", namespace).setText(gridPointY);
 	 * XMLUtilities.convertElementToXMLString(thisAgentLocation.get(0), true); return
 	 * actor; }
-	 * 
+	 *
 	 * public void setIDForActorInAgentModel(Content actor, String ID) { // TODO: Support
 	 * multiple actors List<Element> agentModelID = (List<Element>)
 	 * XMLUtilities.executeXPath(actor, "./x:ID", namespaceStr, elementFilter); Element e
 	 * = agentModelID.get(0); e.setText(ID);
-	 * 
+	 *
 	 * }
-	 * 
+	 *
 	 * private Element getNextAgentModelActor(Object doc) {
-	 * 
+	 *
 	 * @SuppressWarnings("unchecked") List<Element> agentModels = (List<Element>)
 	 * XMLUtilities .executeXPath( doc,
 	 * "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel"
@@ -169,25 +169,25 @@ public class XMLTests implements JadeControllerMock {
 	 * = agentModels.get(0).getChild("Actor", namespace); return agentModel; } else {
 	 * agentModel = agentModelTemplate.clone(); agentModels.get(0).addContent(agentModel);
 	 * return agentModel; } }
-	 * 
+	 *
 	 * private Element getNextNonSelfLocationForActor(Element actor) {
-	 * 
+	 *
 	 * @SuppressWarnings("unchecked") List<Element> environmentChange = (List<Element>)
 	 * XMLUtilities.executeXPath( actor,
 	 * "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange",
 	 * namespaceStr, elementFilter); Element newLocation = locationTemplate.clone();
 	 * environmentChange.get(0).addContent(newLocation); return newLocation; }
-	 * 
-	 * 
+	 *
+	 *
 	 * Returns an
-	 * 
+	 *
 	 * public Element processActorForAgentModel(Element actor, String ID, String
 	 * gridPointX, String gridPointY) { // Select Agent Model
-	 * 
+	 *
 	 * // Go ahead and populate the already created agent model from the Document //
 	 * template setIDForActorInAgentModel(actor, ID); return
 	 * populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY); }
-	 * 
+	 *
 	 * private Element populatePointWithLeastZombies(Element agentModelActor, String
 	 * GridPointX, String GridPointY) { Element location =
 	 * getNextNonSelfLocationForActor(agentModelActor); location.getChild("GridPointX",
@@ -307,12 +307,12 @@ public class XMLTests implements JadeControllerMock {
 	FrameworkMessage testPopulatePrisonersDilemmaMessageHelper() {
 		/*
 		 * Document doc = getDocument();
-		 * 
+		 *
 		 * @SuppressWarnings("unchecked")
-		 * 
+		 *
 		 * //TODO: Support for other actors Element agentModelActor =
 		 * getNextAgentModelActor(doc);
-		 * 
+		 *
 		 * // For each agent model/actor Element actor =
 		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
 		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
@@ -326,7 +326,7 @@ public class XMLTests implements JadeControllerMock {
 		final Element distributedAutonomousAgentElement = msg
 				.getNextDistributedAutonomousAgent(msg.getDocument(),
 						simulationRunGroupContext
-								.getCachedDistributedAutonomousAgentTemplate());
+						.getCachedDistributedAutonomousAgentTemplate());
 		msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
 				"distAutAgent2");
 
@@ -351,12 +351,12 @@ public class XMLTests implements JadeControllerMock {
 	public void testPopulateZombiesMessage() {
 		/*
 		 * Document doc = getDocument();
-		 * 
+		 *
 		 * @SuppressWarnings("unchecked")
-		 * 
+		 *
 		 * //TODO: Support for other actors Element agentModelActor =
 		 * getNextAgentModelActor(doc);
-		 * 
+		 *
 		 * // For each agent model/actor Element actor =
 		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
 		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
@@ -373,8 +373,8 @@ public class XMLTests implements JadeControllerMock {
 		pointLeastZombies.add("3");
 		pointLeastZombies.add("4");
 
-		jZombies_CSF.populateZombiesMessage(msg, "distAutAgent1", "distAutAgentMode1",
-				thisAgentModelPosition, pointLeastZombies);
+		jZombies_CABSF_Helper.populateZombiesMessage(msg, "distAutAgent1",
+				"distAutAgentMode1", thisAgentModelPosition, pointLeastZombies);
 
 		thisAgentModelPosition = new ArrayList<String>();
 		thisAgentModelPosition.add("5");
@@ -383,8 +383,8 @@ public class XMLTests implements JadeControllerMock {
 		pointLeastZombies.add("7");
 		pointLeastZombies.add("8");
 
-		jZombies_CSF.populateZombiesMessage(msg, "distAutAgent2", "distAutAgentMode2",
-				thisAgentModelPosition, pointLeastZombies);
+		jZombies_CABSF_Helper.populateZombiesMessage(msg, "distAutAgent2",
+				"distAutAgentMode2", thisAgentModelPosition, pointLeastZombies);
 
 		System.out.println("Msg:"
 				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
@@ -418,7 +418,8 @@ public class XMLTests implements JadeControllerMock {
 
 		msg.getSelfLocationFromFirstAgentModel(distributedAutonomousAgentElement, msg);
 
-		jZombies_CSF.getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
+		jZombies_CABSF_Helper.getPointWithLeastZombies(distributedAutonomousAgentElement,
+				msg);
 
 		System.out.println("Msg:"
 				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));

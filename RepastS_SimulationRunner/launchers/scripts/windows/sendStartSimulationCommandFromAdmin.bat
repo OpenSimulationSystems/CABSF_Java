@@ -15,7 +15,7 @@ echo ****************************************************
 echo.
 @echo on
 redis-cli flushall
-redis-cli -x LPUSH csf.commands.adminToSim:19def3fa-a1d4-4996-a1ac-22c3a041e6ff <../../../../CommonSimulationFramework/bin/org/simulationsystems/csf/common/resources/messageexchange/startSimulation.xml
+redis-cli -x LPUSH csf.commands.adminToSim:19def3fa-a1d4-4996-a1ac-22c3a041e6ff <../../../../CommonSimulationFramework/bin/org/opensimulationsystems/cabsf/common/resources/messageexchange/startSimulation.xml
 @echo.
 @echo off
 pause

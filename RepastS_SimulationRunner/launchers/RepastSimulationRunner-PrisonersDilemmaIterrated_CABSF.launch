@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="edu.buffalo.cse.jive.preferences.common_filters">
+<listEntry value="antlr.*"/>
+<listEntry value="com.apple.*"/>
+<listEntry value="com.mysql.*"/>
+<listEntry value="com.sun.*"/>
+<listEntry value="java.*"/>
+<listEntry value="javax.*"/>
+<listEntry value="org.apache.*"/>
+<listEntry value="org.eclipse.*"/>
+<listEntry value="org.hibernate.*"/>
+<listEntry value="org.jcp.*"/>
+<listEntry value="org.junit.*"/>
+<listEntry value="org.postgresql.*"/>
+<listEntry value="org.w3c.*"/>
+<listEntry value="org.xml.*"/>
+<listEntry value="sun.*"/>
+<listEntry value="$Proxy*"/>
+</listAttribute>
+<booleanAttribute key="edu.buffalo.cse.jive.preferences.generateLocalEvents" value="true"/>
+<booleanAttribute key="edu.buffalo.cse.jive.preferences.generateLockEvents" value="false"/>
+<booleanAttribute key="edu.buffalo.cse.jive.preferences.manualStart" value="false"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/RepastS_SimulationRunner/src/org/opensimulationsystems/cabsf/sim/engines/runners/repastS/RepastS_SimulationRunnerMain.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.opensimulationsystems.cabsf.sim.engines.runners.repastS.RepastS_SimulationRunnerMain"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../ReferenceSimulations/PrisonersDilemmaIterated_CABSF/PrisonersDilemmaIterated_CABSF_Repast/PrisonersDilemmaIterated_CABSF_Repast.rs PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE1"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="RepastS_SimulationRunner"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+</launchConfiguration>

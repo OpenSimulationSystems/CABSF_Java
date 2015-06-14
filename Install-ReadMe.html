@@ -23,7 +23,7 @@ GitHub repository and updates the Repast Simphony version to 2.3.1.</p>
 
 <h2>User Guide</h2>
 Please start with the <a href="Documentation/UserGuide.html">User Guide</a> in
-the Documentation directory under the overall CSF project repository. 
+the Documentation directory under the overall CABSF project repository. 
 
 <h2>Requirements</h2>
 <ol>
@@ -94,47 +94,45 @@ path variable if it's not done automatically in your installation.</p>
       <li>In your Eclipse workspace directory (usually "workspace" under your
         username), clone the following repo. The master branch should contain
         the latest stable release. The "develop" branch contains the latest
-        code for the upcoming release.
+        code for the upcoming release. 
         <p>https://github.com/OpenSimulationSystems/CABSF_Java.git</p>
       </li>
     </ol>
   </li>
-  <li>Install <span style="font-weight: bold;">JZombies_CSF_Demo</span> 
+  <li>Install <span style="font-weight: bold;">JZombies_CABSF_Demo</span> 
     <ol>
       <li>While this simulation comes with the Repast Simphony samples
-        (File-Import-Repast Simphony-Import Repast Example Models), the CSF
-        version of JZombies_Demo is a modification that adds the CSF/JADE
+        (File-Import-Repast Simphony-Import Repast Example Models), the CABSF
+        version of JZombies_Demo is a modification that adds the CABSF/JADE
         functionality. The name of this modified project/directory is <span
-        style="font-weight: bold;">JZombies_CSF_Demo</span>. Make sure not to
-        confuse this directory with JZombies_CSF_JADE_Agents, which is a
+        style="font-weight: bold;">JZombies_CABSF_Demo</span>. Make sure not to
+        confuse this directory with JZombies_CABSF_JADE_Agents, which is a
         separate project with the JADE agents. 
         <ol>
-          <li>Go into the cloned repository, change to the
-            CommonSimulationFrameworkSimulations directory and find the
-            JZombies_CSF_Demo directory. Now temporarily rename this
-          directory.</li>
+          <li>Go into the cloned repository, change to the ReferenceSimulations
+            directory and find the JZombies_CABSF_Demo directory. Now
+            temporarily rename this directory.</li>
           <li>In Repast Simphony/Eclipse, go to
             File-&gt;New-&gt;Other-&gt;Repast Simphony-&gt;Repast Simphony
             Project-&gt;Next. Unselect "default location", browse to the
-            CommonSimulationFrameworkSimulations directory, add
-            JZombies_CSF_Demo to the project location, OK, then add
-            "JZombies_CSF_Demo<span style="font-weight: bold;">"</span> (not
+            ReferenceSimulations directory, add JZombies_CABSF_Demo to the
+            project location and to the name of the project, OK, then add
+            "JZombies_CABSF_Demo<span style="font-weight: bold;">"</span> (not
             the renamed folder) to the project directory-&gt;Next-Finish.  If
             you get an error stating that the project "overlaps the location of
-            another project", you probably selected the wrong directory; you
-            may have left off the JZombies_CSF_Demo directory in either the
-            project name or the location.</li>
-          <li>Right click on the JZombies_CSF_Demo project on the left hand
+            another project", you may have an existing project in your Eclipse
+            workspace. If so, delete the project in Eclipse first.</li>
+          <li>Right click on the JZombies_CABSF_Demo project on the left hand
             side (the project explorer) and under Resource, verify that the
-            JZombies_CSF_Demo directory you created is in the
-            CommonSimulationFrameworkSimulations directory.
-            CommonSimulationFrameworkSimulations is also the same directory
-            where the original renamed version is. </li>
+            JZombies_CABSF_Demo directory you created is in the
+            ReferenceSimulationsew directory. ReferenceSimulations is also the
+            same directory where the original renamed version is. </li>
           <li>In the file system go to your original renamed directory. Ensure
-            that there is no .classpath or .project file there (these files
-            could be hidden). Delete them if they exist. Copy the contents of
-            this original renamed JZombies_CSF_Demo directory into the newly
-            created  JZombies_CSF_Demo directory.  Replace all files. 
+            that there is no .classpath or .project file or .settings directory
+            there (these files could be hidden). Delete them if they exist.
+            Copy the contents of this original renamed JZombies_CABSF_Demo
+            directory into the newly created  JZombies_CABSF_Demo
+            directory.  Replace all files. 
             <p></p>
             <p>All of these steps were necessary because the Eclipse metadata
             files (.project and .classpath) are not part of the source code.
@@ -150,39 +148,40 @@ path variable if it's not done automatically in your installation.</p>
             state, you may need to use the git checkout, reset, and clean
             commands.</p>
           </li>
-          <li>Delete the renamed project.</li>
-          <li>Right click on the JZombies_CSF_Demo project in the project
+          <li>Delete the renamed directory from the file system.</li>
+          <li>Right click on the JZombies_CABSF_Demo project in the project
             explorer and click Refresh. You should see the new source files
             added under the "zombies" package.</li>
-          <li>In the the new JZombies_CSF_Demo project, if you haven't done so
-            already, delete the JZombies_CSF_Demo package directory, leaving
-            only the "jzombies" package because we're not using Groovy</li>
+          <li>In the the new JZombies_CABSF_Demo project, if you haven't done
+            so already, delete the JZombies_CABSF_Demo package directory,
+            leaving only the "jzombies" package because we're not using
+          Groovy</li>
           <li>Right click on the project on the left side (package explorer)
             and click Refresh. You should see the new files added to the src
-            directory. The launcher for the project has been updated to use CSF
-            dependencies and so those first need to be set up even if you're
-            trying to run this project without the CSF features.</li>
-          <li>Repeat these steps for the PrisonersDilemmaIterated_CSF project.
-            Just as with the zombies project, make sure not to use
-            PrisonersDilemmaIterated_CSF_JADE_Agents as that is for the JADE
+            directory. The launcher for the project has been updated to use
+            CABSF dependencies and so those first need to be set up even if
+            you're trying to run this project without the CABSF features.</li>
+          <li>Repeat these steps for the PrisonersDilemmaIterated_CABSF
+            project. Just as with the zombies project, make sure not to use
+            PrisonersDilemmaIterated_CABSF_JADE_Agents as that is for the JADE
             agents.</li>
         </ol>
       </li>
     </ol>
   </li>
-  <li>Open a separate new Java Project for these projects under the cloned
-    local repo go going to File-New-Java Project, unselect "Use default
-    location", browse to each directory in the list below.  
+  <li>Create separate Java Projects for these projects under the cloned local
+    repo go going to File-New-Java Project, unselect "Use default location",
+    browse the following directory.  
     <ol>
       <li>CommonSimulationFramework</li>
-      <li>CSF_JADE_Controller_Agent<span
+      <li>CABSF_JADE_Controller_Agent<span
         style="text-decoration: underline;"><br>
         </span></li>
       <li>RepastSimulationRunner</li>
-      <li>JZombies_CSF_JADE_Agents (This on is under the
-        CommonSimulationFrameworkSimulations subdirectory.)</li>
-      <li>JZombies_CSF_JADE_Agents (This on is under under the
-        CommonSimulationFrameworkSimulations subdirectory.)</li>
+      <li>JZombies_CABSF_JADE_Agents (This on is under the ReferenceSimulations
+        subdirectory.)subdirectory.)</li>
+      <li>JZombies_CABSF_JADE_Agents (This on is under under the
+        ReferenceSimulations subdirections subdirectory.)</li>
     </ol>
   </li>
   <li>Add the third party libraries to the CommonSimulationFramework  from the
@@ -218,7 +217,7 @@ path variable if it's not done automatically in your installation.</p>
     XML, Java EE, and OSGI Enterprise Development" and restart.  Once JUnit is
     installed, you'll need to add the library to the individual projects that
     have JUnits (explained later on). The Junit set up is not required for the
-    CSF to function.</li>
+    CABSF to function.</li>
   <li>Under the JADE_Controller_Agent and RepastS_SimulationRunner projects, go
     to Build Path, Configure Build Path, Select the Libraries button and select
     JUnit. If you don't see Junit, follow the instructions above to install it.
@@ -232,21 +231,21 @@ path variable if it's not done automatically in your installation.</p>
       <li>Click the Classpath tab, select the "User Entries", Select the "Add
         Projects" button,  add the CommonSimulationFramework project</li>
       <li>Select the "Add JARs" tab and select all of the JARs under the lib
-        directory of CommonSimulationFramework, including subdirectories.  You
-        should only have to modify the run configuration CLASSPATH for the
-        Repast simulation projects.  All of the other projects just need to
-        have the dependencies set up in the "Build Path".  The CSF Repast
-        simulations(Model projects) also need to have the dependencies set up
-        in the "Build Path" section (described below).</li>
+        directory of CommonSimulationFramework.  You should only have to modify
+        the run configuration CLASSPATH for the Repast simulation
+        projects.  All of the other projects just need to have the dependencies
+        set up in the "Build Path".  The CABSF Repast simulations(Model
+        projects) also need to have the dependencies set up in the "Build Path"
+        section (described below).</li>
       <li>Select Close and repeat for the other Model project(s).</li>
     </ul>
   </li>
   <li>In the same tab click on on add JARs, and select all JARS under the lib
-    directory of CommonSimulationFramework, and subdirectories.</li>
+    directory of CommonSimulationFramework.</li>
   <li>Right click on the RepastSimulationRunner, Build Path, and add
-    the  JZombies_CSF_Demo project.  While the underlying runner code doesn't
+    the  JZombies_CABSF_Demo project.  While the underlying runner code doesn't
     need these projects, there are JUnit tests in the Repast Simulation Runner
-    for convenience methods in the JZombies_CSF_Demo project.</li>
+    for convenience methods in the JZombies_CABSF_Demo project.</li>
   <li>Select add JARs, and select the jars under the folder and subfolders
     in CommonSimulationFramework//lib.</li>
   <li>Select the External JARs button and add all of the JARS from the<span
@@ -259,9 +258,9 @@ path variable if it's not done automatically in your installation.</p>
   <li>Add the CommonSimulationFramework dependency and accompanying JARs to the
     JADE_Controller_Agent.</li>
   <li>Follow these steps for each of the JADE Agent Projects
-    (JZombies_CSF_JADE_Agents and PrisonersDilemmaIterated_CSF_JADE_Agents)
+    (JZombies_CABSF_JADE_Agents and PrisonersDilemmaIterated_CABSF_JADE_Agents)
     that are run agents for the simulations. (The JADE Controller Agent is an
-    administrative agent of the CSF). 
+    administrative agent of the CABSF). 
     <ul>
       <li>Add the CommonSimulationFramework project and accompanying JAR files
         as described above but do not add the two sets of dependencies in
@@ -271,8 +270,8 @@ path variable if it's not done automatically in your installation.</p>
         agents and the JADE Controller in a single JADE Container/JVM, for
         simplicity.  </li>
       <li>Add the corresponding Model (Repast) project. For example for
-        JZombies_CSF_JADE_Agents add the JZombies_CSF_Demo project. This is to
-        give the JADE agent access to convenience methods that are in the
+        JZombies_CABSF_JADE_Agents add the JZombies_CABSF_Demo project. This is
+        to give the JADE agent access to convenience methods that are in the
         Repast project.</li>
     </ul>
   </li>
@@ -283,26 +282,26 @@ path variable if it's not done automatically in your installation.</p>
   Projects-&gt;OK.</li>
   <li>Click on the "Problems" tab below.  Assuming you added Junit, you should
     no longer see any red "Error" entries, only yellow warnings.</li>
-  <li>Unlike the Repast simulations projects (such as JZombies_CSF_Demo), other
-    applications such as  RepastSimulationRunner and JADE_Controller_Agent do
-    not automatically get the run configurations created when the projects are
-    created.  However, there is a presaved run configuration that can be added
-    to the run configurations menu.  Right click RepastSimulationRunner, open
-    the launders folder, select "RepastSimulationRunner - CSF -
-    JZombies.launch", right click "Run As", click "RepastSimulationRunner - CSF
-    - JZombies.launch .  The simulation runner has started executing.  Next
-    time you should see it in the drop down next to the run button.  Click on
-    the red square to stop the execution.</li>
+  <li>Unlike the Repast simulations projects (such as JZombies_CABSF_Demo),
+    other applications such as  RepastSimulationRunner and
+    JADE_Controller_Agent do not automatically get the run configurations
+    created when the projects are created.  However, there is a presaved run
+    configuration that can be added to the run configurations menu.  Right
+    click RepastSimulationRunner, open the launders folder, select
+    "RepastSimulationRunner - CABSF - JZombies.launch", right click "Run As",
+    click "RepastSimulationRunner - CABSF - JZombies.launch .  The simulation
+    runner has started executing.  Next time you should see it in the drop down
+    next to the run button.  Click on the red square to stop the execution.</li>
   <li>You should see an error message initially as Redis has not been
   started. </li>
-  <li>Run the Projeect without the CSF features 
+  <li>Run the Projeect without the CABSF features 
     <ul>
       <li>Click the down arrow next to the green "Run" button.  Verify that
         Repast Simphony/Eclipse has created a run configuration for  <span
-        style="font-weight: bold;">JZombies_CSF_Demo </span>simulation.</li>
-      <li>Click the simulation in the drop down list for JZombies_CSF_Demo.
-        This will run the JZombies_CSF_Demo simulation, but without actually
-        using the CSF features.</li>
+        style="font-weight: bold;">JZombies_CABSF_Demo</span> simulation.</li>
+      <li>Click the simulation in the drop down list for JZombies_CABSF_Demo.
+        This will run the JZombies_CABSF_Demo simulation, but without actually
+        using the CABSF features.</li>
       <li>If you see an error when using Windows, such as "WARNING: Could not
         open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002.
         Windows RegCreateKeyEx(...) returned error code 5." in the eclipse
@@ -322,11 +321,11 @@ path variable if it's not done automatically in your installation.</p>
     </ul>
   </li>
   <li>Click on that drop down next to the green run, Run Configurations, select
-    the "RepastSimulationRunner - CSF - JZombies.launch button", select the
-    Arguments tab.  You should see the path to your JZombies_CSF_Demo
-    directory.  The first argument is the location of the Repast configuration
-    for this simulation.  The second file is the path to the CSF configuration
-    for this simulation.</li>
+    the "RepastSimulationRunner - CABSF - JZombies.launch button", select the
+    Arguments tab.  You should see the path to your JZombies_CABSF_Demo
+    directory.  The first argument is the location of the Repast configuration
+    for this simulation.  The second file is the path to the CABSF
+    configuration for this simulation.for this s</li>
   <li>Look for the launcher file for JADE_Controller_Agent and do the same as
     for the RepastSimulationRunner.  Stop the execution and verify that the run
     configuration has been added to the list of run configurations.</li>
@@ -341,13 +340,16 @@ path variable if it's not done automatically in your installation.</p>
 <ol>
   <li><span style="font-weight: bold;">Start up all of the Processes</span> 
     <ol>
-      <li>Start the Redis server by opening the launcher folder, selecting the
-        appropriate subfolder for your operating system, and double clicking on
-        "redis-server".   If it opens as a text file, right click it, open
-        with, default editor.   (TODO: Create another version for Linux/MacOS
-        for each of these files). Keep a separate terminal window open for
-        Redis and watch for error messages.  Alternatively, in Windows, Redis
-        can be installed as a service. </li>
+      <li>Start the Redis server by opening the launcher folder, select the
+        scripts directory, select the appropriate subfolder for your operating
+        system, and double clicking on "redis-server".   NOTE: If your
+        operating system isn't listed, then you would need to run the command
+        manually or create a script based on the windows batch file. If it
+        opens as a text file, right click it, open with, default editor.  
+        (TODO: Create another version for Linux/MacOS for each of these
+        files). Keep a separate terminal window open for Redis and watch for
+        error messages.  Alternatively, in Windows, Redis can be installed as a
+        service. </li>
       <li>Optionally, run a separate terminal window for the redis command line
         "redis-cli".  This allows you to inspect messages.  For example, if you
         shut down or pause the distributed system(s), you can check Run As see
@@ -362,18 +364,18 @@ path variable if it's not done automatically in your installation.</p>
         </ol>
       </li>
       <li>Navigate to the launchers folder and right click on
-        "RepastSimulationRunner - CSF.launch".   You should see that the
-        RepastSimulationRunner, running the Simulation side of the CSF begins
-        to execute.  After right clicking this .launch file, you should now see
+        "RepastSimulationRunner - CABSF.launch".   You should see that the
+        RepastSimulationRunner, running the Simulation side of the CABSF begins
+        to execute.  After right clicking this .launch file, you should now see
         this entry as a run configuration in the drop down next to the green
-        run button at the top.  In the future, you can execute this run from
-        there.  If any changes are needed such as a changed program argument
-        (such as a new location of the CSF configuration file), changes
+        run button at the top.  In the future, you can execute this run from
+        there.  If any changes are needed such as a changed program argument
+        (such as a new location of the CABSF configuration file), changes
         directly to the run configuration will not change the .launch file. It
         would be best to change the .launch file, delete the run configuration,
         and right click again.</li>
       <li>Click on the drop down next to the run button and select
-        RepastSimulationRunner - CSF - JZombies.launch.  You may receive a
+        RepastSimulationRunner - CABSF - JZombies.launch.  You may receive a
         message warning about errors in the project(s). If so, hit the Proceed
         button. These errrors are probably related to unit test compilation
         errors, but shouldn't affect the execution of the simulation. You
@@ -385,8 +387,8 @@ path variable if it's not done automatically in your installation.</p>
           <li>In our case we need to start the JADE agents, including the JADE
             Controller Agent, which brokers communication between the JADE
             agent participants in the simulation, and the simulation
-            engine/runtime Repast Simphony.  There is one project created for
-            the JZombies JADE agents, called JZombies_CSF_JADE_Agents.  Right
+            engine/runtime Repast Simphony.  There is one project created for
+            the JZombies JADE agents, called JZombies_CABSF_JADE_Agents.  Right
             click on it, find the launchers folder, expand it, and right click
             on JZombies-JADE_zombies_with_JADE_Controller_Agent.launch, click
             on Run As
@@ -441,7 +443,7 @@ path variable if it's not done automatically in your installation.</p>
 
 <h2>Next Steps</h2>
 Read the <a href="Documentation/UserGuide.html">User Guide</a> in the
-Documentation directory under the overall CSF project repository. 
+Documentation directory under the overall CABSF project repository. 
 <ol>
   <br>
 </ol>

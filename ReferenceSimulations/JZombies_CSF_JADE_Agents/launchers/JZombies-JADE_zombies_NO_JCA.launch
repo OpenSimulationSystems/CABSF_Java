@@ -18,18 +18,14 @@
 <listEntry value="sun.*"/>
 <listEntry value="$Proxy*"/>
 </listAttribute>
-<booleanAttribute key="edu.buffalo.cse.jive.preferences.generateLocalEvents" value="true"/>
-<booleanAttribute key="edu.buffalo.cse.jive.preferences.generateLockEvents" value="false"/>
-<booleanAttribute key="edu.buffalo.cse.jive.preferences.manualStart" value="false"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/RepastS_SimulationRunner/src/org/simulationsystems/csf/sim/engines/runners/repastS/RepastS_SimulationRunnerMain.java"/>
+<listEntry value="/CommonSimulationFramework/lib/jade.jar"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.simulationsystems.csf.sim.engines.runners.repastS.RepastS_SimulationRunnerMain"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../ReferenceSimulations/PrisonersDilemmaIterated_CSF/PrisonersDilemmaIterated_CSF.rs PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE1"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="RepastS_SimulationRunner"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-container -agents DistributedSystemAutonomousAgent1:jzombies.HumanJADE;DistributedSystemAutonomousAgent2:jzombies.HumanJADE;DistributedSystemAutonomousAgent3:jzombies.HumanJADE;DistributedSystemAutonomousAgent4:jzombies.HumanJADE;DistributedSystemAutonomousAgent5:jzombies.HumanJADE;DistributedSystemAutonomousAgent6:jzombies.HumanJADE"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JZombies_CSF_JADE_Agents"/>
 </launchConfiguration>

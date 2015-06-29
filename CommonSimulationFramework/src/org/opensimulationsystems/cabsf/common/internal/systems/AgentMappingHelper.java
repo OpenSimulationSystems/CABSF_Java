@@ -3,8 +3,8 @@ package org.opensimulationsystems.cabsf.common.internal.systems;
 import java.util.HashSet;
 import java.util.UUID;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.AgentMapping;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -58,7 +58,7 @@ public class AgentMappingHelper {
 	}
 
 	/**
-	 * Creates objects to hold Agent Mappings between the simulation-side and CSF-wide
+	 * Creates objects to hold Agent Mappings between the simulation-side and CABSF-wide
 	 * string identifiers (to identify distributed autonomous agent models). The actual
 	 * setting of mapped objects occurs later on. See
 	 * org.simulationsystems.simulationframework

@@ -5,8 +5,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
 import org.opensimulationsystems.cabsf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
 
 import redis.clients.jedis.JedisPubSub;
 

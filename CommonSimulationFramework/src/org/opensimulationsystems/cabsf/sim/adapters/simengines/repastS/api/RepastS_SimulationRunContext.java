@@ -5,11 +5,11 @@ import java.util.Set;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunGroupConfiguration;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;

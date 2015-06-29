@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.SIMULATION_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.AgentMapping;
+import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
@@ -137,7 +137,7 @@ public class Human {
 				final Iterable<Object> csfRepastContextIterable = RunState.getInstance()
 						.getMasterContext()
 						.getAgentLayer(RepastS_SimulationRunContext.class);
-				simulationType = repastS_AgentContext.initializeCsfAgent(
+				simulationType = repastS_AgentContext.initializeCabsfAgent(
 						simulationAgentsClasses, csfRepastContextIterable);
 			}
 		} catch (final JDOMException e) {

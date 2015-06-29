@@ -2,13 +2,13 @@ package org.opensimulationsystems.cabsf.sim.core.api.distributedsystems;
 
 import java.util.HashSet;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.internal.messaging.bridge.abstraction.CommonMessagingAbstraction;
 import org.opensimulationsystems.cabsf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.opensimulationsystems.cabsf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
 import org.opensimulationsystems.cabsf.common.internal.systems.AgentMappingHelper;
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
+import org.opensimulationsystems.cabsf.common.model.AgentMapping;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 
 /**
@@ -83,7 +83,7 @@ public class SimulationDistributedSystemManager {
 		} else {
 			// TODO: Handle this better
 			throw new IllegalStateException(
-					"Error: Redis not properly configured in the CSF configuration file.");
+					"Error: Redis not properly configured in the CABSF configuration file.");
 		}
 
 		// Instantiate the correct manager for the common messaging interface (e.g., Redis

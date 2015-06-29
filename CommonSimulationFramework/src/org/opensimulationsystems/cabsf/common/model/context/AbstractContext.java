@@ -1,7 +1,7 @@
 /*
  * 
  */
-package org.opensimulationsystems.cabsf.common.csfmodel.context;
+package org.opensimulationsystems.cabsf.common.model.context;
 
 import java.util.List;
 
@@ -9,15 +9,15 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 
 /**
  * The abstract parent of all context classes. This class provides common functionality
  * across the contexts, such a method to generate a FrameworkMessage from the message
- * exchange (CsfMessageExchange) template
+ * exchange (CabsfMessageExchange) template
  * 
  * @author Jorge Calderon
  * @version 0.1
@@ -27,7 +27,7 @@ public abstract class AbstractContext {
 	// TODO: Get these two from the configuration
 	// TODO: Only use either the string or the namespace.
 	/** The namespace str. */
-	private final String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
+	private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
 
 	/** The namespace. */
 	private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
@@ -147,7 +147,7 @@ public abstract class AbstractContext {
 		final List<Element> distributedAutonomousAgentElements = (List<Element>) XMLUtilities
 				.executeXPath(
 						doc,
-						"/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent",
+						"/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent",
 						namespaceStr, elementFilter);
 		distributedAutonomousAgentTemplate = distributedAutonomousAgentElements.get(0)
 				.clone();

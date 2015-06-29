@@ -2,12 +2,12 @@ package org.opensimulationsystems.cabsf.distsys.core.api.simulationruntime;
 
 import java.util.HashSet;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.internal.messaging.bridge.abstraction.CommonMessagingAbstraction;
 import org.opensimulationsystems.cabsf.common.internal.messaging.bridge.abstraction.CommonMessagingRefinedAbstractionAPI;
 import org.opensimulationsystems.cabsf.common.internal.messaging.bridge.implementation.CommonMessagingImplementationAPI;
+import org.opensimulationsystems.cabsf.common.model.AgentMapping;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 
 /**
@@ -72,7 +72,7 @@ public class SimulationEngineManager {
 		} else {
 			// TODO: Handle this better
 			throw new IllegalStateException(
-					"Error: Redis not properly configured in the CSF configuration file.");
+					"Error: Redis not properly configured in the CABSF configuration file.");
 		}
 
 		// commonMessagingAbstraction =

@@ -5,8 +5,8 @@ package org.opensimulationsystems.cabsf.sim.engines.runners.repastS;
 
 import java.io.File;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.SIMULATION_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationAdapterAPI;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunGroupContext;

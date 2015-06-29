@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages;
+package org.opensimulationsystems.cabsf.common.model.messaging.messages;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,15 +6,15 @@ import java.util.List;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfCheckedException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.transformers.FrameworkMessageDocumentHelper;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfCheckedException;
 
 /**
  * The implementation class for the FrameworkMessage interface which wraps the
- * CsfMessageExchange XML Document
- * 
+ * CabsfMessageExchange XML Document
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -47,7 +47,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 */
 	/**
 	 * Instantiates a new framework message impl.
-	 * 
+	 *
 	 * @param sourceSystemType
 	 *            the source system type
 	 * @param targetSystemType
@@ -69,7 +69,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 */
 	/**
 	 * Instantiates a new framework message impl.
-	 * 
+	 *
 	 * @param sourceSystemType
 	 *            the source system type
 	 * @param targetSystemType
@@ -77,11 +77,11 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 * @param xmlString
 	 *            the xml string
 	 * @throws CabsfCheckedException
-	 *             the csf checked exception
+	 *             the cabsf checked exception
 	 */
 	public FrameworkMessageImpl(final SYSTEM_TYPE sourceSystemType,
 			final SYSTEM_TYPE targetSystemType, final String xmlString)
-			throws CabsfCheckedException {
+					throws CabsfCheckedException {
 		super();
 		try {
 			this.document = MessagingUtilities.createDocumentFromString(xmlString);
@@ -97,22 +97,24 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * addDistributedAutonomousAgent(org.jdom2.Document, org.jdom2.Element, boolean)
 	 */
 	@Override
-	public Document addDistributedAutonomousAgent(final Document csfMessageExchangeDoc,
+	public Document addDistributedAutonomousAgent(final Document CabsfMessageExchangeDoc,
 			final Element distributedAutononomousAgentElement,
 			final boolean removeChildren) {
 		return frameworkMessageDocumentHelper.addDistributedAutonomousAgent(
-				csfMessageExchangeDoc, distributedAutononomousAgentElement,
+				CabsfMessageExchangeDoc, distributedAutononomousAgentElement,
 				removeChildren);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getAgentModels(org.jdom2.Element)
 	 */
 	@Override
@@ -124,7 +126,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getDistributedAutonomousAgentElements(java.lang.Object)
 	 */
 	@Override
@@ -135,7 +138,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getDistributedAutonomousAgentID(org.jdom2.Element)
 	 */
 	@Override
@@ -148,18 +152,20 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getDocument()
 	 */
-@Override
-public Document getDocument() {
+	@Override
+	public Document getDocument() {
 		return document;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getFirstAgentModelActorAgentModelID(org.jdom2.Element)
 	 */
 	@Override
@@ -171,7 +177,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getFrameworkToDistributedSystemCommand()
 	 */
 	@Override
@@ -182,7 +189,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getFrameworkToSimulationEngineCommand()
 	 */
 	@Override
@@ -193,7 +201,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getNextAgentModelActor(java.lang.Object, org.jdom2.Element)
 	 */
 	@Override
@@ -208,7 +217,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getNextDistributedAutonomousAgent(org.jdom2.Document, org.jdom2.Element)
 	 */
 	@Override
@@ -221,7 +231,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getNextNonSelfSimulationDefinedLocationForActor(org.jdom2.Element,
 	 * org.jdom2.Element)
 	 */
@@ -236,9 +247,10 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getSelfLocation(org.jdom2.Element,
-	 * org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage)
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage)
 	 */
 	@Override
 	public List<String> getSelfLocationFromFirstAgentModel(
@@ -250,9 +262,10 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getSelfLocation
-	 * (org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage)
+	 * (org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage)
 	 */
 	@Override
 	public List<String> getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(
@@ -265,7 +278,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * getSimulationDefinedEnvironmentChangesElement(org.jdom2.Element)
 	 */
 	@Override
@@ -278,8 +292,8 @@ public Document getDocument() {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#getStatus
-	 * ()
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage
+	 * #getStatus ()
 	 */
 	@Override
 	public STATUS getStatus() {
@@ -289,7 +303,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * populateThisLocationInAgentModelActor(org.jdom2.Element, java.lang.String,
 	 * java.lang.String, org.jdom2.Element)
 	 */
@@ -304,20 +319,22 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * removeDistributedAutonomousAgents(org.jdom2.Document)
 	 */
 	@Override
-	public void removeDistributedAutonomousAgents(final Document csfMessageExchangeDoc) {
+	public void removeDistributedAutonomousAgents(final Document CabsfMessageExchangeDoc) {
 		frameworkMessageDocumentHelper
-				.removeDistributedAutonomousAgents(csfMessageExchangeDoc);
+		.removeDistributedAutonomousAgents(CabsfMessageExchangeDoc);
 
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * setDistributedAutonomousAgentID(org.jdom2.Element, java.lang.String)
 	 */
 	@Override
@@ -330,35 +347,38 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * setFrameworkToDistributedSystemCommand
-	 * (org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND)
+	 * (org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND)
 	 */
 	@Override
 	public void setFrameworkToDistributedSystemCommand(
 			final FRAMEWORK_COMMAND frameworkToDistributedSystemCommand) {
 		frameworkMessageDocumentHelper
-				.setFrameworkToDistributedSystemCommand(frameworkToDistributedSystemCommand);
+		.setFrameworkToDistributedSystemCommand(frameworkToDistributedSystemCommand);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * setFrameworkToSimulationEngineCommand
-	 * (org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND)
+	 * (org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND)
 	 */
 	@Override
 	public void setFrameworkToSimulationEngineCommand(
 			final FRAMEWORK_COMMAND frameworkToSimulationEngineCommand) {
 		frameworkMessageDocumentHelper
-				.setFrameworkToSimulationEngineCommnad(frameworkToSimulationEngineCommand);
+		.setFrameworkToSimulationEngineCommnad(frameworkToSimulationEngineCommand);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * setIDForActorInAgentModel(org.jdom2.Element, java.lang.String)
 	 */
 	@Override
@@ -370,8 +390,8 @@ public Document getDocument() {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#setStatus
-	 * (org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.STATUS)
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage
+	 * #setStatus (org.opensimulationsystems.cabsf.common.model.messaging.messages.STATUS)
 	 */
 	@Override
 	public void setStatus(final STATUS status) {
@@ -387,7 +407,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * toPrettyPrintedXMLString()
 	 */
 	@Override
@@ -399,7 +420,8 @@ public Document getDocument() {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage#
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage#
 	 * transformToCommonMessagingXMLString(boolean)
 	 */
 	@Override

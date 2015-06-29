@@ -11,11 +11,11 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 import org.jdom2.Element;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfCheckedException;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfCheckedException;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 
 /**

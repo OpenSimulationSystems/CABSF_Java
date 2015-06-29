@@ -1,9 +1,9 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
+package org.opensimulationsystems.cabsf.common.model.cabsfexceptions;
 
 // TODO: Auto-generated Javadoc
 /**
- * A CSF Exception that has to be checked by the caller.
- * 
+ * A CABSF Exception that has to be checked by the caller.
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -11,15 +11,15 @@ package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
 public class CabsfCheckedException extends Exception {
 
 	/**
-	 * Instantiates a new csf checked exception.
+	 * Instantiates a new cabsf checked exception.
 	 */
 	public CabsfCheckedException() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * Instantiates a new csf checked exception.
-	 * 
+	 * Instantiates a new cabsf checked exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 */
@@ -29,8 +29,8 @@ public class CabsfCheckedException extends Exception {
 	}
 
 	/**
-	 * Instantiates a new csf checked exception.
-	 * 
+	 * Instantiates a new cabsf checked exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 * @param arg1
@@ -42,8 +42,8 @@ public class CabsfCheckedException extends Exception {
 	}
 
 	/**
-	 * Instantiates a new csf checked exception.
-	 * 
+	 * Instantiates a new cabsf checked exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 * @param arg1
@@ -60,8 +60,8 @@ public class CabsfCheckedException extends Exception {
 	}
 
 	/**
-	 * Instantiates a new csf checked exception.
-	 * 
+	 * Instantiates a new cabsf checked exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 */

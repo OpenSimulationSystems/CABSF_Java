@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 
 /**
- * This is an object in the CSF that represents a distributed autonomous agent. It is not
+ * This is an object in the CABSF that represents a distributed autonomous agent. It is not
  * the same as the distributed autonomous agent itself (such as a JADE agent). The
  * implementors of this API do not have direct references to the underlying distributed
  * autonomous agent.

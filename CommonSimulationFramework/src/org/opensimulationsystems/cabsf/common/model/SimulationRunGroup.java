@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel;
+package org.opensimulationsystems.cabsf.common.model;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -205,7 +205,7 @@ public class SimulationRunGroup {
 	 *            statically. A separate ID is created internally for each instance of the
 	 *            DistributedSystemSimulationRunGroup. Every new run through the
 	 *            Simulation Framework would generate a new instance ID (a UUID).
-	 * @param csfSimulationRunGroupConfigurationID
+	 * @param cabsfSimulationRunGroupConfigurationID
 	 *            An optional ID to track the configuration ( from the framework
 	 *            configuration file, not the simulation toolkit configuration file) of a
 	 *            simulation run group, which is a group of related simulation runs. For
@@ -219,11 +219,11 @@ public class SimulationRunGroup {
 	 *            simulation runs.
 	 */
 	public void setSimulationFrameworkOptions(final String simulationRunGroupID,
-			final String csfSimulationRunGroupConfigurationID,
+			final String cabsfSimulationRunGroupConfigurationID,
 			final HashMap<String, Object> userSpecifiedConfigurations) {
 		// Common-Simulation-Framework-specific IDs
 		this.simulationRunGroupID = simulationRunGroupID;
-		this.simulationRunGroupConfigurationID = csfSimulationRunGroupConfigurationID;
+		this.simulationRunGroupConfigurationID = cabsfSimulationRunGroupConfigurationID;
 		this.userSpecifiedConfigurations = userSpecifiedConfigurations;
 
 	}

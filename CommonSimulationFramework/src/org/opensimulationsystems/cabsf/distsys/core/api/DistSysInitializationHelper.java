@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
+import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
@@ -100,7 +100,7 @@ public class DistSysInitializationHelper {
 		distSysRunContext.setSimulationEngine(simRuntime);
 
 		// Set up manager for the distributed autonomous agents (such as the JADE agents) on behalf
-		// of the client of this API, such as the CSF JADE Controller Agent
+		// of the client of this API, such as the CABSF JADE Controller Agent
 		// TODO: Add this distributed system's id
 		DistributedAgentsManager distributedAgentsManager = new DistributedAgentsManager(distSysRunContext.getDistSysRunConfiguration().getDistributedSystemID(),
 				distSysRunContext, distSysRunContext.getDistSysRunConfiguration());
@@ -137,7 +137,7 @@ public class DistSysInitializationHelper {
 	}
 
 	/*
-	 * This method is caused to assign an existing AgentMapping object (created at CSF
+	 * This method is caused to assign an existing AgentMapping object (created at CABSF
 	 * initialization) to a simulation-side agent.
 	 */
 	public void assignNativeDistributedAutonomousAgent(Object nativeDistributedAutonomousAgent,

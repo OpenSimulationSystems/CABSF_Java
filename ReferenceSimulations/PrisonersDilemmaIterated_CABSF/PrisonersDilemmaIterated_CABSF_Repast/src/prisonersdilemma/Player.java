@@ -1,8 +1,8 @@
 package prisonersdilemma;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.AgentMapping;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 /**

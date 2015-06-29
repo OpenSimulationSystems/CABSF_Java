@@ -8,9 +8,9 @@ package org.opensimulationsystems.cabsf.sim.core.api;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.context.CsfRunContext;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.context.CabsfRunContext;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunConfiguration;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
@@ -24,7 +24,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.Simulatio
  * @version 0.1
  * @since 0.1
  */
-public class SimulationRunContext extends CsfRunContext {
+public class SimulationRunContext extends CabsfRunContext {
 	// protected SimulationRunGroupConfiguration simulationRunGroupConfiguration; //
 	// Simulation
 	// Run-group-wide

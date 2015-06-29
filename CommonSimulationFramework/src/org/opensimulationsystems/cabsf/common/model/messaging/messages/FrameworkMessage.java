@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages;
+package org.opensimulationsystems.cabsf.common.model.messaging.messages;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 /**
- * The Interface used throughout the CSF to represent the XML Document
- * (CsfMessageExchange). This interface contains several convenience methods for accessing
- * and populating different parts of the FrameworkMessage.
- * 
+ * The Interface used throughout the CABSF to represent the XML Document
+ * (CabsfMessageExchange). This interface contains several convenience methods for
+ * accessing and populating different parts of the FrameworkMessage.
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -17,13 +17,13 @@ import org.jdom2.Element;
 public interface FrameworkMessage {
 
 	/**
-	 * Adds the distributed autonomous agent to a CsfMessageExchange Document. Side effect
-	 * includes detaching the distributedAutononomousAgentElement from the current
+	 * Adds the distributed autonomous agent to a CabsfMessageExchange Document. Side
+	 * effect includes detaching the distributedAutononomousAgentElement from the current
 	 * Document. Generally you would no longer need to use the original Document. If you
 	 * do need to still use the original Document, it is best to clone the distributed
 	 * autonomous agent element prior to calling this method.
-	 * 
-	 * @param csfMessageExchangeDoc
+	 *
+	 * @param CabsfMessageExchangeDoc
 	 *            the document to add the distributed autonomous agent element to.
 	 * @param distributedAutononomousAgentElement
 	 *            the distributed autonomous agent element
@@ -32,13 +32,13 @@ public interface FrameworkMessage {
 	 *            Document before adding the new distributed autonomous agents.
 	 * @return the document
 	 */
-	public Document addDistributedAutonomousAgent(Document csfMessageExchangeDoc,
+	public Document addDistributedAutonomousAgent(Document CabsfMessageExchangeDoc,
 			Element distributedAutononomousAgentElement, boolean removeChildren);
 
 	/**
 	 * Gets the agent models element from the distributed autonomous agent element in the
 	 * XML
-	 * 
+	 *
 	 * @param distributedAutonomousAgentElement
 	 *            the distributed autonomous agent element
 	 * @return the agent models
@@ -46,19 +46,19 @@ public interface FrameworkMessage {
 	List<Element> getAgentModels(Element distributedAutonomousAgentElement);
 
 	/**
-	 * Gets the list of distributed autonomous agent elements from a CsfMessageExchange
+	 * Gets the list of distributed autonomous agent elements from a CabsfMessageExchange
 	 * document
-	 * 
-	 * @param csfMessageExchangeDoc
-	 *            the csf message exchange doc
+	 *
+	 * @param CabsfMessageExchangeDoc
+	 *            the cabsf message exchange doc
 	 * @return the distributed autonomous agent elements
 	 */
-	List<Element> getDistributedAutonomousAgentElements(Object csfMessageExchangeDoc);
+	List<Element> getDistributedAutonomousAgentElements(Object CabsfMessageExchangeDoc);
 
 	/**
 	 * Gets the distributed autonomous agent id from a distributed autonomous agent
 	 * element.
-	 * 
+	 *
 	 * @param distributedAutononomousAgentElement
 	 *            the distributed autononomous agent element
 	 * @return the distributed autonomous agent id
@@ -66,15 +66,15 @@ public interface FrameworkMessage {
 	String getDistributedAutonomousAgentID(Element distributedAutononomousAgentElement);
 
 	/**
-	 * Gets the CsfMessageExchange XML Document which thie FrameworkMessage wraps
-	 * 
+	 * Gets the CabsfMessageExchange XML Document which thie FrameworkMessage wraps
+	 *
 	 * @return the document
 	 */
 	Document getDocument();
 
 	/**
 	 * Gets the first agent model actor agent model ID from an agent model element
-	 * 
+	 *
 	 * @param agentModel
 	 *            the agent model
 	 * @return the first agent model actor agent model id
@@ -82,15 +82,15 @@ public interface FrameworkMessage {
 	String getFirstAgentModelActorAgentModelID(Element agentModel);
 
 	/**
-	 * Gets the CSF framework to distributed system command.
-	 * 
+	 * Gets the CABSF framework to distributed system command.
+	 *
 	 * @return the framework to distributed system command
 	 */
 	FRAMEWORK_COMMAND getFrameworkToDistributedSystemCommand();
 
 	/**
-	 * Gets the CSF framework to simulation engine command.
-	 * 
+	 * Gets the CABSF framework to simulation engine command.
+	 *
 	 * @return the framework to simulation engine command
 	 */
 	FRAMEWORK_COMMAND getFrameworkToSimulationEngineCommand();
@@ -99,7 +99,7 @@ public interface FrameworkMessage {
 	 * Gets the next agent model actor in the distributed autonomous agent element. If the
 	 * cachedAgentModelTemplate is null, it get the first element and returns it.
 	 * Otherwise, it creates a new element and returns it.
-	 * 
+	 *
 	 * @param distributedAutonomousAgent
 	 *            the distributed autonomous agent element
 	 * @param cachedAgentModelTemplate
@@ -110,12 +110,12 @@ public interface FrameworkMessage {
 			Element cachedAgentModelTemplate);
 
 	/**
-	 * Gets the next distributed autonomous agent in the CsfMessageExchange Document. If
+	 * Gets the next distributed autonomous agent in the CabsfMessageExchange Document. If
 	 * the cachedDistributedAutonomousAgentTemplate is null, it get the first element and
 	 * returns it. Otherwise, it creates a new element and returns it.
-	 * 
+	 *
 	 * @param doc
-	 *            the CsfMessageExchange Document
+	 *            the CabsfMessageExchange Document
 	 * @param cachedDistributedAutonomousAgentTemplate
 	 *            the cache distributed autonomous agent template
 	 * @return the next distributed autonomous agent
@@ -126,7 +126,7 @@ public interface FrameworkMessage {
 	/**
 	 * Gets the location element in the simulation-specific section for the next agent
 	 * model actor.
-	 * 
+	 *
 	 * @param actor
 	 *            the actor
 	 * @param cachedLocationTemplate
@@ -141,7 +141,7 @@ public interface FrameworkMessage {
 	 * Gets the actor's own location element in the simulation-specific section for the
 	 * next agent model actor for a given distributed autonomous agent element. The
 	 * actor's own location is in the CommonEnvironmentChanges section.
-	 * 
+	 *
 	 * @param distributedAutononomousAgentElement
 	 *            the distributed autononomous agent element
 	 * @param msg
@@ -155,7 +155,7 @@ public interface FrameworkMessage {
 	 * Gets the actor's own location element in the simulation-specific section for the
 	 * next agent model actor in the next distributed autonomous agent. The actor's own
 	 * location is in the CommonEnvironmentChanges section.
-	 * 
+	 *
 	 * @param msg
 	 *            the FrameworkMessage
 	 * @return the self location list of grid points
@@ -166,7 +166,7 @@ public interface FrameworkMessage {
 
 	/**
 	 * Gets the simulation defined environment changes element.
-	 * 
+	 *
 	 * @param actor
 	 *            the actor
 	 * @return the simulation defined environment changes element
@@ -175,14 +175,14 @@ public interface FrameworkMessage {
 
 	/**
 	 * Gets the status.
-	 * 
+	 *
 	 * @return the status
 	 */
 	STATUS getStatus();
 
 	/**
 	 * Populate this location in agent model actor.
-	 * 
+	 *
 	 * @param actor
 	 *            the actor
 	 * @param gridPointX
@@ -200,15 +200,15 @@ public interface FrameworkMessage {
 
 	/**
 	 * Removes the distributed autonomous agents from a Document
-	 * 
-	 * @param csfMessageExchangeDoc
-	 *            the csf message exchange doc
+	 *
+	 * @param CabsfMessageExchangeDoc
+	 *            the cabsf message exchange doc
 	 */
-	public void removeDistributedAutonomousAgents(Document csfMessageExchangeDoc);
+	public void removeDistributedAutonomousAgents(Document CabsfMessageExchangeDoc);
 
 	/**
 	 * Sets the distributed autonomous agent id.
-	 * 
+	 *
 	 * @param distributedAutonomousAgent
 	 *            the distributed autonomous agent
 	 * @param ID
@@ -219,7 +219,7 @@ public interface FrameworkMessage {
 
 	/**
 	 * Sets the framework to distributed system command.
-	 * 
+	 *
 	 * @param frameworkToDistributedSystemCommand
 	 *            the new framework to distributed system command
 	 */
@@ -228,7 +228,7 @@ public interface FrameworkMessage {
 
 	/**
 	 * Sets the framework to simulation engine command.
-	 * 
+	 *
 	 * @param frameworkToDistributedSystemCommand
 	 *            the new framework to simulation engine command
 	 */
@@ -237,7 +237,7 @@ public interface FrameworkMessage {
 
 	/**
 	 * Sets the ID for actor in agent model.
-	 * 
+	 *
 	 * @param actor
 	 *            the actor
 	 * @param ID
@@ -247,7 +247,7 @@ public interface FrameworkMessage {
 
 	/**
 	 * Sets the status.
-	 * 
+	 *
 	 * @param readyToStartSimulation
 	 *            the new status
 	 */
@@ -255,14 +255,14 @@ public interface FrameworkMessage {
 
 	/**
 	 * To pretty printed xml string.
-	 * 
+	 *
 	 * @return the string
 	 */
 	String toPrettyPrintedXMLString();
 
 	/**
 	 * Transform to common messaging xml string.
-	 * 
+	 *
 	 * @param prettyPrint
 	 *            the pretty print
 	 * @return the string

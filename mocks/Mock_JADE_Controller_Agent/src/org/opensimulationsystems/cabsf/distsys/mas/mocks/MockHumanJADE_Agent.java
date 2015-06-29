@@ -8,9 +8,9 @@ import jzombies.JZombies_CABSF_Helper;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfRuntimeException;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
@@ -45,7 +45,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 			logPrefix = "[MockHumanJADE_Agent " + distributedSystemID + " "
 					+ distributedAutonomousAgentID + " " + distAutAgentModelID + "]";
 
-			jade_MAS_AgentContext.initializeCsfAgent("TESTconfigFile");
+			jade_MAS_AgentContext.initializeCabsfAgent("TESTconfigFile");
 		} catch (final JDOMException e) {
 			throw new CabsfRuntimeException("Error initializing the agent", e);
 		} catch (final IOException e) {

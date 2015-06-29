@@ -8,9 +8,9 @@ package org.opensimulationsystems.cabsf.distsys.core.api;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.context.CsfRunContext;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.context.CabsfRunContext;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
@@ -26,7 +26,7 @@ import org.opensimulationsystems.cabsf.distsys.core.api.simulationruntime.Simula
  * Adapter developers should instantiate this class first before the Simulation-Toolkit-specific
  * Context object.
  */
-public class DistSysRunContext extends CsfRunContext {
+public class DistSysRunContext extends CabsfRunContext {
 	/**
 	 * <pre>
 	 *           0..*     0..*

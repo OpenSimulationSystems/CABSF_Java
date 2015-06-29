@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel;
+package org.opensimulationsystems.cabsf.common.model;
 
 // TODO: Auto-generated Javadoc
 // NON_CABSF_SIMULATION Run RepastS Programmatically without the Common
@@ -7,7 +7,7 @@ package org.opensimulationsystems.cabsf.common.csfmodel;
 // Framework
 /**
  * The type of simulation. This is used to identify whether a simulation will be run with
- * the full CSF functionality or as a simple ABMS system only simulation (such as an
+ * the full CABSF functionality or as a simple ABMS system only simulation (such as an
  * RepastS-only simulation).
  *
  * @author Jorge Calderon

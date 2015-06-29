@@ -8,15 +8,15 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.Filter;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfMessagingRuntimeException;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfRuntimeException;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.STATUS;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfMessagingRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.STATUS;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationAPI;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunGroupContext;
@@ -53,7 +53,7 @@ public class RepastS_SimulationAdapterAPI {
 		return instance;
 	}
 
-	/** The CSF-wide Simulation API. Intended to be used across ABMS systems. */
+	/** The CABSF-wide Simulation API. Intended to be used across ABMS systems. */
 	private final SimulationAPI simulationAPI = SimulationAPI.getInstance();
 
 	/** The simulation tool name to set in simulation API. */
@@ -111,13 +111,13 @@ public class RepastS_SimulationAdapterAPI {
 
 	/**
 	 * Initializes the Common Simulation Framework on the RepastS simulation side, based
-	 * on the supplied CSF configuration property file. Calls the simulation-adaptor-wide
+	 * on the supplied CABSF configuration property file. Calls the simulation-adaptor-wide
 	 * Simulation API to initialize the simulation run group.
 	 *
 	 * NOTE: The current version initialization is hard coded to only work with the two
-	 * reference implementation simulations. The CSF configuration filename is used to
+	 * reference implementation simulations. The CABSF configuration filename is used to
 	 * switch the configuration based on the simulation. In the future, this filename will
-	 * be used to read an XML configuration file from the file system so that the CSF can
+	 * be used to read an XML configuration file from the file system so that the CABSF can
 	 * be used for any simulation.
 	 *
 	 * @param cabsfConfigurationFileName
@@ -143,7 +143,7 @@ public class RepastS_SimulationAdapterAPI {
 	// LOW: Allow the same simulation agent class to be both distributed and
 	// non-distributed.
 	/**
-	 * Initializes a single CSF Repast Simphony simulation run. This method configures the
+	 * Initializes a single CABSF Repast Simphony simulation run. This method configures the
 	 * (already-created in the simulation API initialization) AgentMapping objects.
 	 *
 	 * @param nativeRepastScontextForThisRun

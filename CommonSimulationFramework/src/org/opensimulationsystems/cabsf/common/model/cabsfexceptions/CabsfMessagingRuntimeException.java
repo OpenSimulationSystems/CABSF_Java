@@ -1,9 +1,9 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
+package org.opensimulationsystems.cabsf.common.model.cabsfexceptions;
 
 // TODO: Auto-generated Javadoc
 /**
- * A runtime exception in the CSF related to messaging. *
- * 
+ * A runtime exception in the CABSF related to messaging. *
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -11,15 +11,15 @@ package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
 public class CabsfMessagingRuntimeException extends RuntimeException {
 
 	/**
-	 * Instantiates a new csf messaging runtime exception.
+	 * Instantiates a new cabsf messaging runtime exception.
 	 */
 	public CabsfMessagingRuntimeException() {
 		super();
 	}
 
 	/**
-	 * Instantiates a new csf messaging runtime exception.
-	 * 
+	 * Instantiates a new cabsf messaging runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 */
@@ -28,8 +28,8 @@ public class CabsfMessagingRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * Instantiates a new csf messaging runtime exception.
-	 * 
+	 * Instantiates a new cabsf messaging runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 * @param arg1
@@ -40,8 +40,8 @@ public class CabsfMessagingRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * Instantiates a new csf messaging runtime exception.
-	 * 
+	 * Instantiates a new cabsf messaging runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 * @param arg1
@@ -57,8 +57,8 @@ public class CabsfMessagingRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * Instantiates a new csf messaging runtime exception.
-	 * 
+	 * Instantiates a new cabsf messaging runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 */

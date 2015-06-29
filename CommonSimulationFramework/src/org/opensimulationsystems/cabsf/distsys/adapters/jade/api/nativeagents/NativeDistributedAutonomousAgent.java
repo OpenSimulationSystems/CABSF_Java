@@ -1,6 +1,6 @@
 package org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
 
 // TODO: Auto-generated Javadoc

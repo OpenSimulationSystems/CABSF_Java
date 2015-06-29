@@ -1,5 +1,5 @@
 /**
- * Package for internal CSF functionality for managing distributed systems and agent mappings
+ * Package for internal CABSF functionality for managing distributed systems and agent mappings
  * 
  * @author Jorge Calderon
  * 

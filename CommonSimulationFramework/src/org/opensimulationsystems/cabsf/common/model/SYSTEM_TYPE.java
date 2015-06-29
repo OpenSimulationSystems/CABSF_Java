@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel;
+package org.opensimulationsystems.cabsf.common.model;
 
 /**
  * The type of entity receiving or sending messages.

@@ -3,10 +3,10 @@ package org.opensimulationsystems.cabsf.sim.core.api;
 import java.io.IOException;
 
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
+import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunConfiguration;
 import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunGroupConfiguration;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
@@ -122,7 +122,7 @@ public class SimulationInitializationHelper {
 	}
 
 	/*
-	 * This method is caused to assign an existing AgentMapping object (created at CSF
+	 * This method is caused to assign an existing AgentMapping object (created at CABSF
 	 * initialization) to a simulation-side agent.
 	 */
 	/**

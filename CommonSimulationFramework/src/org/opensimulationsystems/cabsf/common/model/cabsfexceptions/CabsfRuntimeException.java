@@ -1,8 +1,8 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
+package org.opensimulationsystems.cabsf.common.model.cabsfexceptions;
 
 /**
- * A generic runtime exception in the CSF.
- * 
+ * A generic runtime exception in the CABSF.
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -10,15 +10,15 @@ package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
 public class CabsfRuntimeException extends RuntimeException {
 
 	/**
-	 * Instantiates a new csf runtime exception.
+	 * Instantiates a new cabsf runtime exception.
 	 */
 	public CabsfRuntimeException() {
 		super();
 	}
 
 	/**
-	 * Instantiates a new csf runtime exception.
-	 * 
+	 * Instantiates a new cabsf runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 */
@@ -27,8 +27,8 @@ public class CabsfRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * Instantiates a new csf runtime exception.
-	 * 
+	 * Instantiates a new cabsf runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 * @param arg1
@@ -39,8 +39,8 @@ public class CabsfRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * Instantiates a new csf runtime exception.
-	 * 
+	 * Instantiates a new cabsf runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 * @param arg1
@@ -56,8 +56,8 @@ public class CabsfRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * Instantiates a new csf runtime exception.
-	 * 
+	 * Instantiates a new cabsf runtime exception.
+	 *
 	 * @param arg0
 	 *            the arg0
 	 */

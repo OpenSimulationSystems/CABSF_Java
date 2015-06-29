@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.context;
+package org.opensimulationsystems.cabsf.common.model.context;
 
 /**
  * The parent run context class of the distributed system and simulation run contexts.
@@ -7,6 +7,6 @@ package org.opensimulationsystems.cabsf.common.csfmodel.context;
  * @version 0.1
  * @since 0.1
  */
-public class CsfRunContext extends AbstractContext {
+public class CabsfRunContext extends AbstractContext {
 
 }

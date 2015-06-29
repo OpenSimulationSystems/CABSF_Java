@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages;
+package org.opensimulationsystems.cabsf.common.model.messaging.messages;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -3,7 +3,7 @@ package prisonersdilemma;
 import java.math.BigInteger;
 
 import org.codehaus.groovy.runtime.typehandling.LongMath;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfRuntimeException;
 
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;

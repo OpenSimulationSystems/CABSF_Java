@@ -11,8 +11,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.SIMULATION_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
@@ -223,7 +223,7 @@ public class GameAdministrator {
 				final Iterable<Object> csfRepastContextIterable = RunState.getInstance()
 						.getMasterContext()
 						.getAgentLayer(RepastS_SimulationRunContext.class);
-				simulationType = repastS_AgentContext.initializeCsfAgent(
+				simulationType = repastS_AgentContext.initializeCabsfAgent(
 						simulationAgentsClasses, csfRepastContextIterable);
 			}
 		} catch (final JDOMException e) {

@@ -20,7 +20,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfRuntimeException;
 import org.xml.sax.InputSource;
 
 /**
@@ -43,6 +43,9 @@ public class XMLUtilities {
 	 */
 	static public String convertDocumentToXMLString(final Document document,
 			final boolean prettyPrint) {
+		if (document == null) {
+			throw new CabsfRuntimeException("Unable to convert document to string.");
+		}
 		return convertDocumentToXMLString(document.getRootElement(), prettyPrint);
 	}
 
@@ -172,8 +175,8 @@ public class XMLUtilities {
 
 			final Element root = document.getRootElement();
 			System.out
-			.println("[Common Simulation Framework - internal] Successfully loaded template file: "
-					+ root.getName());
+					.println("[Common Simulation Framework - internal] Successfully loaded template file: "
+							+ root.getName());
 		} finally {
 			if (inputStream != null) {
 				inputStream.close();
@@ -205,8 +208,8 @@ public class XMLUtilities {
 
 			final Element root = document.getRootElement();
 			System.out
-			.println("[Common Simulation Framework - internal] Successfully loaded template file: "
-					+ root.getName());
+					.println("[Common Simulation Framework - internal] Successfully loaded template file: "
+							+ root.getName());
 		} finally {
 			if (inputStream != null) {
 				inputStream.close();

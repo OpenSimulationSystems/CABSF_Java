@@ -1,8 +1,8 @@
-package org.opensimulationsystems.cabsf.common.csfmodel;
+package org.opensimulationsystems.cabsf.common.model;
 
 /**
  * Stores the mapping of a simulation agent such as Repast Simphony agent with the
- * CSF-wide IDs which jointly uniquely identify an agent across the CSF: Distributed
+ * CABSF-wide IDs which jointly uniquely identify an agent across the CABSF: Distributed
  * System ID (Such as for a JADE MAS), Distributed Autonomous Agent ID (such as for a JADE
  * Agent), and Distributed Autonomous Agent Model ID (ID for the part of the JADE agent
  * that corresponds to the RepastS representational agent).

@@ -10,11 +10,11 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
-import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 import org.opensimulationsystems.cabsf.common.internal.systems.AgentMappingHelper;
+import org.opensimulationsystems.cabsf.common.model.AgentMapping;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,7 +30,7 @@ public class SimulationRunGroupConfiguration {
 	private final String simulationEngineID = "REPAST_SIMPHONY";
 
 	/** The namespace str. */
-	private final String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
+	private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
 
 	/** The namespace. */
 	private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
@@ -84,7 +84,7 @@ public class SimulationRunGroupConfiguration {
 
 		/*
 		 * if (cabsfConfigurationFileName
-		 * .equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
+		 * .equals("PLACEHOLDER_FOR_CABSF_CONFIGURATION_FILE")) {
 		 * this.simulationAgentsBelongToOneClass = true; }
 		 */
 

@@ -1,6 +1,6 @@
 package prisonersdilemma;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
 
 /**
  * A temporary Player (subclass of Player) created in place of the parent Player object.

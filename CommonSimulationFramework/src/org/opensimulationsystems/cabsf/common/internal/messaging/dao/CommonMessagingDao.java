@@ -1,14 +1,15 @@
 package org.opensimulationsystems.cabsf.common.internal.messaging.dao;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 
 /**
- * The Interface for the DAO for reading and writing the CsfMessageExchange XML messages.
- * 
+ * The Interface for the DAO for reading and writing the CabsfMessageExchange XML
+ * messages.
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -22,7 +23,7 @@ public interface CommonMessagingDao {
 
 	/**
 	 * Initialize simulation framework common messaging interface.
-	 * 
+	 *
 	 * @param messagingConnectionString
 	 *            the messaging connection string
 	 */
@@ -31,7 +32,7 @@ public interface CommonMessagingDao {
 
 	/**
 	 * Listen for message from simulation engine.
-	 * 
+	 *
 	 * @param targetSystemType
 	 *            the target system type
 	 * @param clientID
@@ -43,7 +44,7 @@ public interface CommonMessagingDao {
 
 	/**
 	 * Read framework message from distributed system.
-	 * 
+	 *
 	 * @param clientID
 	 *            the client id
 	 * @return the framework message
@@ -52,7 +53,7 @@ public interface CommonMessagingDao {
 
 	/**
 	 * Read framework message from simulation administrator.
-	 * 
+	 *
 	 * @param clientID
 	 *            the client id
 	 * @return the framework message
@@ -62,7 +63,7 @@ public interface CommonMessagingDao {
 
 	/**
 	 * Request environment information.
-	 * 
+	 *
 	 * @param targetSystemType
 	 *            the target system type
 	 * @param clientID
@@ -74,7 +75,7 @@ public interface CommonMessagingDao {
 
 	/**
 	 * Send messages to distributed agents.
-	 * 
+	 *
 	 * @param simulationRunContext
 	 *            the simulation run context
 	 * @param frameworkMessage
@@ -88,7 +89,7 @@ public interface CommonMessagingDao {
 
 	/**
 	 * Send message to simulation engine.
-	 * 
+	 *
 	 * @param distSysRunContext
 	 *            the dist sys run context
 	 * @param frameworkMessage

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This configurationf file is used for both the Simulation Engine -->
+<!-- This configuration file is used for both the Simulation Engine -->
 <!-- and each Distributed System -->
-<CabsfSimulationConfiguration xmlns="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0">
+<CabsfSimulationConfiguration xmlns="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0">
 	<Name>JZombies CABSF JADE-Repast Simphony Simulation</Name>
 	<!-- optional -->
 	<ConfigVersion>1.0</ConfigVersion>

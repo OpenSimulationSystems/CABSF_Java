@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.SIMULATION_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.context.AgentContext;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
+import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.context.AgentContext;
 
 /**
  * The Repast Simphony Agent Context.
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -35,7 +35,7 @@ public class RepastS_AgentContext extends AgentContext {
 
 	/**
 	 * Gets the repast s_ simulation run context.
-	 * 
+	 *
 	 * @return the repast s_ simulation run context
 	 */
 	public RepastS_SimulationRunContext getRepastS_SimulationRunContext() {
@@ -44,7 +44,7 @@ public class RepastS_AgentContext extends AgentContext {
 
 	/**
 	 * Gets the repast s_ simulation run group context.
-	 * 
+	 *
 	 * @return the repast s_ simulation run group context
 	 */
 	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
@@ -53,39 +53,35 @@ public class RepastS_AgentContext extends AgentContext {
 
 	/**
 	 * Initializes the RepastS agent. Returns SIMULATION_TYPE to identify whether this is
-	 * part of a CSF simulation or regular simulation. If it is part of the CSF
+	 * part of a CABSF simulation or regular simulation. If it is part of the CABSF
 	 * simulation, it checks whether initialization has occurred. if not, it initializes
 	 * the simulation for this agent.
-	 * 
+	 *
 	 * @param simulationAgentsClasses
 	 *            the simulation agents classes
-	 * @param csfRepastContextIterable
-	 *            the csf repast context iterable
+	 * @param cabsfRepastContextIterable
+	 *            the cabsf repast context iterable
 	 * @return the simulation type
 	 * @throws JDOMException
 	 *             the JDOM exception
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public SIMULATION_TYPE initializeCsfAgent(
+	public SIMULATION_TYPE initializeCabsfAgent(
 			final Iterable<Class> simulationAgentsClasses,
-			final Iterable<Object> csfRepastContextIterable) throws JDOMException,
+			final Iterable<Object> cabsfRepastContextIterable) throws JDOMException,
 			IOException {
 		// Get a hold of the REpast Simulation Run Context. The agent authors only use
 		// this API class.
 		if (!bypassRepastRuntimeForTestingPurposes
 				&& repastS_SimulationRunContext == null) {
 			@SuppressWarnings("unchecked")
-			// Iterable<Class> simulationAgentsClasses =
-			// RunState.getInstance().getMasterContext().getAgentTypes();
-			// Iterable<Object> csfRepastContextIterable =
-			// RunState.getInstance().getMasterContext().getAgentLayer(RepastS_SimulationRunContext.class);
 			RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 
 			// Look to see if the Repast Simulation Context has been created
-			// If not that means that this is not a CSF simulation run
+			// If not that means that this is not a CABSF simulation run
 			try {
-				repastS_SimulationRunContext = (RepastS_SimulationRunContext) csfRepastContextIterable
+				repastS_SimulationRunContext = (RepastS_SimulationRunContext) cabsfRepastContextIterable
 						.iterator().next();
 			} catch (final NoSuchElementException e) {
 				return SIMULATION_TYPE.NON_CABSF_SIMULATION;
@@ -103,7 +99,7 @@ public class RepastS_AgentContext extends AgentContext {
 
 	/**
 	 * Sets the bypass repast runtime for testing purposes.
-	 * 
+	 *
 	 * @param bypassRepastRuntimeForTestingPurposes
 	 *            the new bypass repast runtime for testing purposes
 	 */
@@ -114,7 +110,7 @@ public class RepastS_AgentContext extends AgentContext {
 
 	/**
 	 * Sets the repast s_ simulation run context.
-	 * 
+	 *
 	 * @param repastS_SimulationRunContext
 	 *            the new repast s_ simulation run context
 	 */
@@ -125,7 +121,7 @@ public class RepastS_AgentContext extends AgentContext {
 
 	/**
 	 * Sets the repast s_ simulation run group context.
-	 * 
+	 *
 	 * @param repastS_SimulationRunGroupContext
 	 *            the new repast s_ simulation run group context
 	 */

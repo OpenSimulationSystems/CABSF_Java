@@ -6,18 +6,18 @@ import jade.lang.acl.ACLMessage;
 
 import java.util.UUID;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
 
 /**
  * The wrapper for holding on to the IDs to uniquely identify a distributed autonomous
  * agent within a distributed system.
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
  */
-public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomousAgent {
+public class CabsfDistributedJADEagentWrapper implements NativeDistributedAutonomousAgent {
 
 	/** The aid. */
 	private final AID aid;
@@ -38,8 +38,8 @@ public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomo
 	private final Agent jadeControllerAgent;
 
 	/**
-	 * Instantiates a new csf distributed jad eagent wrapper.
-	 * 
+	 * Instantiates a new cabsf distributed jade agent wrapper.
+	 *
 	 * @param aid
 	 *            the aid
 	 * @param distributedSystemID
@@ -53,7 +53,7 @@ public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomo
 	 * @param jadeControllerAgent
 	 *            the jade controller agent
 	 */
-	public CsfDistributedJADEagentWrapper(final AID aid,
+	public CabsfDistributedJADEagentWrapper(final AID aid,
 			final String distributedSystemID, final String distributedAutonomousAgentID,
 			final String distAutAgentModelID, final String modelName,
 			final Agent jadeControllerAgent) {
@@ -71,7 +71,8 @@ public class CsfDistributedJADEagentWrapper implements NativeDistributedAutonomo
 	 * @see org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.
 	 * NativeDistributedAutonomousAgent#getDistributedAutonomousAgentID()
 	 */
-public String getDistributedAutonomousAgentID() {
+	@Override
+	public String getDistributedAutonomousAgentID() {
 		return distributedAutonomousAgentID;
 	}
 
@@ -102,7 +103,7 @@ public String getDistributedAutonomousAgentID() {
 	 * 
 	 * @see org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.
 	 * NativeDistributedAutonomousAgent
-	 * #receiveMessage(org.opensimulationsystems.cabsf.common.csfmodel
+	 * #receiveMessage(org.opensimulationsystems.cabsf.common.model
 	 * .messaging.messages.FrameworkMessage, java.lang.String, java.lang.String,
 	 * org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock)
 	 */

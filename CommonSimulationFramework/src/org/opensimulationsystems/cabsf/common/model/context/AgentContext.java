@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.context;
+package org.opensimulationsystems.cabsf.common.model.context;
 
 /**
  * The AgentContext parent object which is the parent of the individual agent context on

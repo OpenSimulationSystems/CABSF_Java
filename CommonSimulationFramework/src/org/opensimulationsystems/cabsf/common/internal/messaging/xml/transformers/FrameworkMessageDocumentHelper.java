@@ -7,11 +7,11 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.STATUS;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.STATUS;
 
 // TODO: Auto-generated Javadoc
 /*
@@ -19,7 +19,7 @@ import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilitie
  */
 /**
  * The helper class for the FrameworkMessageImpl implementation of the FrameworkMessage
- * interface wrapping the CsfMessageExchange XML Document
+ * interface wrapping the CabsfMessageExchange XML Document
  * 
  * @author Jorge Calderon
  * @version 0.1
@@ -31,19 +31,19 @@ public class FrameworkMessageDocumentHelper {
 	FrameworkMessage frameworkMessage;
 
 	/** The framework to distributed system command_ x path. */
-	final private String frameworkToDistributedSystemCommand_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:AllDistributedAutonomousAgents/x:ControlMessages/x:Command";
+	final private String frameworkToDistributedSystemCommand_XPath = "/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:AllDistributedAutonomousAgents/x:ControlMessages/x:Command";
 
 	/** The framework to simulation engine commnad_ x path. */
-	final private String frameworkToSimulationEngineCommnad_XPath = "/x:CsfMessageExchange/x:ReceivingEntities/x:SimulationSystem/x:ControlMessages/x:Command";
+	final private String frameworkToSimulationEngineCommnad_XPath = "/x:CabsfMessageExchange/x:ReceivingEntities/x:SimulationSystem/x:ControlMessages/x:Command";
 
 	/** The framework status_ x path. */
-	final private String frameworkStatus_XPath = "/x:CsfMessageExchange/x:Status";
+	final private String frameworkStatus_XPath = "/x:CabsfMessageExchange/x:Status";
 
 	/** The distributed autonomous agents xpath. */
-	final private String distributedAutonomousAgentsXpath = "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents";
+	final private String distributedAutonomousAgentsXpath = "/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents";
 	// TODO: Get this from the configuration
 	/** The namespace str. */
-	private final String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
+	private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
 
 	/** The namespace. */
 	private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
@@ -66,7 +66,7 @@ public class FrameworkMessageDocumentHelper {
 	 * current Document
 	 */
 	/**
-	 * Adds the distributed autonomous agent to a CsfMessageExchange Document. Side effect
+	 * Adds the distributed autonomous agent to a CabsfMessageExchange Document. Side effect
 	 * includes detaching the distributedAutononomousAgentElement from the current
 	 * Document. Generally you would no longer need to use the original Document. If you
 	 * do need to still use the original Document, it is best to clone the distributed
@@ -158,7 +158,7 @@ public class FrameworkMessageDocumentHelper {
 	}
 
 	/**
-	 * Gets the list of distributed autonomous agent elements from a CsfMessageExchange
+	 * Gets the list of distributed autonomous agent elements from a CabsfMessageExchange
 	 * document
 	 * 
 	 * @param doc
@@ -446,7 +446,7 @@ public class FrameworkMessageDocumentHelper {
 		// TODO: Make the namespace configurable
 		List<Element> xPathSearchedNodes = (List<Element>) XMLUtilities.executeXPath(
 				frameworkMessage.getDocument(), frameworkStatus_XPath,
-				"http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0",
+				"http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0",
 				elementFilter);
 		System.out.println(xPathSearchedNodes.get(0).getValue());
 
@@ -556,7 +556,7 @@ Element distributedAutonomousAgent, String ID) {
 		// TODO: Make the namespace configurable
 		List<Element> xPathSearchedNodes = (List<Element>) XMLUtilities.executeXPath(
 				frameworkMessage.getDocument(), frameworkToSimulationEngineCommnad_XPath,
-				"http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0",
+				"http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0",
 				elementFilter);
 		System.out.println(xPathSearchedNodes.get(0).getValue());
 

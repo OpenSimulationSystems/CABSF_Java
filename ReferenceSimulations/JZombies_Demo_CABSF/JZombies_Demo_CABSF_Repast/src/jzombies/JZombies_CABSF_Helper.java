@@ -10,12 +10,12 @@ import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.context.AgentContext;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.AgentMapping;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.context.AgentContext;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
@@ -30,7 +30,7 @@ public class JZombies_CABSF_Helper {
 	private RepastS_AgentContext repastS_AgentContext;
 
 	// TODO: Get this from the configuration
-	private final String namespaceStr = "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0";
+	private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
 	private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 	private JADE_MAS_AgentContext jade_MAS_AgentContext;
 
@@ -40,7 +40,7 @@ public class JZombies_CABSF_Helper {
 		this.jade_MAS_AgentContext = jade_MAS_AgentContext;
 		agentContext = jade_MAS_AgentContext;
 		try {
-			jade_MAS_AgentContext.initializeCsfAgent("TEST");
+			jade_MAS_AgentContext.initializeCabsfAgent("TEST");
 		} catch (final JDOMException e) {
 			// TODO Auto-generated catch block
 

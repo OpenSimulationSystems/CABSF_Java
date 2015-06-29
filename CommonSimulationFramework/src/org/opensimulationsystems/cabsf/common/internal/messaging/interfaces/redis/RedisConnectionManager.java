@@ -1,6 +1,6 @@
 package org.opensimulationsystems.cabsf.common.internal.messaging.interfaces.redis;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

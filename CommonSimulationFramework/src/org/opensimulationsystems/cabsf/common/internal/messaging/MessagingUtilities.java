@@ -45,18 +45,11 @@ public class MessagingUtilities {
 	static public org.jdom2.Document createCachedMessageExchangeTemplateWithPlaceholders()
 			throws JDOMException, IOException {
 		Document doc = null;
-		try {
-			// doc = XMLUtilities
-			// .filenameStrTojdom2Document("../../../CommonSimulationFramework/bin/org/opensimulationsystems/cabsf/common/resources/messageexchange/CabsfMessageExchangeTemplate.xml");
-			doc = XMLUtilities
-					.filenameStrTojdom2Document(
-							"org/opensimulationsystems/cabsf/common/resources/messageexchange/CabsfMessageExchangeTemplate.xml",
-							true);
+		doc = XMLUtilities
+				.filenameStrTojdom2Document(
+						"org/opensimulationsystems/cabsf/common/resources/messageexchange/CabsfMessageExchangeTemplate.xml",
+						true);
 
-		} catch (final Exception e) {
-			// doc = XMLUtilities
-			// .filenameStrTojdom2Document("../CommonSimulationFramework/bin/org/opensimulationsystems/cabsf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
-		}
 		assert (doc != null);
 		return doc;
 	}
@@ -65,7 +58,7 @@ public class MessagingUtilities {
 	 * static public org.jdom2.Document createDocumentFromFile(final File file) throws
 	 * JDOMException, IOException { // FIXME: Use the current path of this java file
 	 * Document doc = null; try { doc = XMLUtilities.fileTojdom2Document(file);
-	 * 
+	 *
 	 * } catch (final Exception e) { } assert (doc != null); return doc; }
 	 */
 
@@ -84,11 +77,7 @@ public class MessagingUtilities {
 			final String filePath) throws JDOMException, IOException {
 		// FIXME: Use the current path of this java file
 		Document doc = null;
-		try {
-			doc = XMLUtilities.filenameStrTojdom2Document(filePath, false);
-
-		} catch (final Exception e) {
-		}
+		doc = XMLUtilities.filenameStrTojdom2Document(filePath, false);
 		assert (doc != null);
 		return doc;
 	}

@@ -1,6 +1,6 @@
 package org.opensimulationsystems.cabsf.distsys.adapters.jade.api;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 
 /**
  * The Interface JadeControllerMock used for testing mock JADE agents.

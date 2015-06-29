@@ -1,11 +1,11 @@
 package org.opensimulationsystems.cabsf.distsys.core.api;
 
 import org.jdom2.Document;
-import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.context.CsfRunGroupContext;
+import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.context.CabsfRunGroupContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 
-public class DistSysRunGroupContext extends CsfRunGroupContext  {
+public class DistSysRunGroupContext extends CabsfRunGroupContext  {
 	private SimulationRunGroup simulationRunGroup;
 	private DistSysRunGroupConfiguration distSysRunGroupConfiguration;
 

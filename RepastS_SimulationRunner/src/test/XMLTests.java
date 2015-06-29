@@ -12,10 +12,10 @@ import org.jdom2.JDOMException;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_RunContext;
@@ -49,7 +49,7 @@ public class XMLTests implements JadeControllerMock {
 	public static void setUpBeforeClass() throws Exception {
 		repastS_AgentContext = new RepastS_AgentContext();
 		repastS_AgentContext.setBypassRepastRuntimeForTestingPurposes(true);
-		repastS_AgentContext.initializeCsfAgent(null, null);
+		repastS_AgentContext.initializeCabsfAgent(null, null);
 
 		final JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
 		jade_MAS_AdapterAPI.initializeAPI("TEMP");
@@ -62,7 +62,7 @@ public class XMLTests implements JadeControllerMock {
 		prisonersDilemma_CSF = new PrisonersDilemma_CSF(repastS_AgentContext);
 
 		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
-		jade_MAS_AgentContext.initializeCsfAgent("TEST");
+		jade_MAS_AgentContext.initializeCabsfAgent("TEST");
 
 		simulationAPI = SimulationAPI.getInstance();
 		simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
@@ -87,7 +87,7 @@ public class XMLTests implements JadeControllerMock {
 	/*
 	 * static private Document documentTemplateInstance = null; static private String
 	 * namespaceStr =
-	 * "http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0"; static
+	 * "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0"; static
 	 * private Namespace namespace = Namespace.getNamespace("x", namespaceStr); static
 	 * private Element agentModelTemplate = null; static private Element locationTemplate;
 	 * static private Filter<Element> elementFilter = new
@@ -195,7 +195,7 @@ public class XMLTests implements JadeControllerMock {
 	 * namespace).setText(GridPointY); return location; }
 	 */
 
-	String xmlString = "<DistributedAutonomousAgent xmlns=\"http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0\"\r\n"
+	String xmlString = "<DistributedAutonomousAgent xmlns=\"http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0\"\r\n"
 			+ "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n"
 			+ "          <Name />\r\n"
 			+ "          <ID>distAutAgent2</ID>\r\n"

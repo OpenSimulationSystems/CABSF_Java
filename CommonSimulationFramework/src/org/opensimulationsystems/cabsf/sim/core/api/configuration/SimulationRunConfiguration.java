@@ -1,6 +1,6 @@
 package org.opensimulationsystems.cabsf.sim.core.api.configuration;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 

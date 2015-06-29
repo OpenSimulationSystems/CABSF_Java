@@ -1,4 +1,4 @@
-<CsfMessageExchange xmlns="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<CsfMessageExchange xmlns="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Identifiers>
     <Simulation>
       <!-- Required by CSF, but optional in the configuration -->
@@ -54,7 +54,7 @@
             </AllAgentModels>
             <!-- Message submitted to this one agent model in the parent distributed 
 							autonomous agent -->
-            <x:AgentModel xmlns:x="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0">
+            <x:AgentModel xmlns:x="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0">
               <Actor>
                 <!-- RE: Self or another agent model -->
                 <ID>distAutAgentMode1</ID>
@@ -135,7 +135,7 @@
             </AllAgentModels>
             <!-- Message submitted to this one agent model in the parent distributed 
 							autonomous agent -->
-            <x:AgentModel xmlns:x="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0">
+            <x:AgentModel xmlns:x="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0">
               <Actor>
                 <!-- RE: Self or another agent model -->
                 <ID>distAutAgentMode2</ID>

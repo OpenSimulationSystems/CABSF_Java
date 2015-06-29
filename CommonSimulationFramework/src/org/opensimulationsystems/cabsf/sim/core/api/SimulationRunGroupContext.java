@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.context.CsfRunGroupContext;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
+import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.context.CabsfRunGroupContext;
 import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunGroupConfiguration;
 
-public class SimulationRunGroupContext extends CsfRunGroupContext {
+public class SimulationRunGroupContext extends CabsfRunGroupContext {
 	private SimulationRunGroup simulationRunGroup;
 	private SimulationRunGroupConfiguration simulationRunGroupConfiguration;
 	private Document cachedMessageExchangeTemplate;

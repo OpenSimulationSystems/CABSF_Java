@@ -4,20 +4,20 @@ import java.io.IOException;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
-import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfCheckedException;
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfMessagingRuntimeException;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.messaging.interfaces.redis.RedisConnectionManager;
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
+import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfCheckedException;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfMessagingRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 
 /**
  * The DAO implementation class for Redis
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -32,7 +32,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/**
 	 * Gets the single instance of RedisDaoImpl.
-	 * 
+	 *
 	 * @return single instance of RedisDaoImpl
 	 */
 	static public CommonMessagingDao getInstance() {
@@ -41,8 +41,9 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
 	 * closeInterface()
 	 */
 	@Override
@@ -58,7 +59,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 	 * Note: Whenever we use the term "Redis Channel"it does not necessarily mean we are
 	 * using the publish/subscribe model. It could be a Redis key. Eventually the code
 	 * will be switched over to publish/subscribe.
-	 * 
+	 *
 	 * @param sourceSystemType
 	 *            the source system type
 	 * @param targetSystemType
@@ -69,24 +70,26 @@ public class RedisDaoImpl implements CommonMessagingDao {
 	 */
 	private String createRedisChannelStr(final SYSTEM_TYPE sourceSystemType,
 			final SYSTEM_TYPE targetSystemType, final String ID) {
-		// LOW: Make this configurable on the CSF side.
+		// LOW: Make this configurable on the CABSF side.
 		final String prefix = "csf.commands.";
 
 		String prefix2 = null;
-		if (sourceSystemType == SYSTEM_TYPE.SYSTEM_ADMINISTRATOR)
+		if (sourceSystemType == SYSTEM_TYPE.SYSTEM_ADMINISTRATOR) {
 			prefix2 = "adminTo";
-		else if (sourceSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
+		} else if (sourceSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM) {
 			prefix2 = "distTo";
-		else
+		} else {
 			prefix2 = "simTo";
+		}
 
 		String prefix3 = null;
-		if (targetSystemType == SYSTEM_TYPE.SYSTEM_ADMINISTRATOR)
+		if (targetSystemType == SYSTEM_TYPE.SYSTEM_ADMINISTRATOR) {
 			prefix3 = "Admin";
-		else if (targetSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
+		} else if (targetSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM) {
 			prefix3 = "DistSystem";
-		else
+		} else {
 			prefix3 = "Sim";
+		}
 
 		final String channel = prefix + prefix2 + prefix3 + ":" + ID;
 		// LOW: Make this configurable
@@ -105,8 +108,9 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
 	 * initializeSimulationFrameworkCommonMessagingInterface(java.lang.String)
 	 */
 	@Override
@@ -118,10 +122,11 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
 	 * listenForMessageFromSimulationEngine
-	 * (org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE, java.lang.String)
+	 * (org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE, java.lang.String)
 	 */
 	@Override
 	// FIXME: Pass back the actual value and handle it upstream
@@ -134,8 +139,9 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
 	 * readFrameworkMessageFromDistributedSystem(java.lang.String)
 	 */
 	@Override
@@ -148,8 +154,9 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
 	 * readFrameworkMessageFromSimulationAdministrator(java.lang.String)
 	 */
 	@Override
@@ -162,10 +169,11 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
 	 * requestEnvironmentInformation
-	 * (org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE, java.lang.String)
+	 * (org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE, java.lang.String)
 	 */
 	@Override
 	public FrameworkMessage requestEnvironmentInformation(
@@ -189,7 +197,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/**
 	 * Retrieve the string message from Redis and return a FrameworkMessage
-	 * 
+	 *
 	 * @param sourceSystemType
 	 *            the source system type
 	 * @param targetSystemType
@@ -207,7 +215,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 		final String xmlString = redisConnectionManager.redisSynchronousPolling(
 				targetSystemType, redisChannelStr, 0.001d, null);
 
-		Document doc;
+		Document doc = null;
 		try {
 			doc = MessagingUtilities.createDocumentFromString(xmlString);
 		} catch (final JDOMException e) {
@@ -215,7 +223,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
 			// like the system IDs.
 			throw new CabsfMessagingRuntimeException(
 					"Failed to understand message from the simulation engine to the distributed system: "
-							+ clientID, e);
+							+ clientID + " message: " + xmlString, e);
 		} catch (final IOException e) {
 			throw new CabsfMessagingRuntimeException(
 					"Failed to understand message from the simulation engine to the distributed system: "
@@ -230,8 +238,9 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao
 	 * #sendMessagesToDistributedAgents(org.opensimulationsystems.cabsf.sim.core.api.
 	 * messaging.FrameworkMessage,
 	 * org.opensimulationsystems.cabsf.sim.core.api.messaging.DistributedSystemAgentSet,
@@ -253,11 +262,12 @@ public class RedisDaoImpl implements CommonMessagingDao {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
+	 *
+	 * @see
+	 * org.opensimulationsystems.cabsf.common.internal.messaging.dao.CommonMessagingDao#
 	 * sendMessageToSimulationEngine
 	 * (org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext,
-	 * org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage,
+	 * org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage,
 	 * java.lang.String)
 	 */
 	@Override

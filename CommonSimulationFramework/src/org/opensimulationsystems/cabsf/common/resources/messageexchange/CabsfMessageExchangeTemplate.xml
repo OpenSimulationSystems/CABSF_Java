@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CsfMessageExchange
-	xmlns="http://www.simulationsystems.org/csf/schemas/CsfMessageExchange/0.1.0"
+<CabsfMessageExchange
+	xmlns="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Identifiers>
 		<Simulation>
@@ -134,4 +134,4 @@
 			</DistributedAutonomousAgents>
 		</DistributedSystem>
 	</ReceivingEntities>
-</CsfMessageExchange>
+</CabsfMessageExchange>

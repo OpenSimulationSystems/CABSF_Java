@@ -5,14 +5,14 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
 
 /**
- * THis manager provides some utilities for the client (e.g. CSF JADE Controller Agent) to
+ * THis manager provides some utilities for the client (e.g. CABSF JADE Controller Agent) to
  * message its own distributed autonomous agents. The client uses its own native messaging
  * (such as FIPA ACL for JADE). Unlike the SimulationEngineManager (for the distributed
  * system to talk to the simulation side), this class does not perform any message
@@ -126,7 +126,7 @@ public class DistributedAgentsManager {
 
 	/**
 	 * Creates objects to hold Agent Mappings between the distributed-agent-side agents
-	 * and CSF-wide string identifiers that are used in mapping on the simulation side.
+	 * and CABSF-wide string identifiers that are used in mapping on the simulation side.
 	 * The actual setting of mapped distributed agent objects occurs later on.
 	 * 
 	 * @param distSysRunContext

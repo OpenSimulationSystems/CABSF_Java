@@ -27,5 +27,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-container -agents DistributedSystemAutonomousAgent1:jzombies.HumanJADE;DistributedSystemAutonomousAgent2:jzombies.HumanJADE;DistributedSystemAutonomousAgent3:jzombies.HumanJADE;DistributedSystemAutonomousAgent4:jzombies.HumanJADE;DistributedSystemAutonomousAgent5:jzombies.HumanJADE;DistributedSystemAutonomousAgent6:jzombies.HumanJADE"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JZombies_CABSF_JADE"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JZombies_Demo_CABSF_JADE"/>
 </launchConfiguration>

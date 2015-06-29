@@ -3,7 +3,7 @@ package prisonersdilemma;
 import java.math.BigInteger;
 
 import org.codehaus.groovy.runtime.typehandling.LongMath;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfRuntimeException;
 
 import repast.simphony.context.Context;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -39,7 +39,7 @@ public class PrisonersDilemmaBuilder implements ContextBuilder<Object> {
 		final Parameters params = RunEnvironment.getInstance().getParameters();
 		final int playerCount = (Integer) params.getValue("player_count");
 		if (playerCount % 2 != 0)
-			throw new CsfRuntimeException(
+			throw new CabsfRuntimeException(
 					"The CSF only supports an even number of players for now.");
 		final int numberOfRounds = (Integer) params.getValue("number_of_rounds");
 

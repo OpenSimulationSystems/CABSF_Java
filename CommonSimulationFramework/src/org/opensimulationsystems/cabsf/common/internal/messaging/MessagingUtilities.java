@@ -6,8 +6,9 @@ import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 
+// TODO: Auto-generated Javadoc
 /**
- * XML Utilities class to be used by the agents
+ * XML Utilities class to be used by the agents.
  *
  * @author Jorge Calderon
  * @version 0.1
@@ -32,7 +33,8 @@ public class MessagingUtilities {
 	}
 
 	/**
-	 * Creates the cached message exchange template as a Document
+	 * Creates the cached message exchange template JDOM2 Document. Any placeholder values
+	 * in the template file are kept in the returned Document.
 	 *
 	 * @return the org.jdom2. document
 	 * @throws JDOMException
@@ -42,17 +44,52 @@ public class MessagingUtilities {
 	 */
 	static public org.jdom2.Document createCachedMessageExchangeTemplateWithPlaceholders()
 			throws JDOMException, IOException {
+		Document doc = null;
+		try {
+			// doc = XMLUtilities
+			// .filenameStrTojdom2Document("../../../CommonSimulationFramework/bin/org/opensimulationsystems/cabsf/common/resources/messageexchange/CabsfMessageExchangeTemplate.xml");
+			doc = XMLUtilities
+					.filenameStrTojdom2Document(
+							"org/opensimulationsystems/cabsf/common/resources/messageexchange/CabsfMessageExchangeTemplate.xml",
+							true);
+
+		} catch (final Exception e) {
+			// doc = XMLUtilities
+			// .filenameStrTojdom2Document("../CommonSimulationFramework/bin/org/opensimulationsystems/cabsf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
+		}
+		assert (doc != null);
+		return doc;
+	}
+
+	/*
+	 * static public org.jdom2.Document createDocumentFromFile(final File file) throws
+	 * JDOMException, IOException { // FIXME: Use the current path of this java file
+	 * Document doc = null; try { doc = XMLUtilities.fileTojdom2Document(file);
+	 * 
+	 * } catch (final Exception e) { } assert (doc != null); return doc; }
+	 */
+
+	/**
+	 * Creates the cached CABSF configuration file template as a Document.
+	 *
+	 * @param filePath
+	 *            the file path
+	 * @return the org.jdom2. document
+	 * @throws JDOMException
+	 *             the JDOM exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	static public org.jdom2.Document createDocumentFromFileSystemPath(
+			final String filePath) throws JDOMException, IOException {
 		// FIXME: Use the current path of this java file
 		Document doc = null;
 		try {
-			doc = XMLUtilities
-					.filenameStrTojdom2Document("../../../CommonSimulationFramework/bin/org/opensimulationsystems/cabsf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
-		} catch (final Exception e) {
-			// FIXME: Read these files dynamically
-			doc = XMLUtilities
-					.filenameStrTojdom2Document("../CommonSimulationFramework/bin/org/opensimulationsystems/cabsf/common/resources/messageexchange/CsfMessageExchangeTemplate.xml");
+			doc = XMLUtilities.filenameStrTojdom2Document(filePath, false);
 
+		} catch (final Exception e) {
 		}
+		assert (doc != null);
 		return doc;
 	}
 

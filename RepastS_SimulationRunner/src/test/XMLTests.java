@@ -212,7 +212,7 @@ public class XMLTests implements JadeControllerMock {
 			+ "              <!-- Message about this one actor to this one agent model (parent element) under the parent distributed autonomous agent -->\r\n"
 			+ "              <Actor>\r\n"
 			+ "                <!-- RE: Self or another agent model -->\r\n"
-			+ "                <ID>distAutAgentMode2</ID>\r\n"
+			+ "                <test/><ID>distAutAgentMode2</ID>\r\n"
 			+ "                <!-- EnvironmentChanges Could be used to communicate all local environment \r\n"
 			+ "									information if desired, not just changes since the last tick -->\r\n"
 			+ "                <EnvironmentChanges>\r\n"
@@ -299,7 +299,7 @@ public class XMLTests implements JadeControllerMock {
 	}
 
 	@Test
-	@Ignore
+	// @Ignore
 	public void testPopulatePrisonersDilemmaMessage() {
 		testPopulatePrisonersDilemmaMessageHelper();
 	}

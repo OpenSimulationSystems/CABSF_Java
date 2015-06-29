@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import org.jdom2.Element;
 import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
@@ -41,7 +41,7 @@ public class JADE_Controller_Agent implements JadeControllerMock {
 			frameworkConfigurationFileName = args[0];
 		// TODO: Add Validation of CSF configuration file
 		if (frameworkConfigurationFileName == null)
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"The configuration directory must be provided");
 
 		jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
@@ -51,7 +51,7 @@ public class JADE_Controller_Agent implements JadeControllerMock {
 			jade_MAS_RunGroupContext = jade_MAS_AdapterAPI
 					.initializeAPI(frameworkConfigurationFileName);
 		} catch (IOException e) {
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"Error in initializing the JADE Controller Agent", e);
 		}
 

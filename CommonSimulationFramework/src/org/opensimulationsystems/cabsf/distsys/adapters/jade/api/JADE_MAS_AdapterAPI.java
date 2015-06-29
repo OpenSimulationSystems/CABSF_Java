@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
@@ -170,7 +170,7 @@ public class JADE_MAS_AdapterAPI {
 			String fcStr = "null";
 			if (fc != null)
 				fcStr = fc.toString();
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"The JADE Controller Agent tried to read message from the simulation engine, but did not understand the command: "
 							+ fcStr
 							+ " It's possible that a previous simulation didn't complete, and a message was left in the Redis cache, which has been picked up in this new simulation run.  Next time try flushing the Redis cache if the simulation does not end normally, before running a new simulation.");

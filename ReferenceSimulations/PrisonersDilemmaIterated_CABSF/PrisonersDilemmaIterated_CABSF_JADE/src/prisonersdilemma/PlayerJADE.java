@@ -12,7 +12,7 @@ import jade.lang.acl.MessageTemplate;
 
 import org.jdom2.Element;
 import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfCheckedException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfCheckedException;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
@@ -64,7 +64,7 @@ public class PlayerJADE extends Agent {
 					msg = new FrameworkMessageImpl(
 							SYSTEM_TYPE.SIMULATION_ENGINE,
 							SYSTEM_TYPE.DISTRIBUTED_SYSTEM, msgStr);
-				} catch (CsfCheckedException e) {
+				} catch (CabsfCheckedException e) {
 					System.out
 					.println(logPrefix
 							+ " Error parsing message from the JADE Controller Agent to this agent.  Message: "

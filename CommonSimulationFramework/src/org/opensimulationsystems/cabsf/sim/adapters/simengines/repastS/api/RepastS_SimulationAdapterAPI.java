@@ -1,39 +1,52 @@
 package org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filter;
 import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfMessagingRuntimeException;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfMessagingRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfRuntimeException;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.STATUS;
+import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
+import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationAPI;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunGroupContext;
 
 import repast.simphony.context.Context;
+import repast.simphony.engine.controller.Controller;
+import repast.simphony.parameter.DefaultParameters;
 
 /**
  * The Repast Simphony Adapter API context factory. This class is the entry point for
  * RepastS simulations to use the Common Simulation Framework.
- * 
+ *
  * Note: This API was originally intended to only be used at the RepastS simulation-level,
  * not at the individual RepastS agent-level. However, in the current version, the
  * individual agents do use this API directly in addition to the agent-level API (RepastS
  * Agent API). This may change in newer versions so that agents only use instantiate the
  * agent-level API.
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
  */
 public class RepastS_SimulationAdapterAPI {
 
+	/** The instance. */
+	private static RepastS_SimulationAdapterAPI instance = new RepastS_SimulationAdapterAPI();
+
 	/**
 	 * The API singleton for adaptor.
-	 * 
+	 *
 	 * @return single instance of RepastS_SimulationAdapterAPI
 	 */
 	public static RepastS_SimulationAdapterAPI getInstance() {
@@ -46,9 +59,6 @@ public class RepastS_SimulationAdapterAPI {
 	/** The simulation tool name to set in simulation API. */
 	private final String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
 
-	/** The instance. */
-	private static RepastS_SimulationAdapterAPI instance = new RepastS_SimulationAdapterAPI();
-
 	/**
 	 * Instantiates a new repast s_ simulation adapter api.
 	 */
@@ -56,28 +66,72 @@ public class RepastS_SimulationAdapterAPI {
 		super();
 	}
 
+	public void applyRssrParametersFix(final Controller controller, final File scenarioDir)
+			throws JDOMException, IOException {
+		/** The element filter. */
+		final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
+
+		// Set the Parameters across all simulation runs of this simulation
+		final Document repastSconfigFile = MessagingUtilities
+				.createDocumentFromFileSystemPath(scenarioDir.getAbsolutePath()
+						+ "/parameters.xml");
+		assert (repastSconfigFile != null);
+
+		final List<Element> parameters = (List<Element>) XMLUtilities.executeXPath(
+				repastSconfigFile, "/parameters", null, elementFilter);
+		// TODO: Support more than 1 Distributed System
+		assert (parameters.size() == 1);
+
+		final List<Element> parameterElements = parameters.get(0).getChildren();
+		final DefaultParameters defaultParameters = new DefaultParameters();
+
+		for (int i = 0; i < parameterElements.size(); i++) {
+			// Handle "int" parameters only
+			final String paramName = parameterElements.get(i).getAttributeValue("name");
+			final String displayName = parameterElements.get(i).getAttributeValue(
+					"displayName");
+			final String defaultValue = parameterElements.get(i).getAttributeValue(
+					"defaultValue");
+
+			if (defaultValue.equals("__NULL__")) {
+				defaultParameters.addParameter(paramName, defaultValue, Number.class,
+						null, true);
+			} else if (parameterElements.get(i).getAttributeValue("type").equals("int")) {
+				defaultParameters.addParameter(paramName, defaultValue, Number.class,
+						Integer.parseInt(defaultValue), true);
+			} else if (parameterElements.get(i).getAttributeValue("type")
+					.equalsIgnoreCase("String")) {
+				defaultParameters.addParameter(paramName, defaultValue, Number.class,
+						defaultValue, true);
+			}
+		}
+		controller.runParameterSetters(defaultParameters);
+
+	}
+
 	/**
 	 * Initializes the Common Simulation Framework on the RepastS simulation side, based
 	 * on the supplied CSF configuration property file. Calls the simulation-adaptor-wide
 	 * Simulation API to initialize the simulation run group.
-	 * 
+	 *
 	 * NOTE: The current version initialization is hard coded to only work with the two
 	 * reference implementation simulations. The CSF configuration filename is used to
 	 * switch the configuration based on the simulation. In the future, this filename will
 	 * be used to read an XML configuration file from the file system so that the CSF can
 	 * be used for any simulation.
-	 * 
-	 * @param csfConfigurationFileName
+	 *
+	 * @param cabsfConfigurationFileName
 	 *            the framework configuration file name
 	 * @return the repast s_ simulation run group context
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public RepastS_SimulationRunGroupContext initializeAPI(
-			final String csfConfigurationFileName) throws IOException {
+			final String cabsfConfigurationFileName) throws IOException {
 
 		final SimulationRunGroupContext simulationRunGroupContext = simulationAPI
-				.initializeAPI(csfConfigurationFileName, simToolNameToSetInSimulationAPI);
+				.initializeAPI(cabsfConfigurationFileName,
+						simToolNameToSetInSimulationAPI);
 
 		// Set the Repast-Simphony-specific objects, using the Decorator Pattern
 		final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
@@ -91,7 +145,7 @@ public class RepastS_SimulationAdapterAPI {
 	/**
 	 * Initializes a single CSF Repast Simphony simulation run. This method configures the
 	 * (already-created in the simulation API initialization) AgentMapping objects.
-	 * 
+	 *
 	 * @param nativeRepastScontextForThisRun
 	 *            the native repast context for this run
 	 * @param repastS_SimulationRunGroupContext
@@ -161,21 +215,31 @@ public class RepastS_SimulationAdapterAPI {
 				// agent, map to an existing free AgentMapping object
 				for (final Object simulationAgent : simulationAgentsInSingleClass) {
 					atLeastOneMappingPerformed = true;
+					System.out.println("Attempting to map: " + simulationAgent);
 					mapSimulationSideAgent(simulationAgent,
 							repastS_SimulationRunContext.getSimulationRunContext());
 				}
-				/*
-				 * } else {
-				 * 
-				 * }
-				 */
-			} else
+
+				// TODO: Support partial mappings for one class
+				// Elsewhere we check for the opposite mismatch (agents in the CABSF
+				// configuration are less than the number of agents in the simulation
+				// runtime.
+				if (repastS_SimulationRunContext.getSimulationRunGroupConfiguration()
+						.getAgentsReadyForSimulationSideMapping().size() > 0) {
+					throw new CabsfRuntimeException(
+							"The number of agent models to be mapped in the CABSF configuration exceed the number of agents instantiated in the simulation runtime.");
+				}
+				;
+
+			} else {
 				continue; // Not an agent we need to map.
+			}
 		}
 
-		if (atLeastOneMappingPerformed != true)
-			throw new CsfRuntimeException(
+		if (atLeastOneMappingPerformed != true) {
+			throw new CabsfRuntimeException(
 					"No mapping was performed of simulation agent(s) to distributed autonomous agent and agent model IDs");
+		}
 
 		// TODO: Move this whole section to the main simulation API?
 		// 1 - Wait for the command from the simulation administrator to start
@@ -183,9 +247,10 @@ public class RepastS_SimulationAdapterAPI {
 		final FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
 				.readFrameworkMessageFromSimulationAdministrator()
 				.getFrameworkToSimulationEngineCommand();
-		if (fc != FRAMEWORK_COMMAND.START_SIMULATION)
-			throw new CsfMessagingRuntimeException(
+		if (fc != FRAMEWORK_COMMAND.START_SIMULATION) {
+			throw new CabsfMessagingRuntimeException(
 					"Did not understand the message from the simulation administrator");
+		}
 
 		// 2 - Message the distributed systems that the simulation has started
 		// and is ready to accept messages from the distributed agents.
@@ -203,9 +268,10 @@ public class RepastS_SimulationAdapterAPI {
 				.readFrameworkMessageFromDistributedSystem().getStatus();
 		// TODO: Identify which distributed system caused the error.
 		// TODO: Set these up as checked exceptions?
-		if (st != STATUS.READY_TO_START_SIMULATION)
-			throw new CsfMessagingRuntimeException(
+		if (st != STATUS.READY_TO_START_SIMULATION) {
+			throw new CabsfMessagingRuntimeException(
 					"Did not understand the message from the simulation distributed system.");
+		}
 
 		// The distributed agent (models) have previously been mapped.
 		// Now we're ready to perform the steps in the simulation.
@@ -218,7 +284,7 @@ public class RepastS_SimulationAdapterAPI {
 	 * method must be called to configure the simulation-side of the AgentMappings for one
 	 * type (class) of simulation agent. If multiple agent classes are distributed, this
 	 * method must be called for each type.
-	 * 
+	 *
 	 * @param simulationAgent
 	 *            the simulation agent
 	 * @param simulationRunContext
@@ -231,7 +297,7 @@ public class RepastS_SimulationAdapterAPI {
 
 	/**
 	 * Map simulation side agents.
-	 * 
+	 *
 	 * @param agentsOfOneType
 	 *            the agents of one type
 	 * @param simulationRunContext

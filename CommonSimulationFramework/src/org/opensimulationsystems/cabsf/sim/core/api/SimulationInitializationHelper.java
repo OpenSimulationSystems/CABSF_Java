@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
 import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunConfiguration;
@@ -14,7 +14,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.Simulatio
 // TODO: Auto-generated Javadoc
 /**
  * The simulation initialization helper class
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -33,7 +33,7 @@ public class SimulationInitializationHelper {
 
 	/**
 	 * Instantiates a new simulation initialization helper.
-	 * 
+	 *
 	 * @param simulationAPI
 	 *            the simulation api
 	 */
@@ -45,39 +45,39 @@ public class SimulationInitializationHelper {
 	 * Initializes the API objects for the simulation adaptor client(s). Reads the
 	 * properties from the configuration file, and prepares AgentMapping objects, which
 	 * will be populated later once the distributed agents join the simulation.
-	 * 
+	 *
 	 * It is expected that this API is only called once before any simulation runs in a
 	 * simulation group are executed. All simulation runs within a simulation run group
 	 * contain the same agents, both on the simulation-side and distributed-agent-side. If
 	 * a different number or type of agents are needed, this should be set up as a
 	 * separate simulation run group.
-	 * 
-	 * @param frameworkConfigurationFileNameName
+	 *
+	 * @param cabsfConfigurationFileName
 	 *            the framework configuration file name name
 	 * @return the simulation run group context
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
 	protected SimulationRunGroupContext initializeAPI(
-			final String frameworkConfigurationFileNameName)
+			final String cabsfConfigurationFileName)
 
-	throws IOException {
+					throws IOException {
 
 		// Process the configuration properties (creating the not yet populated
 		// DistSysRunContext simFrameworkContext = new
 		// DistSysRunContext(fullyQualifiedClassNameForDistributedAgentManager);
 		final SimulationRunGroupContext simulationRunGroupContext = new SimulationRunGroupContext();
 		final SimulationRunGroupConfiguration config = processFrameworkConfigurationProperties(
-				frameworkConfigurationFileNameName, simulationRunGroupContext);
+				cabsfConfigurationFileName, simulationRunGroupContext);
 		simulationRunGroupContext.setSimulationConfiguration(config);
 
 		// Cache the message exchange template from the file system
 		try {
 			simulationRunGroupContext
-					.setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
-							.createCachedMessageExchangeTemplateWithPlaceholders());
+			.setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
+					.createCachedMessageExchangeTemplateWithPlaceholders());
 		} catch (final JDOMException e) {
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"Error reading the message exchange template from the file system", e);
 		}
 
@@ -86,7 +86,7 @@ public class SimulationInitializationHelper {
 
 	/**
 	 * Initializes a simulation run.
-	 * 
+	 *
 	 * @param simulationSideContext
 	 *            the simulation side context
 	 * @param simulationRunGroupContext
@@ -116,7 +116,7 @@ public class SimulationInitializationHelper {
 				simulationRunContext,
 				simulationRunConfiguration.getCommonMessagingConcreteImplStr(), sys);
 		simulationRunContext
-				.addSimulationDistributedSystemManager(simulationDistributedSystemManager);
+		.addSimulationDistributedSystemManager(simulationDistributedSystemManager);
 
 		return simulationRunContext;
 	}
@@ -127,7 +127,7 @@ public class SimulationInitializationHelper {
 	 */
 	/**
 	 * Map simulation side agent.
-	 * 
+	 *
 	 * @param simulationAgent
 	 *            the simulation agent
 	 * @param simulationRunContext
@@ -137,7 +137,7 @@ public class SimulationInitializationHelper {
 			final SimulationRunContext simulationRunContext) {
 		// TODO: Handle multiple distributed systems
 		simulationRunContext.getSimulationDistributedSystemManagers().iterator().next()
-				.addSimulationAgentToAgentMapping(simulationAgent);
+		.addSimulationAgentToAgentMapping(simulationAgent);
 
 	}
 
@@ -147,8 +147,8 @@ public class SimulationInitializationHelper {
 	 */
 	/**
 	 * Process framework configuration properties.
-	 * 
-	 * @param frameworkConfigurationFileNameName
+	 *
+	 * @param cabsfConfigurationFileName
 	 *            the framework configuration file name name
 	 * @param simulationRunGroupContext
 	 *            the simulation run group context
@@ -157,17 +157,11 @@ public class SimulationInitializationHelper {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	private SimulationRunGroupConfiguration processFrameworkConfigurationProperties(
-			final String frameworkConfigurationFileNameName,
+			final String cabsfConfigurationFileName,
 			final SimulationRunGroupContext simulationRunGroupContext) throws IOException {
-		/*
-		 * FileInputStream fstream = new FileInputStream("textfile.txt"); // Get the
-		 * object of DataInputStream DataInputStream in = new DataInputStream(fstream);
-		 * BufferedReader br = new BufferedReader(new InputStreamReader(in)); String
-		 * strLine; // Read File Line By Line while ((strLine = br.readLine()) != null) {
-		 * // Print the content on the console System.out.println(strLine); }
-		 */
+
 		final SimulationRunGroupConfiguration config = new SimulationRunGroupConfiguration(
-				frameworkConfigurationFileNameName);
+				cabsfConfigurationFileName);
 		simulationRunGroupContext.setSimulationRunGroupConfiguration(config);
 
 		// TODO: Retrieve the Simulation Run Group level configuration and use those

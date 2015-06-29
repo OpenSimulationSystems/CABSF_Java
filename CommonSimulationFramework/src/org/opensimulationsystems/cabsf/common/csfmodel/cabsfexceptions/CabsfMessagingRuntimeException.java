@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions;
+package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -8,12 +8,12 @@ package org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions;
  * @version 0.1
  * @since 0.1
  */
-public class CsfMessagingRuntimeException extends RuntimeException {
+public class CabsfMessagingRuntimeException extends RuntimeException {
 
 	/**
 	 * Instantiates a new csf messaging runtime exception.
 	 */
-	public CsfMessagingRuntimeException() {
+	public CabsfMessagingRuntimeException() {
 		super();
 	}
 
@@ -23,7 +23,7 @@ public class CsfMessagingRuntimeException extends RuntimeException {
 	 * @param arg0
 	 *            the arg0
 	 */
-	public CsfMessagingRuntimeException(final String arg0) {
+	public CabsfMessagingRuntimeException(final String arg0) {
 		super(arg0);
 	}
 
@@ -35,7 +35,7 @@ public class CsfMessagingRuntimeException extends RuntimeException {
 	 * @param arg1
 	 *            the arg1
 	 */
-	public CsfMessagingRuntimeException(final String arg0, final Throwable arg1) {
+	public CabsfMessagingRuntimeException(final String arg0, final Throwable arg1) {
 		super(arg0, arg1);
 	}
 
@@ -51,7 +51,7 @@ public class CsfMessagingRuntimeException extends RuntimeException {
 	 * @param arg3
 	 *            the arg3
 	 */
-	public CsfMessagingRuntimeException(final String arg0, final Throwable arg1,
+	public CabsfMessagingRuntimeException(final String arg0, final Throwable arg1,
 			final boolean arg2, final boolean arg3) {
 		super(arg0, arg1, arg2, arg3);
 	}
@@ -62,7 +62,7 @@ public class CsfMessagingRuntimeException extends RuntimeException {
 	 * @param arg0
 	 *            the arg0
 	 */
-	public CsfMessagingRuntimeException(final Throwable arg0) {
+	public CabsfMessagingRuntimeException(final Throwable arg0) {
 		super(arg0);
 	}
 

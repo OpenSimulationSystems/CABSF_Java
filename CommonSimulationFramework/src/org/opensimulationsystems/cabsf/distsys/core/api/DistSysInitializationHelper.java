@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.csfmodel.SimulationRunGroup;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
@@ -71,7 +71,7 @@ public class DistSysInitializationHelper {
 			distSysRunGroupContext.setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
 					.createCachedMessageExchangeTemplateWithPlaceholders());
 		} catch (JDOMException e) {
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"Error reading the message exchange template from the file system", e);
 		}
 

@@ -12,7 +12,7 @@ import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 
 /**
  * The Class SimulationEngineManager.
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -48,7 +48,7 @@ public class SimulationEngineManager {
 
 	/**
 	 * Instantiates a new simulation engine manager.
-	 * 
+	 *
 	 * @param distSysRunContext
 	 *            the dist sys run context
 	 * @param getCommonMessagingConcreteImplStr
@@ -105,49 +105,27 @@ public class SimulationEngineManager {
 
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, distSysRunContext
-						.getDistSysRunConfiguration().getRedisConnectionString(),
+				.getDistSysRunConfiguration().getRedisConnectionString(),
 				distSysRunContext.getDistSysRunConfiguration().getDistributedSystemID());
 
 		// TODO: Move this configuration to the Simulation Run Group level?
 		commonMessagingAbstraction
-				.initializeSimulationFrameworkCommonMessagingInterface(distSysRunContext
-						.getDistSysRunConfiguration().getRedisConnectionString());
+		.initializeSimulationFrameworkCommonMessagingInterface(distSysRunContext
+				.getDistSysRunConfiguration().getRedisConnectionString());
 	}
 
-	// TODO: Determine whether this can be removed
 	/*
-	 * public void initializeAgentMappings() {
-	 * 
-	 * AgentMappingHelper.createAgentMapping(
-	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-	 * "DistributedSystemAutonomousAgent1", "DistributedSystemAutonomousAgent1MODEL",
-	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
-	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-	 * "DistributedSystemAutonomousAgent2", "DistributedSystemAutonomousAgent2MODEL",
-	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
-	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-	 * "DistributedSystemAutonomousAgent3", "DistributedSystemAutonomousAgent3MODEL",
-	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
-	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-	 * "DistributedSystemAutonomousAgent4", "DistributedSystemAutonomousAgent4MODEL",
-	 * "jzombies.Human"); AgentMappingHelper.createAgentMapping(
-	 * agentsReadyForDistributedAutonomousAgentMapping, thisDistributedSystemID,
-	 * "DistributedSystemAutonomousAgent5", "DistributedSystemAutonomousAgent5MODEL",
-	 * "jzombies.Human"); } ageToSimulationEngine(frameworkMessage, distSysRunContext,
-	 * simulationEngineID);
-	 * 
-	 * }
-	 * 
+	 *
 	 * public FrameworkMessage listenForMessageFromSimulationEngine() { return
 	 * commonMessagingAbstraction.listenForMessageFromSimulationEngine(
 	 * SYSTEM_TYPE.DISTRIBUTED_SYSTEM, thisDistributedSystemID);
-	 * 
+	 *
 	 * }
-	 * 
+	 *
 	 * public FrameworkMessage requestEnvironmentInformation() { return
 	 * commonMessagingAbstraction.requestEnvir
 	 * .getDistSysRunConfiguration().getRedisConnectionString()); }
-	 * 
+	 *
 	 * public void sendMessage(final FrameworkMessage frameworkMessage, final
 	 * DistSysRunContext distSysRunContext, final String simulationEngineID) {
 	 * commonMessagingAbstraction.sendMess

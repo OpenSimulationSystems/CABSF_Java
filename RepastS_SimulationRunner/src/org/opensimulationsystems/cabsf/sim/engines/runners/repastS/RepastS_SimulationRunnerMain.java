@@ -57,7 +57,7 @@ public class RepastS_SimulationRunnerMain {
 		// TODO: Add Validation of CSF configuration file
 		// if (frameworkConfigurationFileName == null)
 		// throw new
-		// CsfInitializationRuntimeException("The Repast scenario directory must be provided");
+		// CabsfInitializationRuntimeException("The Repast scenario directory must be provided");
 
 		// The Repast scenario Directory
 		File file = new File(args[0]);

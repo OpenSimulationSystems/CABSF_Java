@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions;
+package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -8,12 +8,12 @@ package org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions;
  * @version 0.1
  * @since 0.1
  */
-public class CsfCheckedException extends Exception {
+public class CabsfCheckedException extends Exception {
 
 	/**
 	 * Instantiates a new csf checked exception.
 	 */
-	public CsfCheckedException() {
+	public CabsfCheckedException() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -23,7 +23,7 @@ public class CsfCheckedException extends Exception {
 	 * @param arg0
 	 *            the arg0
 	 */
-	public CsfCheckedException(final String arg0) {
+	public CabsfCheckedException(final String arg0) {
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}
@@ -36,7 +36,7 @@ public class CsfCheckedException extends Exception {
 	 * @param arg1
 	 *            the arg1
 	 */
-	public CsfCheckedException(final String arg0, final Throwable arg1) {
+	public CabsfCheckedException(final String arg0, final Throwable arg1) {
 		super(arg0, arg1);
 		// TODO Auto-generated constructor stub
 	}
@@ -53,7 +53,7 @@ public class CsfCheckedException extends Exception {
 	 * @param arg3
 	 *            the arg3
 	 */
-	public CsfCheckedException(final String arg0, final Throwable arg1,
+	public CabsfCheckedException(final String arg0, final Throwable arg1,
 			final boolean arg2, final boolean arg3) {
 		super(arg0, arg1, arg2, arg3);
 		// TODO Auto-generated constructor stub
@@ -65,7 +65,7 @@ public class CsfCheckedException extends Exception {
 	 * @param arg0
 	 *            the arg0
 	 */
-	public CsfCheckedException(final Throwable arg0) {
+	public CabsfCheckedException(final Throwable arg0) {
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}

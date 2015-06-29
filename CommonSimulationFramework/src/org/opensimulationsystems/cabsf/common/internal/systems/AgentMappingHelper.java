@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.UUID;
 
 import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 
 // TODO: Auto-generated Javadoc
 /**
  * The helper class for AgentMapping
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -18,7 +18,7 @@ public class AgentMappingHelper {
 
 	/**
 	 * Adds the native simulation agent (e.g. RepastS) to the AgentMapping object.
-	 * 
+	 *
 	 * @param requestingSystem
 	 *            the requesting system
 	 * @param beforeMappingSet
@@ -36,18 +36,23 @@ public class AgentMappingHelper {
 		try {
 			// Take first available
 			am = beforeMappingSet.iterator().next();
-			am.setSimulationAgent(agentObj);
-			beforeMappingSet.remove(am);
-			afterMappingSet.add(am);
-			System.out.println(requestingSystem + ": Successfully mapped Agent "
-					+ am.getDistributedAutonomousAgentID() + " "
-					+ am.getDistributedAutonomousAgentModelID() + " " + am.toString()
-					+ " class: " + agentObj.getClass().getCanonicalName());
-		} catch (final java.util.NoSuchElementException e) {
-			throw new CsfInitializationRuntimeException("exception:" + e.getMessage()
-					+ "  class: " + agentObj.getClass().getCanonicalName());
-		}
 
+		} catch (final java.util.NoSuchElementException e) {
+			// TODO: Handle partial distribution of agents. Currently all agents of a type
+			// must be distributed.
+			throw new CabsfInitializationRuntimeException(
+					"Error mapping agent: "
+							+ agentObj
+							+ ".  CABSF currently requires that all simulation engine agent objects of one type (class) either be distributed using CABSF, or be solely within the simulation runtime/not distributed to CABSF. There is a mismatch in the number of agent mappings between the simulation configuration and the CABSF configuration for this agent's agent type: "
+							+ agentObj.getClass().getCanonicalName());
+		}
+		am.setSimulationAgent(agentObj);
+		beforeMappingSet.remove(am);
+		afterMappingSet.add(am);
+		System.out.println(requestingSystem + ": Successfully mapped Agent "
+				+ am.getDistributedAutonomousAgentID() + " "
+				+ am.getDistributedAutonomousAgentModelID() + " " + am.toString()
+				+ " class: " + agentObj.getClass().getCanonicalName());
 		return am;
 
 	}
@@ -59,7 +64,7 @@ public class AgentMappingHelper {
 	 * org.simulationsystems.simulationframework
 	 * .simulation.adapters.simulationapps.api.distributedagents
 	 * .RepastSimphonySimulationDistributedAgentManager for reference;
-	 * 
+	 *
 	 * @param hs
 	 *            the hs
 	 * @param distributedSystemID
@@ -77,8 +82,9 @@ public class AgentMappingHelper {
 			final String distributedAgentModelID,
 			final String fullyQualifiedSimulationAgentName) {
 		// TODO: How to handle agent ids not specified by the distributed system?
-		if (distributedAutonomousAgentID == null)
+		if (distributedAutonomousAgentID == null) {
 			distributedAutonomousAgentID = UUID.randomUUID().toString();
+		}
 
 		final AgentMapping am = new AgentMapping(distributedSystemID,
 				distributedAutonomousAgentID, distributedAgentModelID,

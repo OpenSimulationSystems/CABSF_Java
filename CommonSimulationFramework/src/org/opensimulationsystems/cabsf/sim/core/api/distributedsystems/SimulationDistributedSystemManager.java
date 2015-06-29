@@ -15,7 +15,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
  * Manages the distributed agents from other systems through the common simulation
  * framework. Also acts as the client to the Bridge Pattern (through composition) to the
  * common messaging.
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -24,7 +24,7 @@ public class SimulationDistributedSystemManager {
 
 	/**
 	 * The Enum CONFIGURATION_KEYS.
-	 * 
+	 *
 	 * @author Jorge Calderon
 	 * @version 0.1
 	 * @since 0.1
@@ -39,9 +39,6 @@ public class SimulationDistributedSystemManager {
 
 	/** The distributed system. */
 	private DistributedSystem distributedSystem;
-	// TODO: Change the UUIDs to String
-	/** The agents ready for simulation side mapping. */
-	private final HashSet<AgentMapping> agentsReadyForSimulationSideMapping = new HashSet<AgentMapping>();
 
 	/** The fully initialized agent mappings. */
 	private final HashSet<AgentMapping> fullyInitializedAgentMappings = new HashSet<AgentMapping>();
@@ -61,7 +58,7 @@ public class SimulationDistributedSystemManager {
 
 	/**
 	 * Instantiates a new simulation distributed system manager.
-	 * 
+	 *
 	 * @param simulationRunContext
 	 *            the simulation run context
 	 * @param getCommonMessagingConcreteImplStr
@@ -119,14 +116,14 @@ public class SimulationDistributedSystemManager {
 		// interface
 		commonMessagingAbstraction = new CommonMessagingRefinedAbstractionAPI(
 				commonMessagingImplementationAPI, simulationRunContext
-						.getSimulationRunConfiguration().getRedisConnectionString(),
+				.getSimulationRunConfiguration().getRedisConnectionString(),
 				simulationRunContext.getSimulationRunConfiguration()
-						.getSimulationEngineID());
+				.getSimulationEngineID());
 
 		// TODO: Move this configuration to the Simulation Run Group level?
 		commonMessagingAbstraction
-				.initializeSimulationFrameworkCommonMessagingInterface(simulationRunContext
-						.getSimulationRunConfiguration().getRedisConnectionString());
+		.initializeSimulationFrameworkCommonMessagingInterface(simulationRunContext
+				.getSimulationRunConfiguration().getRedisConnectionString());
 	}
 
 	/*
@@ -134,7 +131,7 @@ public class SimulationDistributedSystemManager {
 	 */
 	/**
 	 * Adds the simulation agent to agent mapping.
-	 * 
+	 *
 	 * @param agentObj
 	 *            the agent obj
 	 * @return the agent mapping
@@ -144,8 +141,10 @@ public class SimulationDistributedSystemManager {
 
 		return AgentMappingHelper
 				.addNativeSimulationToDistributedAutononmousAgentToAgentMapping(this
-						.getClass().getCanonicalName().toString(),
-						agentsReadyForSimulationSideMapping,
+						.getClass().getCanonicalName().toString(), simulationRunContext
+						.getSimulationRunGroupContext()
+						.getSimulationRunGroupConfiguration()
+						.getAgentsReadyForSimulationSideMapping(),
 						fullyInitializedAgentMappings, agentObj);
 	}
 
@@ -158,15 +157,16 @@ public class SimulationDistributedSystemManager {
 
 	/**
 	 * Gets the agent mapping for object.
-	 * 
+	 *
 	 * @param obj
 	 *            the obj
 	 * @return the agent mapping for object
 	 */
 	public AgentMapping getAgentMappingForObject(final Object obj) {
 		for (final AgentMapping am : fullyInitializedAgentMappings) {
-			if (am.getSimulationAgent().equals(obj))
+			if (am.getSimulationAgent().equals(obj)) {
 				return am;
+			}
 		}
 		return null;
 	}
@@ -184,72 +184,9 @@ public class SimulationDistributedSystemManager {
 		// Mocking data for now;
 		// TODO: Pull from configuration
 
-		// JZombies
-		if (simulationRunContext.getSimulationRunGroupContext()
-				.getSimulationRunGroupConfiguration()
-				.getFrameworkConfigurationFileNameName()
-				.equals("PLACEHOLDER_FOR_CSF_CONFIGURATION_FILE")) {
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent1",
-					"DistributedSystemAutonomousAgent1MODEL", "jzombies.Human");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent2",
-					"DistributedSystemAutonomousAgent2MODEL", "jzombies.Human");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent3",
-					"DistributedSystemAutonomousAgent3MODEL", "jzombies.Human");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent4",
-					"DistributedSystemAutonomousAgent4MODEL", "jzombies.Human");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent5",
-					"DistributedSystemAutonomousAgent5MODEL", "jzombies.Human");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent6",
-					"DistributedSystemAutonomousAgent6MODEL", "jzombies.Human");
-		}
-		// Prisoner's Dilemma
-		else {
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent1",
-					"DistributedSystemAutonomousAgent1MODEL", "prisonersdilemma.Player");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent2",
-					"DistributedSystemAutonomousAgent2MODEL", "prisonersdilemma.Player");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent3",
-					"DistributedSystemAutonomousAgent3MODEL", "prisonersdilemma.Player");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent4",
-					"DistributedSystemAutonomousAgent4MODEL", "prisonersdilemma.Player");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent5",
-					"DistributedSystemAutonomousAgent5MODEL", "prisonersdilemma.Player");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent6",
-					"DistributedSystemAutonomousAgent6MODEL", "prisonersdilemma.Player");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent7",
-					"DistributedSystemAutonomousAgent7MODEL", "prisonersdilemma.Player");
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distributedSystem.getDistributedSystemID(),
-					"DistributedSystemAutonomousAgent8",
-					"DistributedSystemAutonomousAgent8MODEL", "prisonersdilemma.Player");
+		simulationRunContext.getSimulationRunGroupContext()
+		.getSimulationRunGroupConfiguration().createAgentMappingObjects();
 
-		}
 	}
 
 	/*
@@ -259,25 +196,24 @@ public class SimulationDistributedSystemManager {
 	// TODO: Revist how this is being used.
 	/**
 	 * Checks if is agent class distributed type.
-	 * 
+	 *
 	 * @param agentClass
 	 *            the agent class
 	 * @return true, if is agent class distributed type
 	 */
 	public boolean isAgentClassDistributedType(final Class<Object> agentClass) {
-		// TODO: Tie this to the simulation configuration
-		if (agentClass.getCanonicalName().equals("jzombies.Human")
-				|| agentClass.getCanonicalName().equals("prisonersdilemma.Player"))
-			// || agentClass.getCanonicalName().equals("prisonersdilemma.PlayerB"))
+		if (simulationRunContext.getSimulationRunGroupContext()
+				.getSimulationRunGroupConfiguration().getAgentTypes()
+				.contains(agentClass.getCanonicalName())) {
 			return true;
-		else
+		} else {
 			return false;
-
+		}
 	}
 
 	/**
 	 * Log helper.
-	 * 
+	 *
 	 * @return the object
 	 */
 	public Object logHelper() {
@@ -286,7 +222,7 @@ public class SimulationDistributedSystemManager {
 
 	/**
 	 * Message distributed agents.
-	 * 
+	 *
 	 * @param frameworkMessage
 	 *            the framework message
 	 * @param simulationRunContext
@@ -301,7 +237,7 @@ public class SimulationDistributedSystemManager {
 
 	/**
 	 * Read framework message from distributed system.
-	 * 
+	 *
 	 * @return the framework message
 	 */
 	public FrameworkMessage readFrameworkMessageFromDistributedSystem() {
@@ -314,7 +250,7 @@ public class SimulationDistributedSystemManager {
 
 	/**
 	 * Read framework message from simulation administrator.
-	 * 
+	 *
 	 * @return the framework message
 	 */
 	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {

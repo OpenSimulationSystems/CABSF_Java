@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions;
+package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;
 
 /**
  * A runtime exception related to initialization of the CSF.
@@ -7,12 +7,12 @@ package org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions;
  * @version 0.1
  * @since 0.1
  */
-public class CsfInitializationRuntimeException extends RuntimeException {
+public class CabsfInitializationRuntimeException extends RuntimeException {
 
 	/**
 	 * Instantiates a new csf initialization runtime exception.
 	 */
-	public CsfInitializationRuntimeException() {
+	public CabsfInitializationRuntimeException() {
 		super();
 	}
 
@@ -22,7 +22,7 @@ public class CsfInitializationRuntimeException extends RuntimeException {
 	 * @param arg0
 	 *            the arg0
 	 */
-	public CsfInitializationRuntimeException(final String arg0) {
+	public CabsfInitializationRuntimeException(final String arg0) {
 		super(arg0);
 	}
 
@@ -34,7 +34,7 @@ public class CsfInitializationRuntimeException extends RuntimeException {
 	 * @param arg1
 	 *            the arg1
 	 */
-	public CsfInitializationRuntimeException(final String arg0, final Throwable arg1) {
+	public CabsfInitializationRuntimeException(final String arg0, final Throwable arg1) {
 		super(arg0, arg1);
 	}
 
@@ -50,7 +50,7 @@ public class CsfInitializationRuntimeException extends RuntimeException {
 	 * @param arg3
 	 *            the arg3
 	 */
-	public CsfInitializationRuntimeException(final String arg0, final Throwable arg1,
+	public CabsfInitializationRuntimeException(final String arg0, final Throwable arg1,
 			final boolean arg2, final boolean arg3) {
 		super(arg0, arg1, arg2, arg3);
 	}
@@ -61,7 +61,7 @@ public class CsfInitializationRuntimeException extends RuntimeException {
 	 * @param arg0
 	 *            the arg0
 	 */
-	public CsfInitializationRuntimeException(final Throwable arg0) {
+	public CabsfInitializationRuntimeException(final Throwable arg0) {
 		super(arg0);
 	}
 

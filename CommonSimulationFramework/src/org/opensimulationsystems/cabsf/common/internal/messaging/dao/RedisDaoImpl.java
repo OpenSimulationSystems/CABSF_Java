@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfCheckedException;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfMessagingRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfCheckedException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfMessagingRuntimeException;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
@@ -180,8 +180,8 @@ public class RedisDaoImpl implements CommonMessagingDao {
 		try {
 			fm = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 					SYSTEM_TYPE.DISTRIBUTED_SYSTEM, messageXML);
-		} catch (final CsfCheckedException e) {
-			throw new CsfMessagingRuntimeException(e);
+		} catch (final CabsfCheckedException e) {
+			throw new CabsfMessagingRuntimeException(e);
 		}
 
 		return fm;
@@ -213,11 +213,11 @@ public class RedisDaoImpl implements CommonMessagingDao {
 		} catch (final JDOMException e) {
 			// TODO: Find the rest of the exceptions and set more information
 			// like the system IDs.
-			throw new CsfMessagingRuntimeException(
+			throw new CabsfMessagingRuntimeException(
 					"Failed to understand message from the simulation engine to the distributed system: "
 							+ clientID, e);
 		} catch (final IOException e) {
-			throw new CsfMessagingRuntimeException(
+			throw new CabsfMessagingRuntimeException(
 					"Failed to understand message from the simulation engine to the distributed system: "
 							+ clientID + "Message: " + xmlString, e);
 		}

@@ -9,7 +9,7 @@ import java.util.List;
 import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.csfmodel.AgentMapping;
 import org.opensimulationsystems.cabsf.common.csfmodel.SIMULATION_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
@@ -141,11 +141,11 @@ public class Human {
 						simulationAgentsClasses, csfRepastContextIterable);
 			}
 		} catch (final JDOMException e) {
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
 					e);
 		} catch (final IOException e) {
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
 					e);
 		}
@@ -180,7 +180,7 @@ public class Human {
 		// FIXME: Support multiple distributed system managers/provide method
 		// for getting
 		// the appropriate one.
-		if (simulationType == SIMULATION_TYPE.CSF_SIMULATION) {
+		if (simulationType == SIMULATION_TYPE.CABSF_SIMULATION) {
 			final SimulationDistributedSystemManager dsm = repastS_AgentContext
 					.getRepastS_SimulationRunContext()
 					.getSimulationDistributedSystemManagers().iterator().next();

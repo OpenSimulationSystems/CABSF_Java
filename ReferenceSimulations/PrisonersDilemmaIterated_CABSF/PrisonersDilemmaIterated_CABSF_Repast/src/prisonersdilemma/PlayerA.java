@@ -38,7 +38,7 @@ public class PlayerA extends Player {
 	@Override
 	public DECISION decide() {
 
-		if (this.gameAdministrator.getSimulationType() == SIMULATION_TYPE.CSF_SIMULATION) {
+		if (this.gameAdministrator.getSimulationType() == SIMULATION_TYPE.CABSF_SIMULATION) {
 			return sendRoundInformationToAndGetDecisionFromDistributedAgent(
 					this.gameAdministrator.getRound(),
 					this.gameAdministrator.getLastPlayerBDecision(), null);

@@ -20,22 +20,21 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfRuntimeException;
 import org.xml.sax.InputSource;
 
-// TODO: Auto-generated Javadoc
 /**
- * Utility class for XML messages
- * 
+ * The Class XMLUtilities.
+ *
  * @author Jorge Calderon
- * @version 0.1
+ * @version 0.2
  * @since 0.1
  */
 public class XMLUtilities {
 
 	/**
 	 * Convert Document to XML string.
-	 * 
+	 *
 	 * @param document
 	 *            the document
 	 * @param prettyPrint
@@ -49,7 +48,7 @@ public class XMLUtilities {
 
 	/**
 	 * Convert Document to XML string.
-	 * 
+	 *
 	 * @param document
 	 *            the document
 	 * @param prettyPrint
@@ -59,17 +58,18 @@ public class XMLUtilities {
 	static public String convertDocumentToXMLString(final Element document,
 			final boolean prettyPrint) {
 		XMLOutputter outputter = null;
-		if (prettyPrint)
+		if (prettyPrint) {
 			outputter = new XMLOutputter(Format.getPrettyFormat());
-		else
+		} else {
 			outputter = new XMLOutputter();
+		}
 		final String xmlString = outputter.outputString(document);
 		return xmlString;
 	}
 
 	/**
 	 * Convert an JDOM2 Element to an XML string.
-	 * 
+	 *
 	 * @param document
 	 *            the document
 	 * @param prettyPrint
@@ -79,17 +79,18 @@ public class XMLUtilities {
 	static public String convertElementToXMLString(final Element document,
 			final boolean prettyPrint) {
 		XMLOutputter outputter = null;
-		if (prettyPrint)
+		if (prettyPrint) {
 			outputter = new XMLOutputter(Format.getPrettyFormat());
-		else
+		} else {
 			outputter = new XMLOutputter();
+		}
 		final String xmlString = outputter.outputString(document);
 		return xmlString;
 	}
 
 	/**
-	 * Execute an XPath
-	 * 
+	 * Execute an XPath.
+	 *
 	 * @param document
 	 *            the Document
 	 * @param xpathStr
@@ -107,11 +108,12 @@ public class XMLUtilities {
 		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
 
 		XPathExpression<? extends Content> expr = null;
-		if (namespaceStr != null)
+		if (namespaceStr != null) {
 			expr = xpathFactory.compile(xpathStr, filter, null,
 					Namespace.getNamespace("x", namespaceStr));
-		else
+		} else {
 			expr = xpathFactory.compile(xpathStr, filter);
+		}
 
 		List<? extends Content> xPathSearchedNodes = null;
 		try {
@@ -119,7 +121,7 @@ public class XMLUtilities {
 		}
 		// TODO: Add better handling for these kinds of exceptions
 		catch (final Exception e) {
-			throw new CsfRuntimeException("Error in querying the message", e);
+			throw new CabsfRuntimeException("Error in querying the message", e);
 		}
 		return xPathSearchedNodes;
 		/*
@@ -130,26 +132,68 @@ public class XMLUtilities {
 	}
 
 	/**
-	 * Take a filename, read the file to an XML string, and convert the string to a JDOM2
-	 * Document.
-	 * 
+	 * Take a filename from the classpath, read the file to an XML string, and convert the
+	 * string to a JDOM2 Document.
+	 *
 	 * @param fileName
-	 *            the file name
+	 *            the filename on the classpath
+	 * @param isOnClassPath
+	 *            true if the supplied path is on the classpath. false if path is on file
+	 *            system.
 	 * @return the org.jdom2. document
 	 * @throws JDOMException
 	 *             the JDOM exception
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	static public org.jdom2.Document filenameStrTojdom2Document(final String fileName)
-			throws JDOMException, IOException {
+	static public org.jdom2.Document filenameStrTojdom2Document(final String fileName,
+			final boolean isOnClassPath) throws JDOMException, IOException {
 		File file = null;
 		InputStream inputStream = null;
 		Reader reader = null;
 		Document document = null;
 
 		try {
-			file = new File(fileName);
+
+			if (isOnClassPath) {
+				inputStream = Thread.currentThread().getContextClassLoader()
+						.getResourceAsStream(fileName);
+			} else {
+				file = new File(fileName);
+				inputStream = new FileInputStream(file);
+			}
+
+			// LOW: is there a way of not having to specify the encoding?
+			reader = new InputStreamReader(inputStream, "UTF-8");
+
+			final SAXBuilder saxBuilder = new SAXBuilder();
+			// begin of try - catch block
+			document = saxBuilder.build(inputStream);
+
+			final Element root = document.getRootElement();
+			System.out
+			.println("[Common Simulation Framework - internal] Successfully loaded template file: "
+					+ root.getName());
+		} finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
+			if (reader != null) {
+				reader.close();
+			}
+		}
+
+		return document;
+
+	}
+
+	static public org.jdom2.Document fileTojdom2Document(final File file)
+			throws JDOMException, IOException {
+		InputStream inputStream = null;
+		Reader reader = null;
+		Document document = null;
+
+		try {
 			inputStream = new FileInputStream(file);
 
 			// LOW: is there a way of not having to specify the encoding?
@@ -161,27 +205,23 @@ public class XMLUtilities {
 
 			final Element root = document.getRootElement();
 			System.out
-					.println("[Common Simulation Framework - internal] Successfully loaded template file: "
-							+ root.getName());
+			.println("[Common Simulation Framework - internal] Successfully loaded template file: "
+					+ root.getName());
 		} finally {
-			if (inputStream != null)
+			if (inputStream != null) {
 				inputStream.close();
-			if (reader != null)
+			}
+			if (reader != null) {
 				reader.close();
+			}
 		}
 
 		return document;
-
 	}
 
-	/*
-	 * @throws IOException
-	 * 
-	 * @throws JDOMException
-	 */
 	/**
 	 * Xml string tojdom2 document.
-	 * 
+	 *
 	 * @param xmlString
 	 *            the xml string
 	 * @return the org.jdom2. document
@@ -207,8 +247,9 @@ public class XMLUtilities {
 			final Element root = document.getRootElement();
 			System.out.println("Successfully loaded template file: " + root.getName());
 		} finally {
-			if (sr != null)
+			if (sr != null) {
 				sr.close();
+			}
 		}
 
 		return document;

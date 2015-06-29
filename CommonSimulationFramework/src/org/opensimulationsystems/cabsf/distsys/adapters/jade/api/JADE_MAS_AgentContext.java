@@ -40,7 +40,7 @@ public class JADE_MAS_AgentContext extends AgentContext {
 		 * 
 		 * try { jade_MAS_RunGroupContext = jade_MAS_AdapterAPI
 		 * .initializeAPI(frameworkConfigurationFileName); } catch (IOException e) { throw
-		 * new CsfInitializationRuntimeException(
+		 * new CabsfInitializationRuntimeException(
 		 * "Error in initializing the JADE Agent Context", e); }
 		 * 
 		 * // Initialize simulation run jade_MAS_RunContext =

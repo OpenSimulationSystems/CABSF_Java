@@ -7,7 +7,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfCheckedException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfCheckedException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.transformers.FrameworkMessageDocumentHelper;
 
@@ -76,18 +76,18 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 *            the target system type
 	 * @param xmlString
 	 *            the xml string
-	 * @throws CsfCheckedException
+	 * @throws CabsfCheckedException
 	 *             the csf checked exception
 	 */
 	public FrameworkMessageImpl(final SYSTEM_TYPE sourceSystemType,
 			final SYSTEM_TYPE targetSystemType, final String xmlString)
-			throws CsfCheckedException {
+			throws CabsfCheckedException {
 		super();
 		try {
 			this.document = MessagingUtilities.createDocumentFromString(xmlString);
 		} catch (JDOMException | IOException e) {
 			// TODO: Where to catch this?
-			throw new CsfCheckedException("Unable to parse the message XML", e);
+			throw new CabsfCheckedException("Unable to parse the message XML", e);
 		}
 
 		this.sourceSystemType = sourceSystemType;

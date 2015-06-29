@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.opensimulationsystems.cabsf.common.csfmodel.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfCheckedException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfCheckedException;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FRAMEWORK_COMMAND;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.csfmodel.messaging.messages.FrameworkMessageImpl;
@@ -64,7 +64,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 					message = new FrameworkMessageImpl(
 							SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
 							SYSTEM_TYPE.SIMULATION_ENGINE, msgStr);
-				} catch (CsfCheckedException e) {
+				} catch (CabsfCheckedException e) {
 					// FIXME: Remove all of the agents/shutdown the MAS?
 					System.out
 					.println("[JADE Controller Agent] Error converting message from a distributed JADE agent to the JADE Controller Agent: "

@@ -88,7 +88,7 @@ public class RepastS_AgentContext extends AgentContext {
 				repastS_SimulationRunContext = (RepastS_SimulationRunContext) csfRepastContextIterable
 						.iterator().next();
 			} catch (final NoSuchElementException e) {
-				return SIMULATION_TYPE.NON_CSF_SIMULATION;
+				return SIMULATION_TYPE.NON_CABSF_SIMULATION;
 			}
 			this.repastS_SimulationRunContext = repastS_SimulationRunContext;
 			this.repastS_SimulationRunGroupContext = repastS_SimulationRunContext
@@ -98,7 +98,7 @@ public class RepastS_AgentContext extends AgentContext {
 		setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
 				.createCachedMessageExchangeTemplateWithPlaceholders());
 
-		return SIMULATION_TYPE.CSF_SIMULATION;
+		return SIMULATION_TYPE.CABSF_SIMULATION;
 	}
 
 	/**

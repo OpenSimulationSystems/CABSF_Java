@@ -6,4 +6,4 @@
  * @since 0.1
  * 
  */
-package org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions;
+package org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions;

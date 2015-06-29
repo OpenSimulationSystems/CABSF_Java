@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.opensimulationsystems.cabsf.common.csfmodel.csfexceptions.CsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.csfmodel.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
@@ -117,7 +117,7 @@ public class DistributedAgentsManager {
 					+ " native class: "
 					+ nativeDistributedAutonomousAgent.getClass().getCanonicalName());
 		} catch (final java.util.NoSuchElementException e) {
-			throw new CsfInitializationRuntimeException(
+			throw new CabsfInitializationRuntimeException(
 					"Error Assigning native JADE agent to mapping.", e);
 		}
 

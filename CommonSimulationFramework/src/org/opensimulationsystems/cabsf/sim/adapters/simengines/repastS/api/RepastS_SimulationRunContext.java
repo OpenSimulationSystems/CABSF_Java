@@ -25,7 +25,7 @@ import repast.simphony.context.Context;
  * simulation context exists per simulation run. Adapter developers should first
  * instantiate DistSysRunContext, before instantiating a Simulation-Toolkit-specific
  * Context such as this class.
- * 
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -37,6 +37,7 @@ public class RepastS_SimulationRunContext {
 
 	/** The repast s_ context for this run. */
 	Context<Object> repastS_ContextForThisRun;
+
 	// TODO: Move this up to the main API level?
 	/** The simulation distributed system managers. */
 	Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
@@ -54,7 +55,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Instantiates a new repast s_ simulation run context.
-	 * 
+	 *
 	 * @param simulationRunContext
 	 *            the simulation run context
 	 */
@@ -72,7 +73,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Close interface.
-	 * 
+	 *
 	 * @param simulationRunContext
 	 *            the simulation run context
 	 */
@@ -83,7 +84,7 @@ public class RepastS_SimulationRunContext {
 	// TODO: These can probably be removed now that we added the abstract AgentContext
 	/**
 	 * Gets the blank cached message exchange template.
-	 * 
+	 *
 	 * @return the blank cached message exchange template
 	 */
 	public Document getBlankCachedMessageExchangeTemplate() {
@@ -93,7 +94,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the cached agent model actor template.
-	 * 
+	 *
 	 * @return the cached agent model actor template
 	 */
 	public Element getCachedAgentModelActorTemplate() {
@@ -103,7 +104,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the cached distributed autonomous agent template.
-	 * 
+	 *
 	 * @return the cached distributed autonomous agent template
 	 */
 	public Element getCachedDistributedAutonomousAgentTemplate() {
@@ -113,7 +114,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the cached location template.
-	 * 
+	 *
 	 * @return the cached location template
 	 */
 	public Element getCachedLocationTemplate() {
@@ -123,7 +124,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the current repast context.
-	 * 
+	 *
 	 * @return the current repast context
 	 */
 	public Context<Object> getCurrentRepastContext() {
@@ -132,7 +133,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the repast s_ simulation run group context.
-	 * 
+	 *
 	 * @return the repast s_ simulation run group context
 	 */
 	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
@@ -144,7 +145,7 @@ public class RepastS_SimulationRunContext {
 	 */
 	/**
 	 * Gets the simulation distributed system managers.
-	 * 
+	 *
 	 * @return the simulation distributed system managers
 	 */
 	public Set<SimulationDistributedSystemManager> getSimulationDistributedSystemManagers() {
@@ -153,7 +154,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the simulation run context.
-	 * 
+	 *
 	 * @return the simulation run context
 	 */
 	public SimulationRunContext getSimulationRunContext() {
@@ -162,7 +163,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the simulation run group.
-	 * 
+	 *
 	 * @return the simulation run group
 	 */
 	public SimulationRunGroup getSimulationRunGroup() {
@@ -171,7 +172,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Gets the simulation run group configuration.
-	 * 
+	 *
 	 * @return the simulation run group configuration
 	 */
 	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
@@ -181,7 +182,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Message distributed systems.
-	 * 
+	 *
 	 * @param frameworkMessage
 	 *            the framework message
 	 * @param simulationRunContext
@@ -194,7 +195,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Read framework message from distributed system.
-	 * 
+	 *
 	 * @return the framework message
 	 */
 	public FrameworkMessage readFrameworkMessageFromDistributedSystem() {
@@ -203,7 +204,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Read framework message from simulation administrator.
-	 * 
+	 *
 	 * @return the framework message
 	 */
 	public FrameworkMessage readFrameworkMessageFromSimulationAdministrator() {
@@ -216,7 +217,7 @@ public class RepastS_SimulationRunContext {
 	 */
 	/**
 	 * Sets the repast context for this run.
-	 * 
+	 *
 	 * @param repastS_ContextForThisRun
 	 *            the new repast context for this run
 	 */
@@ -228,7 +229,7 @@ public class RepastS_SimulationRunContext {
 
 	/**
 	 * Sets the repast run group context.
-	 * 
+	 *
 	 * @param repastS_SimulationRunGroupContext
 	 *            the new repast run group context
 	 */

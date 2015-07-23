@@ -127,11 +127,6 @@ public class XMLUtilities {
 			throw new CabsfRuntimeException("Error in querying the message", e);
 		}
 		return xPathSearchedNodes;
-		/*
-		 * for (int i = 0; i < xPathSearchedNodes.size(); i++) { Content content =
-		 * xPathSearchedNodes.get(i); System.out.println("content: " + i + ": " +
-		 * content.getValue()); }
-		 */
 	}
 
 	/**
@@ -175,8 +170,8 @@ public class XMLUtilities {
 
 			final Element root = document.getRootElement();
 			System.out
-					.println("[Common Simulation Framework - internal] Successfully loaded template file: "
-							+ root.getName());
+			.println("[Common Simulation Framework - internal] Successfully loaded template file: "
+					+ root.getName());
 		} finally {
 			if (inputStream != null) {
 				inputStream.close();
@@ -208,8 +203,8 @@ public class XMLUtilities {
 
 			final Element root = document.getRootElement();
 			System.out
-					.println("[Common Simulation Framework - internal] Successfully loaded template file: "
-							+ root.getName());
+			.println("[Common Simulation Framework - internal] Successfully loaded template file: "
+					+ root.getName());
 		} finally {
 			if (inputStream != null) {
 				inputStream.close();

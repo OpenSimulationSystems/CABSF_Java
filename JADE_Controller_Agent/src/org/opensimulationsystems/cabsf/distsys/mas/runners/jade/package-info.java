@@ -1,5 +1,5 @@
 /**
- * The JADE-specific CSF adapter implementation.
+ * The JADE-specific CABSF adapter implementation.
  * 
  * @author Jorge Calderon
  * 

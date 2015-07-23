@@ -26,7 +26,7 @@ import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.Na
 
 // TODO: Auto-generated Javadoc
 /**
- * The JADE agent implementing the CSF JADE MAS Adapter API to enable JADE agents to
+ * The JADE agent implementing the CABSF JADE MAS Adapter API to enable JADE agents to
  * communicate with ABMS systems such as Repast Simphony.
  *
  * @author Jorge Calderon
@@ -48,7 +48,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 
 		/*
 		 * (non-Javadoc)
-		 *
+		 * 
 		 * @see jade.core.behaviours.Behaviour#action()
 		 */
 		@Override
@@ -67,14 +67,14 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 				} catch (final CabsfCheckedException e) {
 					// FIXME: Remove all of the agents/shutdown the MAS?
 					System.out
-							.println("[JADE Controller Agent] Error converting message from a distributed JADE agent to the JADE Controller Agent: "
-									+ msgStr);
+					.println("[JADE Controller Agent] Error converting message from a distributed JADE agent to the JADE Controller Agent: "
+							+ msgStr);
 					doDelete();
 					e.printStackTrace();
 				}
 
 				System.out
-						.println("[JADE Controller Agent] Received the distributed autonomous agent (model) decision. Forwarding to the simulation engine (agent)");
+				.println("[JADE Controller Agent] Received the distributed autonomous agent (model) decision. Forwarding to the simulation engine (agent)");
 
 				jade_MAS_RunContext.messageSimulationEngine(message,
 						jade_MAS_RunContext.getDistSysRunContext());
@@ -83,7 +83,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 						.waitForAndProcessSimulationEngineMessageAfterHandshake();
 				if (fc == FRAMEWORK_COMMAND.STOP_SIMULATION) {
 					System.out
-							.println("[JADE Controller Agent] Received Stop Simulation Command from Simulation Engine.  Listening for new simulation run");
+					.println("[JADE Controller Agent] Received Stop Simulation Command from Simulation Engine.  Listening for new simulation run");
 					setupNewSimulationRun();
 				}
 
@@ -135,7 +135,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 	 * private static Set<NativeDistributedAutonomousAgent>
 	 * getInitialSetOfNativeJADEagents() { Set<NativeDistributedAutonomousAgent> st = new
 	 * HashSet<NativeDistributedAutonomousAgent>();
-	 * 
+	 *
 	 * NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = new
 	 * MockHumanJADE_Agent( "DistSys1", "DistributedSystemAutonomousAgent1",
 	 * "DistributedSystemAutonomousAgent1MODEL", "Human");
@@ -177,6 +177,11 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 
 	/*
 	 * Setup tasks run once
+	 *
+	 * @see jade.core.Agent#setup()
+	 */
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see jade.core.Agent#setup()
 	 */
@@ -186,14 +191,12 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 		// Printout a welcome message
 		System.out.println("JADE Controller Agent " + getAID().getName() + " is ready.");
 
-		// TODO: Add Validation of CSF configuration file
-		// One-time setup
 		final Object[] args = getArguments();
 		if (args != null && args.length > 0) {
 			frameworkConfigurationFileName = (String) args[0];
 			System.out
-					.println("[JADE Controller Agent] JADE Controller Agent Configuration file "
-							+ frameworkConfigurationFileName);
+			.println("[JADE Controller Agent] CABSF JADE Controller Agent Configuration file "
+					+ frameworkConfigurationFileName);
 
 			// JZombies or Prisoner's Dilemma
 			if (frameworkConfigurationFileName.equals("PLACEHOLDERCONFIGFILE")) {
@@ -211,7 +214,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 			} catch (final IOException e) {
 				// FIXME: Remove all of the agents/shutdown the MAS?
 				System.out
-						.println("[JADE Controller Agent] Error in initializing the JADE Controller Agent");
+				.println("[JADE Controller Agent] Error in initializing the JADE Controller Agent");
 				doDelete();
 				e.printStackTrace();
 			}
@@ -221,7 +224,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 			final DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
 			final ServiceDescription sd = new ServiceDescription();
-			sd.setType("jade-csf-agents");
+			sd.setType("jade-CABSF-agents");
 			sd.setName("jade-controller-agent");
 			dfd.addServices(sd);
 			try {
@@ -241,7 +244,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 		} else {
 			// Make the agent terminate
 			System.out
-					.println("[JADE Controller Agent] The JADE Controller Agent configuration file must be provided as an argument");
+			.println("[JADE Controller Agent] The JADE Controller Agent configuration file must be provided as an argument");
 			doDelete();
 		}
 
@@ -257,19 +260,19 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 					+ numberOfAgents);
 			final DFAgentDescription template = new DFAgentDescription();
 			final ServiceDescription sd = new ServiceDescription();
-			sd.setType("jade-csf-agents");
+			sd.setType("jade-CABSF-agents");
 			sd.setName("non-admin-agents");
 			template.addServices(sd);
 			try {
 				final DFAgentDescription[] result = DFService.search(this, template);
 				System.out
-						.println("[JADE Controller Agent] Found the following JADE agents ("
-								+ String.valueOf(result.length) + "):");
+				.println("[JADE Controller Agent] Found the following JADE agents ("
+						+ String.valueOf(result.length) + "):");
 				jadeAgents = new HashSet<NativeDistributedAutonomousAgent>();
 
 				// Create a CabsfDistributedJADEagentWrapper concrete object for
 				// each JADE agent. The purpose is to hold both the JADE AID and
-				// CSF-specific identifiers in a single object.
+				// CABSF-specific identifiers in a single object.
 				// TODO: Dynamically handle naming
 				// :DistributedSystemAutonomousAgent1,
 				// DistributedSystemAutonomousAgent1MODEL
@@ -277,15 +280,15 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 					String.valueOf(i);
 					final CabsfDistributedJADEagentWrapper agent = new CabsfDistributedJADEagentWrapper(
 							result[i].getName(), "DistSys1", result[i].getName()
-									.getLocalName(), result[i].getName().getLocalName()
-									+ "MODEL", "Human", this);
+							.getLocalName(), result[i].getName().getLocalName()
+							+ "MODEL", "Human", this);
 					jadeAgents.add(agent);
 					System.out.println("   " + result[i].getName().getName());
 				}
 			} catch (final FIPAException fe) {
 				// FIXME: Remove all of the agents/shutdown the MAS?
 				System.out
-						.println("[JADE Controller Agent] FIPA error in finding the distributed JADE agents.  Terminating.");
+				.println("[JADE Controller Agent] FIPA error in finding the distributed JADE agents.  Terminating.");
 				doDelete();
 				fe.printStackTrace();
 			}
@@ -302,7 +305,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
 				.waitForAndProcessSimulationEngineMessageAfterHandshake();
 		if (fc == FRAMEWORK_COMMAND.STOP_SIMULATION) {
 			System.out
-					.println("[JADE Controller Agent] Received Stop Simulation Command from Simulation Engine.  Listening for new simulation run");
+			.println("[JADE Controller Agent] Received Stop Simulation Command from Simulation Engine.  Listening for new simulation run");
 			setupNewSimulationRun();
 		}
 	}

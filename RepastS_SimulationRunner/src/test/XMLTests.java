@@ -29,7 +29,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunGroupContext;
 
 import prisonersdilemma.DECISION;
-import prisonersdilemma.PrisonersDilemma_CSF;
+import prisonersdilemma.PrisonersDilemma_CABSF_Helper;
 
 public class XMLTests implements JadeControllerMock {
 	static private XMLTests instance = new XMLTests();
@@ -39,7 +39,7 @@ public class XMLTests implements JadeControllerMock {
 	static private SimulationAPI simulationAPI;
 	static private String simToolNameToSetInSimulationAPI;
 	private static JZombies_CABSF_Helper jZombies_CABSF_Helper;
-	private static PrisonersDilemma_CSF prisonersDilemma_CSF;
+	private static PrisonersDilemma_CABSF_Helper prisonersDilemma_CABSF_Helper;
 	static JADE_MAS_AgentContext jade_MAS_AgentContext;
 	static private RepastS_AgentContext repastS_AgentContext;
 
@@ -59,7 +59,7 @@ public class XMLTests implements JadeControllerMock {
 		jade_MAS_RunContext = new JADE_MAS_RunContext(null);
 
 		jZombies_CABSF_Helper = new JZombies_CABSF_Helper(repastS_AgentContext);
-		prisonersDilemma_CSF = new PrisonersDilemma_CSF(repastS_AgentContext);
+		prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(repastS_AgentContext);
 
 		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
 		jade_MAS_AgentContext.initializeCabsfAgent("TEST");
@@ -337,7 +337,7 @@ public class XMLTests implements JadeControllerMock {
 		msg.setIDForActorInAgentModel(agentModelActor, "distAutAgentModel2");
 		final int round = 1;
 		final DECISION otherPlayerLastDecision = DECISION.COOPERATE;
-		prisonersDilemma_CSF.populatePrisonersDilemmaFrameworkMessage(msg,
+		prisonersDilemma_CABSF_Helper.populatePrisonersDilemmaFrameworkMessage(msg,
 				agentModelActor, round, otherPlayerLastDecision, null);
 
 		System.out.println("Prisoner's Dilemma MSG:"
@@ -468,11 +468,11 @@ public class XMLTests implements JadeControllerMock {
 		 * msg.getNextAgentModelActor(distributedAutonomousAgent,
 		 * repastS_AgentContext.getCachedAgentModelActorTemplate());
 		 */
-		final DECISION decision = prisonersDilemma_CSF.getOtherPlayerDecision(
+		final DECISION decision = prisonersDilemma_CABSF_Helper.getOtherPlayerDecision(
 				distributedAutonomousAgent, msg);
 		System.out.println("Read decision: " + decision.toString());
 
-		final int roundNumber = prisonersDilemma_CSF.getRoundNumber(
+		final int roundNumber = prisonersDilemma_CABSF_Helper.getRoundNumber(
 				distributedAutonomousAgent, msg);
 		System.out.println("Read round number: " + String.valueOf(roundNumber));
 	}

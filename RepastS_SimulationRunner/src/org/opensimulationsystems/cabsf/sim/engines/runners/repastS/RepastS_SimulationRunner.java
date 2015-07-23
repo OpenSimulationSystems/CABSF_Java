@@ -103,15 +103,15 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		isStopped = false; // Clear this flag for the next simulation run
 		if (lastRepastS_SimulationRunContext != null) { // if CSF run
 			lastRepastS_SimulationRunContext
-					.closeInterface(lastRepastS_SimulationRunContext
-							.getSimulationRunContext());
+			.closeInterface(lastRepastS_SimulationRunContext
+					.getSimulationRunContext());
 			lastRepastS_SimulationRunContext.terminateSimulationRun();
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see repast.simphony.engine.graph.Executor#execute(java.lang.Object)
 	 */
 	public void execute(final RunState toExecuteOn) {
@@ -215,7 +215,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
 
 			// Temporary Fix to set the Paremters in the simulation
-			repastS_SimulationAdapterAPI.applyRssrParametersFix(controller, scenarioDir);
+			repastS_SimulationAdapterAPI.applyRssrParametersFix(controller, scenarioDir,
+					cabsfConfigurationFileName);
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(cabsfConfigurationFileName);
 			simulationRunnerType = SIMULATION_TYPE.CABSF_SIMULATION;
@@ -244,7 +245,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 		@SuppressWarnings("unchecked")
 		final Context<Object> repastContextForThisRun = RunState.getInstance()
-				.getMasterContext();
+		.getMasterContext();
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 		if (simulationRunnerType == SIMULATION_TYPE.CABSF_SIMULATION) {
 			repastS_SimulationRunContext = repastS_SimulationAdapterAPI
@@ -280,9 +281,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/*
 	 * Performs the step in the simulation
-	 * 
+	 *
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see repast.simphony.engine.environment.AbstractRunner#step()
 	 */
 	@Override
@@ -294,9 +295,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	//
 	/*
 	 * Call the end actions on the scheduler
-	 * 
+	 *
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see repast.simphony.engine.environment.AbstractRunner#stop()
 	 */
 	@Override

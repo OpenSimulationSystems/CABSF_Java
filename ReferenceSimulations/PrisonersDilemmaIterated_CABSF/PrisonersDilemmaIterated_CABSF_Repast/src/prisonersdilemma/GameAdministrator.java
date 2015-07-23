@@ -86,7 +86,7 @@ public class GameAdministrator {
 	private SIMULATION_TYPE simulationType;
 
 	/** The prisoners dilemma_ csf. */
-	private PrisonersDilemma_CSF prisonersDilemma_CSF;
+	private PrisonersDilemma_CABSF_Helper prisonersDilemma_CABSF_Helper;
 
 	/** The player set. */
 	private HashSet<Player> playerSet;
@@ -162,12 +162,12 @@ public class GameAdministrator {
 	}
 
 	/**
-	 * Gets the PrisonersDilemma_CSF.
+	 * Gets the PrisonersDilemma_CABSF_Helper.
 	 * 
-	 * @return the PrisonersDilemma_CSF convenience class
+	 * @return the PrisonersDilemma_CABSF_Helper convenience class
 	 */
-	public PrisonersDilemma_CSF getPrisonersDilemma_CSF() {
-		return prisonersDilemma_CSF;
+	public PrisonersDilemma_CABSF_Helper getPrisonersDilemma_CSF() {
+		return prisonersDilemma_CABSF_Helper;
 	}
 
 	/**
@@ -214,9 +214,9 @@ public class GameAdministrator {
 
 		// FIXME: Simplify the API
 		try {
-			if (prisonersDilemma_CSF == null) {
+			if (prisonersDilemma_CABSF_Helper == null) {
 				repastScontext = RunState.getInstance().getMasterContext();
-				prisonersDilemma_CSF = new PrisonersDilemma_CSF(repastS_AgentContext);
+				prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(repastS_AgentContext);
 
 				final Iterable<Class> simulationAgentsClasses = RunState.getInstance()
 						.getMasterContext().getAgentTypes();

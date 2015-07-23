@@ -22,7 +22,7 @@ import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentC
 
 // TODO: Auto-generated Javadoc
 /**
- * The JADE class representing the Human in a CSF-administered
+ * The JADE class representing the Human in a CABSF-administered
  * JADE-Repast-Simphony-integrated JZombies simulation.
  *
  * @author Jorge Calderon
@@ -59,7 +59,7 @@ public class HumanJADE extends Agent {
 				final String msgStr = aclMsg.getContent();
 
 				FrameworkMessage msg = null;
-				// Convert the message content from an XML string to a (CSF)
+				// Convert the message content from an XML string to a (CABSF)
 				// FrameworkMessage to gain access to convenience methods.
 				try {
 					msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
@@ -101,7 +101,7 @@ public class HumanJADE extends Agent {
 				// dependency on that
 				// project.
 				// However, there is no direct use of RepastS code from JADE
-				// agents in a CSF MAS-ABMS-systems integrated simulation.
+				// agents in a CABSF MAS-ABMS-systems integrated simulation.
 				final List<String> pointWithLeastZombiesPoint = jZombies_CABSF_Helper
 						.getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
 
@@ -185,7 +185,7 @@ public class HumanJADE extends Agent {
 		addBehaviour(new HumanJADE_Server());
 
 		/*
-		 * The Common Simulation Framework (CSF) context object specific to CSF JADE
+		 * The Common Simulation Framework (CABSF) context object specific to CABSF JADE
 		 * agents. Gives the user access to many convenience methods for dealing with XML
 		 * messages coming from the simulation engine/runtime such as Repast Simphony.
 		 */
@@ -210,7 +210,7 @@ public class HumanJADE extends Agent {
 		final DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("jade-csf-agents");
+		sd.setType("jade-CABSF-agents");
 		sd.setName("non-admin-agents"); // All JADE agents other than the JADE
 		// Controller Agent
 		dfd.addServices(sd);
@@ -227,7 +227,7 @@ public class HumanJADE extends Agent {
 		System.out.println(logPrefix + " Looking for the JADE Controller Agent");
 		final DFAgentDescription template = new DFAgentDescription();
 		sd = new ServiceDescription();
-		sd.setType("jade-csf-agents");
+		sd.setType("jade-CABSF-agents");
 		sd.setName("jade-controller-agent");
 		template.addServices(sd);
 		try {

@@ -1,7 +1,6 @@
 package jzombies;
 
 import repast.simphony.context.Context;
-import repast.simphony.context.DefaultContext;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.context.space.graph.NetworkBuilder;
@@ -24,56 +23,55 @@ public class JZombiesBuilder implements ContextBuilder<Object> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context
+	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context
 	 * .Context)
 	 */
 	@SuppressWarnings("rawtypes")
-	//@Override
-	public Context build(Context<Object> context) {
-		double MAX_ITERATIONS = 300;
-		RunEnvironment runEnvironment = RunEnvironment.getInstance();
+	// @Override
+	public Context build(final Context<Object> context) {
+		final double MAX_ITERATIONS = 300;
+		final RunEnvironment runEnvironment = RunEnvironment.getInstance();
 		runEnvironment.endAt(MAX_ITERATIONS);
-		
+
 		context.setId("jzombies");
 
-		NetworkBuilder<Object> netBuilder = new NetworkBuilder<Object>(
+		final NetworkBuilder<Object> netBuilder = new NetworkBuilder<Object>(
 				"infection network", context, true);
 		netBuilder.buildNetwork();
 
-		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder
+		final ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder
 				.createContinuousSpaceFactory(null);
-		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace(
-				"space", context, new RandomCartesianAdder<Object>(),
-				new repast.simphony.space.continuous.WrapAroundBorders(), 50,
-				50);
+		final ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space",
+				context, new RandomCartesianAdder<Object>(),
+				new repast.simphony.space.continuous.WrapAroundBorders(), 50, 50);
 
-		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
-		Grid<Object> grid = gridFactory.createGrid("grid", context,
+		final GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+		final Grid<Object> grid = gridFactory.createGrid("grid", context,
 				new GridBuilderParameters<Object>(new WrapAroundBorders(),
 						new SimpleGridAdder<Object>(), true, 50, 50));
 
-		Parameters params = RunEnvironment.getInstance().getParameters();
-		int zombieCount = (Integer) params.getValue("zombie_count");
+		final Parameters params = RunEnvironment.getInstance().getParameters();
+		final int zombieCount = (Integer) params.getValue("zombie_count");
 		for (int i = 0; i < zombieCount; i++) {
 			context.add(new Zombie(space, grid));
 		}
 
-		int humanCount = (Integer) params.getValue("human_count");
+		final int humanCount = (Integer) params.getValue("human_count");
 		for (int i = 0; i < humanCount; i++) {
-			int energy = RandomHelper.nextIntFromTo(4, 10);
+			final int energy = RandomHelper.nextIntFromTo(4, 10);
 			context.add(new Human(space, grid, energy));
 		}
 
-		for (Object obj : context) {
-			NdPoint pt = space.getLocation(obj);
+		for (final Object obj : context) {
+			final NdPoint pt = space.getLocation(obj);
 			grid.moveTo(obj, (int) pt.getX(), (int) pt.getY());
 		}
-		
-/*		if (RunEnvironment.getInstance().isBatch()) {
-			RunEnvironment.getInstance().endAt(20);
-		}*/
-		
+
+		/*
+		 * if (RunEnvironment.getInstance().isBatch()) {
+		 * RunEnvironment.getInstance().endAt(20); }
+		 */
+
 		return context;
 	}
 }

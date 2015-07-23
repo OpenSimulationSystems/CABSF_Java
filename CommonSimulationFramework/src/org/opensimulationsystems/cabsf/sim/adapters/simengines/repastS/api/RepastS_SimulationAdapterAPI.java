@@ -25,6 +25,7 @@ import repast.simphony.context.Context;
 import repast.simphony.engine.controller.Controller;
 import repast.simphony.parameter.DefaultParameters;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Repast Simphony Adapter API context factory. This class is the entry point for
  * RepastS simulations to use the Common Simulation Framework.
@@ -66,8 +67,27 @@ public class RepastS_SimulationAdapterAPI {
 		super();
 	}
 
-	public void applyRssrParametersFix(final Controller controller, final File scenarioDir)
+	/**
+	 * Apply rssr parameters fix.
+	 *
+	 * @param controller
+	 *            the controller
+	 * @param scenarioDir
+	 *            the scenario dir
+	 * @param cabsfConfigurationFileName
+	 *            the cabsf configuration file name
+	 * @throws JDOMException
+	 *             the JDOM exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	public void applyRssrParametersFix(final Controller controller,
+			final File scenarioDir, final String cabsfConfigurationFileName)
 			throws JDOMException, IOException {
+		if (!shouldApplyRunFix(cabsfConfigurationFileName)) {
+			return;
+		}
+
 		/** The element filter. */
 		final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
 
@@ -111,14 +131,14 @@ public class RepastS_SimulationAdapterAPI {
 
 	/**
 	 * Initializes the Common Simulation Framework on the RepastS simulation side, based
-	 * on the supplied CABSF configuration property file. Calls the simulation-adaptor-wide
-	 * Simulation API to initialize the simulation run group.
+	 * on the supplied CABSF configuration property file. Calls the
+	 * simulation-adaptor-wide Simulation API to initialize the simulation run group.
 	 *
 	 * NOTE: The current version initialization is hard coded to only work with the two
 	 * reference implementation simulations. The CABSF configuration filename is used to
 	 * switch the configuration based on the simulation. In the future, this filename will
-	 * be used to read an XML configuration file from the file system so that the CABSF can
-	 * be used for any simulation.
+	 * be used to read an XML configuration file from the file system so that the CABSF
+	 * can be used for any simulation.
 	 *
 	 * @param cabsfConfigurationFileName
 	 *            the framework configuration file name
@@ -143,8 +163,8 @@ public class RepastS_SimulationAdapterAPI {
 	// LOW: Allow the same simulation agent class to be both distributed and
 	// non-distributed.
 	/**
-	 * Initializes a single CABSF Repast Simphony simulation run. This method configures the
-	 * (already-created in the simulation API initialization) AgentMapping objects.
+	 * Initializes a single CABSF Repast Simphony simulation run. This method configures
+	 * the (already-created in the simulation API initialization) AgentMapping objects.
 	 *
 	 * @param nativeRepastScontextForThisRun
 	 *            the native repast context for this run
@@ -310,6 +330,41 @@ public class RepastS_SimulationAdapterAPI {
 		for (final Object simulationAgent : agentsOfOneType) {
 			mapSimulationSideAgent(simulationAgent, simulationRunContext);
 		}
+	}
+
+	/**
+	 * Returns whether the parameters fix should be applied, depending on the presence of
+	 * the flag in the configuration file.
+	 *
+	 * @param cabsfConfigurationDocumentStr
+	 *            the cabsf configuration document str
+	 * @return true, if successful
+	 * @throws IOException
+	 * @throws JDOMException
+	 */
+	private boolean shouldApplyRunFix(final String cabsfConfigurationDocumentStr)
+			throws JDOMException, IOException {
+		final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
+		/** The namespace str. */
+		final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+
+		/** The namespace. */
+
+		final Document configFileDoc = MessagingUtilities
+				.createDocumentFromFileSystemPath(cabsfConfigurationDocumentStr);
+		assert (configFileDoc != null);
+
+		final List<Element> applyRssrParametersFixElements = (List<Element>) XMLUtilities
+				.executeXPath(
+						configFileDoc,
+						"/x:CabsfSimulationConfiguration/x:SimulationEngineSpecificConfigurations/x:AllSimulationRuns/x:SimulationEngineSpecific/x:ApplyRssrParametersFix",
+						namespaceStr, elementFilter);
+
+		if (applyRssrParametersFixElements.size() >= 1) {
+			return applyRssrParametersFixElements.get(0).getText()
+					.equalsIgnoreCase("true");
+		}
+		return false;
 	}
 
 }

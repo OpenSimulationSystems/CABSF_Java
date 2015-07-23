@@ -39,7 +39,7 @@ public class JADE_Controller_Agent implements JadeControllerMock {
 		String frameworkConfigurationFileName = null;
 		if (args.length >= 1)
 			frameworkConfigurationFileName = args[0];
-		// TODO: Add Validation of CSF configuration file
+		// TODO: Add Validation of CABSF configuration file
 		if (frameworkConfigurationFileName == null)
 			throw new CabsfInitializationRuntimeException(
 					"The configuration directory must be provided");

@@ -1,3 +1,4 @@
 cd %~dp0
 
-rm ../../ModelOutput*.*
+cd ../../../
+del ModelOutput*.*

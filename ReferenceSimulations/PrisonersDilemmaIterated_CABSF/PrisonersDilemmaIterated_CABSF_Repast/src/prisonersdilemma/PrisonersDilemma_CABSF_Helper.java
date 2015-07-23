@@ -28,7 +28,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.Simulatio
  * @version 0.1
  * @since 0.1
  */
-public class PrisonersDilemma_CSF {
+public class PrisonersDilemma_CABSF_Helper {
 
 	/** The element filter used when querying the XML. */
 	private final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
@@ -51,12 +51,12 @@ public class PrisonersDilemma_CSF {
 	private final AgentContext agentContext;
 
 	/**
-	 * Instantiates a new PrisonersDilemma_CSF.
+	 * Instantiates a new PrisonersDilemma_CABSF_Helper.
 	 * 
 	 * @param jade_MAS_AgentContext
 	 *            the JADE_MAS_AgentContext context
 	 */
-	public PrisonersDilemma_CSF(final JADE_MAS_AgentContext jade_MAS_AgentContext) {
+	public PrisonersDilemma_CABSF_Helper(final JADE_MAS_AgentContext jade_MAS_AgentContext) {
 		this.jade_MAS_AgentContext = jade_MAS_AgentContext;
 		agentContext = jade_MAS_AgentContext;
 		try {
@@ -71,12 +71,12 @@ public class PrisonersDilemma_CSF {
 	}
 
 	/**
-	 * Instantiates a new PrisonersDilemma_CSF.
+	 * Instantiates a new PrisonersDilemma_CABSF_Helper.
 	 * 
 	 * @param repastS_AgentContext
 	 *            the RepastS_AgentContext context
 	 */
-	public PrisonersDilemma_CSF(final RepastS_AgentContext repastS_AgentContext) {
+	public PrisonersDilemma_CABSF_Helper(final RepastS_AgentContext repastS_AgentContext) {
 		this.repastS_AgentContext = repastS_AgentContext;
 		agentContext = repastS_AgentContext;
 	}

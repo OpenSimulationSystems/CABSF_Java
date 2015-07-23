@@ -19,7 +19,7 @@ import org.opensimulationsystems.cabsf.common.model.messaging.messages.Framework
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 
 /**
- * The JADE class representing the Player in a CSF-administered
+ * The JADE class representing the Player in a CABSF-administered
  * JADE-Repast-Simphony-integrated Prisoner's Dilemma game theory tournament.
  *
  * @author Jorge Calderon
@@ -58,7 +58,7 @@ public class PlayerJADE extends Agent {
 				String msgStr = aclMsg.getContent();
 
 				FrameworkMessage msg = null;
-				// Convert the message content from an XML string to a (CSF)
+				// Convert the message content from an XML string to a (CABSF)
 				// FrameworkMessage to gain access to convenience methods.
 				try {
 					msg = new FrameworkMessageImpl(
@@ -91,9 +91,9 @@ public class PlayerJADE extends Agent {
 				msg.setIDForActorInAgentModel(agentModelActor,
 						distributedAutonomousAgentModelID);
 
-				int round = prisonersDilemma_CSF.getRoundNumber(
+				int round = prisonersDilemma_CABSF_Helper.getRoundNumber(
 						distributedAutonomousAgentElement, msg);
-				DECISION otherPlayerLastRoundDecision = prisonersDilemma_CSF
+				DECISION otherPlayerLastRoundDecision = prisonersDilemma_CABSF_Helper
 						.getOtherPlayerDecision(
 								distributedAutonomousAgentElement, msg);
 
@@ -130,7 +130,7 @@ public class PlayerJADE extends Agent {
 				replyMsg.setIDForActorInAgentModel(agentModelActor,
 						distributedAutonomousAgentModelID);
 
-				replyMsg = prisonersDilemma_CSF
+				replyMsg = prisonersDilemma_CABSF_Helper
 						.populatePrisonersDilemmaFrameworkMessage(replyMsg,
 								agentModelActor, round, null, myDecision);
 
@@ -184,8 +184,8 @@ public class PlayerJADE extends Agent {
 	/** The JADE_MAS_AgentContext context. */
 	private JADE_MAS_AgentContext jade_MAS_AgentContext;
 
-	/** The PrisonersDilemma_CSF. */
-	private PrisonersDilemma_CSF prisonersDilemma_CSF;
+	/** The PrisonersDilemma_CABSF_Helper. */
+	private PrisonersDilemma_CABSF_Helper prisonersDilemma_CABSF_Helper;
 
 	/** The distributed autonomous agent id. */
 	private String distributedAutonomousAgentID;
@@ -207,7 +207,7 @@ public class PlayerJADE extends Agent {
 		addBehaviour(new PrisonersDilemmaJADE_Server());
 
 		/*
-		 * The Common Simulation Framework (CSF) context object specific to CSF
+		 * The Common Simulation Framework (CABSF) context object specific to CABSF
 		 * JADE agents. Gives the user access to many convenience methods for
 		 * dealing with XML messages coming from the simulation engine/runtime
 		 * such as Repast Simphony.
@@ -217,7 +217,7 @@ public class PlayerJADE extends Agent {
 		 * This class contains convenience methods specific to this one
 		 * simulation.
 		 */
-		prisonersDilemma_CSF = new PrisonersDilemma_CSF(jade_MAS_AgentContext);
+		prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(jade_MAS_AgentContext);
 		// TODO: Support global JADE naming
 		/*
 		 * The mapping between the JADE agent and RepastS agent actually happens
@@ -234,7 +234,7 @@ public class PlayerJADE extends Agent {
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("jade-csf-agents");
+		sd.setType("jade-CABSF-agents");
 		sd.setName("non-admin-agents"); // All JADE agents other than the JADE
 		// Controller Agent
 		dfd.addServices(sd);
@@ -252,7 +252,7 @@ public class PlayerJADE extends Agent {
 		.println(logPrefix + " Looking for the JADE Controller Agent");
 		DFAgentDescription template = new DFAgentDescription();
 		sd = new ServiceDescription();
-		sd.setType("jade-csf-agents");
+		sd.setType("jade-CABSF-agents");
 		sd.setName("jade-controller-agent");
 		template.addServices(sd);
 		try {

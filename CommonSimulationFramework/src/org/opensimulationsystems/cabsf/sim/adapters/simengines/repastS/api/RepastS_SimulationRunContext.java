@@ -7,17 +7,17 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
 import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.configuration.RunGroupConfiguration;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
-import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunGroupConfiguration;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
 
 /**
- * Provides the context for the Common Simulation Framework. This
+ * Provides the context for the Common Agent-Based Simulation Framework. This
  * Simulation-Toolkit-specific context mirrors the generic DistSysRunContext provided by
  * the Common Framework API. It enables API users to get native Simulation-Toolkit objects
  * instead of generic "Object"s. This aids the API client at compile time. The simulation
@@ -175,7 +175,7 @@ public class RepastS_SimulationRunContext {
 	 *
 	 * @return the simulation run group configuration
 	 */
-	public SimulationRunGroupConfiguration getSimulationRunGroupConfiguration() {
+	public RunGroupConfiguration getSimulationRunGroupConfiguration() {
 		return simulationRunContext.getSimulationRunGroupContext()
 				.getSimulationRunGroupConfiguration();
 	}

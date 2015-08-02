@@ -15,7 +15,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunC
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 /**
- * Provides the context for the Common Simulation Framework.
+ * Provides the context for the Common Agent-Based Simulation Framework.
  * 
  * Adapter developers should instantiate this class first before the
  * Simulation-Toolkit-specific Context object.
@@ -25,7 +25,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.Simulatio
  * @since 0.1
  */
 public class SimulationRunContext extends CabsfRunContext {
-	// protected SimulationRunGroupConfiguration simulationRunGroupConfiguration; //
+	// protected runGroupConfiguration runGroupConfiguration; //
 	// Simulation
 	// Run-group-wide
 	/** The simulation distributed system managers. */

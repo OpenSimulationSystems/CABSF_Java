@@ -9,7 +9,7 @@ import repast.simphony.engine.environment.RunEnvironment;
  * The Repast Simphony (RepastS) Simulation Runner programmatically runs a
  * RepastS Simulation. This class is taken from the Repast FAQ for running a
  * program from another program. It is enhanced to enable the incorporation of
- * the Common Simulation Framework.
+ * the Common Agent-Based Simulation Framework.
  * 
  * Currently, this is the only way to run a RepastS simulation using the Common
  * Simulation Framework functionality.
@@ -50,7 +50,7 @@ public class RepastS_SimulationRunnerMain {
 	public static void main(String[] args) throws Exception {
 		String csfConfigurationFileName = null;
 		if (args.length >= 2)
-			// Read the directory to the Common Simulation Framework
+			// Read the directory to the Common Agent-Based Simulation Framework
 			// configuration file (second
 			// argument)
 			csfConfigurationFileName = args[1];

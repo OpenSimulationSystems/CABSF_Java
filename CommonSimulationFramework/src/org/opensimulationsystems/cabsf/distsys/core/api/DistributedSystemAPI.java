@@ -8,7 +8,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.Simulatio
 
 /**
  * This API is only for use by developers of adapters to connect simulation tools (such as Repast)
- * and agent-based systems (such as JADE) into the common simulation framework. Simulation and Agent
+ * and agent-based systems (such as JADE) into the Common Agent-Based Simulation Framework. Simulation and Agent
  * developers using such systems should use the appropriate adapter(s). The following highlights the
  * where in the overall system this code sits:<br/>
  * <br/>
@@ -20,12 +20,12 @@ import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.Simulatio
  * 
  * Currently supported Adaptors (Implementors of this API):<br/>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repast - Via the "Repast Simulation RepastS_SimulationRunnerMain"
- * Application, which is both an JADE_DistributedSystemAdapterAPI into the common simulation framework
+ * Application, which is both an JADE_DistributedSystemAdapterAPI into the Common Agent-Based Simulation Framework
  * and its own application programmatically running Repast as a library.<br/>
  * <br/>
  * 
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JADE - Via the
- * "Common Simulation Framework JADE_DistributedSystemAdapterAPI JADE Agent".<br/>
+ * "Common Agent-Based Simulation Framework JADE_DistributedSystemAdapterAPI JADE Agent".<br/>
  * <br/>
  * 
  * THIS PACKAGE WILL BE MOVED TO A SEPARATE JAR. TEMPORARILY HERE WIH THE REPAST SIMULATION WRAPPER

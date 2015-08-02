@@ -1,46 +1,41 @@
 package org.opensimulationsystems.cabsf.distsys.core.api;
 
-import org.jdom2.Document;
 import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.configuration.RunGroupConfiguration;
 import org.opensimulationsystems.cabsf.common.model.context.CabsfRunGroupContext;
-import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 
-public class DistSysRunGroupContext extends CabsfRunGroupContext  {
+public class DistSysRunGroupContext extends CabsfRunGroupContext {
 	private SimulationRunGroup simulationRunGroup;
-	private DistSysRunGroupConfiguration distSysRunGroupConfiguration;
+	private RunGroupConfiguration runGroupConfiguration;
 
 	// LOW: Support Multiple simulation run groups/run contexts
 	private DistSysRunContext distSysRunContext;
 
-
 	public DistSysRunGroupContext() {
 	}
 
-	public DistSysRunGroupConfiguration getSimulationConfiguration() {
-		return distSysRunGroupConfiguration;
+	public RunGroupConfiguration getRunGroupConfiguration() {
+		return runGroupConfiguration;
 	}
 
-	public SimulationRunGroup getSimulationRunGroup() {
+	public SimulationRunGroup getRunGroup() {
 		return simulationRunGroup;
 	}
 
-	public void setDistributedSystemSimulationRunGroup(SimulationRunGroup simulationRunGroup) {
+	public void setDistributedSystemSimulationRunGroup(
+			final SimulationRunGroup simulationRunGroup) {
 		this.simulationRunGroup = simulationRunGroup;
 	}
 
-	public void setDistSysRunGroupConfiguration(
-			DistSysRunGroupConfiguration distSysRunGroupConfiguration) {
-		this.distSysRunGroupConfiguration = distSysRunGroupConfiguration;
-
-	}
-
-	public void setDistSysRunContext(
-			DistSysRunContext distSysRunContext) {
+	public void setDistSysRunContext(final DistSysRunContext distSysRunContext) {
 		this.distSysRunContext = distSysRunContext;
 
 	}
 
+	public void setRunGroupConfiguration(
+			final RunGroupConfiguration runGroupConfiguration) {
+		this.runGroupConfiguration = runGroupConfiguration;
 
-
+	}
 
 }

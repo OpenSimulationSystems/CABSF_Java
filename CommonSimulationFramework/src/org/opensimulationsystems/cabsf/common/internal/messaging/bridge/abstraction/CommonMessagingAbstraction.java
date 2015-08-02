@@ -8,10 +8,10 @@ import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 
 /**
- * The abstract class in the Bridge pattern that specifies the Common Simulation Framework
- * interface. This class uses the Bridge Pattern so that clients can switch the messaging
- * interface as needed. The actual interface is Redis or (in the future) web services.
- * 
+ * The abstract class in the Bridge pattern that specifies the CABSF interface. This class
+ * uses the Bridge Pattern so that clients can switch the messaging interface as needed.
+ * The actual interface is Redis or (in the future) web services.
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -31,7 +31,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Instantiates a new common messaging abstraction.
-	 * 
+	 *
 	 * @param commonMessagingImplementationAPI
 	 *            the common messaging implementation api
 	 * @param messagingConnectionString
@@ -56,7 +56,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Initialize simulation framework common messaging interface.
-	 * 
+	 *
 	 * @param messagingConnectionString
 	 *            the messaging connection string
 	 */
@@ -65,7 +65,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Listen for message from simulation engine.
-	 * 
+	 *
 	 * @param targetSystemType
 	 *            the target system type
 	 * @param clientID
@@ -81,7 +81,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Read framework message from distributed system.
-	 * 
+	 *
 	 * @param clientID
 	 *            the client id
 	 * @return the framework message
@@ -95,7 +95,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Read framework message from simulation administrator.
-	 * 
+	 *
 	 * @param clientID
 	 *            the client id
 	 * @return the framework message
@@ -109,7 +109,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Request environment information.
-	 * 
+	 *
 	 * @param targetSystemType
 	 *            the target system type
 	 * @param clientID
@@ -124,7 +124,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Send message to distributed agents.
-	 * 
+	 *
 	 * @param frameworkMessage
 	 *            the framework message
 	 * @param distributedSystem
@@ -138,7 +138,7 @@ public abstract class CommonMessagingAbstraction {
 
 	/**
 	 * Send message to simulation engine.
-	 * 
+	 *
 	 * @param frameworkMessage
 	 *            the framework message
 	 * @param distSysRunContext

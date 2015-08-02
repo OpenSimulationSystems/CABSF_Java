@@ -7,7 +7,7 @@ import jade.lang.acl.ACLMessage;
 import java.util.UUID;
 
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
 
 /**
  * The wrapper for holding on to the IDs to uniquely identify a distributed autonomous
@@ -105,11 +105,11 @@ public class CabsfDistributedJADEagentWrapper implements NativeDistributedAutono
 	 * NativeDistributedAutonomousAgent
 	 * #receiveMessage(org.opensimulationsystems.cabsf.common.model
 	 * .messaging.messages.FrameworkMessage, java.lang.String, java.lang.String,
-	 * org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock)
+	 * org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface)
 	 */
 	@Override
 	public void receiveMessage(final FrameworkMessage msg, final String messageID,
-			final String inReplyToMessageID, final JadeControllerMock jade_ControllerMock) {
+			final String inReplyToMessageID, final JadeControllerInterface jade_ControllerMock) {
 		final ACLMessage aclMsg = new ACLMessage(ACLMessage.INFORM);
 		aclMsg.addReceiver(aid);
 		aclMsg.setContent(msg.toPrettyPrintedXMLString());

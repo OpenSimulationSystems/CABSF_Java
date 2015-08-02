@@ -176,7 +176,7 @@ public class HumanJADE extends Agent {
 
 	/*
 	 * The agent initialization.
-	 *
+	 * 
 	 * @see jade.core.Agent#setup()
 	 */
 	@Override
@@ -185,7 +185,7 @@ public class HumanJADE extends Agent {
 		addBehaviour(new HumanJADE_Server());
 
 		/*
-		 * The Common Simulation Framework (CABSF) context object specific to CABSF JADE
+		 * The Common Agent-Based Simulation Framework (CABSF) context object specific to CABSF JADE
 		 * agents. Gives the user access to many convenience methods for dealing with XML
 		 * messages coming from the simulation engine/runtime such as Repast Simphony.
 		 */
@@ -230,18 +230,31 @@ public class HumanJADE extends Agent {
 		sd.setType("jade-CABSF-agents");
 		sd.setName("jade-controller-agent");
 		template.addServices(sd);
-		try {
-			final DFAgentDescription[] result = DFService.search(this, template);
-			assert (result.length == 1);
-			System.out.println(logPrefix + " Found the JADE Controller Agent: "
-					+ result[0].getName().getName());
-			jadeControllerAgent = result[0].getName();
+		while (true) {
+			try {
+				final DFAgentDescription[] result = DFService.search(this, template);
+				if (result.length == 1) {
+					System.out.println(logPrefix + " Found the JADE Controller Agent: "
+							+ result[0].getName().getName());
+					jadeControllerAgent = result[0].getName();
+					break;
+				} else {
+					Thread.sleep(1000);
+				}
 
-		} catch (final FIPAException fe) {
-			System.out
-					.println("[JADE Controller Agent] FIPA error in finding the JADE Controller Agent.  Terminating.");
-			doDelete();
-			fe.printStackTrace();
+			} catch (final FIPAException fe) {
+				System.out
+						.println("[JADE Agent "
+								+ getAID().getName()
+								+ "] FIPA error in finding the JADE Controller Agent.  Terminating.");
+				doDelete();
+				fe.printStackTrace();
+			} catch (final InterruptedException e) {
+				System.out.println("[JADE Agent " + getAID().getName()
+						+ "] Thread interrupted.  Terminating.");
+				doDelete();
+				e.printStackTrace();
+			}
 		}
 	}
 }

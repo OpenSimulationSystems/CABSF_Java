@@ -7,7 +7,7 @@ import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 
 /**
- * The implementor in the Bridge pattern, for the Common Simulation Framework's messaging
+ * The implementor in the Bridge pattern, for the Common Agent-Based Simulation Framework's messaging
  * 
  * 
  * @author Jorge Calderon

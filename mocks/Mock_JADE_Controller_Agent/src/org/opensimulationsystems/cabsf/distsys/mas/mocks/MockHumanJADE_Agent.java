@@ -12,7 +12,7 @@ import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilitie
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfRuntimeException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 
 public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
@@ -77,7 +77,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 	 */
 	public void receiveMessage(FrameworkMessage msg, final String messageID,
 			final String inReplyToMessageID,
-			final JadeControllerMock jade_Controller_Agent) {
+			final JadeControllerInterface jade_Controller_Agent) {
 		// converts the distributed autonomous agent document back to the full message
 		// exchange document that then gets converted into a FrameworkMessage
 		// All of the other information not meant for this distributed autonomous agent is

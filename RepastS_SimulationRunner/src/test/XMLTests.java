@@ -19,7 +19,7 @@ import org.opensimulationsystems.cabsf.common.model.messaging.messages.Framework
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_RunContext;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.opensimulationsystems.cabsf.distsys.mas.mocks.MockHumanJADE_Agent;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
@@ -31,7 +31,7 @@ import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunGroupContext;
 import prisonersdilemma.DECISION;
 import prisonersdilemma.PrisonersDilemma_CABSF_Helper;
 
-public class XMLTests implements JadeControllerMock {
+public class XMLTests implements JadeControllerInterface {
 	static private XMLTests instance = new XMLTests();
 
 	static private SimulationRunContext simulationRunContext;
@@ -440,7 +440,7 @@ public class XMLTests implements JadeControllerMock {
 			final Element distributedAutonomousAgentElement = XMLUtilities
 					.xmlStringTojdom2Document(xmlString).getRootElement();
 			final FrameworkMessage msg = jade_MAS_AgentContext
-					.convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage(
+					.convertDocumentToSendToDAAtoFrameworkMessage(
 							distributedAutonomousAgentElement,
 							distributedAutonomousAgentID, SYSTEM_TYPE.SIMULATION_ENGINE,
 							SYSTEM_TYPE.DISTRIBUTED_SYSTEM);

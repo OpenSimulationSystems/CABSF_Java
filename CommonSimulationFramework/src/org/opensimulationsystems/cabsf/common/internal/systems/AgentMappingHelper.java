@@ -29,7 +29,7 @@ public class AgentMappingHelper {
 	 *            the agent obj
 	 * @return the agent mapping
 	 */
-	public static AgentMapping addNativeSimulationToDistributedAutononmousAgentToAgentMapping(
+	public static AgentMapping addNativeSimulationAgentToAgentMapping(
 			final String requestingSystem, final HashSet<AgentMapping> beforeMappingSet,
 			final HashSet<AgentMapping> afterMappingSet, final Object agentObj) {
 		AgentMapping am = null;
@@ -77,7 +77,7 @@ public class AgentMappingHelper {
 	 *            the fully qualified simulation agent name
 	 * @return the agent mapping
 	 */
-	static public AgentMapping createAgentMapping(final HashSet<AgentMapping> hs,
+	static public AgentMapping createAgentMappingObjButDontMap(final HashSet<AgentMapping> hs,
 			final String distributedSystemID, String distributedAutonomousAgentID,
 			final String distributedAgentModelID,
 			final String fullyQualifiedSimulationAgentName) {

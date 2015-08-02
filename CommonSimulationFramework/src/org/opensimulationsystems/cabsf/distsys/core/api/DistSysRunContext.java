@@ -9,20 +9,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
+import org.opensimulationsystems.cabsf.common.model.configuration.RunGroupConfiguration;
 import org.opensimulationsystems.cabsf.common.model.context.CabsfRunContext;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
-import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunGroupConfiguration;
 import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
 import org.opensimulationsystems.cabsf.distsys.core.api.simulationruntime.SimulationEngineManager;
 
 /*
- * Provides the context for the Common Simulation Framework. Adapter developers may use this context
+ * Provides the context for the Common Agent-Based Simulation Framework. Adapter developers may use this context
  * directly, but are encouraged to create separate Simulation-Toolkit-specific context (e.g.,
  * org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastSimphonySimulationFrameworkContext). The benefit
  * is that the API client would be able to utilize native Simulation-Toolkit-specific objects
  * instead of the generic "Object" that is used by this generic Simulation Framework API.
- * 
+ *
  * Adapter developers should instantiate this class first before the Simulation-Toolkit-specific
  * Context object.
  */
@@ -45,7 +45,7 @@ public class DistSysRunContext extends CabsfRunContext {
 	 */
 	private Set<DistSysRunContext> distSysRunContext1;
 
-	protected DistSysRunGroupConfiguration distSysRunGroupConfiguration; // Simulation
+	protected RunGroupConfiguration runGroupConfiguration; // Simulation
 	// Run-group-wide
 
 	private SimulationEngineManager simulationEngineManager;
@@ -57,7 +57,7 @@ public class DistSysRunContext extends CabsfRunContext {
 	private DistSysRunGroupContext distSysRunGroupContext;
 
 	/*
-	 * Creates the context for the Common Simulation Framework.
+	 * Creates the context for the Common Agent-Based Simulation Framework.
 	 */
 	// protected DistSysRunContext(String
 	// fullyQualifiedClassNameForDistributedAgentManager) {
@@ -79,8 +79,8 @@ public class DistSysRunContext extends CabsfRunContext {
 		return distributedAgentsManager;
 	}
 
-	public DistSysRunGroupConfiguration getDistributedSystemRunGroupConfiguration() {
-		return distSysRunGroupConfiguration;
+	public RunGroupConfiguration getDistributedSystemRunGroupConfiguration() {
+		return runGroupConfiguration;
 	}
 
 	public DistSysRunConfiguration getDistSysRunConfiguration() {
@@ -94,17 +94,6 @@ public class DistSysRunContext extends CabsfRunContext {
 		return this.distSysRunContext;
 	}
 
-	public Set<DistSysRunContext> getDistSysRunContext1() {
-		if (this.distSysRunContext1 == null) {
-			this.distSysRunContext1 = new HashSet<DistSysRunContext>();
-		}
-		return this.distSysRunContext1;
-	}
-
-	public DistSysRunGroupConfiguration getDistSysRunGroupConfiguration() {
-		return distSysRunGroupConfiguration;
-	}
-
 	public DistSysRunGroupContext getDistSysRunGroupContext() {
 		return distSysRunGroupContext;
 	}
@@ -115,6 +104,10 @@ public class DistSysRunContext extends CabsfRunContext {
 
 	public SimulationRunGroup getSimulationRunGroup() {
 		return simulationRunGroup;
+	}
+
+	public RunGroupConfiguration getSimulationRunGroupConfiguration() {
+		return runGroupConfiguration;
 	}
 
 	public FrameworkMessage listenForMessageFromSimulationEngine() {
@@ -137,11 +130,6 @@ public class DistSysRunContext extends CabsfRunContext {
 		this.distributedAgentsManager = distributedAgentsManager;
 	}
 
-	protected void setDistSysConfiguration(
-			final DistSysRunGroupConfiguration distSysRunGroupConfiguration) {
-		this.distSysRunGroupConfiguration = distSysRunGroupConfiguration;
-	}
-
 	public void setDistSysRunConfiguration(
 			final DistSysRunConfiguration distSysRunConfiguration) {
 		this.distSysRunConfiguration = distSysRunConfiguration;
@@ -161,6 +149,11 @@ public class DistSysRunContext extends CabsfRunContext {
 	protected void setSimulationRunConfiguration(
 			final DistSysRunConfiguration distributedSystemSimulationRunConfigurationSimulationRunConfiguration) {
 		this.distSysRunConfiguration = distributedSystemSimulationRunConfigurationSimulationRunConfiguration;
+	}
+
+	protected void setSimulationRunGroupConfiguration(
+			final RunGroupConfiguration runGroupConfiguration) {
+		this.runGroupConfiguration = runGroupConfiguration;
 	}
 
 }

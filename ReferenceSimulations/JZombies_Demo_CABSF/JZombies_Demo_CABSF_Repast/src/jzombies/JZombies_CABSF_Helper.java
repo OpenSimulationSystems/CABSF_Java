@@ -99,7 +99,7 @@ public class JZombies_CABSF_Helper {
 	}
 
 	/*
-	 * public void sendMessageToSimulationAgent(JadeControllerMock jade_Controller_Agent,
+	 * public void sendMessageToSimulationAgent(JadeControllerInterface jade_Controller_Agent,
 	 * FrameworkMessage msg, String messageID, String inReplyToMessageID) {
 	 * jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID); }
 	 */

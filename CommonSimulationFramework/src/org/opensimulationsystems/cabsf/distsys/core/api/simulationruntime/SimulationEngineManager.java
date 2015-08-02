@@ -41,7 +41,7 @@ public class SimulationEngineManager {
 	 * @param simulationRuntimeID An optional ID to identify the simulation runtime
 	 * instance for this distributed system to connect to. If it is to be used, it should
 	 * be provided by the configuration on the distributed system side. If it is not
-	 * provided, the Common Simulation Framework Distributed System API will look for the
+	 * provided, the Common Agent-Based Simulation Framework Distributed System API will look for the
 	 * first simulation run group (when using Redis) and attach to that simulation run
 	 * group instance.
 	 */

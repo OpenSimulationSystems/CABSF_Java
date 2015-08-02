@@ -7,8 +7,8 @@ import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilit
 import org.opensimulationsystems.cabsf.common.internal.systems.DistributedSystem;
 import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.configuration.RunGroupConfiguration;
 import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunConfiguration;
-import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunGroupConfiguration;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 // TODO: Auto-generated Javadoc
@@ -67,9 +67,9 @@ public class SimulationInitializationHelper {
 		// DistSysRunContext simFrameworkContext = new
 		// DistSysRunContext(fullyQualifiedClassNameForDistributedAgentManager);
 		final SimulationRunGroupContext simulationRunGroupContext = new SimulationRunGroupContext();
-		final SimulationRunGroupConfiguration config = processFrameworkConfigurationProperties(
+		final RunGroupConfiguration config = readCABSFConfigurationFile(
 				cabsfConfigurationFileName, simulationRunGroupContext);
-		simulationRunGroupContext.setSimulationConfiguration(config);
+		simulationRunGroupContext.setRunGroupConfiguration(config);
 
 		// Cache the message exchange template from the file system
 		try {
@@ -142,8 +142,8 @@ public class SimulationInitializationHelper {
 	}
 
 	/*
-	 * Reads the Common Simulation Framework Configuration File. Creates the AgentMapping
-	 * objects, with the actual mappings added in later.
+	 * Reads the Common Agent-Based Simulation Framework Configuration File. Creates the
+	 * AgentMapping objects, with the actual mappings added in later.
 	 */
 	/**
 	 * Process framework configuration properties.
@@ -156,19 +156,19 @@ public class SimulationInitializationHelper {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	private SimulationRunGroupConfiguration processFrameworkConfigurationProperties(
+	private RunGroupConfiguration readCABSFConfigurationFile(
 			final String cabsfConfigurationFileName,
 			final SimulationRunGroupContext simulationRunGroupContext) throws IOException {
 
-		final SimulationRunGroupConfiguration config = new SimulationRunGroupConfiguration(
+		final RunGroupConfiguration config = new RunGroupConfiguration(
 				cabsfConfigurationFileName);
-		simulationRunGroupContext.setSimulationRunGroupConfiguration(config);
+		simulationRunGroupContext.setRunGroupConfiguration(config);
 
 		// TODO: Retrieve the Simulation Run Group level configuration and use those
 		// values here:
 		final SimulationRunGroup simulationRunGroup = new SimulationRunGroup("12345",
 				"1.0", "1.0");
-		// TODO: Organizae these two methods better.
+		// TODO: Organize these two methods better.
 		simulationRunGroup.setSimulationFrameworkOptions("MonteCarlo_TestGroupA", null,
 				null);
 		simulationRunGroupContext.setSimulationRunGroup(simulationRunGroup);

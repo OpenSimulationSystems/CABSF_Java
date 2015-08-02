@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.sim.core.api.configuration;
+package org.opensimulationsystems.cabsf.common.model.configuration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilitie
 import org.opensimulationsystems.cabsf.common.internal.systems.AgentMappingHelper;
 import org.opensimulationsystems.cabsf.common.model.AgentMapping;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.sim.core.api.configuration.SimulationRunConfiguration;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,7 +25,7 @@ import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitial
  * @version 0.2
  * @since 0.1
  */
-public class SimulationRunGroupConfiguration {
+public class RunGroupConfiguration {
 	// TODO set all of these in the configuration file
 	/** The simulation engine id. */
 	private final String simulationEngineID = "REPAST_SIMPHONY";
@@ -61,13 +62,15 @@ public class SimulationRunGroupConfiguration {
 	/** The agent types. */
 	private final HashSet<String> agentTypes = new HashSet<String>();
 
+	private Integer numberOfDistributedAutonomousAgnets;
+
 	/**
 	 * Instantiates a new simulation run group configuration.
 	 *
 	 * @param cabsfConfigurationFileName
 	 *            the framework configuration file name name
 	 */
-	public SimulationRunGroupConfiguration(final String cabsfConfigurationFileName) {
+	public RunGroupConfiguration(final String cabsfConfigurationFileName) {
 		try {
 			cabsfConfigurationDocument = MessagingUtilities
 					.createDocumentFromFileSystemPath(cabsfConfigurationFileName);
@@ -126,6 +129,8 @@ public class SimulationRunGroupConfiguration {
 		final List<Element> distributedAutonomousAgentsElements = distSys.getChildren(
 				"DistributedAutonomousAgents", namespace);
 		assert (distributedAutonomousAgentsElements.size() == 1);
+		this.numberOfDistributedAutonomousAgnets = distributedAutonomousAgentsElements
+				.size();
 
 		final List<Element> agentTypeElements = distributedAutonomousAgentsElements
 				.get(0).getChildren("AgentType", namespace);
@@ -164,10 +169,10 @@ public class SimulationRunGroupConfiguration {
 						"The Distributed Autonomous Agent Model ID and Simulation Engine Class must be supplied for each agent model. ");
 			}
 
-			// Create Agent Mapping
-			AgentMappingHelper.createAgentMapping(agentsReadyForSimulationSideMapping,
-					distSysIDstr, distAutAgentID, distributedAutonomousAgentModelID,
-					simulationEngineClass);
+			// Create Agent Mapping Object, but Don't map actual agent yetl
+			AgentMappingHelper.createAgentMappingObjButDontMap(
+					agentsReadyForSimulationSideMapping, distSysIDstr, distAutAgentID,
+					distributedAutonomousAgentModelID, simulationEngineClass);
 		}
 
 		// TODO: Support more than 1 Distributed System
@@ -204,6 +209,10 @@ public class SimulationRunGroupConfiguration {
 
 	public Document getCabsfConfigurationDocument() {
 		return cabsfConfigurationDocument;
+	}
+
+	public Integer getNumberOfDistributedAutonomousAgents() {
+		return numberOfDistributedAutonomousAgnets;
 	}
 
 	/**

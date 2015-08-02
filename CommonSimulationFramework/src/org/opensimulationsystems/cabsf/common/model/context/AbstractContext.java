@@ -69,7 +69,7 @@ public abstract class AbstractContext {
 	 *            FrameworkMessage across the wire.
 	 * @return the FrameworkMessage
 	 */
-	public FrameworkMessage convertDocumentSentToDistributedAutonomousAgentToFrameworkMessage(
+	public FrameworkMessage convertDocumentToSendToDAAtoFrameworkMessage(
 			final Element distributedAutononomousAgentElement,
 			final String distributedAutonomousAgentID, final SYSTEM_TYPE sourceSystem,
 			final SYSTEM_TYPE targetSystem) {

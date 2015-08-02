@@ -228,11 +228,11 @@ public class GameAdministrator {
 			}
 		} catch (final JDOMException e) {
 			throw new CabsfInitializationRuntimeException(
-					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
+					"Failed to initialize the Common Agent-Based Simulation Framework in the Repast simulation agent",
 					e);
 		} catch (final IOException e) {
 			throw new CabsfInitializationRuntimeException(
-					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
+					"Failed to initialize the Common Agent-Based Simulation Framework in the Repast simulation agent",
 					e);
 		}
 

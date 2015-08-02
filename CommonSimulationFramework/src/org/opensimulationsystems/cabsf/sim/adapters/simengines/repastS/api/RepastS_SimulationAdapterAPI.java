@@ -28,7 +28,7 @@ import repast.simphony.parameter.DefaultParameters;
 // TODO: Auto-generated Javadoc
 /**
  * The Repast Simphony Adapter API context factory. This class is the entry point for
- * RepastS simulations to use the Common Simulation Framework.
+ * RepastS simulations to use the Common Agent-Based Simulation Framework.
  *
  * Note: This API was originally intended to only be used at the RepastS simulation-level,
  * not at the individual RepastS agent-level. However, in the current version, the
@@ -130,7 +130,7 @@ public class RepastS_SimulationAdapterAPI {
 	}
 
 	/**
-	 * Initializes the Common Simulation Framework on the RepastS simulation side, based
+	 * Initializes the Common Agent-Based Simulation Framework on the RepastS simulation side, based
 	 * on the supplied CABSF configuration property file. Calls the
 	 * simulation-adaptor-wide Simulation API to initialize the simulation run group.
 	 *
@@ -196,7 +196,7 @@ public class RepastS_SimulationAdapterAPI {
 		// TODO: Move distributed system manager to main level? same for on the
 		// distributed side (simulation engine manager)
 		repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
-				.next().initializeAgentMappings();
+				.next().createAgentMappingObjects();
 
 		boolean atLeastOneMappingPerformed = false;
 

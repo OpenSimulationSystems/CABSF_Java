@@ -140,7 +140,7 @@ public class SimulationDistributedSystemManager {
 		// Add Validation to make sure mappings exist. / Throw exception
 
 		return AgentMappingHelper
-				.addNativeSimulationToDistributedAutononmousAgentToAgentMapping(this
+				.addNativeSimulationAgentToAgentMapping(this
 						.getClass().getCanonicalName().toString(), simulationRunContext
 						.getSimulationRunGroupContext()
 						.getSimulationRunGroupConfiguration()
@@ -175,7 +175,7 @@ public class SimulationDistributedSystemManager {
 	/**
 	 * Initialize agent mappings.
 	 */
-	public void initializeAgentMappings() {
+	public void createAgentMappingObjects() {
 		// Create AgentMapping objects based on the configured type and number
 		// of agents.
 		// These objects will be populated with actual mapped simulation-side

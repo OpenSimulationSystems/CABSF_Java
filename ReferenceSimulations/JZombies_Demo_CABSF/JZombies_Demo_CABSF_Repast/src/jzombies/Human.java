@@ -34,7 +34,7 @@ import repast.simphony.util.SimUtilities;
 // TODO: Auto-generated Javadoc
 /**
  * The Human in the JZombies simulation. We modified this Repast Simphony simulation from
- * the tutorial to integrated with the Common Simulation Framework (CSF). The humans are
+ * the tutorial to integrated with the Common Agent-Based Simulation Framework (CSF). The humans are
  * distributed to a JADE MAS. This Human RepastS class is the representational agent
  * within RepastS of the distributed JADE Human agent.
  *
@@ -142,11 +142,11 @@ public class Human {
 			}
 		} catch (final JDOMException e) {
 			throw new CabsfInitializationRuntimeException(
-					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
+					"Failed to initialize the Common Agent-Based Simulation Framework in the Repast simulation agent",
 					e);
 		} catch (final IOException e) {
 			throw new CabsfInitializationRuntimeException(
-					"Failed to initialize the Common Simulation Framework in the Repast simulation agent",
+					"Failed to initialize the Common Agent-Based Simulation Framework in the Repast simulation agent",
 					e);
 		}
 		// ////////////////////////////////

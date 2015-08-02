@@ -45,7 +45,7 @@ public class JADE_MAS_AdapterAPI {
 	private JADE_MAS_RunContext jade_MAS_RunContext;
 
 	/** The jade controller mock. */
-	private JadeControllerMock jadeControllerMock;
+	private JadeControllerInterface jadeControllerInterface;
 
 	/** The jade controller agent. */
 	private Agent jadeControllerAgent;
@@ -125,7 +125,7 @@ public class JADE_MAS_AdapterAPI {
 	 *            the native jade context for this run
 	 * @param jade_MAS_RunGroupContext
 	 *            the jade_ ma s_ run group context
-	 * @param jadeControllerMock
+	 * @param jadeControllerInterface
 	 *            the jade controller mock
 	 * @param nativeAgentsSet
 	 *            the native agents set
@@ -134,9 +134,9 @@ public class JADE_MAS_AdapterAPI {
 	public JADE_MAS_RunContext initializeSimulationRun(
 			final NativeJADEMockContext nativeJadeContextForThisRun,
 			final JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
-			final JadeControllerMock jadeControllerMock,
+			final JadeControllerInterface jadeControllerInterface,
 			final Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
-		this.jadeControllerMock = jadeControllerMock;
+		this.jadeControllerInterface = jadeControllerInterface;
 
 		final DistSysRunContext distSysRunContext = distributedSystemAPI
 				.initializeSimulationRun(nativeJadeContextForThisRun,
@@ -181,7 +181,7 @@ public class JADE_MAS_AdapterAPI {
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_ENGINE,
 				jade_MAS_RunContext.getCachedMessageExchangeTemplate());
 		fm.setStatus(STATUS.READY_TO_START_SIMULATION);
-		jade_MAS_RunContext.messageSimulationEngine(fm,
+		jade_MAS_RunContext.sendMessageToSimulationEngine(fm,
 				jade_MAS_RunContext.getDistSysRunContext());
 
 		// TODO:Move all of this up one API level
@@ -190,7 +190,7 @@ public class JADE_MAS_AdapterAPI {
 		jade_MAS_RunContext.setDam(jade_MAS_RunContext.getDistSysRunContext()
 				.getDistributedAgentsManager());
 
-		jade_MAS_RunContext.setJadeController(jadeControllerMock);
+		jade_MAS_RunContext.setJadeController(jadeControllerInterface);
 
 		return jade_MAS_RunContext;
 	}

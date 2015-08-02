@@ -139,7 +139,7 @@ public class PrisonersDilemma_CABSF_Helper {
 	// Used by the mock. This code is left here for now as the mock code may be migrated
 	// to a generic Java adapter for the CSF.
 	/*
-	 * public void sendMessageToSimulationAgent(JadeControllerMock jade_Controller_Agent,
+	 * public void sendMessageToSimulationAgent(JadeControllerInterface jade_Controller_Agent,
 	 * FrameworkMessage msg, String messageID, String inReplyToMessageID) {
 	 * jade_Controller_Agent.receiveMessage(msg, messageID, inReplyToMessageID); }
 	 */

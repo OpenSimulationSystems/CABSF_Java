@@ -1,7 +1,7 @@
 package org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents;
 
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerMock;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,5 +47,5 @@ public interface NativeDistributedAutonomousAgent {
 	 *            the jade_ controller_ agent
 	 */
 	public void receiveMessage(FrameworkMessage msg, String messageID,
-			String inReplyToMessageID, JadeControllerMock jade_Controller_Agent);
+			String inReplyToMessageID, JadeControllerInterface jade_Controller_Agent);
 }

@@ -227,7 +227,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/**
 	 * Initializes a single simulation run. Called after the simulation and (if
-	 * configured) Common Simulation Framework are initialized.
+	 * configured) Common Agent-Based Simulation Framework are initialized.
 	 *
 	 * @return the repast s_ simulation run context
 	 */

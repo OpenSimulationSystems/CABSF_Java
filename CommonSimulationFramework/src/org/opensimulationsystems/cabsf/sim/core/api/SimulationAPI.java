@@ -5,7 +5,7 @@ import java.io.IOException;
 // TODO: Auto-generated Javadoc
 /**
  * This API is only for use by developers of adapters to connect simulation tools (such as
- * Repast) and agent-based systems (such as JADE) into the common simulation framework.
+ * Repast) and agent-based systems (such as JADE) into the Common Agent-Based Simulation Framework.
  * Simulation and Agent developers using such systems should use the appropriate
  * adapter(s).
  * 
@@ -27,7 +27,7 @@ public class SimulationAPI {
 
 	/**
 	 * The API singleton for clients that are simulation systems adapters to into the
-	 * common simulation framework.
+	 * Common Agent-Based Simulation Framework.
 	 * 
 	 * @return single instance of SimulationAPI
 	 */
@@ -68,7 +68,7 @@ public class SimulationAPI {
 	/**
 	 * Initialize api.
 	 * 
-	 * @param frameworkConfigurationFileName
+	 * @param cabsfConfigurationFileName
 	 *            the framework configuration file name
 	 * @param simulationToolName
 	 *            the simulation tool name
@@ -77,7 +77,7 @@ public class SimulationAPI {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public SimulationRunGroupContext initializeAPI(
-			final String frameworkConfigurationFileName, final String simulationToolName)
+			final String cabsfConfigurationFileName, final String simulationToolName)
 			throws IOException {
 		SIMULATION_TOOL_NAME = simulationToolName.toUpperCase();
 
@@ -88,7 +88,7 @@ public class SimulationAPI {
 		 * fullyQualifiedClassNameForDistributedAgentManager);
 		 */
 		final SimulationRunGroupContext simulationRunGroupContext = simulationInitializationHelper
-				.initializeAPI(frameworkConfigurationFileName);
+				.initializeAPI(cabsfConfigurationFileName);
 
 		return simulationRunGroupContext;
 	}

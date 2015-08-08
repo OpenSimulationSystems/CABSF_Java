@@ -8,8 +8,8 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Manages the CRUD operations to Redis. This class has no business-level knowledge.
- * 
- * 
+ *
+ *
  * @author Jorge Calderon
  * @version 0.1
  * @since 0.1
@@ -34,7 +34,7 @@ public class RedisConnectionManager {
 
 	/**
 	 * Gets the jedis.
-	 * 
+	 *
 	 * @return the jedis
 	 */
 	public Jedis getJedis() {
@@ -43,7 +43,7 @@ public class RedisConnectionManager {
 
 	/**
 	 * Initialize Redis connection.
-	 * 
+	 *
 	 * @param host
 	 *            the host
 	 */
@@ -68,7 +68,7 @@ public class RedisConnectionManager {
 
 	/**
 	 * Post message.
-	 * 
+	 *
 	 * @param channel
 	 *            the channel
 	 * @param message
@@ -90,7 +90,7 @@ public class RedisConnectionManager {
 
 	/**
 	 * Redis synchronous polling.
-	 * 
+	 *
 	 * @param requestingSystemType
 	 *            the requesting system
 	 * @param redisKey
@@ -107,14 +107,21 @@ public class RedisConnectionManager {
 		String value = null;
 		long i = 0;
 		long printCount = 0;
-		System.out.println("[" + requestingSystemType + "]"
-				+ "Attempting Redis lpop on: " + redisKey);
+		System.out
+				.println("["
+						+ requestingSystemType
+						+ "]"
+						+ "Listening for command. Attempting Redis lpop on Redis key: "
+						+ redisKey
+						+ "\r\n"
+						+ " '.' printed by the simulation process, '+' by the distributed system/MAS.");
 		while (maximumNumberOfPolls == null || maximumNumberOfPolls > 0) {
 			if (printCount == 0) {
-				if (requestingSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM)
+				if (requestingSystemType == SYSTEM_TYPE.DISTRIBUTED_SYSTEM) {
 					System.out.print("+");
-				else
+				} else {
 					System.out.print(".");
+				}
 			}
 
 			value = jedis.lpop(redisKey);
@@ -135,12 +142,14 @@ public class RedisConnectionManager {
 				return value;
 			}
 			// System.out.println("Stopped sleeping");
-			if (maximumNumberOfPolls != null)
+			if (maximumNumberOfPolls != null) {
 				maximumNumberOfPolls--;
+			}
 			i++;
 			printCount++;
-			if (printCount == 1000)
+			if (printCount == 1000) {
 				printCount = 0;
+			}
 		}
 
 		return value;

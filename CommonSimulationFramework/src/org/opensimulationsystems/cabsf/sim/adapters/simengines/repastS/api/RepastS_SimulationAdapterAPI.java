@@ -3,6 +3,7 @@ package org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -74,18 +75,18 @@ public class RepastS_SimulationAdapterAPI {
 	 *            the controller
 	 * @param scenarioDir
 	 *            the scenario dir
-	 * @param cabsfConfigurationFileName
+	 * @param secondProgramArgument
 	 *            the cabsf configuration file name
 	 * @throws JDOMException
 	 *             the JDOM exception
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public void applyRssrParametersFix(final Controller controller,
-			final File scenarioDir, final String cabsfConfigurationFileName)
-			throws JDOMException, IOException {
-		if (!shouldApplyRunFix(cabsfConfigurationFileName)) {
-			return;
+	public DefaultParameters applyRssrParametersFix(final Controller controller,
+			final File scenarioDir, final String secondProgramArgument)
+					throws JDOMException, IOException {
+		if (!shouldApplyRunFix(secondProgramArgument)) {
+			return null;
 		}
 
 		/** The element filter. */
@@ -113,25 +114,31 @@ public class RepastS_SimulationAdapterAPI {
 			final String defaultValue = parameterElements.get(i).getAttributeValue(
 					"defaultValue");
 
+			final Random rand = new Random();
+			final Number num = rand.nextInt(Integer.MAX_VALUE);
+
 			if (defaultValue.equals("__NULL__")) {
-				defaultParameters.addParameter(paramName, defaultValue, Number.class,
-						null, true);
+				defaultParameters.addParameter(paramName, displayName, Number.class,
+						// null, true);
+						num, true);
 			} else if (parameterElements.get(i).getAttributeValue("type").equals("int")) {
-				defaultParameters.addParameter(paramName, defaultValue, Number.class,
+				defaultParameters.addParameter(paramName, displayName, Number.class,
 						Integer.parseInt(defaultValue), true);
 			} else if (parameterElements.get(i).getAttributeValue("type")
 					.equalsIgnoreCase("String")) {
-				defaultParameters.addParameter(paramName, defaultValue, Number.class,
+				defaultParameters.addParameter(paramName, displayName, String.class,
 						defaultValue, true);
 			}
 		}
 		controller.runParameterSetters(defaultParameters);
 
+		return defaultParameters;
+
 	}
 
 	/**
-	 * Initializes the Common Agent-Based Simulation Framework on the RepastS simulation side, based
-	 * on the supplied CABSF configuration property file. Calls the
+	 * Initializes the Common Agent-Based Simulation Framework on the RepastS simulation
+	 * side, based on the supplied CABSF configuration property file. Calls the
 	 * simulation-adaptor-wide Simulation API to initialize the simulation run group.
 	 *
 	 * NOTE: The current version initialization is hard coded to only work with the two
@@ -183,10 +190,10 @@ public class RepastS_SimulationAdapterAPI {
 		final RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
 				simulationRunContext);
 		repastS_SimulationRunContext
-				.setRepastContextForThisRun(nativeRepastScontextForThisRun);
+		.setRepastContextForThisRun(nativeRepastScontextForThisRun);
 
 		repastS_SimulationRunContext
-				.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
+		.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
 		// Make the context available to the agents in the Repast model
 		nativeRepastScontextForThisRun.add(repastS_SimulationRunContext);
 
@@ -196,7 +203,7 @@ public class RepastS_SimulationAdapterAPI {
 		// TODO: Move distributed system manager to main level? same for on the
 		// distributed side (simulation engine manager)
 		repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
-				.next().createAgentMappingObjects();
+		.next().createAgentMappingObjects();
 
 		boolean atLeastOneMappingPerformed = false;
 
@@ -207,7 +214,7 @@ public class RepastS_SimulationAdapterAPI {
 		// (Same for JADE API side)
 		@SuppressWarnings({ "rawtypes" })
 		final Iterable<Class> simulationAgentsClasses = nativeRepastScontextForThisRun
-				.getAgentTypes();
+		.getAgentTypes();
 
 		// For each simulation agent class
 		for (@SuppressWarnings("rawtypes")
@@ -344,6 +351,17 @@ public class RepastS_SimulationAdapterAPI {
 	 */
 	private boolean shouldApplyRunFix(final String cabsfConfigurationDocumentStr)
 			throws JDOMException, IOException {
+		if (cabsfConfigurationDocumentStr != null
+				&& cabsfConfigurationDocumentStr
+				.equalsIgnoreCase("ApplyRssrParametersFix")) {
+			return true;
+		}
+		if (cabsfConfigurationDocumentStr != null
+				&& cabsfConfigurationDocumentStr
+				.equalsIgnoreCase("DontApplyRssrParametersFix")) {
+			return false;
+		}
+
 		final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
 		/** The namespace str. */
 		final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";

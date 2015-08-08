@@ -62,7 +62,16 @@ public class RunGroupConfiguration {
 	/** The agent types. */
 	private final HashSet<String> agentTypes = new HashSet<String>();
 
-	private Integer numberOfDistributedAutonomousAgnets;
+	private Integer numberOfDistributedAutonomousAgents;
+
+	// TODO: Support Multiple Distributed Systems
+	private List<Element> distributedAutonomousAgentElements;
+
+	// TODO: Support Multiple Distributed Systems
+	private Element distSys;
+
+	// TODO: Support Multiple Distributed Systems
+	private String distSysIDstr;
 
 	/**
 	 * Instantiates a new simulation run group configuration.
@@ -85,6 +94,8 @@ public class RunGroupConfiguration {
 							+ cabsfConfigurationFileName);
 		}
 
+		processHeaderSection();
+
 		/*
 		 * if (cabsfConfigurationFileName
 		 * .equals("PLACEHOLDER_FOR_CABSF_CONFIGURATION_FILE")) {
@@ -99,48 +110,6 @@ public class RunGroupConfiguration {
 	 * @return the hash set
 	 */
 	public HashSet<AgentMapping> createAgentMappingObjects() {
-
-		final List<Element> distributedSystemsElements = (List<Element>) XMLUtilities
-				.executeXPath(cabsfConfigurationDocument, distributedSystems_XPath,
-						namespaceStr, elementFilter);
-		assert (distributedSystemsElements.size() == 1);
-
-		final List<Element> distributedSystemElements = distributedSystemsElements.get(0)
-				.getChildren("DistributedSystem", namespace);
-		// TODO: Support more than 1 Distributed System
-		assert (distributedSystemElements.size() == 1);
-
-		final Element distSys = distributedSystemElements.get(0);
-
-		final Element distSysIDelement = distributedSystemElements.get(0).getChild(
-				"DistributedSystemID", namespace);
-
-		// final HashMap<Element, List<Element>>
-		// distributedSystemToDistributedAutonomousAgents = new HashSet<Element,
-		// List<Element>>();
-
-		final String distSysIDstr = distSysIDelement.getValue();
-		if (distSysIDstr == null || distSysIDstr.equals("")) {
-			throw new CabsfInitializationRuntimeException(
-					"The Distributed System ID must be supplied: "
-							+ distributedSystems_XPath);
-		}
-
-		final List<Element> distributedAutonomousAgentsElements = distSys.getChildren(
-				"DistributedAutonomousAgents", namespace);
-		assert (distributedAutonomousAgentsElements.size() == 1);
-		this.numberOfDistributedAutonomousAgnets = distributedAutonomousAgentsElements
-				.size();
-
-		final List<Element> agentTypeElements = distributedAutonomousAgentsElements
-				.get(0).getChildren("AgentType", namespace);
-		assert (agentTypeElements.size() >= 1);
-		processAgentTypes(agentTypeElements);
-
-		// TODO: Support multiple agent types
-		final List<Element> distributedAutonomousAgentElements = agentTypeElements.get(0)
-				.getChildren("DistributedAutonomousAgent", namespace);
-		assert (distributedAutonomousAgentElements.size() >= 1);
 
 		for (int i = 0; i < distributedAutonomousAgentElements.size(); i++) {
 			final Element agent = distributedAutonomousAgentElements.get(i);
@@ -212,7 +181,7 @@ public class RunGroupConfiguration {
 	}
 
 	public Integer getNumberOfDistributedAutonomousAgents() {
-		return numberOfDistributedAutonomousAgnets;
+		return numberOfDistributedAutonomousAgents;
 	}
 
 	/**
@@ -243,9 +212,55 @@ public class RunGroupConfiguration {
 	private void processAgentTypes(final List<Element> agentTypeElements) {
 		for (final Element agentTypeElement : agentTypeElements) {
 			final String type = agentTypeElement.getAttribute("type").getValue();
-			System.out.println("Agent type/class to be mapped: " + type);
+			System.out.println("[CABSF - Common API] Agent type/class to be mapped: "
+					+ type);
 			agentTypes.add(type);
 		}
+	}
+
+	private void processHeaderSection() {
+		final List<Element> distributedSystemsElements = (List<Element>) XMLUtilities
+				.executeXPath(cabsfConfigurationDocument, distributedSystems_XPath,
+						namespaceStr, elementFilter);
+		assert (distributedSystemsElements.size() == 1);
+
+		final List<Element> distributedSystemElements = distributedSystemsElements.get(0)
+				.getChildren("DistributedSystem", namespace);
+		// TODO: Support more than 1 Distributed System
+		assert (distributedSystemElements.size() == 1);
+
+		distSys = distributedSystemElements.get(0);
+
+		final Element distSysIDelement = distributedSystemElements.get(0).getChild(
+				"DistributedSystemID", namespace);
+
+		// final HashMap<Element, List<Element>>
+		// distributedSystemToDistributedAutonomousAgents = new HashSet<Element,
+		// List<Element>>();
+
+		distSysIDstr = distSysIDelement.getValue();
+		if (distSysIDstr == null || distSysIDstr.equals("")) {
+			throw new CabsfInitializationRuntimeException(
+					"The Distributed System ID must be supplied: "
+							+ distributedSystems_XPath);
+		}
+
+		final List<Element> distributedAutonomousAgentsElements = distSys.getChildren(
+				"DistributedAutonomousAgents", namespace);
+		assert (distributedAutonomousAgentsElements.size() == 1);
+
+		final List<Element> agentTypeElements = distributedAutonomousAgentsElements
+				.get(0).getChildren("AgentType", namespace);
+		assert (agentTypeElements.size() >= 1);
+		processAgentTypes(agentTypeElements);
+
+		// TODO: Support multiple agent types
+		distributedAutonomousAgentElements = agentTypeElements.get(0).getChildren(
+				"DistributedAutonomousAgent", namespace);
+		assert (distributedAutonomousAgentElements.size() >= 1);
+
+		this.numberOfDistributedAutonomousAgents = distributedAutonomousAgentElements
+				.size();
 	}
 
 	/**

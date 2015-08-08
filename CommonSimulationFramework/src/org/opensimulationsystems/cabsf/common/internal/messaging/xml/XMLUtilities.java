@@ -169,7 +169,7 @@ public class XMLUtilities {
 			document = saxBuilder.build(inputStream);
 
 			final Element root = document.getRootElement();
-			System.out.println("[CABSF - Comon API] Successfully loaded template file: "
+			System.out.println("[CABSF - Common API] Successfully loaded template file: "
 					+ root.getName());
 		} finally {
 			if (inputStream != null) {

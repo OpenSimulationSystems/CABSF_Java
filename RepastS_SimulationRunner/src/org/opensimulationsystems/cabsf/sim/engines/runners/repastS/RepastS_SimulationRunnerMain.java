@@ -6,13 +6,13 @@ import repast.simphony.engine.environment.RunEnvironment;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Repast Simphony (RepastS) Simulation Runner programmatically runs a
- * RepastS Simulation. This class is taken from the Repast FAQ for running a
- * program from another program. It is enhanced to enable the incorporation of
- * the Common Agent-Based Simulation Framework.
- * 
- * Currently, this is the only way to run a RepastS simulation using the Common
- * Simulation Framework functionality.
+ * The Repast Simphony (RepastS) Simulation Runner programmatically runs a RepastS
+ * Simulation. This class is taken from the Repast FAQ for running a program from another
+ * program. It is enhanced to enable the incorporation of the Common Agent-Based
+ * Simulation Framework.
+ *
+ * Currently, this is the only way to run a RepastS simulation using the Common Simulation
+ * Framework functionality.
  *
  * @author Jorge Calderon
  * @version 0.1
@@ -33,10 +33,10 @@ public class RepastS_SimulationRunnerMain {
 	 * @param isStopped
 	 *            the is stopped
 	 */
-	static private void logHelper(double tick, int modelActionCount,
-			boolean isStopped) {
-		System.out.println("Tick: " + tick + " Model Action Count: "
-				+ modelActionCount + " isStopped: " + isStopped);
+	static private void logHelper(final double tick, final int modelActionCount,
+			final boolean isStopped) {
+		System.out.println("Tick: " + tick + " Model Action Count: " + modelActionCount
+				+ " isStopped: " + isStopped);
 	}
 
 	/**
@@ -47,39 +47,40 @@ public class RepastS_SimulationRunnerMain {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public static void main(String[] args) throws Exception {
-		String csfConfigurationFileName = null;
-		if (args.length >= 2)
+	public static void main(final String[] args) throws Exception {
+		String firstProgramArgument = null;
+		if (args.length >= 2) {
 			// Read the directory to the Common Agent-Based Simulation Framework
 			// configuration file (second
 			// argument)
-			csfConfigurationFileName = args[1];
-		// TODO: Add Validation of CSF configuration file
-		// if (frameworkConfigurationFileName == null)
-		// throw new
-		// CabsfInitializationRuntimeException("The Repast scenario directory must be provided");
+			firstProgramArgument = args[1];
+			// TODO: Add Validation of CSF configuration file
+			// if (frameworkConfigurationFileName == null)
+			// throw new
+			// CabsfInitializationRuntimeException("The Repast scenario directory must be provided");
+		}
 
 		// The Repast scenario Directory
-		File file = new File(args[0]);
-		RepastS_SimulationRunner repastS_SimulationRunner = new RepastS_SimulationRunner();
+		final File file = new File(args[0]);
+		final RepastS_SimulationRunner repastS_SimulationRunner = new RepastS_SimulationRunner();
 
-		repastS_SimulationRunner.load(file, csfConfigurationFileName); // Load
+		repastS_SimulationRunner.load(file, firstProgramArgument); // Load
 
 		// Run the simulation a few times to check for cleanup and init issues.
 		// TODO: Tie in the number of simulation runs from the configuration
-		int simulation_runs = 2;
+		final int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
 			repastS_SimulationRunner.runInitialize();
 
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the
 			// configuration
-			Double max_ticks = null; // = 300d;
+			final Double max_ticks = null; // = 300d;
 			double tick = RunEnvironment.getInstance().getCurrentSchedule()
 					.getTickCount();
 
 			System.out
-			.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
+					.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
 			logHelper(tick, repastS_SimulationRunner.getModelActionCount(),
 					repastS_SimulationRunner.getIsStopped());
 			// loop until last action is left
@@ -96,8 +97,7 @@ public class RepastS_SimulationRunnerMain {
 				// execute all scheduled actions at next tick
 				repastS_SimulationRunner.step();
 
-				tick = RunEnvironment.getInstance().getCurrentSchedule()
-						.getTickCount();
+				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 				System.out.println("Finished Stepping.  New Tick: " + tick);
 
 				// Call stop() after the last step. One "end" action is left, so
@@ -117,8 +117,9 @@ public class RepastS_SimulationRunnerMain {
 						repastS_SimulationRunner.getIsStopped());
 			}
 
-			if (!repastS_SimulationRunner.getIsStopped()) // Don't stop twice
+			if (!repastS_SimulationRunner.getIsStopped()) {
 				repastS_SimulationRunner.stop(); // Execute any actions
+			}
 			// scheduled at run at the end
 			repastS_SimulationRunner.cleanUpRun();
 		}

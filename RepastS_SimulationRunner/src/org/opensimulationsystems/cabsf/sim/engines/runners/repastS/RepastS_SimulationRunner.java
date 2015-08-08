@@ -24,10 +24,10 @@ import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.Schedule;
 import repast.simphony.parameter.DefaultParameters;
-import repast.simphony.parameter.ParameterConstants;
 import repast.simphony.parameter.SweeperProducer;
 import simphony.util.messages.MessageCenter;
 
+// TODO: Auto-generated Javadoc
 /**
  * Contains most of the logic for the RepastS Simulation Runner.
  *
@@ -36,8 +36,8 @@ import simphony.util.messages.MessageCenter;
  *
  * @author Jorge Calderon
  * @version 0.1
- * @since 0.1
  * @see RepastS_SimulationRunnerMain
+ * @since 0.1
  */
 public class RepastS_SimulationRunner extends AbstractRunner {
 
@@ -79,6 +79,12 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	/** The schedule. */
 	private ISchedule schedule; // level
 
+	private DefaultParameters defaultParameters;
+
+	private File scenarioDir;
+
+	private String secondProgramArgument;
+
 	/**
 	 * Instantiates a new repast s_ simulation runner.
 	 */
@@ -103,24 +109,47 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		isStopped = false; // Clear this flag for the next simulation run
 		if (lastRepastS_SimulationRunContext != null) { // if CSF run
 			lastRepastS_SimulationRunContext
-			.closeInterface(lastRepastS_SimulationRunContext
-					.getSimulationRunContext());
+					.closeInterface(lastRepastS_SimulationRunContext
+							.getSimulationRunContext());
 			lastRepastS_SimulationRunContext.terminateSimulationRun();
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see repast.simphony.engine.graph.Executor#execute(java.lang.Object)
 	 */
+	@Override
 	public void execute(final RunState toExecuteOn) {
 		// required AbstractRunner stub. We will control the
 		// schedule directly.
 	}
 
 	/**
-	 * Gets the action count (number of non-model actions in the schedule)
+	 * Checks whether the first program argument refers to the CABSF configuration file
+	 * name, or to a flag to be used in lieu of a configuration file. Normally if no
+	 * configuration file is supplied that means that the simulation will not use the
+	 * CABSF features, but flags may still need to be passed to the simulation to enable
+	 * certain fixes or workarounds.
+	 *
+	 * @param firstProgramArgument
+	 *            the first program argument
+	 * @return the string
+	 */
+	private String firstProgramArgumentToConfigurationFileName(
+			final String firstProgramArgument) {
+		if (firstProgramArgument.equalsIgnoreCase("ApplyRssrParametersFix")
+				|| firstProgramArgument.equalsIgnoreCase("DontApplyRssrParametersFix")) {
+			return null;
+		} else {
+			return firstProgramArgument;
+		}
+
+	}
+
+	/**
+	 * Gets the action count (number of non-model actions in the schedule).
 	 *
 	 * @return the action count
 	 */
@@ -182,13 +211,16 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 *
 	 * @param scenarioDir
 	 *            the RepastS scenario directory
-	 * @param cabsfConfigurationFileName
-	 *            the CSF configuration file name
+	 * @param secondProgramArgument
+	 *            the first program argument
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void load(final File scenarioDir, final String cabsfConfigurationFileName)
+	public void load(final File scenarioDir, final String secondProgramArgument)
 			throws Exception {
+		this.scenarioDir = scenarioDir;
+		this.secondProgramArgument = secondProgramArgument;
+
 		if (scenarioDir.exists()) {
 			final BatchScenarioLoader loader = new BatchScenarioLoader(scenarioDir);
 			final ControllerRegistry registry = loader.load(runEnvironmentBuilder);
@@ -205,18 +237,21 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// TODO: Add validation of this number against the actual number of
 		// distributed agent models
 
+		// Call the concrete Adapter as this Adapter is only for Repast
+		// Simphony
+		repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
+
+		// Temporary Fix to set the Parameters in the simulation
+		defaultParameters = repastS_SimulationAdapterAPI.applyRssrParametersFix(
+				controller, scenarioDir, secondProgramArgument);
+
+		final String cabsfConfigurationFileName = firstProgramArgumentToConfigurationFileName(secondProgramArgument);
+
 		// If Common Framework configuration file is provided, initialize Common
 		// Framework
 		// otherwise run the simulation as a regular Repast Simphony simulation
 		// (programmatically).
 		if (cabsfConfigurationFileName != null) {
-			// Call the concrete Adapter as this Adapter is only for Repast
-			// Simphony
-			repastS_SimulationAdapterAPI = RepastS_SimulationAdapterAPI.getInstance();
-
-			// Temporary Fix to set the Paremters in the simulation
-			repastS_SimulationAdapterAPI.applyRssrParametersFix(controller, scenarioDir,
-					cabsfConfigurationFileName);
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(cabsfConfigurationFileName);
 			simulationRunnerType = SIMULATION_TYPE.CABSF_SIMULATION;
@@ -231,21 +266,29 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 *
 	 * @return the repast s_ simulation run context
 	 */
-	public RepastS_SimulationRunContext runInitialize() {
+	public RepastS_SimulationRunContext runInitialize() throws Exception {
 		// Set the Seed Parameter for this simulation run
 		// HARD CODED FOR NOW
 		// TODO: Programmatically read the parameters
-		final DefaultParameters defaultParameters = new DefaultParameters();
-		defaultParameters.addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
-				ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1,
-				true);
+
+		/*
+		 * final DefaultParameters defaultParameters = new DefaultParameters();
+		 * defaultParameters
+		 * .addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
+		 * ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1, true);
+		 */
+
+		final DefaultParameters defaultParameters = repastS_SimulationAdapterAPI
+				.applyRssrParametersFix(controller, scenarioDir, secondProgramArgument);
 
 		controller.runInitialize(defaultParameters);
+
 		schedule = RunState.getInstance().getScheduleRegistry().getModelSchedule();
 
 		@SuppressWarnings("unchecked")
 		final Context<Object> repastContextForThisRun = RunState.getInstance()
-		.getMasterContext();
+				.getMasterContext();
+		assert (repastContextForThisRun != null);
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 		if (simulationRunnerType == SIMULATION_TYPE.CABSF_SIMULATION) {
 			repastS_SimulationRunContext = repastS_SimulationAdapterAPI
@@ -281,9 +324,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/*
 	 * Performs the step in the simulation
-	 *
+	 * 
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see repast.simphony.engine.environment.AbstractRunner#step()
 	 */
 	@Override
@@ -295,9 +338,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	//
 	/*
 	 * Call the end actions on the scheduler
-	 *
+	 * 
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see repast.simphony.engine.environment.AbstractRunner#stop()
 	 */
 	@Override

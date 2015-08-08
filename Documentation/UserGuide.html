@@ -278,6 +278,11 @@ releases.</p>
   <li>All Repast agents with corresponding JADE agents must be objects of the
     same Repaast class and all of those Repast objects must have corresponding
     JADE agents.</li>
+  <li>Only JADE agents with representations in Repast should be started. There
+    is currently no process to match the names of each JADE agent , as
+    specified in the JADE program argument, with the JADE agent names specified
+    in the configuration file which CABSF uses to map to the Repast agent
+  names.</li>
   <li>A single distributed autonomous agent/JADE agent may only contain a
     single agent model corresponding to a single Repast agent (Repast class
     object). In the future we may support JADE agents corresponding to
@@ -297,8 +302,13 @@ releases.</p>
   <li>The number of  JADE agents with matching representations in Repast is
     fixed at the start of execution and defined in the CABSF configuration
     file(s)  No such agents can be added after the CABSF simulation execution
-    begins .  This does not apply to Repast agents with no matching JADE agents
-    or JADE agents with no representations in Repast.</li>
+    begins.  This does not apply to Repast agents with no matching JADE agents
+    or JADE agents with no representations in Repast (However, see the current
+    limitation on this scenario above).</li>
+  <li>The distributed autonomous agent model names are hard coded to be the
+    distributed autonomous agent name (JADE local name) plus "MODEL". This
+    naming convention needs to be followed in the configuration file, until it
+    is relaxed in the future.</li>
   <li>No assurances are made about the use of the Common Agent-Based Simulation
     Framework with JADE LEAP for execution on Android phones.</li>
   <li>It is best to start the JADE Controller Agent first as part of the JADE
@@ -313,9 +323,11 @@ releases.</p>
     the results are consistent in Repast Simphony version 2.3.1+. CABSF has no
     control over this limitation.</li>
   <li>Multithreading of the Common Agent-Based Simulation Framework is not
-    supported.  However, support for concurrent executions of the Common
-    Agent-Based Simulation Framework as separate processes using the same Redis
-    cache will be supported in the future.</li>
+    supported.  Multithreading within RepastS agents should still be supported,
+    but has not been tested out. Multithreading of JADE agents is not
+    recommended, per the JADE documentation. Support for concurrent executions
+    of the Common Agent-Based Simulation Framework as separate processes using
+    the same Redis cache may be supported in the future.</li>
 </ol>
 
 <h1>XML</h1>
@@ -355,5 +367,16 @@ library, make sure your library is set to be namespace-aware.  CABSF uses JDOM
   <li>Refer to the Javadocs in the <a href=".">Documentation</a> directory
     under the overall CABSF project repository.</li>
 </ol>
+
+<p>When starting JADE, if you see an error such as:</p>
+
+<p><span style="color:#ff0000">WARNING: Error adding ICP
+jade.imtp.leap.JICP.JICPPeer@1806e9d2[Cannot bind server socket to localhost
+port 1099].</span></p>
+
+<p>it probably means that you already have a JADE process running. Kill the
+existing process (hit the red square in Eclipse for all JADE processes). You
+may want to clear the Redis cache then restart the simulation process as
+well.</p>
 </body>
 </html>

@@ -77,9 +77,9 @@ public class AgentMappingHelper {
 	 *            the fully qualified simulation agent name
 	 * @return the agent mapping
 	 */
-	static public AgentMapping createAgentMappingObjButDontMap(final HashSet<AgentMapping> hs,
-			final String distributedSystemID, String distributedAutonomousAgentID,
-			final String distributedAgentModelID,
+	static public AgentMapping createAgentMappingObjButDontMap(
+			final HashSet<AgentMapping> hs, final String distributedSystemID,
+			String distributedAutonomousAgentID, final String distributedAgentModelID,
 			final String fullyQualifiedSimulationAgentName) {
 		// TODO: How to handle agent ids not specified by the distributed system?
 		if (distributedAutonomousAgentID == null) {

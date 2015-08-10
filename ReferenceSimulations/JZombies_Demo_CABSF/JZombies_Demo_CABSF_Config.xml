@@ -14,10 +14,14 @@
 		<AllSimulationRuns>
 			<SimulationEngineSpecific>
 				<SimulationEngineName>REPAST_SIMPHONY</SimulationEngineName>
+				
+				<!-- These flags can be removed if/when the Repast team corrects these issues in their code. -->
 				<!-- As of Repast Simphony 2.3.1, when using the CABSF Repast Simphony -->
 				<!-- Simulation Runner (RSSR), the parameters are not read from the .rs -->
 				<!-- directory. Apply temporary fix, to be removed in the future. -->
 				<ApplyRssrParametersFix>true</ApplyRssrParametersFix>
+				<!-- As of Repast Simphony 2.3.1, when adding objects to the context, Repast Simphony uses RandomHelper internally, which throws off the sequence of random numbers generated. The result is that the results of the simulation are different whether the RSSR is CABSF-enabled or not. This workaround corrects this issue, but does not correct the mismatch in results between the RSSR and regular GUI runs. -->
+				<ApplyRssrRandomSeedContextAddFix>true</ApplyRssrRandomSeedContextAddFix>
 			</SimulationEngineSpecific>
 			<!-- Does not depend on the actual simulation engine used. It's just the algorithm -->
 			<SeedAlgorithm>REPAST_SIMPHONY</SeedAlgorithm>

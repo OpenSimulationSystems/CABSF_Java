@@ -26,13 +26,13 @@ public class JZombiesBuilder implements ContextBuilder<Object> {
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context
 	 * .Context)
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	// @Override
 	public Context build(final Context<Object> context) {
 		final double MAX_ITERATIONS = 300;
 		final RunEnvironment runEnvironment = RunEnvironment.getInstance();
 		runEnvironment.endAt(MAX_ITERATIONS);
-
 		context.setId("jzombies");
 
 		final NetworkBuilder<Object> netBuilder = new NetworkBuilder<Object>(

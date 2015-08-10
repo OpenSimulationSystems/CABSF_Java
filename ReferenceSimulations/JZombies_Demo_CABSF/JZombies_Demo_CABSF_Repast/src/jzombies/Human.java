@@ -18,6 +18,7 @@ import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.Repas
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
@@ -34,15 +35,14 @@ import repast.simphony.util.SimUtilities;
 // TODO: Auto-generated Javadoc
 /**
  * The Human in the JZombies simulation. We modified this Repast Simphony simulation from
- * the tutorial to integrated with the Common Agent-Based Simulation Framework (CSF). The humans are
- * distributed to a JADE MAS. This Human RepastS class is the representational agent
- * within RepastS of the distributed JADE Human agent.
+ * the tutorial to integrated with the Common Agent-Based Simulation Framework (CSF). The
+ * humans are distributed to a JADE MAS. This Human RepastS class is the representational
+ * agent within RepastS of the distributed JADE Human agent.
  *
  * @author nick
  * @author Jorge Calderon (modified Human class for integrating with the CSF)
  */
 public class Human {
-
 	/** The space. */
 	private final ContinuousSpace<Object> space;
 
@@ -170,7 +170,7 @@ public class Human {
 			}
 		}
 
-		GridPoint moveToPoint = null;
+		GridPoint moveTowardsPoint = null;
 		// /////////////////////////////////////////////
 
 		// /////////////////////////////////////////////
@@ -200,7 +200,8 @@ public class Human {
 			// distributed agent (agent model)
 			// LOW: Add support for merging multiple messages bound for
 			// different agents
-			jZombies_CABSF_Helper.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
+			jZombies_CABSF_Helper
+			.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
 					loggingPrefix, this, pt, pointWithLeastZombies);
 			// FIXME: Move to simultaneous processing of these messages?
 			final FrameworkMessage msg = repastS_AgentContext
@@ -218,28 +219,39 @@ public class Human {
 				System.out.println(loggingPrefix + "Move Towards Location:"
 						+ String.valueOf(i) + " : " + String.valueOf(selfPoint.get(i)));
 			}
-			final int xValue = Integer.parseInt(selfPoint.get(0));
-			final int yValue = Integer.parseInt(selfPoint.get(1));
+			final int xValueToMoveTowards = Integer.parseInt(selfPoint.get(0));
+			final int yValueToMoveTowards = Integer.parseInt(selfPoint.get(1));
 
 			for (final GridCell<Zombie> cell : gridCells) {
-				if (cell.getPoint().getX() == xValue && cell.getPoint().getY() == yValue) {
-					moveToPoint = cell.getPoint();
+				if (cell.getPoint().getX() == xValueToMoveTowards
+						&& cell.getPoint().getY() == yValueToMoveTowards) {
+					moveTowardsPoint = cell.getPoint();
 				}
 			}
-			assert (moveToPoint != null);
+			assert (moveTowardsPoint != null);
 
-		} else
-			moveToPoint = pointWithLeastZombies;
+		}
+		// Non-CABSF enabled. Just move to the point with the least zombies without asking
+		// a corresponding JADE agent.
+		else {
+			moveTowardsPoint = pointWithLeastZombies;
+		}
 		// /////////////////////////////////////////////
+
+		System.out.println("***"
+				+ String.valueOf(this.hashCode())
+				+ " "
+				+ String.valueOf(RunEnvironment.getInstance().getCurrentSchedule()
+						.getTickCount()) + ": " + String.valueOf(moveTowardsPoint.getX())
+						+ "," + String.valueOf(moveTowardsPoint.getX()));
 
 		// /////////////////////////////////////////////
 		// Back to the original JZombies Code
 		if (energy > 0) {
-			moveTowards(moveToPoint);
+			moveTowards(moveTowardsPoint);
 		} else {
 			energy = startingEnergy;
 		}
 		// /////////////////////////////////////////////
 	}
-
 }

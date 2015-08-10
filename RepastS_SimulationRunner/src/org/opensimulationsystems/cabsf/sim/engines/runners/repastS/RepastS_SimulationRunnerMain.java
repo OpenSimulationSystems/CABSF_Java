@@ -3,6 +3,7 @@ package org.opensimulationsystems.cabsf.sim.engines.runners.repastS;
 import java.io.File;
 
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.random.RandomHelper;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -71,7 +72,7 @@ public class RepastS_SimulationRunnerMain {
 		final int simulation_runs = 2;
 		for (int i = 0; i < simulation_runs; i++) {
 			repastS_SimulationRunner.runInitialize();
-
+			RandomHelper.nextDouble();
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the
 			// configuration
@@ -80,7 +81,7 @@ public class RepastS_SimulationRunnerMain {
 					.getTickCount();
 
 			System.out
-					.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
+			.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
 			logHelper(tick, repastS_SimulationRunner.getModelActionCount(),
 					repastS_SimulationRunner.getIsStopped());
 			// loop until last action is left

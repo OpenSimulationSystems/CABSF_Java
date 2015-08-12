@@ -23,7 +23,6 @@ import repast.simphony.engine.environment.RunEnvironmentBuilder;
 import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.Schedule;
-import repast.simphony.parameter.DefaultParameters;
 import repast.simphony.parameter.SweeperProducer;
 import simphony.util.messages.MessageCenter;
 
@@ -80,8 +79,6 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	/** The schedule. */
 	private ISchedule schedule; // level
 
-	private DefaultParameters defaultParameters;
-
 	private File scenarioDir;
 
 	private String secondProgramArgument;
@@ -108,7 +105,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	public void cleanUpRun() {
 		controller.runCleanup();
 		isStopped = false; // Clear this flag for the next simulation run
-		if (lastRepastS_SimulationRunContext != null) { // if CSF run
+		if (lastRepastS_SimulationRunContext != null) { // if CABSF run
 			lastRepastS_SimulationRunContext
 					.closeInterface(lastRepastS_SimulationRunContext
 							.getSimulationRunContext());
@@ -132,7 +129,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			final String firstProgramArgument) {
 		if (firstProgramArgument.toUpperCase().contains(
 				"ApplyRssrParametersFix".toUpperCase())
-				|| firstProgramArgument.toUpperCase().equalsIgnoreCase(
+				|| firstProgramArgument.toUpperCase().contains(
 						"ApplyRssrRandomSeedContextAddFix".toUpperCase())) {
 			return null;
 		} else {
@@ -211,8 +208,11 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/**
 	 * Loads the Repast Simphony simulation and, optionally, the Common
-	 * Simulation Framework depending on whether or not the
-	 * csfConfigurationFileName is supplied.
+	 * Agent-Based Simulation Framework depending on whether or not the CABSF
+	 * configuration file is supplied as the second argument. The second
+	 * argument could also contains flags in place of a configuration file. In
+	 * that case, the simulation is run in CABSF-disabled mode, however the
+	 * flags may be used to correct issues with Repast Simphony.
 	 *
 	 * @param scenarioDir
 	 *            the RepastS scenario directory
@@ -250,9 +250,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 				.getInstance();
 
 		// Temporary Fix to set the Parameters in the simulation
-		defaultParameters = repastS_SimulationAdapterAPI
-				.applyRssrParametersFix(controller, scenarioDir,
-						secondProgramArgument);
+		repastS_SimulationAdapterAPI.applyRssrParametersFix(controller,
+				scenarioDir, secondProgramArgument);
 		final String cabsfConfigurationFileName = convertFirstProgramArgumentToConfigurationFileName(secondProgramArgument);
 
 		// If Common Framework configuration file is provided, initialize Common
@@ -288,11 +287,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		 * true);
 		 */
 
-		final DefaultParameters defaultParameters = repastS_SimulationAdapterAPI
+		controller.runInitialize(repastS_SimulationAdapterAPI
 				.applyRssrParametersFix(controller, scenarioDir,
-						secondProgramArgument);
-
-		controller.runInitialize(defaultParameters);
+						secondProgramArgument));
 		schedule = RunState.getInstance().getScheduleRegistry()
 				.getModelSchedule();
 

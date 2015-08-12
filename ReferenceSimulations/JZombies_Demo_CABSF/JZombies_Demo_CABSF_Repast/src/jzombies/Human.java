@@ -18,7 +18,6 @@ import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.Repas
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
@@ -34,10 +33,11 @@ import repast.simphony.util.SimUtilities;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Human in the JZombies simulation. We modified this Repast Simphony simulation from
- * the tutorial to integrated with the Common Agent-Based Simulation Framework (CSF). The
- * humans are distributed to a JADE MAS. This Human RepastS class is the representational
- * agent within RepastS of the distributed JADE Human agent.
+ * The Human in the JZombies simulation. We modified this Repast Simphony
+ * simulation from the tutorial to integrated with the Common Agent-Based
+ * Simulation Framework (CSF). The humans are distributed to a JADE MAS. This
+ * Human RepastS class is the representational agent within RepastS of the
+ * distributed JADE Human agent.
  *
  * @author nick
  * @author Jorge Calderon (modified Human class for integrating with the CSF)
@@ -96,11 +96,11 @@ public class Human {
 	}
 
 	/**
-	 * This class is only used when this simulation is run with the CSF functionality
-	 * turned off. It moves the agent to a particular Gridpoint. By using this method when
-	 * CSF is turned off, we can "plugin" in the move decision of this agent into the
-	 * simulation so that this agent does not have to rely on a corresponding distributed
-	 * JADE agent.
+	 * This class is only used when this simulation is run with the CSF
+	 * functionality turned off. It moves the agent to a particular Gridpoint.
+	 * By using this method when CSF is turned off, we can "plugin" in the move
+	 * decision of this agent into the simulation so that this agent does not
+	 * have to rely on a corresponding distributed JADE agent.
 	 *
 	 * @param pt
 	 *            the GridPoint
@@ -110,8 +110,8 @@ public class Human {
 		if (!pt.equals(grid.getLocation(this))) {
 			NdPoint myPoint = space.getLocation(this);
 			final NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-			final double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint,
-					otherPoint);
+			final double angle = SpatialMath.calcAngleFor2DMovement(space,
+					myPoint, otherPoint);
 			space.moveByVector(this, 2, angle, 0);
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int) myPoint.getX(), (int) myPoint.getY());
@@ -130,12 +130,13 @@ public class Human {
 		try {
 			if (jZombies_CABSF_Helper == null) {
 				repastContext = RunState.getInstance().getMasterContext();
-				jZombies_CABSF_Helper = new JZombies_CABSF_Helper(repastS_AgentContext);
+				jZombies_CABSF_Helper = new JZombies_CABSF_Helper(
+						repastS_AgentContext);
 
-				final Iterable<Class> simulationAgentsClasses = RunState.getInstance()
-						.getMasterContext().getAgentTypes();
-				final Iterable<Object> csfRepastContextIterable = RunState.getInstance()
-						.getMasterContext()
+				final Iterable<Class> simulationAgentsClasses = RunState
+						.getInstance().getMasterContext().getAgentTypes();
+				final Iterable<Object> csfRepastContextIterable = RunState
+						.getInstance().getMasterContext()
 						.getAgentLayer(RepastS_SimulationRunContext.class);
 				simulationType = repastS_AgentContext.initializeCabsfAgent(
 						simulationAgentsClasses, csfRepastContextIterable);
@@ -156,9 +157,10 @@ public class Human {
 		final GridPoint pt = grid.getLocation(this);
 		// use the GridCellNgh class to create GridCells for
 		// the surrounding neighborhood.
-		final GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid, pt,
-				Zombie.class, 1, 1);
-		final List<GridCell<Zombie>> gridCells = nghCreator.getNeighborhood(true);
+		final GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid,
+				pt, Zombie.class, 1, 1);
+		final List<GridCell<Zombie>> gridCells = nghCreator
+				.getNeighborhood(true);
 		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 
 		GridPoint pointWithLeastZombies = null;
@@ -201,8 +203,8 @@ public class Human {
 			// LOW: Add support for merging multiple messages bound for
 			// different agents
 			jZombies_CABSF_Helper
-			.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
-					loggingPrefix, this, pt, pointWithLeastZombies);
+					.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
+							loggingPrefix, this, pt, pointWithLeastZombies);
 			// FIXME: Move to simultaneous processing of these messages?
 			final FrameworkMessage msg = repastS_AgentContext
 					.getRepastS_SimulationRunContext()
@@ -217,7 +219,8 @@ public class Human {
 					.getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(msg);
 			for (int i = 0; i < selfPoint.size(); i++) {
 				System.out.println(loggingPrefix + "Move Towards Location:"
-						+ String.valueOf(i) + " : " + String.valueOf(selfPoint.get(i)));
+						+ String.valueOf(i) + " : "
+						+ String.valueOf(selfPoint.get(i)));
 			}
 			final int xValueToMoveTowards = Integer.parseInt(selfPoint.get(0));
 			final int yValueToMoveTowards = Integer.parseInt(selfPoint.get(1));
@@ -231,19 +234,13 @@ public class Human {
 			assert (moveTowardsPoint != null);
 
 		}
-		// Non-CABSF enabled. Just move to the point with the least zombies without asking
+		// Non-CABSF enabled. Just move to the point with the least zombies
+		// without asking
 		// a corresponding JADE agent.
 		else {
 			moveTowardsPoint = pointWithLeastZombies;
 		}
 		// /////////////////////////////////////////////
-
-		System.out.println("***"
-				+ String.valueOf(this.hashCode())
-				+ " "
-				+ String.valueOf(RunEnvironment.getInstance().getCurrentSchedule()
-						.getTickCount()) + ": " + String.valueOf(moveTowardsPoint.getX())
-						+ "," + String.valueOf(moveTowardsPoint.getX()));
 
 		// /////////////////////////////////////////////
 		// Back to the original JZombies Code

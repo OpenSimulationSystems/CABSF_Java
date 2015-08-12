@@ -34,7 +34,8 @@ public class RunGroupConfiguration {
 	private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
 
 	/** The namespace. */
-	private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
+	private final Namespace namespace = Namespace.getNamespace("x",
+			namespaceStr);
 
 	/** The location template. */
 	private final Element locationTemplate = null;
@@ -113,35 +114,38 @@ public class RunGroupConfiguration {
 
 		for (int i = 0; i < distributedAutonomousAgentElements.size(); i++) {
 			final Element agent = distributedAutonomousAgentElements.get(i);
-			final String distAutAgentID = agent.getChild("DistributedAutonomousAgentID",
-					namespace).getValue();
+			final String distAutAgentID = agent.getChild(
+					"DistributedAutonomousAgentID", namespace).getValue();
 
 			// Get Agent Models
-			final List<Element> agentModelsElements = agent.getChildren("AgentModels",
-					namespace);
+			final List<Element> agentModelsElements = agent.getChildren(
+					"AgentModels", namespace);
 			assert (agentModelsElements.size() == 1);
 
-			final List<Element> agentModels = agentModelsElements.get(0).getChildren(
-					"AgentModel", namespace);
+			final List<Element> agentModels = agentModelsElements.get(0)
+					.getChildren("AgentModel", namespace);
 			// TODO: Support Multiple Agent Models
 			assert (agentModels.size() == 1);
 			final Element agentModel = agentModels.get(0);
-			final String distributedAutonomousAgentModelID = agentModel.getChildText(
-					"DistributedAutonomousAgentModelID", namespace);
+			final String distributedAutonomousAgentModelID = agentModel
+					.getChildText("DistributedAutonomousAgentModelID",
+							namespace);
 
 			final String simulationEngineClass = agentModel.getChildText(
 					"SimulationEngineClass", namespace);
 			if (distributedAutonomousAgentModelID == null
 					|| distributedAutonomousAgentModelID.equals("")
-					|| simulationEngineClass == null || simulationEngineClass.equals("")) {
+					|| simulationEngineClass == null
+					|| simulationEngineClass.equals("")) {
 				throw new CabsfInitializationRuntimeException(
 						"The Distributed Autonomous Agent Model ID and Simulation Engine Class must be supplied for each agent model. ");
 			}
 
 			// Create Agent Mapping Object, but Don't map actual agent yetl
 			AgentMappingHelper.createAgentMappingObjButDontMap(
-					agentsReadyForSimulationSideMapping, distSysIDstr, distAutAgentID,
-					distributedAutonomousAgentModelID, simulationEngineClass);
+					agentsReadyForSimulationSideMapping, distSysIDstr,
+					distAutAgentID, distributedAutonomousAgentModelID,
+					simulationEngineClass);
 		}
 
 		// TODO: Support more than 1 Distributed System
@@ -211,28 +215,37 @@ public class RunGroupConfiguration {
 	 */
 	private void processAgentTypes(final List<Element> agentTypeElements) {
 		for (final Element agentTypeElement : agentTypeElements) {
-			final String type = agentTypeElement.getAttribute("type").getValue();
-			System.out.println("[CABSF - Common API] Agent type/class to be mapped: "
+			final String type = agentTypeElement.getAttribute("type")
+					.getValue();
+			System.out
+			.println("[CABSF - Common API] Agent type/class to be mapped: "
 					+ type);
 			agentTypes.add(type);
 		}
 	}
 
 	private void processHeaderSection() {
+		/*
+		 * final List<Element> distributedSystemsElements = (List<Element>)
+		 * XMLUtilities .executeXPath(cabsfConfigurationDocument,
+		 * distributedSystems_XPath, namespaceStr, elementFilter); assert
+		 * (distributedSystemsElements.size() == 1);
+		 */
+
 		final List<Element> distributedSystemsElements = (List<Element>) XMLUtilities
-				.executeXPath(cabsfConfigurationDocument, distributedSystems_XPath,
-						namespaceStr, elementFilter);
+				.executeXPath(cabsfConfigurationDocument,
+						distributedSystems_XPath, namespaceStr, elementFilter);
 		assert (distributedSystemsElements.size() == 1);
 
-		final List<Element> distributedSystemElements = distributedSystemsElements.get(0)
-				.getChildren("DistributedSystem", namespace);
+		final List<Element> distributedSystemElements = distributedSystemsElements
+				.get(0).getChildren("DistributedSystem", namespace);
 		// TODO: Support more than 1 Distributed System
 		assert (distributedSystemElements.size() == 1);
 
 		distSys = distributedSystemElements.get(0);
 
-		final Element distSysIDelement = distributedSystemElements.get(0).getChild(
-				"DistributedSystemID", namespace);
+		final Element distSysIDelement = distributedSystemElements.get(0)
+				.getChild("DistributedSystemID", namespace);
 
 		// final HashMap<Element, List<Element>>
 		// distributedSystemToDistributedAutonomousAgents = new HashSet<Element,
@@ -245,8 +258,8 @@ public class RunGroupConfiguration {
 							+ distributedSystems_XPath);
 		}
 
-		final List<Element> distributedAutonomousAgentsElements = distSys.getChildren(
-				"DistributedAutonomousAgents", namespace);
+		final List<Element> distributedAutonomousAgentsElements = distSys
+				.getChildren("DistributedAutonomousAgents", namespace);
 		assert (distributedAutonomousAgentsElements.size() == 1);
 
 		final List<Element> agentTypeElements = distributedAutonomousAgentsElements
@@ -255,8 +268,8 @@ public class RunGroupConfiguration {
 		processAgentTypes(agentTypeElements);
 
 		// TODO: Support multiple agent types
-		distributedAutonomousAgentElements = agentTypeElements.get(0).getChildren(
-				"DistributedAutonomousAgent", namespace);
+		distributedAutonomousAgentElements = agentTypeElements.get(0)
+				.getChildren("DistributedAutonomousAgent", namespace);
 		assert (distributedAutonomousAgentElements.size() >= 1);
 
 		this.numberOfDistributedAutonomousAgents = distributedAutonomousAgentElements
@@ -269,7 +282,8 @@ public class RunGroupConfiguration {
 	 * @param cabsfConfigurationDocument
 	 *            the new cabsf configuration document
 	 */
-	public void setCabsfConfigurationDocument(final Document cabsfConfigurationDocument) {
+	public void setCabsfConfigurationDocument(
+			final Document cabsfConfigurationDocument) {
 		this.cabsfConfigurationDocument = cabsfConfigurationDocument;
 	}
 

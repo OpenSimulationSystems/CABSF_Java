@@ -66,8 +66,8 @@ public class Zombie {
 		if (!pt.equals(grid.getLocation(this))) {
 			NdPoint myPoint = space.getLocation(this);
 			final NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-			final double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint,
-					otherPoint);
+			final double angle = SpatialMath.calcAngleFor2DMovement(space,
+					myPoint, otherPoint);
 			space.moveByVector(this, 1, angle, 0);
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int) myPoint.getX(), (int) myPoint.getY());
@@ -77,15 +77,6 @@ public class Zombie {
 
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
-		final Context<Object> context = ContextUtils.getContext(this);
-		final Class hum = Human.class;
-		final Iterable i = context.getAgentLayer(hum);
-		for (final Object h : i) {
-			final GridPoint gp = grid.getLocation(h);
-			System.out.println("*** " + this.hashCode() + " " + String.valueOf(gp.getX())
-					+ " " + String.valueOf(gp.getY()));
-		}
-
 		// get the grid location of this Zombie
 		final GridPoint pt = grid.getLocation(this);
 
@@ -93,7 +84,8 @@ public class Zombie {
 		// the surrounding neighborhood.
 		final GridCellNgh<Human> nghCreator = new GridCellNgh<Human>(grid, pt,
 				Human.class, 1, 1);
-		final List<GridCell<Human>> gridCells = nghCreator.getNeighborhood(true);
+		final List<GridCell<Human>> gridCells = nghCreator
+				.getNeighborhood(true);
 		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 		GridPoint pointWithMostHumans = null;
 		int maxCount = -1;
@@ -105,7 +97,8 @@ public class Zombie {
 		}
 		// Search the global environment
 		/*
-		 * if (maxCount <=0) { System.out.println("No more Humans.  Ending Simulation");
+		 * if (maxCount <=0) {
+		 * System.out.println("No more Humans.  Ending Simulation");
 		 * RunEnvironment.getInstance().endRun(); }
 		 */
 

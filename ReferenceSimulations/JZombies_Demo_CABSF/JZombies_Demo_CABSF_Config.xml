@@ -29,7 +29,7 @@
 			<PseudorandomNumberSettings>
 				<!-- Does not depend on the actual simulation engine used. -->
 				<RandomNumberGenerator>REPAST_SIMPHONY</RandomNumberGenerator>
-			</PseudorandomSettings>
+			</PseudorandomNumberSettings>
 		</AllSimulationRuns>
 		<!-- Simulation Run Configuration. Each child represents a run, sequentially. Optional -->
 		<!-- Not Supported yet as of 6/27/2015 -->

@@ -5,15 +5,15 @@
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="REPAST_SIMPHONY_SUPPORT"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CommonSimulationFramework"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/combinatoricslib-2.1.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/commons-pool2-2.0.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/guava-18.0.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/jade.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/jaxen-1.1.6.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/jdom-2.0.5.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/jedis-2.4.2.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="/CommonSimulationFramework/lib/xml-apis.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CommonAgentBasedSimulationFramework"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/combinatoricslib-2.1.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/commons-pool2-2.0.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/guava-18.0.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/jade.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/jaxen-1.1.6.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/jdom-2.0.5.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/jedis-2.4.2.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

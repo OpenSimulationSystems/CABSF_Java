@@ -19,7 +19,7 @@
 <listEntry value="$Proxy*"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/CommonSimulationFramework/lib/jade.jar"/>
+<listEntry value="/CommonAgentBasedSimulationFramework/lib/jade.jar"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>

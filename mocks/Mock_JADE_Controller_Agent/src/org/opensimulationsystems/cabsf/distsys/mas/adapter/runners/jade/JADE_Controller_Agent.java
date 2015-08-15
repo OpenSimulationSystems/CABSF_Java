@@ -84,6 +84,8 @@ public class JADE_Controller_Agent implements JadeControllerInterface {
 
 	private JADE_MAS_RunContext jade_MAS_RunContext;
 
+	private boolean initialRun = true;
+
 	public JADE_MAS_AdapterAPI getJade_MAS_AdapterAPI() {
 		return jade_MAS_AdapterAPI;
 	}
@@ -95,35 +97,38 @@ public class JADE_Controller_Agent implements JadeControllerInterface {
 	private void listenLoop(final Set<NativeDistributedAutonomousAgent> st) {
 		while (true) {
 			try {
-				// Handshake with the simulation system for a new simulation run.
+				// Handshake with the simulation system for a new simulation
+				// run.
 				final JADE_MAS_RunContext jade_MAS_RunContext = jade_MAS_AdapterAPI
 						.initializeSimulationRun(new NativeJADEMockContext(),
-								jade_MAS_RunGroupContext, this, st);
+								jade_MAS_RunGroupContext, this, st, initialRun);
 				setJade_MAS_RunContext(jade_MAS_RunContext);
 			} catch (final Exception e) {
 				e.printStackTrace();
 			}
+			initialRun = false;
 
 			final FRAMEWORK_COMMAND fc = getJade_MAS_RunContext()
 					.waitForAndProcessSimulationEngineMessageAfterHandshake();
 			if (fc == FRAMEWORK_COMMAND.STOP_SIMULATION) {
 				System.out
-				.println("[JADE Controller Agent] Received command to end simulation run. Listening for new simulation run");
+						.println("[JADE Controller Agent] Received command to end simulation run. Listening for new simulation run");
 			}
 		}
 	}
 
 	@Override
-	public void receiveMessage(final FrameworkMessage message, final String messageID,
-			final String inReplyToMessageID) {
-		final List<String> location = message.getSelfLocationFromFirstAgentModel(
-				message.getNextDistributedAutonomousAgent(message.getDocument(), null),
-				message);
+	public void receiveMessage(final FrameworkMessage message,
+			final String messageID, final String inReplyToMessageID) {
+		final List<String> location = message
+				.getSelfLocationFromFirstAgentModel(
+						message.getNextDistributedAutonomousAgent(
+								message.getDocument(), null), message);
 		// TODO: Remove or add other validation.
 		assert (location.size() == 2);
 
 		System.out
-		.println("[JADE Controller Agent] Received the distributed autonomous agent (model) decision. Forwarding to the simulation engine (agent)");
+				.println("[JADE Controller Agent] Received the distributed autonomous agent (model) decision. Forwarding to the simulation engine (agent)");
 
 		jade_MAS_RunContext.sendMessageToSimulationEngine(message,
 				jade_MAS_RunContext.getDistSysRunContext());
@@ -132,13 +137,14 @@ public class JADE_Controller_Agent implements JadeControllerInterface {
 				.waitForAndProcessSimulationEngineMessageAfterHandshake();
 		if (fc == FRAMEWORK_COMMAND.STOP_SIMULATION) {
 			System.out
-			.println("[JADE Controller Agent] Simulation Run Ended. Listening for new simulation run");
+					.println("[JADE Controller Agent] Simulation Run Ended. Listening for new simulation run");
 			final Set<NativeDistributedAutonomousAgent> st = getInitialSetOfNativeJADEagents();
 			listenLoop(st);
 		}
 	}
 
-	public void setJade_MAS_RunContext(final JADE_MAS_RunContext jade_MAS_RunContext) {
+	public void setJade_MAS_RunContext(
+			final JADE_MAS_RunContext jade_MAS_RunContext) {
 		this.jade_MAS_RunContext = jade_MAS_RunContext;
 	}
 

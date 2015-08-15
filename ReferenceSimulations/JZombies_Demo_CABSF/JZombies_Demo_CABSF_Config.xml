@@ -25,7 +25,7 @@
 			<!-- optional, Default=Infinite -->
 			<MaximumNumberOfTicks>300</MaximumNumberOfTicks>
 			<!-- optional, Default=1 -->
-			<NumberOfSimulationRuns>2</NumberOfSimulationRuns>
+			<NumberOfSimulationRuns>3</NumberOfSimulationRuns>
 			<PseudorandomNumberSettings>
 				<!-- Does not depend on the actual simulation engine used. -->
 				<RandomNumberGenerator>REPAST_SIMPHONY</RandomNumberGenerator>

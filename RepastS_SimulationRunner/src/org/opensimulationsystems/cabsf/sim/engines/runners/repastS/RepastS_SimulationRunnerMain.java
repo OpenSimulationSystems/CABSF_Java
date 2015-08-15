@@ -7,13 +7,13 @@ import repast.simphony.random.RandomHelper;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Repast Simphony (RepastS) Simulation Runner programmatically runs a RepastS
- * Simulation. This class is taken from the Repast FAQ for running a program from another
- * program. It is enhanced to enable the incorporation of the Common Agent-Based
- * Simulation Framework.
+ * The Repast Simphony (RepastS) Simulation Runner programmatically runs a
+ * RepastS Simulation. This class is taken from the Repast FAQ for running a
+ * program from another program. It is enhanced to enable the incorporation of
+ * the Common Agent-Based Simulation Framework.
  *
- * Currently, this is the only way to run a RepastS simulation using the Common Simulation
- * Framework functionality.
+ * Currently, this is the only way to run a RepastS simulation using the Common
+ * Simulation Framework functionality.
  *
  * @author Jorge Calderon
  * @version 0.1
@@ -34,10 +34,10 @@ public class RepastS_SimulationRunnerMain {
 	 * @param isStopped
 	 *            the is stopped
 	 */
-	static private void logHelper(final double tick, final int modelActionCount,
-			final boolean isStopped) {
-		System.out.println("Tick: " + tick + " Model Action Count: " + modelActionCount
-				+ " isStopped: " + isStopped);
+	static private void logHelper(final double tick,
+			final int modelActionCount, final boolean isStopped) {
+		System.out.println("Tick: " + tick + " Model Action Count: "
+				+ modelActionCount + " isStopped: " + isStopped);
 	}
 
 	/**
@@ -68,10 +68,17 @@ public class RepastS_SimulationRunnerMain {
 		repastS_SimulationRunner.load(file, firstProgramArgument); // Load
 
 		// Run the simulation a few times to check for cleanup and init issues.
-		// TODO: Tie in the number of simulation runs from the configuration
-		final int simulation_runs = 2;
+		long simulation_runs = 2;
+
+		if (repastS_SimulationRunner.getRepastS_SimulationRunGroupContext() != null) {
+			simulation_runs = repastS_SimulationRunner
+					.getRepastS_SimulationRunGroupContext()
+					.getSimulationRunGroupContext().getRunGroupConfiguration()
+					.getNumberOfSimulationRuns();
+		}
+
 		for (int i = 0; i < simulation_runs; i++) {
-			repastS_SimulationRunner.runInitialize();
+			repastS_SimulationRunner.runInitialize(i == 0);
 			RandomHelper.nextDouble();
 			// Hard Coded for now
 			// TODO: Tie in the maximum ticks in this simulation run from the
@@ -81,7 +88,7 @@ public class RepastS_SimulationRunnerMain {
 					.getTickCount();
 
 			System.out
-			.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
+					.println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
 			logHelper(tick, repastS_SimulationRunner.getModelActionCount(),
 					repastS_SimulationRunner.getIsStopped());
 			// loop until last action is left
@@ -98,7 +105,8 @@ public class RepastS_SimulationRunnerMain {
 				// execute all scheduled actions at next tick
 				repastS_SimulationRunner.step();
 
-				tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+				tick = RunEnvironment.getInstance().getCurrentSchedule()
+						.getTickCount();
 				System.out.println("Finished Stepping.  New Tick: " + tick);
 
 				// Call stop() after the last step. One "end" action is left, so

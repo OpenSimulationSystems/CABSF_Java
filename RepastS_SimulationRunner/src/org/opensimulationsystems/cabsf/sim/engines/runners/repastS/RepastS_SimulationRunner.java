@@ -107,8 +107,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		isStopped = false; // Clear this flag for the next simulation run
 		if (lastRepastS_SimulationRunContext != null) { // if CABSF run
 			lastRepastS_SimulationRunContext
-					.closeInterface(lastRepastS_SimulationRunContext
-							.getSimulationRunContext());
+			.closeInterface(lastRepastS_SimulationRunContext
+					.getSimulationRunContext());
 			lastRepastS_SimulationRunContext.terminateSimulationRun();
 		}
 	}
@@ -140,7 +140,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see repast.simphony.engine.graph.Executor#execute(java.lang.Object)
 	 */
 	@Override
@@ -189,9 +189,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	}
 
 	/**
-	 * Gets the repast s_ simulation run group context.
+	 * Gets the repast s_ run group context.
 	 *
-	 * @return the repast s_ simulation run group context
+	 * @return the repast s_ run group context
 	 */
 	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
 		return repastS_SimulationRunGroupContext;
@@ -236,7 +236,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			msgCenter.error("Scenario not found", new IllegalArgumentException(
 					"Invalid scenario " + scenarioDir.getAbsolutePath()));
 			throw new CabsfInitializationRuntimeException(
-					"Unable to initialize the simulation run.  Are you pointed to the right simulation configuration directory?  In Repast Simphony, it ends in .rs.  Tried using:  "
+					"Unable to initialize the simulation run.  Are you pointing to the right simulation configuration directory?  In Repast Simphony, it ends in .rs.  Tried using:  "
 							+ scenarioDir);
 		}
 		controller.batchInitialize();
@@ -274,19 +274,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 *
 	 * @return the repast s_ simulation run context
 	 */
-	public RepastS_SimulationRunContext runInitialize() throws Exception {
-		// Set the Seed Parameter for this simulation run
-		// HARD CODED FOR NOW
-		// TODO: Programmatically read the parameters
-
-		/*
-		 * final DefaultParameters defaultParameters = new DefaultParameters();
-		 * defaultParameters
-		 * .addParameter(ParameterConstants.DEFAULT_RANDOM_SEED_USAGE_NAME,
-		 * ParameterConstants.DEFAULT_RANDOM_SEED_DISPLAY_NAME, Number.class, 1,
-		 * true);
-		 */
-
+	public RepastS_SimulationRunContext runInitialize(
+			final boolean executeHandshake) throws Exception {
 		controller.runInitialize(repastS_SimulationAdapterAPI
 				.applyRssrParametersFix(controller, scenarioDir,
 						secondProgramArgument));
@@ -295,13 +284,13 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 		@SuppressWarnings("unchecked")
 		final Context<Object> repastContextForThisRun = RunState.getInstance()
-				.getMasterContext();
+		.getMasterContext();
 		assert (repastContextForThisRun != null);
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 		if (simulationRunnerType == SIMULATION_TYPE.CABSF_SIMULATION) {
 			repastS_SimulationRunContext = repastS_SimulationAdapterAPI
 					.initializeSimulationRun(repastContextForThisRun,
-							repastS_SimulationRunGroupContext);
+							repastS_SimulationRunGroupContext, executeHandshake);
 			// Fix after expanding to support multiple distributed systems.
 			System.out.println(repastS_SimulationRunContext
 					.getSimulationDistributedSystemManagers().iterator().next()
@@ -337,9 +326,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/*
 	 * Performs the step in the simulation
-	 * 
+	 *
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see repast.simphony.engine.environment.AbstractRunner#step()
 	 */
 	@Override
@@ -351,9 +340,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	//
 	/*
 	 * Call the end actions on the scheduler
-	 * 
+	 *
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see repast.simphony.engine.environment.AbstractRunner#stop()
 	 */
 	@Override

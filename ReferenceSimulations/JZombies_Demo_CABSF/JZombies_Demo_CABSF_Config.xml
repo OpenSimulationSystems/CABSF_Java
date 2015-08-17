@@ -65,21 +65,21 @@
 					<!-- Attribute used internally by the simulation engine -->
 					<!-- The distributed system(s) should not be concerned with this attribute value -->
 					<AgentType type="jzombies.Human">
-						<DistributedAutonomousAgent>
-							<!-- The JADE Agent ID. Identifier #2 of 3 -->
+ 		<!-- 				<DistributedAutonomousAgent>
+							The JADE Agent ID. Identifier #2 of 3
 							<DistributedAutonomousAgentID>DistributedSystemAutonomousAgent1</DistributedAutonomousAgentID>
 							<AgentModels>
-								<!-- The 1 to many agent models within the JADE agent -->
-								<!-- Only one is supported currently -->
+								The 1 to many agent models within the JADE agent
+								Only one is supported currently
 								<AgentModel>
-									<!-- Identifier #3 of 3 -->
+									Identifier #3 of 3
 									<DistributedAutonomousAgentModelID>DistributedSystemAutonomousAgent1MODEL</DistributedAutonomousAgentModelID>
-									<!-- Only used internally by the simulation engine -->
-									<!-- The distributed system(s) should not be concerned with this value -->
+									Only used internally by the simulation engine
+									The distributed system(s) should not be concerned with this value
 									<SimulationEngineClass>jzombies.Human</SimulationEngineClass>
 								</AgentModel>
 							</AgentModels>
-						</DistributedAutonomousAgent>
+						</DistributedAutonomousAgent> -->
 						<DistributedAutonomousAgent>
 							<!-- The JADE Agent ID. Identifier #2 of 3 -->
 							<DistributedAutonomousAgentID>DistributedSystemAutonomousAgent2</DistributedAutonomousAgentID>

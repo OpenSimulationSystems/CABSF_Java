@@ -57,6 +57,8 @@ public class RunGroupConfiguration {
 	/** The framework status_ x path. */
 	final private String distributedSystems_XPath = "/x:CabsfSimulationConfiguration/x:AgentMappings/x:DistributedSystems";
 
+	final private String numberOfSimulationRuns_XPath = "/x:CabsfSimulationConfiguration/x:SimulationEngineSpecificConfigurations/x:AllSimulationRuns/x:NumberOfSimulationRuns";
+
 	/** The agents ready for simulation side mapping. */
 	private final HashSet<AgentMapping> agentsReadyForSimulationSideMapping = new HashSet<AgentMapping>();
 
@@ -64,6 +66,8 @@ public class RunGroupConfiguration {
 	private final HashSet<String> agentTypes = new HashSet<String>();
 
 	private Integer numberOfDistributedAutonomousAgents;
+
+	private Integer numberOfSimulationRuns;
 
 	// TODO: Support Multiple Distributed Systems
 	private List<Element> distributedAutonomousAgentElements;
@@ -188,6 +192,11 @@ public class RunGroupConfiguration {
 		return numberOfDistributedAutonomousAgents;
 	}
 
+	public long getNumberOfSimulationRuns() {
+		return numberOfSimulationRuns;
+
+	}
+
 	/**
 	 * Gets the simulation engine id.
 	 *
@@ -218,8 +227,8 @@ public class RunGroupConfiguration {
 			final String type = agentTypeElement.getAttribute("type")
 					.getValue();
 			System.out
-			.println("[CABSF - Common API] Agent type/class to be mapped: "
-					+ type);
+					.println("[CABSF - Common API] Agent type/class to be mapped: "
+							+ type);
 			agentTypes.add(type);
 		}
 	}
@@ -236,6 +245,24 @@ public class RunGroupConfiguration {
 				.executeXPath(cabsfConfigurationDocument,
 						distributedSystems_XPath, namespaceStr, elementFilter);
 		assert (distributedSystemsElements.size() == 1);
+
+		final List<Element> numberOfSimulationRunsElements = (List<Element>) XMLUtilities
+				.executeXPath(cabsfConfigurationDocument,
+						numberOfSimulationRuns_XPath, namespaceStr,
+						elementFilter);
+		if (numberOfSimulationRunsElements.size() != 1) {
+			throw new CabsfInitializationRuntimeException(
+					"Number of simulation runs is not defined in the configuration file.");
+		}
+		final String numberOfSimulationRunsStr = numberOfSimulationRunsElements
+				.get(0).getText();
+		try {
+			numberOfSimulationRuns = Integer
+					.parseInt(numberOfSimulationRunsStr);
+		} catch (final NumberFormatException e) {
+			throw new CabsfInitializationRuntimeException(
+					"Number of simulation runs is not defined in the configuration file.");
+		}
 
 		final List<Element> distributedSystemElements = distributedSystemsElements
 				.get(0).getChildren("DistributedSystem", namespace);

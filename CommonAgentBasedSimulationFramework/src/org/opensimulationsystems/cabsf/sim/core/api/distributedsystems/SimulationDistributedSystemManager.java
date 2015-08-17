@@ -143,7 +143,7 @@ public class SimulationDistributedSystemManager {
 				.addNativeSimulationAgentToAgentMapping(this
 						.getClass().getCanonicalName().toString(), simulationRunContext
 						.getSimulationRunGroupContext()
-						.getSimulationRunGroupConfiguration()
+						.getRunGroupConfiguration()
 						.getAgentsReadyForSimulationSideMapping(),
 						fullyInitializedAgentMappings, agentObj);
 	}
@@ -185,7 +185,7 @@ public class SimulationDistributedSystemManager {
 		// TODO: Pull from configuration
 
 		simulationRunContext.getSimulationRunGroupContext()
-		.getSimulationRunGroupConfiguration().createAgentMappingObjects();
+		.getRunGroupConfiguration().createAgentMappingObjects();
 
 	}
 
@@ -203,7 +203,7 @@ public class SimulationDistributedSystemManager {
 	 */
 	public boolean isAgentClassDistributedType(final Class<Object> agentClass) {
 		if (simulationRunContext.getSimulationRunGroupContext()
-				.getSimulationRunGroupConfiguration().getAgentTypes()
+				.getRunGroupConfiguration().getAgentTypes()
 				.contains(agentClass.getCanonicalName())) {
 			return true;
 		} else {

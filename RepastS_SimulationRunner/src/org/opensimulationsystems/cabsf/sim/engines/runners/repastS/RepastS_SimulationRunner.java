@@ -107,40 +107,15 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		isStopped = false; // Clear this flag for the next simulation run
 		if (lastRepastS_SimulationRunContext != null) { // if CABSF run
 			lastRepastS_SimulationRunContext
-			.closeInterface(lastRepastS_SimulationRunContext
-					.getSimulationRunContext());
+					.closeInterface(lastRepastS_SimulationRunContext
+							.getSimulationRunContext());
 			lastRepastS_SimulationRunContext.terminateSimulationRun();
 		}
 	}
 
-	/**
-	 * Checks whether the first program argument refers to the CABSF
-	 * configuration file name, or to a flag to be used in lieu of a
-	 * configuration file. Normally if no configuration file is supplied that
-	 * means that the simulation will not use the CABSF features, but flags may
-	 * still need to be passed to the simulation to enable certain fixes or
-	 * workarounds.
-	 *
-	 * @param firstProgramArgument
-	 *            the first program argument
-	 * @return the string
-	 */
-	private String convertFirstProgramArgumentToConfigurationFileName(
-			final String firstProgramArgument) {
-		if (firstProgramArgument.toUpperCase().contains(
-				"ApplyRssrParametersFix".toUpperCase())
-				|| firstProgramArgument.toUpperCase().contains(
-						"ApplyRssrRandomSeedContextAddFix".toUpperCase())) {
-			return null;
-		} else {
-			return firstProgramArgument;
-		}
-
-	}
-
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see repast.simphony.engine.graph.Executor#execute(java.lang.Object)
 	 */
 	@Override
@@ -252,7 +227,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// Temporary Fix to set the Parameters in the simulation
 		repastS_SimulationAdapterAPI.applyRssrParametersFix(controller,
 				scenarioDir, secondProgramArgument);
-		final String cabsfConfigurationFileName = convertFirstProgramArgumentToConfigurationFileName(secondProgramArgument);
+		final String cabsfConfigurationFileName = repastS_SimulationAdapterAPI
+				.convertFirstProgramArgumentToConfigurationFileName(secondProgramArgument);
 
 		// If Common Framework configuration file is provided, initialize Common
 		// Framework
@@ -284,7 +260,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 		@SuppressWarnings("unchecked")
 		final Context<Object> repastContextForThisRun = RunState.getInstance()
-		.getMasterContext();
+				.getMasterContext();
 		assert (repastContextForThisRun != null);
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
 		if (simulationRunnerType == SIMULATION_TYPE.CABSF_SIMULATION) {
@@ -326,9 +302,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 
 	/*
 	 * Performs the step in the simulation
-	 *
+	 * 
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see repast.simphony.engine.environment.AbstractRunner#step()
 	 */
 	@Override
@@ -340,9 +316,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	//
 	/*
 	 * Call the end actions on the scheduler
-	 *
+	 * 
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see repast.simphony.engine.environment.AbstractRunner#stop()
 	 */
 	@Override

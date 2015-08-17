@@ -84,7 +84,7 @@ public class JADE_Controller_Agent implements JadeControllerInterface {
 
 	private JADE_MAS_RunContext jade_MAS_RunContext;
 
-	private boolean initialRun = true;
+	private boolean resetRunGroup = true;
 
 	public JADE_MAS_AdapterAPI getJade_MAS_AdapterAPI() {
 		return jade_MAS_AdapterAPI;
@@ -101,12 +101,12 @@ public class JADE_Controller_Agent implements JadeControllerInterface {
 				// run.
 				final JADE_MAS_RunContext jade_MAS_RunContext = jade_MAS_AdapterAPI
 						.initializeSimulationRun(new NativeJADEMockContext(),
-								jade_MAS_RunGroupContext, this, st, initialRun);
+								jade_MAS_RunGroupContext, this, st, resetRunGroup);
 				setJade_MAS_RunContext(jade_MAS_RunContext);
 			} catch (final Exception e) {
 				e.printStackTrace();
 			}
-			initialRun = false;
+			resetRunGroup = false;
 
 			final FRAMEWORK_COMMAND fc = getJade_MAS_RunContext()
 					.waitForAndProcessSimulationEngineMessageAfterHandshake();

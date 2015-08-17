@@ -20,7 +20,7 @@ public class SimulationRunGroupContext extends CabsfRunGroupContext {
 		return simulationRunGroup;
 	}
 
-	public RunGroupConfiguration getSimulationRunGroupConfiguration() {
+	public RunGroupConfiguration getRunGroupConfiguration() {
 		return runGroupConfiguration;
 	}
 

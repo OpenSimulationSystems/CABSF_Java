@@ -79,6 +79,7 @@ public class RepastS_SimulationAdapterAPI {
 	 *            the scenario dir
 	 * @param secondProgramArgument
 	 *            the cabsf configuration file name
+	 * @return the default parameters
 	 * @throws JDOMException
 	 *             the JDOM exception
 	 * @throws IOException
@@ -144,6 +145,21 @@ public class RepastS_SimulationAdapterAPI {
 
 	}
 
+	/**
+	 * Apply rssr random seed context add fix.
+	 *
+	 * @param controller
+	 *            the controller
+	 * @param scenarioDir
+	 *            the scenario dir
+	 * @param secondProgramArgument
+	 *            the second program argument
+	 * @return true, if successful
+	 * @throws JDOMException
+	 *             the JDOM exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public boolean applyRssrRandomSeedContextAddFix(
 			final Controller controller, final File scenarioDir,
 			final String secondProgramArgument) throws JDOMException,
@@ -156,6 +172,28 @@ public class RepastS_SimulationAdapterAPI {
 		RandomHelper.nextDouble();
 
 		return true;
+	}
+
+	/**
+	 * Convert first program argument to configuration file name.
+	 *
+	 * @param secondProgramArgument
+	 *            the second program argument
+	 * @return the the configuration file name, if it is a configuration file.
+	 *         Otherwise return null if it's just flags that are being passed
+	 *         in, and the simulation is being run CABSF-disabled.
+	 */
+	public String convertFirstProgramArgumentToConfigurationFileName(
+			final String secondProgramArgument) {
+		if (secondProgramArgument.toUpperCase().contains(
+				"ApplyRssrParametersFix".toUpperCase())
+				|| secondProgramArgument.toUpperCase().contains(
+						"ApplyRssrRandomSeedContextAddFix".toUpperCase())) {
+			return null;
+		} else {
+			return secondProgramArgument;
+		}
+
 	}
 
 	/**
@@ -201,24 +239,27 @@ public class RepastS_SimulationAdapterAPI {
 	 *            the native repast context for this run
 	 * @param repastS_SimulationRunGroupContext
 	 *            the repast s_ simulation run group context
+	 * @param executeHandshake
+	 *            the execute handshake
 	 * @return the repast s_ simulation run context
 	 */
 	public RepastS_SimulationRunContext initializeSimulationRun(
 			final Context<Object> nativeRepastScontextForThisRun,
-			final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
+			final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext,
+			final boolean executeHandshake) {
 		final SimulationRunContext simulationRunContext = simulationAPI
 				.initializeSimulationRun(nativeRepastScontextForThisRun,
 						repastS_SimulationRunGroupContext
-								.getSimulationRunGroupContext());
+						.getSimulationRunGroupContext());
 
 		// User Decorator Pattern for RepastS_SimulationRunContext
 		final RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
 				simulationRunContext);
 		repastS_SimulationRunContext
-				.setRepastContextForThisRun(nativeRepastScontextForThisRun);
+		.setRepastContextForThisRun(nativeRepastScontextForThisRun);
 
 		repastS_SimulationRunContext
-				.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
+		.setRepastRunGroupContext(repastS_SimulationRunGroupContext);
 
 		// Make the context available to the agents in the Repast model
 		nativeRepastScontextForThisRun.add(repastS_SimulationRunContext);
@@ -229,7 +270,7 @@ public class RepastS_SimulationAdapterAPI {
 		// TODO: Move distributed system manager to main level? same for on the
 		// distributed side (simulation engine manager)
 		repastS_SimulationRunContext.getSimulationDistributedSystemManagers()
-				.iterator().next().createAgentMappingObjects();
+		.iterator().next().createAgentMappingObjects();
 
 		boolean atLeastOneMappingPerformed = false;
 
@@ -240,7 +281,7 @@ public class RepastS_SimulationAdapterAPI {
 		// (Same for JADE API side)
 		@SuppressWarnings({ "rawtypes" })
 		final Iterable<Class> simulationAgentsClasses = nativeRepastScontextForThisRun
-				.getAgentTypes();
+		.getAgentTypes();
 
 		// For each simulation agent class
 		for (@SuppressWarnings("rawtypes")
@@ -273,7 +314,7 @@ public class RepastS_SimulationAdapterAPI {
 					System.out.println("Attempting to map: " + simulationAgent);
 					mapSimulationSideAgent(simulationAgent,
 							repastS_SimulationRunContext
-									.getSimulationRunContext());
+							.getSimulationRunContext());
 				}
 
 				// TODO: Support partial mappings for one class
@@ -300,37 +341,42 @@ public class RepastS_SimulationAdapterAPI {
 					"No mapping was performed of simulation agent(s) to distributed autonomous agent and agent model IDs");
 		}
 
-		// TODO: Move this whole section to the main simulation API?
-		// 1 - Wait for the command from the simulation administrator to start
-		// the simulation
-		final FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
-				.readFrameworkMessageFromSimulationAdministrator()
-				.getFrameworkToSimulationEngineCommand();
-		if (fc != FRAMEWORK_COMMAND.START_SIMULATION) {
-			throw new CabsfMessagingRuntimeException(
-					"Did not understand the message from the simulation administrator");
-		}
+		if (executeHandshake) {
+			// TODO: Move this whole section to the main simulation API?
+			// 1 - Wait for the command from the simulation administrator to
+			// start
+			// the simulation
+			final FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
+					.readFrameworkMessageFromSimulationAdministrator()
+					.getFrameworkToSimulationEngineCommand();
+			if (fc != FRAMEWORK_COMMAND.START_SIMULATION) {
+				throw new CabsfMessagingRuntimeException(
+						"Did not understand the message from the simulation administrator");
+			}
 
-		// 2 - Message the distributed systems that the simulation has started
-		// and is ready to accept messages from the distributed agents.
-		final FrameworkMessage msg = new FrameworkMessageImpl(
-				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				repastS_SimulationRunContext
-						.getBlankCachedMessageExchangeTemplate());
-		msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
-		// TODO: Loop through the multiple distributed systems
-		repastS_SimulationRunContext.messageDistributedSystems(msg,
-				repastS_SimulationRunContext.getSimulationRunContext());
+			// 2 - Message the distributed systems that the simulation has
+			// started
+			// and is ready to accept messages from the distributed agents.
+			final FrameworkMessage msg = new FrameworkMessageImpl(
+					SYSTEM_TYPE.SIMULATION_ENGINE,
+					SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+					repastS_SimulationRunContext
+					.getBlankCachedMessageExchangeTemplate());
+			msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
+			// TODO: Loop through the multiple distributed systems
+			repastS_SimulationRunContext.messageDistributedSystems(msg,
+					repastS_SimulationRunContext.getSimulationRunContext());
 
-		// Wait for distributed system to confirm that simulation is ready
-		// to begin
-		final STATUS st = repastS_SimulationRunContext
-				.readFrameworkMessageFromDistributedSystem().getStatus();
-		// TODO: Identify which distributed system caused the error.
-		// TODO: Set these up as checked exceptions?
-		if (st != STATUS.READY_TO_START_SIMULATION) {
-			throw new CabsfMessagingRuntimeException(
-					"Did not understand the message from the simulation distributed system.");
+			// Wait for distributed system to confirm that simulation is ready
+			// to begin
+			final STATUS st = repastS_SimulationRunContext
+					.readFrameworkMessageFromDistributedSystem().getStatus();
+			// TODO: Identify which distributed system caused the error.
+			// TODO: Set these up as checked exceptions?
+			if (st != STATUS.READY_TO_START_SIMULATION) {
+				throw new CabsfMessagingRuntimeException(
+						"Did not understand the message from the simulation distributed system.");
+			}
 		}
 
 		// The distributed agent (models) have previously been mapped.
@@ -382,8 +428,10 @@ public class RepastS_SimulationAdapterAPI {
 	 * @param cabsfConfigurationDocumentStr
 	 *            the cabsf configuration document str
 	 * @return true, if successful
-	 * @throws IOException
 	 * @throws JDOMException
+	 *             the JDOM exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private boolean shouldApplyRandomSeedContextAddFix(
 			final String cabsfConfigurationDocumentStr) throws JDOMException,
@@ -431,8 +479,10 @@ public class RepastS_SimulationAdapterAPI {
 	 * @param cabsfConfigurationDocumentStr
 	 *            the cabsf configuration document str
 	 * @return true, if successful
-	 * @throws IOException
 	 * @throws JDOMException
+	 *             the JDOM exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private boolean shouldApplyRunFix(final String cabsfConfigurationDocumentStr)
 			throws JDOMException, IOException {

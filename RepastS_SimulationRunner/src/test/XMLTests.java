@@ -51,7 +51,8 @@ public class XMLTests implements JadeControllerInterface {
 		repastS_AgentContext.setBypassRepastRuntimeForTestingPurposes(true);
 		repastS_AgentContext.initializeCabsfAgent(null, null);
 
-		final JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
+		final JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI
+				.getInstance();
 		jade_MAS_AdapterAPI.initializeAPI("TEMP");
 		// jade_MAS_RunContext =
 		// jade_MAS_AdapterAPI.initializeSimulationRun(null,
@@ -59,7 +60,8 @@ public class XMLTests implements JadeControllerInterface {
 		jade_MAS_RunContext = new JADE_MAS_RunContext(null);
 
 		jZombies_CABSF_Helper = new JZombies_CABSF_Helper(repastS_AgentContext);
-		prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(repastS_AgentContext);
+		prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(
+				repastS_AgentContext);
 
 		jade_MAS_AgentContext = new JADE_MAS_AgentContext();
 		jade_MAS_AgentContext.initializeCabsfAgent("TEST");
@@ -80,119 +82,129 @@ public class XMLTests implements JadeControllerInterface {
 		final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
 				simulationRunGroupContext);
 		repastS_AgentContext
-		.setRepastS_SimulationRunGroupContext(repastS_SimulationRunGroupContext);
+				.setRepastS_SimulationRunGroupContext(repastS_SimulationRunGroupContext);
 
 	}
 
 	/*
-	 * static private Document documentTemplateInstance = null; static private String
-	 * namespaceStr =
-	 * "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0"; static
-	 * private Namespace namespace = Namespace.getNamespace("x", namespaceStr); static
-	 * private Element agentModelTemplate = null; static private Element locationTemplate;
-	 * static private Filter<Element> elementFilter = new
-	 * org.jdom2.filter.ElementFilter();
-	 *
-	 * static Document getDocument() { return documentTemplateInstance.clone(); }
-	 *
-	 * static private void setupElementTemplates(Document doc) { // Agent Model Template
-	 * List<Element> agentModel = (List<Element>) XMLUtilities .executeXPath( doc,
+	 * static private Document documentTemplateInstance = null; static private
+	 * String namespaceStr =
+	 * "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0"
+	 * ; static private Namespace namespace = Namespace.getNamespace("x",
+	 * namespaceStr); static private Element agentModelTemplate = null; static
+	 * private Element locationTemplate; static private Filter<Element>
+	 * elementFilter = new org.jdom2.filter.ElementFilter();
+	 * 
+	 * static Document getDocument() { return documentTemplateInstance.clone();
+	 * }
+	 * 
+	 * static private void setupElementTemplates(Document doc) { // Agent Model
+	 * Template List<Element> agentModel = (List<Element>) XMLUtilities
+	 * .executeXPath( doc,
 	 * "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel[1]"
 	 * , namespaceStr, elementFilter); agentModelTemplate = agentModel.get(0);
-	 *
+	 * 
 	 * // Location Template
-	 *
-	 * @SuppressWarnings("unchecked") // TODO: Support multiple actors List<Element>
-	 * agentLocation = (List<Element>) XMLUtilities .executeXPath( doc,
+	 * 
+	 * @SuppressWarnings("unchecked") // TODO: Support multiple actors
+	 * List<Element> agentLocation = (List<Element>) XMLUtilities .executeXPath(
+	 * doc,
 	 * "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel/x:Actor/x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location"
-	 * , namespaceStr, elementFilter); locationTemplate = agentLocation.get(0).clone();
-	 * locationTemplate.setAttribute("id", ""); }
-	 *
-	 * @BeforeClass public static void setUpBeforeClass() throws Exception { try {
-	 * documentTemplateInstance = MessagingUtilities
+	 * , namespaceStr, elementFilter); locationTemplate =
+	 * agentLocation.get(0).clone(); locationTemplate.setAttribute("id", ""); }
+	 * 
+	 * @BeforeClass public static void setUpBeforeClass() throws Exception { try
+	 * { documentTemplateInstance = MessagingUtilities
 	 * .createCachedMessageExchangeTemplate();
-	 * setupElementTemplates(documentTemplateInstance); } catch (JDOMException e) {
-	 *
+	 * setupElementTemplates(documentTemplateInstance); } catch (JDOMException
+	 * e) {
+	 * 
 	 * } catch (IOException e) {
-	 *
+	 * 
 	 * } }
-	 *
+	 * 
 	 * @AfterClass public static void tearDownAfterClass() throws Exception { }
-	 *
+	 * 
 	 * private boolean firstAgentModelActorPopulated;
-	 *
+	 * 
 	 * @Before public void setUp() throws Exception { }
-	 *
+	 * 
 	 * @After public void tearDown() throws Exception { }
-	 *
+	 * 
 	 * @Test
-	 *
+	 * 
 	 * @Ignore public void testCachedMessageExchangeTemplate() { Document doc =
 	 * getDocument();
-	 *
-	 * @SuppressWarnings("unchecked") List<Element> xPathSearchedNodes = (List<Element>)
-	 * XMLUtilities.executeXPath(doc, "/x:CsfMessageExchange/x:SendingEntity/x:Name",
-	 * namespaceStr, elementFilter);
-	 * System.out.println(xPathSearchedNodes.get(0).getValue());
-	 *
-	 * xPathSearchedNodes.get(0).setText("new"); System.out.println("New Document: " + new
+	 * 
+	 * @SuppressWarnings("unchecked") List<Element> xPathSearchedNodes =
+	 * (List<Element>) XMLUtilities.executeXPath(doc,
+	 * "/x:CsfMessageExchange/x:SendingEntity/x:Name", namespaceStr,
+	 * elementFilter); System.out.println(xPathSearchedNodes.get(0).getValue());
+	 * 
+	 * xPathSearchedNodes.get(0).setText("new");
+	 * System.out.println("New Document: " + new
 	 * XMLOutputter().outputString(doc)); }
-	 *
+	 * 
 	 * // TODO: Extents/multiple dimensions public Element
-	 * populateThisActorLocationInAgentModel(Element actor, String gridPointX, String
-	 * gridPointY) {
-	 *
-	 * @SuppressWarnings("unchecked") // TODO: Support multiple actors List<Element>
-	 * thisAgentLocation = (List<Element>) XMLUtilities .executeXPath( actor,
+	 * populateThisActorLocationInAgentModel(Element actor, String gridPointX,
+	 * String gridPointY) {
+	 * 
+	 * @SuppressWarnings("unchecked") // TODO: Support multiple actors
+	 * List<Element> thisAgentLocation = (List<Element>) XMLUtilities
+	 * .executeXPath( actor,
 	 * "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location[@id='self']"
 	 * , namespaceStr, elementFilter);
-	 *
-	 * thisAgentLocation.get(0).getChild("GridPointX", namespace).setText(gridPointX);
-	 * thisAgentLocation.get(0).getChild("GridPointY", namespace).setText(gridPointY);
-	 * XMLUtilities.convertElementToXMLString(thisAgentLocation.get(0), true); return
-	 * actor; }
-	 *
-	 * public void setIDForActorInAgentModel(Content actor, String ID) { // TODO: Support
-	 * multiple actors List<Element> agentModelID = (List<Element>)
-	 * XMLUtilities.executeXPath(actor, "./x:ID", namespaceStr, elementFilter); Element e
-	 * = agentModelID.get(0); e.setText(ID);
-	 *
+	 * 
+	 * thisAgentLocation.get(0).getChild("GridPointX",
+	 * namespace).setText(gridPointX);
+	 * thisAgentLocation.get(0).getChild("GridPointY",
+	 * namespace).setText(gridPointY);
+	 * XMLUtilities.convertElementToXMLString(thisAgentLocation.get(0), true);
+	 * return actor; }
+	 * 
+	 * public void setIDForActorInAgentModel(Content actor, String ID) { //
+	 * TODO: Support multiple actors List<Element> agentModelID =
+	 * (List<Element>) XMLUtilities.executeXPath(actor, "./x:ID", namespaceStr,
+	 * elementFilter); Element e = agentModelID.get(0); e.setText(ID);
+	 * 
 	 * }
-	 *
+	 * 
 	 * private Element getNextAgentModelActor(Object doc) {
-	 *
-	 * @SuppressWarnings("unchecked") List<Element> agentModels = (List<Element>)
-	 * XMLUtilities .executeXPath( doc,
+	 * 
+	 * @SuppressWarnings("unchecked") List<Element> agentModels =
+	 * (List<Element>) XMLUtilities .executeXPath( doc,
 	 * "/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent/x:AgentModels/x:AgentModel"
 	 * , namespaceStr, elementFilter); Element agentModel = null; if
-	 * (!firstAgentModelActorPopulated) { firstAgentModelActorPopulated = true; agentModel
-	 * = agentModels.get(0).getChild("Actor", namespace); return agentModel; } else {
-	 * agentModel = agentModelTemplate.clone(); agentModels.get(0).addContent(agentModel);
-	 * return agentModel; } }
-	 *
+	 * (!firstAgentModelActorPopulated) { firstAgentModelActorPopulated = true;
+	 * agentModel = agentModels.get(0).getChild("Actor", namespace); return
+	 * agentModel; } else { agentModel = agentModelTemplate.clone();
+	 * agentModels.get(0).addContent(agentModel); return agentModel; } }
+	 * 
 	 * private Element getNextNonSelfLocationForActor(Element actor) {
-	 *
-	 * @SuppressWarnings("unchecked") List<Element> environmentChange = (List<Element>)
-	 * XMLUtilities.executeXPath( actor,
+	 * 
+	 * @SuppressWarnings("unchecked") List<Element> environmentChange =
+	 * (List<Element>) XMLUtilities.executeXPath( actor,
 	 * "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange",
-	 * namespaceStr, elementFilter); Element newLocation = locationTemplate.clone();
+	 * namespaceStr, elementFilter); Element newLocation =
+	 * locationTemplate.clone();
 	 * environmentChange.get(0).addContent(newLocation); return newLocation; }
-	 *
-	 *
+	 * 
+	 * 
 	 * Returns an
-	 *
+	 * 
 	 * public Element processActorForAgentModel(Element actor, String ID, String
 	 * gridPointX, String gridPointY) { // Select Agent Model
-	 *
-	 * // Go ahead and populate the already created agent model from the Document //
-	 * template setIDForActorInAgentModel(actor, ID); return
+	 * 
+	 * // Go ahead and populate the already created agent model from the
+	 * Document // template setIDForActorInAgentModel(actor, ID); return
 	 * populateThisActorLocationInAgentModel(actor, gridPointX, gridPointY); }
-	 *
-	 * private Element populatePointWithLeastZombies(Element agentModelActor, String
-	 * GridPointX, String GridPointY) { Element location =
-	 * getNextNonSelfLocationForActor(agentModelActor); location.getChild("GridPointX",
-	 * namespace).setText(GridPointX); location.getChild("GridPointY",
-	 * namespace).setText(GridPointY); return location; }
+	 * 
+	 * private Element populatePointWithLeastZombies(Element agentModelActor,
+	 * String GridPointX, String GridPointY) { Element location =
+	 * getNextNonSelfLocationForActor(agentModelActor);
+	 * location.getChild("GridPointX", namespace).setText(GridPointX);
+	 * location.getChild("GridPointY", namespace).setText(GridPointY); return
+	 * location; }
 	 */
 
 	String xmlString = "<DistributedAutonomousAgent xmlns=\"http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0\"\r\n"
@@ -292,8 +304,9 @@ public class XMLTests implements JadeControllerInterface {
 			+ "          </AgentModels>\r\n"
 			+ "        </DistributedAutonomousAgent>\r\n" + "";
 
-	public void receiveMessage(final FrameworkMessage message, final String messageID,
-			final String inReplyToMessageID) {
+	@Override
+	public void receiveMessage(final FrameworkMessage message,
+			final String messageID, final String inReplyToMessageID) {
 		// TODO Auto-generated method stub
 
 	}
@@ -307,12 +320,12 @@ public class XMLTests implements JadeControllerInterface {
 	FrameworkMessage testPopulatePrisonersDilemmaMessageHelper() {
 		/*
 		 * Document doc = getDocument();
-		 *
+		 * 
 		 * @SuppressWarnings("unchecked")
-		 *
+		 * 
 		 * //TODO: Support for other actors Element agentModelActor =
 		 * getNextAgentModelActor(doc);
-		 *
+		 * 
 		 * // For each agent model/actor Element actor =
 		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
 		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
@@ -320,13 +333,14 @@ public class XMLTests implements JadeControllerInterface {
 
 		final FrameworkMessage msg = new FrameworkMessageImpl(
 				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				simulationRunGroupContext.getBlankCachedMessageExchangeTemplate());
+				simulationRunGroupContext
+						.getBlankCachedMessageExchangeTemplate());
 
 		// Get the distributed autonomous agent element and set the ID
 		final Element distributedAutonomousAgentElement = msg
 				.getNextDistributedAutonomousAgent(msg.getDocument(),
 						simulationRunGroupContext
-						.getCachedDistributedAutonomousAgentTemplate());
+								.getCachedDistributedAutonomousAgentTemplate());
 		msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
 				"distAutAgent2");
 
@@ -337,11 +351,12 @@ public class XMLTests implements JadeControllerInterface {
 		msg.setIDForActorInAgentModel(agentModelActor, "distAutAgentModel2");
 		final int round = 1;
 		final DECISION otherPlayerLastDecision = DECISION.COOPERATE;
-		prisonersDilemma_CABSF_Helper.populatePrisonersDilemmaFrameworkMessage(msg,
-				agentModelActor, round, otherPlayerLastDecision, null);
+		prisonersDilemma_CABSF_Helper.populatePrisonersDilemmaFrameworkMessage(
+				msg, agentModelActor, round, otherPlayerLastDecision, null);
 
 		System.out.println("Prisoner's Dilemma MSG:"
-				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
+				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(),
+						true));
 
 		return msg;
 	}
@@ -351,12 +366,12 @@ public class XMLTests implements JadeControllerInterface {
 	public void testPopulateZombiesMessage() {
 		/*
 		 * Document doc = getDocument();
-		 *
+		 * 
 		 * @SuppressWarnings("unchecked")
-		 *
+		 * 
 		 * //TODO: Support for other actors Element agentModelActor =
 		 * getNextAgentModelActor(doc);
-		 *
+		 * 
 		 * // For each agent model/actor Element actor =
 		 * processActorForAgentModel(agentModelActor, "teststring1", "1", "2");
 		 * populatePointWithLeastZombies(agentModelActor, "5", "6");
@@ -364,7 +379,8 @@ public class XMLTests implements JadeControllerInterface {
 
 		final FrameworkMessage msg = new FrameworkMessageImpl(
 				SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				simulationRunGroupContext.getBlankCachedMessageExchangeTemplate());
+				simulationRunGroupContext
+						.getBlankCachedMessageExchangeTemplate());
 
 		List<String> thisAgentModelPosition = new ArrayList<String>();
 		thisAgentModelPosition.add("1");
@@ -387,7 +403,8 @@ public class XMLTests implements JadeControllerInterface {
 				"distAutAgentMode2", thisAgentModelPosition, pointLeastZombies);
 
 		System.out.println("Msg:"
-				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
+				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(),
+						true));
 
 	}
 
@@ -396,8 +413,8 @@ public class XMLTests implements JadeControllerInterface {
 	public void testReadZombiesAndSelfLocations() {
 		Element distributedAutonomousAgentElement = null;
 		try {
-			distributedAutonomousAgentElement = XMLUtilities.xmlStringTojdom2Document(
-					xmlString).getRootElement();
+			distributedAutonomousAgentElement = XMLUtilities
+					.xmlStringTojdom2Document(xmlString).getRootElement();
 		} catch (final JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -409,20 +426,23 @@ public class XMLTests implements JadeControllerInterface {
 		FrameworkMessage msg = null;
 		msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
 				SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-				simulationRunGroupContext.getBlankCachedMessageExchangeTemplate());
+				simulationRunGroupContext
+						.getBlankCachedMessageExchangeTemplate());
 
 		msg.addDistributedAutonomousAgent(msg.getDocument(),
 				distributedAutonomousAgentElement, true);
 
 		new JADE_MAS_AgentContext();
 
-		msg.getSelfLocationFromFirstAgentModel(distributedAutonomousAgentElement, msg);
+		msg.getSelfLocationFromFirstAgentModel(
+				distributedAutonomousAgentElement, msg);
 
-		jZombies_CABSF_Helper.getPointWithLeastZombies(distributedAutonomousAgentElement,
-				msg);
+		jZombies_CABSF_Helper.getPointWithLeastZombies(
+				distributedAutonomousAgentElement, msg);
 
 		System.out.println("Msg:"
-				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(), true));
+				+ XMLUtilities.convertDocumentToXMLString(msg.getDocument(),
+						true));
 
 		// return msg;
 	}
@@ -435,16 +455,19 @@ public class XMLTests implements JadeControllerInterface {
 				"DistributedAgentModel1", "Human");
 		try {
 			final String messageID = UUID.randomUUID().toString();
-			final String distributedAutonomousAgentID = UUID.randomUUID().toString();
+			final String distributedAutonomousAgentID = UUID.randomUUID()
+					.toString();
 
 			final Element distributedAutonomousAgentElement = XMLUtilities
 					.xmlStringTojdom2Document(xmlString).getRootElement();
 			final FrameworkMessage msg = jade_MAS_AgentContext
 					.convertDocumentToSendToDAAtoFrameworkMessage(
 							distributedAutonomousAgentElement,
-							distributedAutonomousAgentID, SYSTEM_TYPE.SIMULATION_ENGINE,
+							distributedAutonomousAgentID,
+							SYSTEM_TYPE.SIMULATION_ENGINE,
 							SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
-			nativeDistributedAutonomousAgent.receiveMessage(msg, messageID, null, this);
+			nativeDistributedAutonomousAgent.receiveMessage(msg, messageID,
+					null, this);
 		} catch (final JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -460,16 +483,16 @@ public class XMLTests implements JadeControllerInterface {
 	public void testReceiveMessageInPrisonersDilemmaJADEagent() {
 		final FrameworkMessage msg = testPopulatePrisonersDilemmaMessageHelper();
 
-		final Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(
-				msg.getDocument(), null);
+		final Element distributedAutonomousAgent = msg
+				.getNextDistributedAutonomousAgent(msg.getDocument(), null);
 
 		/*
 		 * Element agentModelActor =
 		 * msg.getNextAgentModelActor(distributedAutonomousAgent,
 		 * repastS_AgentContext.getCachedAgentModelActorTemplate());
 		 */
-		final DECISION decision = prisonersDilemma_CABSF_Helper.getOtherPlayerDecision(
-				distributedAutonomousAgent, msg);
+		final DECISION decision = prisonersDilemma_CABSF_Helper
+				.getOtherPlayerDecision(distributedAutonomousAgent, msg);
 		System.out.println("Read decision: " + decision.toString());
 
 		final int roundNumber = prisonersDilemma_CABSF_Helper.getRoundNumber(
@@ -479,7 +502,8 @@ public class XMLTests implements JadeControllerInterface {
 
 	/*
 	 * @Test public void testWaitMethod() {
-	 * jade_MAS_RunContext.waitForAndProcessSimulationEngineMessageAfterHandshake (); }
+	 * jade_MAS_RunContext.waitForAndProcessSimulationEngineMessageAfterHandshake
+	 * (); }
 	 */
 
 }

@@ -13,7 +13,7 @@ public class JadeControllerTests {
 
 	@Test
 	public void test() {
-		//JADE_Controller_Agent controller = JADE_Controller_Agent();
+		//Mock_JADE_Controller_Agent controller = Mock_JADE_Controller_Agent();
 	}
 
 }

@@ -16,7 +16,7 @@ import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.Na
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.opensimulationsystems.cabsf.distsys.mas.mocks.MockHumanJADE_Agent;
 
-public class JADE_Controller_Agent implements JadeControllerInterface {
+public class Mock_JADE_Controller_Agent implements JadeControllerInterface {
 	private static JADE_MAS_RunGroupContext jade_MAS_RunGroupContext;
 
 	static private JADE_MAS_AdapterAPI jade_MAS_AdapterAPI;
@@ -75,7 +75,7 @@ public class JADE_Controller_Agent implements JadeControllerInterface {
 
 		// Initialize simulation run
 		// TODO: Fix the native JADE context
-		final JADE_Controller_Agent jade_Controller_Agent = new JADE_Controller_Agent();
+		final Mock_JADE_Controller_Agent jade_Controller_Agent = new Mock_JADE_Controller_Agent();
 		final Set<NativeDistributedAutonomousAgent> st = getInitialSetOfNativeJADEagents();
 
 		jade_Controller_Agent.listenLoop(st);

@@ -3,18 +3,15 @@
  */
 package jzombies;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 import org.opensimulationsystems.cabsf.common.model.AgentMapping;
-import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATION_TYPE;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
@@ -31,224 +28,227 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Human in the JZombies simulation. We modified this Repast Simphony
- * simulation from the tutorial to integrated with the Common Agent-Based
- * Simulation Framework (CSF). The humans are distributed to a JADE MAS. This
- * Human RepastS class is the representational agent within RepastS of the
- * distributed JADE Human agent.
+ * The Human in the JZombies simulation from the RepastS tutorial. This Repast
+ * Simphony simulation, including this agent, was modified to enable integration
+ * with the Common Agent-Based Simulation Framework (CABSF).
+ * <p>
+ * </p>
+ * When utilizing CABSF's distributed mode, these Human agents are distributed
+ * outside of the RepastS process/runtime, such as to agents running in a JADE
+ * multi-agent system. In such cases, this Human agent here in RepastS is still
+ * used to communicate with the RepastS simulation runtime, but it becomes more
+ * of a representation of the "actual" agent that exists outside of RepastS,
+ * which is the one really making the decisions in the simulation (i.e., the
+ * intelligent agent).
+ *
  *
  * @author nick
- * @author Jorge Calderon (modified Human class for integrating with the CSF)
+ * @author Jorge Calderon (modified Human class for integrating with the CABSF
+ *         and therefore JADE)
  */
 public class Human {
-	/** The space. */
-	private final ContinuousSpace<Object> space;
+    /** The space. */
+    private final ContinuousSpace<Object> space;
 
-	/** The grid. */
-	private final Grid<Object> grid;
+    /** The grid. */
+    private final Grid<Object> grid;
 
-	/** The starting energy. */
-	private int energy, startingEnergy;
+    /** The starting energy. */
+    private int energy;
 
-	// /////////////////////////////
-	// Section Added to the CSF version of this simulation
-	/** The repast s_ agent context. */
-	private final RepastS_AgentContext repastS_AgentContext = RepastS_AgentAdapterAPI
-			.getInstance().getAgentContext();
+    private int startingEnergy;
 
-	/** The simulation type. */
-	private SIMULATION_TYPE simulationType;
+    // /////////////////////////////
+    // Section Added to the CABSF version of this simulation
+    /**
+     * The native Repast Simphony context. Different from CABSF's RepastS agent
+     * context
+     */
+    private Context nativeRepastScontext;
 
-	/** The simulation-specific convenience class */
-	private JZombies_CABSF_Helper jZombies_CABSF_Helper;
+    // CABSF's own RepastS agent context, different from the native RepastS
+    // context.
+    private CabsfRepastS_AgentContext cabsfRepastS_AgentContext = null;
 
-	/** The repast context. */
-	private Context<Object> repastContext;
+    private CABSF_SIMULATION_DISTRIBUATION_TYPE cabsfSimulationType;
 
-	// /////////////////////////////
+    /** The simulation-specific convenience class */
+    private JZombies_CABSF_Helper jZombies_CABSF_Helper;
 
-	/**
-	 * Instantiates a new Human.
-	 *
-	 * @param space
-	 *            the space
-	 * @param grid
-	 *            the grid
-	 * @param energy
-	 *            the energy
-	 */
-	public Human(final ContinuousSpace<Object> space, final Grid<Object> grid,
-			final int energy) {
-		this.space = space;
-		this.grid = grid;
-		this.energy = startingEnergy = energy;
-	}
+    // /////////////////////////////
 
-	/**
-	 * Gets the RepastS_AgentContext context.
-	 *
-	 * @return the repast s_ agent context
-	 */
-	public RepastS_AgentContext getRepastS_AgentContext() {
-		return repastS_AgentContext;
-	}
+    /**
+     * Instantiates a new Human.
+     *
+     * @param space
+     *            the space
+     * @param grid
+     *            the grid
+     * @param energy
+     *            the energy
+     */
+    public Human(final ContinuousSpace<Object> space, final Grid<Object> grid,
+            final int energy) {
+        this.space = space;
+        this.grid = grid;
+        this.energy = startingEnergy = energy;
+    }
 
-	/**
-	 * This class is only used when this simulation is run with the CSF
-	 * functionality turned off. It moves the agent to a particular Gridpoint.
-	 * By using this method when CSF is turned off, we can "plugin" in the move
-	 * decision of this agent into the simulation so that this agent does not
-	 * have to rely on a corresponding distributed JADE agent.
-	 *
-	 * @param pt
-	 *            the GridPoint
-	 */
-	public void moveTowards(final GridPoint pt) {
-		// only move if we are not already in this grid location
-		if (!pt.equals(grid.getLocation(this))) {
-			NdPoint myPoint = space.getLocation(this);
-			final NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-			final double angle = SpatialMath.calcAngleFor2DMovement(space,
-					myPoint, otherPoint);
-			space.moveByVector(this, 2, angle, 0);
-			myPoint = space.getLocation(this);
-			grid.moveTo(this, (int) myPoint.getX(), (int) myPoint.getY());
-			// energy--;
-		}
-	}
+    /**
+     * Gets the CabsfRepastS_AgentContext
+     *
+     * @return the CabsfRepastS_AgentContext
+     */
+    public CabsfRepastS_AgentContext getCabsfRepastS_AgentContext() {
+        return cabsfRepastS_AgentContext;
+    }
 
-	/**
-	 * The step method for the Human.
-	 */
-	@Watch(watcheeClassName = "jzombies.Zombie", watcheeFieldNames = "moved", query = "within_vn 1", whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
-	public void run() {
-		// ////////////////////////////////
-		// Section Added to the CSF version of this simulation
-		// FIXME: Simply the API
-		try {
-			if (jZombies_CABSF_Helper == null) {
-				repastContext = RunState.getInstance().getMasterContext();
-				jZombies_CABSF_Helper = new JZombies_CABSF_Helper(
-						repastS_AgentContext);
+    /**
+     * Returns this Human agent's decision for which GridPoint to move to,
+     * called whenever the simulation is executed in either CABSF-disabled
+     * (RepastS-only) or CABSF-enabled Non-Distributed (RepastS not connected to
+     * JADE) modes. This method is not used when this simulation is run
+     * CABSF-enabled Distributed mode (such as RepastS connected to JADE)
+     * functionality turned on. In that case the Repast Simphony simulation
+     * cannot talk to a corresponding distributed software agent, as none
+     * exists, so this native RepastS agent must make its own decision for the
+     * tick, just as happens in any RepastS-only simulation. By keeping this
+     * non-distributed alternative in this CABSF-wired RepastS simulation, we
+     * allow this simulation to be run in all modes.
+     *
+     * @param pt
+     *            the GridPoint
+     */
+    public void moveTowards(final GridPoint pt) {
+        // only move if we are not already in this grid location
+        if (!pt.equals(grid.getLocation(this))) {
+            NdPoint myPoint = space.getLocation(this);
+            final NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+            final double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint,
+                    otherPoint);
+            space.moveByVector(this, 2, angle, 0);
+            myPoint = space.getLocation(this);
+            grid.moveTo(this, (int) myPoint.getX(), (int) myPoint.getY());
+            energy--;
+        }
+    }
 
-				final Iterable<Class> simulationAgentsClasses = RunState
-						.getInstance().getMasterContext().getAgentTypes();
-				final Iterable<Object> csfRepastContextIterable = RunState
-						.getInstance().getMasterContext()
-						.getAgentLayer(RepastS_SimulationRunContext.class);
-				simulationType = repastS_AgentContext.initializeCabsfAgent(
-						simulationAgentsClasses, csfRepastContextIterable);
-			}
-		} catch (final JDOMException e) {
-			throw new CabsfInitializationRuntimeException(
-					"Failed to initialize the Common Agent-Based Simulation Framework in the Repast simulation agent",
-					e);
-		} catch (final IOException e) {
-			throw new CabsfInitializationRuntimeException(
-					"Failed to initialize the Common Agent-Based Simulation Framework in the Repast simulation agent",
-					e);
-		}
-		// ////////////////////////////////
+    /**
+     * The step method for the Human.
+     */
+    @Watch(watcheeClassName = "jzombies.Zombie", watcheeFieldNames = "moved", query = "within_vn 1", whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
+    public void run() {
+        // ////////////////////////////////
+        // Section Added to the CABSF-wired version of the JZombies
+        // simulation
+        if (cabsfSimulationType == null) {
+            nativeRepastScontext = RunState.getInstance().getMasterContext();
+            cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
+                    .getAgentContext();
 
-		// ////////////////////////////////
-		// Back to the original JZombies code
-		final GridPoint pt = grid.getLocation(this);
-		// use the GridCellNgh class to create GridCells for
-		// the surrounding neighborhood.
-		final GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid,
-				pt, Zombie.class, 1, 1);
-		final List<GridCell<Zombie>> gridCells = nghCreator
-				.getNeighborhood(true);
-		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
+            jZombies_CABSF_Helper = new JZombies_CABSF_Helper(cabsfRepastS_AgentContext);
+            try {
+                final Iterable<Class> simulationAgentsClasses2 = RunState.getInstance()
+                        .getMasterContext().getAgentTypes();
 
-		GridPoint pointWithLeastZombies = null;
-		int minCount = Integer.MAX_VALUE;
-		for (final GridCell<Zombie> cell : gridCells) {
-			if (cell.size() < minCount) {
-				pointWithLeastZombies = cell.getPoint();
-				minCount = cell.size();
-			}
-		}
+                cabsfSimulationType = cabsfRepastS_AgentContext.initializeCabsfAgent(
+                    nativeRepastScontext, cabsfRepastS_AgentContext);
+            } catch (final CabsfInitializationRuntimeException e) {
+                throw new CabsfInitializationRuntimeException(
+                        "Cabsf initialization error in agent: " + this.getClass()
+                                + " hash: " + this.hashCode(), e);
+            }
+        }
+        // ////////////////////////////////
 
-		GridPoint moveTowardsPoint = null;
-		// /////////////////////////////////////////////
+        // ////////////////////////////////
+        // Back to the original JZombies code
+        final GridPoint pt = grid.getLocation(this);
+        // use the GridCellNgh class to create GridCells for
+        // the surrounding neighborhood.
+        final GridCellNgh<Zombie> nghCreator = new GridCellNgh<Zombie>(grid, pt,
+                Zombie.class, 1, 1);
+        final List<GridCell<Zombie>> gridCells = nghCreator.getNeighborhood(true);
+        SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 
-		// /////////////////////////////////////////////
-		// Section Added to the CSF version of this simulation
-		// If it is part of a CSF simulation, move the decision-making to the
-		// distributed
-		// FIXME: Support multiple distributed system managers/provide method
-		// for getting
-		// the appropriate one.
-		if (simulationType == SIMULATION_TYPE.CABSF_SIMULATION) {
-			final SimulationDistributedSystemManager dsm = repastS_AgentContext
-					.getRepastS_SimulationRunContext()
-					.getSimulationDistributedSystemManagers().iterator().next();
-			final AgentMapping am = dsm.getAgentMappingForObject(this);
+        GridPoint pointWithLeastZombies = null;
+        int minCount = Integer.MAX_VALUE;
+        for (final GridCell<Zombie> cell : gridCells) {
+            if (cell.size() < minCount) {
+                pointWithLeastZombies = cell.getPoint();
+                minCount = cell.size();
+            }
+        }
 
-			final String distributedSystemID = am.getDistributedSystemID();
-			final String distributedAutonomousAgentID = am
-					.getDistributedAutonomousAgentID();
-			final String distributedAutonomousAgentModelID = am
-					.getDistributedAutonomousAgentModelID();
-			final String loggingPrefix = "[Human " + distributedSystemID + " "
-					+ distributedAutonomousAgentID + " "
-					+ distributedAutonomousAgentModelID + "] ";
+        GridPoint moveTowardsPoint = null;
+        // /////////////////////////////////////////////
 
-			// Communicate the local environment information for this agent to
-			// the
-			// distributed agent (agent model)
-			// LOW: Add support for merging multiple messages bound for
-			// different agents
-			jZombies_CABSF_Helper
-					.sendMessageToDistributedAutonomousAgentModelFromSimulationAgent(
-							loggingPrefix, this, pt, pointWithLeastZombies);
-			// FIXME: Move to simultaneous processing of these messages?
-			final FrameworkMessage msg = repastS_AgentContext
-					.getRepastS_SimulationRunContext()
-					.readFrameworkMessageFromDistributedSystem();
+        // /////////////////////////////////////////////
+        // Section Added to the CABSF-wired version of the JZombies
+        // simulation
+        if (cabsfSimulationType == CABSF_SIMULATION_DISTRIBUATION_TYPE.DISTRIBUTED) {
+            final SimulationDistributedSystemManager dsm = cabsfRepastS_AgentContext
+                    .getRepastS_SimulationRunContext()
+                    .getSimulationDistributedSystemManager(this);
+            final AgentMapping am = dsm.getAgentMappingForObject(this);
 
-			System.out.println(loggingPrefix
-					+ "Received distributed decision: "
-					+ XMLUtilities.convertDocumentToXMLString(msg.getDocument()
-							.getRootElement(), true));
+            final String distributedSystemID = am.getDistributedSystemID();
+            final String softwareAgentID = am.getSoftwareAgentID();
+            final String agentModelID = am.getAgentModelID();
+            final String loggingPrefix = "[Human " + distributedSystemID + " "
+                    + softwareAgentID + " " + agentModelID + "] ";
 
-			final List<String> selfPoint = msg
-					.getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(msg);
-			for (int i = 0; i < selfPoint.size(); i++) {
-				System.out.println(loggingPrefix + "Move Towards Location:"
-						+ String.valueOf(i) + " : "
-						+ String.valueOf(selfPoint.get(i)));
-			}
-			final int xValueToMoveTowards = Integer.parseInt(selfPoint.get(0));
-			final int yValueToMoveTowards = Integer.parseInt(selfPoint.get(1));
+            // LOW: (for CABSF developers only) Add support for merging multiple
+            // messages bound for different agents
 
-			for (final GridCell<Zombie> cell : gridCells) {
-				if (cell.getPoint().getX() == xValueToMoveTowards
-						&& cell.getPoint().getY() == yValueToMoveTowards) {
-					moveTowardsPoint = cell.getPoint();
-				}
-			}
-			assert (moveTowardsPoint != null);
+            jZombies_CABSF_Helper.sendMsgFromSimAgentToDistributedAgentModel(
+                    loggingPrefix, this, pt, pointWithLeastZombies);
 
-		}
-		// Non-CABSF enabled. Just move to the point with the least zombies
-		// without asking
-		// a corresponding JADE agent.
-		else {
-			moveTowardsPoint = pointWithLeastZombies;
-		}
-		// /////////////////////////////////////////////
+            // LOW: (for CABSF developers only) Move to simultaneous processing
+            // of these messages?
+            final FrameworkMessage msgFromDistSys = cabsfRepastS_AgentContext
+                    .readFrameworkMessageFromDistributedSystem();
 
-		// /////////////////////////////////////////////
-		// Back to the original JZombies Code
-		if (energy > 0) {
-			moveTowards(moveTowardsPoint);
-		} else {
-			energy = startingEnergy;
-		}
-		// /////////////////////////////////////////////
-	}
+            System.out.println(loggingPrefix
+                    + "Received distributed decision: "
+                    + XMLUtilities.convertDocumentToXMLString(msgFromDistSys
+                            .getDocument().getRootElement(), true));
+
+            final List<String> thisAgentPoint = msgFromDistSys
+                    .getThisAgentLocationFromNextSoftwareAgentNextAgentModelActorInFrameworkMessage(msgFromDistSys);
+            for (int i = 0; i < thisAgentPoint.size(); i++) {
+                System.out.println(loggingPrefix
+                        + "Distributed Agent Model Decided to Move Towards:"
+                        + String.valueOf(i) + " : "
+                        + String.valueOf(thisAgentPoint.get(i)) + "  ");
+            }
+            final int xValueToMoveTowards = Integer.parseInt(thisAgentPoint.get(0));
+            final int yValueToMoveTowards = Integer.parseInt(thisAgentPoint.get(1));
+
+            for (final GridCell<Zombie> cell : gridCells) {
+                if (cell.getPoint().getX() == xValueToMoveTowards
+                        && cell.getPoint().getY() == yValueToMoveTowards) {
+                    moveTowardsPoint = cell.getPoint();
+                }
+            }
+            assert (moveTowardsPoint != null);
+
+        }
+        // Non-Distributed. Make the decision here for where to move the Human
+        // agent to without asking the JADE agent agent model.
+        else {
+            moveTowardsPoint = pointWithLeastZombies;
+        }
+        // /////////////////////////////////////////////
+
+        // /////////////////////////////////////////////
+        // Back to the original JZombies Code
+        if (energy > 0) {
+            moveTowards(moveTowardsPoint);
+        } else {
+            energy = startingEnergy;
+        }
+        // /////////////////////////////////////////////
+    }
 }

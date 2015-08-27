@@ -268,7 +268,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 	 * (org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage)
 	 */
 	@Override
-	public List<String> getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(
+	public List<String> getThisAgentLocationFromNextSoftwareAgentNextAgentModelActorInFrameworkMessage(
 			final FrameworkMessage msg) {
 		return frameworkMessageDocumentHelper
 				.getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(msg);

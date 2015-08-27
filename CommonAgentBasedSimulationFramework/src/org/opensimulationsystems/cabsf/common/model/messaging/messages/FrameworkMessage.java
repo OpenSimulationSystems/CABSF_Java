@@ -161,7 +161,7 @@ public interface FrameworkMessage {
 	 * @return the self location list of grid points
 	 */
 	// FIXME: Add validation to check for existing locations other than self location?
-	List<String> getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(
+	List<String> getThisAgentLocationFromNextSoftwareAgentNextAgentModelActorInFrameworkMessage(
 			FrameworkMessage msg);
 
 	/**

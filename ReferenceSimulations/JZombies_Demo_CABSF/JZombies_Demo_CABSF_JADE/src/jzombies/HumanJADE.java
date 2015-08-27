@@ -80,7 +80,7 @@ public class HumanJADE extends Agent {
 				// Get the current grid location of this agent from the
 				// simulation engine/runtime. The result is a list (X, Y)
 				final List<String> selfPoint = msg
-						.getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(msg);
+						.getThisAgentLocationFromNextSoftwareAgentNextAgentModelActorInFrameworkMessage(msg);
 				assert (selfPoint.size() == 2);
 				for (int i = 0; i < selfPoint.size(); i++) {
 					System.out.println(logPrefix + " Self Location: " + String.valueOf(i)

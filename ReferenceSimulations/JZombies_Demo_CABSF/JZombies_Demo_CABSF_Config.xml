@@ -65,7 +65,7 @@
 					<!-- Attribute used internally by the simulation engine -->
 					<!-- The distributed system(s) should not be concerned with this attribute value -->
 					<AgentType type="jzombies.Human">
- 		<!-- 				<DistributedAutonomousAgent>
+						<DistributedAutonomousAgent>
 							The JADE Agent ID. Identifier #2 of 3
 							<DistributedAutonomousAgentID>DistributedSystemAutonomousAgent1</DistributedAutonomousAgentID>
 							<AgentModels>
@@ -79,7 +79,7 @@
 									<SimulationEngineClass>jzombies.Human</SimulationEngineClass>
 								</AgentModel>
 							</AgentModels>
-						</DistributedAutonomousAgent> -->
+						</DistributedAutonomousAgent>
 						<DistributedAutonomousAgent>
 							<!-- The JADE Agent ID. Identifier #2 of 3 -->
 							<DistributedAutonomousAgentID>DistributedSystemAutonomousAgent2</DistributedAutonomousAgentID>

@@ -33,8 +33,8 @@ public class RepastS_AgentAdapterAPI {
 	 * 
 	 * @return the agent context
 	 */
-	public RepastS_AgentContext getAgentContext() {
-		return new RepastS_AgentContext();
+	public CabsfRepastS_AgentContext getAgentContext() {
+		return new CabsfRepastS_AgentContext();
 
 	}
 

@@ -24,144 +24,144 @@ import redis.clients.jedis.JedisPubSub;
  */
 public class PublishSubscribeListener extends JedisPubSub {
 
-	/**
-	 * Sets the up before class.
-	 *
-	 * @throws Exception
-	 *             the exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+    /**
+     * Sets the up before class.
+     *
+     * @throws Exception
+     *             the exception
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+    }
 
-	/**
-	 * Tear down after class.
-	 *
-	 * @throws Exception
-	 *             the exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+    /**
+     * Tear down after class.
+     *
+     * @throws Exception
+     *             the exception
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
 
-	/** The redis connection manager. */
-	private RedisConnectionManager redisConnectionManager;
+    /** The redis connection manager. */
+    private RedisConnectionManager redisConnectionManager;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see redis.clients.jedis.JedisPubSub#onMessage(java.lang.String,
-	 * java.lang.String)
-	 */
-	@Override
-	public void onMessage(String channel, String message) {
-		System.out.println("Received message" + message);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see redis.clients.jedis.JedisPubSub#onMessage(java.lang.String,
+     * java.lang.String)
+     */
+    @Override
+    public void onMessage(final String channel, final String message) {
+        System.out.println("Received message" + message);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see redis.clients.jedis.JedisPubSub#onPMessage(java.lang.String,
-	 * java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void onPMessage(String pattern, String channel, String message) {
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see redis.clients.jedis.JedisPubSub#onPMessage(java.lang.String,
+     * java.lang.String, java.lang.String)
+     */
+    @Override
+    public void onPMessage(final String pattern, final String channel,
+            final String message) {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see redis.clients.jedis.JedisPubSub#onPSubscribe(java.lang.String, int)
-	 */
-	@Override
-	public void onPSubscribe(String pattern, int subscribedChannels) {
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see redis.clients.jedis.JedisPubSub#onPSubscribe(java.lang.String, int)
+     */
+    @Override
+    public void onPSubscribe(final String pattern, final int subscribedChannels) {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see redis.clients.jedis.JedisPubSub#onPUnsubscribe(java.lang.String,
-	 * int)
-	 */
-	@Override
-	public void onPUnsubscribe(String pattern, int subscribedChannels) {
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see redis.clients.jedis.JedisPubSub#onPUnsubscribe(java.lang.String,
+     * int)
+     */
+    @Override
+    public void onPUnsubscribe(final String pattern, final int subscribedChannels) {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see redis.clients.jedis.JedisPubSub#onSubscribe(java.lang.String, int)
-	 */
-	@Override
-	public void onSubscribe(String channel, int subscribedChannels) {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see redis.clients.jedis.JedisPubSub#onSubscribe(java.lang.String, int)
+     */
+    @Override
+    public void onSubscribe(final String channel, final int subscribedChannels) {
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see redis.clients.jedis.JedisPubSub#onUnsubscribe(java.lang.String, int)
-	 */
-	@Override
-	public void onUnsubscribe(String channel, int subscribedChannels) {
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see redis.clients.jedis.JedisPubSub#onUnsubscribe(java.lang.String, int)
+     */
+    @Override
+    public void onUnsubscribe(final String channel, final int subscribedChannels) {
+    }
 
-	/**
-	 * Sets the up.
-	 *
-	 * @throws Exception
-	 *             the exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
+    /**
+     * Sets the up.
+     *
+     * @throws Exception
+     *             the exception
+     */
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	/**
-	 * Tear down.
-	 *
-	 * @throws Exception
-	 *             the exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
+    /**
+     * Tear down.
+     *
+     * @throws Exception
+     *             the exception
+     */
+    @After
+    public void tearDown() throws Exception {
+    }
 
-	/**
-	 * Test.
-	 */
-	@Test
-	public void test() {
-		redisConnectionManager = new RedisConnectionManager();
-		redisConnectionManager.initializeRedisConnection("localhost");
-		redisConnectionManager.getJedis();
+    /**
+     * Test.
+     */
+    @Test
+    public void test() {
+        redisConnectionManager =
+                new RedisConnectionManager();
+        redisConnectionManager.initializeRedisConnection("localhost");
+        redisConnectionManager.getJedis();
 
-		// LOW: Future work, after implementing multithreading for Redis
-		// Subscribe listener
-		// PublishSubscribeListener l = new PublishSubscribeListener();
-		// jedis.subscribe(l,
-		// "csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff");
+        // LOW: Future work, after implementing multithreading for Redis
+        // Subscribe listener
+        // PublishSubscribeListener l = new PublishSubscribeListener();
+        // jedis.subscribe(l,
+        // "cabsf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff");
 
-		// TODO: remove after reading?
-		// Rely on Polling for now, keep everything Synchronous and simple.
-		redisConnectionManager
-		.redisSynchronousPolling(
-				SYSTEM_TYPE.SIMULATION_ENGINE,
-				"csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff",
-				0.001d, null);
+        // TODO: remove after reading?
+        // Rely on Polling for now, keep everything Synchronous and simple.
+        redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE,
+                "cabsf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff",
+                0.001d, null);
 
-		// Test that connection works after 300 second timeout.
-		/*
-		 * redisConnectionManager.redisSynchronousPolling(
-		 * "csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff",
-		 * 1l, 1l); System.out.println("finished first call"); try {
-		 * Thread.sleep(350*1000); } catch (InterruptedException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 * redisConnectionManager.redisSynchronousPolling(
-		 * "csf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff",
-		 * 1l, 1l);
-		 */
+        // Test that connection works after 300 second timeout.
+        /*
+         * redisConnectionManager.redisSynchronousPolling(
+         * "cabsf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff"
+         * , 1l, 1l); System.out.println("finished first call"); try {
+         * Thread.sleep(350*1000); } catch (InterruptedException e) { // TODO
+         * Auto-generated catch block e.printStackTrace(); }
+         * redisConnectionManager.redisSynchronousPolling(
+         * "cabsf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff"
+         * , 1l, 1l);
+         */
 
-		System.out.println("Finished reading");
-	}
+        System.out.println("Finished reading");
+    }
 
 }

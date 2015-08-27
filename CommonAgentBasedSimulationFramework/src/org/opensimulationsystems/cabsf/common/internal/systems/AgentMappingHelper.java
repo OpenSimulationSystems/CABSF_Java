@@ -50,8 +50,8 @@ public class AgentMappingHelper {
 		beforeMappingSet.remove(am);
 		afterMappingSet.add(am);
 		System.out.println(requestingSystem + ": Successfully mapped Agent "
-				+ am.getDistributedAutonomousAgentID() + " "
-				+ am.getDistributedAutonomousAgentModelID() + " " + am.toString()
+				+ am.getSoftwareAgentID() + " "
+				+ am.getAgentModelID() + " " + am.toString()
 				+ " class: " + agentObj.getClass().getCanonicalName());
 		return am;
 

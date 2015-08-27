@@ -1,1 +1,0 @@
-The PrisonersDilemmaIterated_CABSF_Repast model is licensed as provided for by the authors. Please contact them for details.

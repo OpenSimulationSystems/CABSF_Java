@@ -1,6 +1,6 @@
 package org.opensimulationsystems.cabsf.sim.core.api.configuration;
 
-import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATION_TYPE;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
@@ -35,7 +35,7 @@ public class SimulationRunConfiguration {
 	private final String distributedSystemID = "DistSys1";
 
 	/** The simulation type. */
-	private SIMULATION_TYPE simulationType;
+	private CABSF_SIMULATION_DISTRIBUATION_TYPE simulationType;
 
 	// TODO: Read actual simulation-run-level properties
 	/**
@@ -89,7 +89,7 @@ public class SimulationRunConfiguration {
 	 * 
 	 * @return the simulation type
 	 */
-	public SIMULATION_TYPE getSimulationType() {
+	public CABSF_SIMULATION_DISTRIBUATION_TYPE getSimulationType() {
 		return simulationType;
 	}
 
@@ -99,7 +99,7 @@ public class SimulationRunConfiguration {
 	 * @param simulationType
 	 *            the new simulation type
 	 */
-	public void setSimulationType(final SIMULATION_TYPE simulationType) {
+	public void setSimulationType(final CABSF_SIMULATION_DISTRIBUATION_TYPE simulationType) {
 		this.simulationType = simulationType;
 	}
 

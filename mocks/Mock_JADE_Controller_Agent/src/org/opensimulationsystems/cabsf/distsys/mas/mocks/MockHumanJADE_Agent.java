@@ -95,7 +95,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 		// only contain a single entry for the distributed autonomous agent
 
 		final List<String> selfPoint = msg
-				.getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(msg);
+				.getThisAgentLocationFromNextSoftwareAgentNextAgentModelActorInFrameworkMessage(msg);
 		for (int i = 0; i < selfPoint.size(); i++) {
 			System.out.println(logPrefix + " Self Location: " + String.valueOf(i) + " : "
 					+ String.valueOf(selfPoint.get(i)));

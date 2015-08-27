@@ -5,7 +5,7 @@ package org.opensimulationsystems.cabsf.sim.engines.runners.repastS;
 
 import java.io.File;
 
-import org.opensimulationsystems.cabsf.common.model.SIMULATION_TYPE;
+import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATION_TYPE;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationAdapterAPI;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
@@ -56,7 +56,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	private RepastS_SimulationRunContext lastRepastS_SimulationRunContext;
 
 	/** The simulation runner type. */
-	private SIMULATION_TYPE simulationRunnerType;
+	private CABSF_SIMULATION_DISTRIBUATION_TYPE simulationRunnerType;
 
 	/** The is stopped. */
 	private boolean isStopped;
@@ -177,7 +177,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 *
 	 * @return the simulation runner type
 	 */
-	public SIMULATION_TYPE getSimulationRunnerType() {
+	public CABSF_SIMULATION_DISTRIBUATION_TYPE getSimulationRunnerType() {
 		return simulationRunnerType;
 	}
 
@@ -237,9 +237,9 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		if (cabsfConfigurationFileName != null) {
 			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
 					.initializeAPI(cabsfConfigurationFileName);
-			simulationRunnerType = SIMULATION_TYPE.CABSF_SIMULATION;
+			simulationRunnerType = CABSF_SIMULATION_DISTRIBUATION_TYPE.DISTRIBUTED;
 		} else {
-			simulationRunnerType = SIMULATION_TYPE.NON_CABSF_SIMULATION;
+			simulationRunnerType = CABSF_SIMULATION_DISTRIBUATION_TYPE.NON_DISTRIBUTED;
 		}
 
 	}
@@ -263,7 +263,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 				.getMasterContext();
 		assert (repastContextForThisRun != null);
 		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
-		if (simulationRunnerType == SIMULATION_TYPE.CABSF_SIMULATION) {
+		if (simulationRunnerType == CABSF_SIMULATION_DISTRIBUATION_TYPE.DISTRIBUTED) {
 			repastS_SimulationRunContext = repastS_SimulationAdapterAPI
 					.initializeSimulationRun(repastContextForThisRun,
 							repastS_SimulationRunGroupContext, executeHandshake);

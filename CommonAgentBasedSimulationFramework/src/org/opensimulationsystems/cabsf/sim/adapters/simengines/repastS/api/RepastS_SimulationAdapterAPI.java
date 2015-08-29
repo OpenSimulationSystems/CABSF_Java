@@ -88,7 +88,7 @@ public class RepastS_SimulationAdapterAPI {
 
     public DefaultParameters applyRssrParametersFix(final Controller controller,
             final File scenarioDir, final String secondProgramArgument)
-            throws JDOMException, IOException {
+                    throws JDOMException, IOException {
         if (!shouldApplypParametersFix(secondProgramArgument)) {
             return null;
         }
@@ -123,7 +123,7 @@ public class RepastS_SimulationAdapterAPI {
 
             if (defaultValue.equals("__NULL__")) {
                 defaultParameters.addParameter(paramName, displayName, Number.class,
-                // null, true);
+                        // null, true);
                         num, true);
             } else if (parameterElements.get(i).getAttributeValue("type").equals("int")) {
                 defaultParameters.addParameter(paramName, displayName, Number.class,
@@ -157,7 +157,7 @@ public class RepastS_SimulationAdapterAPI {
      */
     public boolean applyRssrRandomSeedContextAddFix(final Controller controller,
             final File scenarioDir, final String secondProgramArgument)
-            throws JDOMException, IOException {
+                    throws JDOMException, IOException {
         if (!shouldApplyRandomSeedContextAddFix(secondProgramArgument)) {
             return false;
         }
@@ -249,10 +249,10 @@ public class RepastS_SimulationAdapterAPI {
         final RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
                 simulationRunContext);
         repastS_SimulationRunContext
-                .setRepastContextForThisRun(nativeRepastScontextForThisRun);
+        .setRepastContextForThisRun(nativeRepastScontextForThisRun);
 
         repastS_SimulationRunContext
-                .setRepastRunGroupContext(repastS_SimulationRunGroupContext);
+        .setRepastRunGroupContext(repastS_SimulationRunGroupContext);
 
         // Make the context available to the agents in the Repast model
         nativeRepastScontextForThisRun.add(repastS_SimulationRunContext);
@@ -263,7 +263,7 @@ public class RepastS_SimulationAdapterAPI {
         // TODO: Move distributed system manager to main level? same for on the
         // distributed side (simulation engine manager)
         repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
-                .next().createAgentMappingObjects();
+        .next().createAgentMappingObjects();
 
         boolean atLeastOneMappingPerformed = false;
 
@@ -274,7 +274,7 @@ public class RepastS_SimulationAdapterAPI {
         // (Same for JADE API side)
         @SuppressWarnings({ "rawtypes" })
         final Iterable<Class> simulationAgentsClasses = nativeRepastScontextForThisRun
-                .getAgentTypes();
+        .getAgentTypes();
 
         // For each simulation agent class
         for (@SuppressWarnings("rawtypes")
@@ -315,7 +315,8 @@ public class RepastS_SimulationAdapterAPI {
                 if (repastS_SimulationRunContext.getSimulationRunGroupConfiguration()
                         .getAgentsReadyForSimulationSideMapping().size() > 0) {
                     throw new CabsfRuntimeException(
-                            "The number of agent models to be mapped in the CABSF configuration exceed the number of agents instantiated in the simulation runtime.");
+                            "The number of agent models to be mapped in the CABSF configuration exceed the number of agents instantiated in the simulation runtime, "
+                                    + "which is specified in the CABSF configuration files.");
                 }
                 ;
 
@@ -326,7 +327,13 @@ public class RepastS_SimulationAdapterAPI {
 
         if (atLeastOneMappingPerformed != true) {
             throw new CabsfRuntimeException(
-                    "No mapping was performed of simulation agent(s) to distributed autonomous agent(s) and agent model IDs.  At one mapping is expected to be performed.  Your configuration file's agent mapping section may not be set up properly.");
+                    "No mapping was performed of simulation agent(s) to "
+                            + "software agents and agent model IDs.  At least one mapping "
+                            + "is expected to be performed.  Your configuration file's agent"
+                            + " mapping section may not be set up properly.  Perhaps the agent type/class"
+                            + " specified is incorrect, or no software agent or agent models were configured."
+                            + "  For Repast Simphony simulations, the agent type/class must be the fully qualified "
+                            + "agent name, including the package name and it's case sensitive.");
         }
 
         if (executeHandshake) {

@@ -29,5 +29,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-agents JadeControllerAgent:org.opensimulationsystems.cabsf.distsys.mas.runners.jade.JADE_Controller_Agent(../../../ReferenceSimulations/JZombies_Demo_CABSF/JZombies_Demo_CABSF_Config.xml);DistributedSystemAutonomousAgent1:jzombies.HumanJADE;DistributedSystemAutonomousAgent2:jzombies.HumanJADE;DistributedSystemAutonomousAgent3:jzombies.HumanJADE;DistributedSystemAutonomousAgent4:jzombies.HumanJADE;DistributedSystemAutonomousAgent5:jzombies.HumanJADE;DistributedSystemAutonomousAgent6:jzombies.HumanJADE"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JZombies_Demo_CABSF_JADE"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xss10M -Xmx400M -ea"/>
 </launchConfiguration>

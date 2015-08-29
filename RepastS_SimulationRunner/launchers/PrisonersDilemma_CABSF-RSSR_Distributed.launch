@@ -35,7 +35,7 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.opensimulationsystems.cabsf.sim.engines.runners.repastS.RepastS_SimulationRunnerMain"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../ReferenceSimulations/PrisonersDilemmaIterated_CABSF/PrisonersDilemmaIterated_CABSF_Repast/PrisonersDilemmaIterated_CABSF_Repast.rs ../ReferenceSimulations/PrisonersDilemmaIterated_CABSF/PrisonersDilemmaIterated_CABSF_Config.xml"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../ReferenceSimulations/PrisonersDilemma_CABSF/PrisonersDilemma_CABSF_Repast/PrisonersDilemma_CABSF_Repast.rs ../ReferenceSimulations/PrisonersDilemma_CABSF/PrisonersDilemma_CABSF_Config.xml"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="RepastS_SimulationRunner"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xss10M -Xmx400M -ea"/>
 </launchConfiguration>

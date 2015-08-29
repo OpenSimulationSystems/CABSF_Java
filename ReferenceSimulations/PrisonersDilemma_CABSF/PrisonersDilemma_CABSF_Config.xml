@@ -2,7 +2,7 @@
 <!-- This configuration file is used for both the Simulation Engine -->
 <!-- and each Distributed System -->
 <CabsfSimulationConfiguration xmlns="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0">
-	<Name>JZombies CABSF JADE-Repast Simphony Simulation</Name>
+	<Name>Prisoner's Dilemma CABSF JADE-Repast Simphony Simulation</Name>
 	<!-- optional -->
 	<ConfigVersion>1.0</ConfigVersion>
 	<!-- optional -->
@@ -14,19 +14,22 @@
 		<AllSimulationRuns>
 			<SimulationEngineSpecific>
 				<SimulationEngineName>REPAST_SIMPHONY</SimulationEngineName>
+				<!-- These flags can be removed if/when the Repast team corrects these issues in their code. -->
 				<!-- As of Repast Simphony 2.3.1, when using the CABSF Repast Simphony -->
 				<!-- Simulation Runner (RSSR), the parameters are not read from the .rs -->
 				<!-- directory. Apply temporary fix, to be removed in the future. -->
 				<ApplyRssrParametersFix>true</ApplyRssrParametersFix>
+				<!-- As of Repast Simphony 2.3.1, when adding objects to the context, Repast Simphony uses RandomHelper internally, which throws off the sequence of random numbers generated. The result is that the results of the simulation are different whether the RSSR is CABSF-enabled or not. This workaround corrects this issue, but does not correct the mismatch in results between the RSSR and regular GUI runs. -->
+				<ApplyRssrRandomSeedContextAddFix>true</ApplyRssrRandomSeedContextAddFix>
 			</SimulationEngineSpecific>
-			<!-- Does not depend on the actual simulation engine used. It's just the algorithm -->
-			<SeedAlgorithm>REPAST_SIMPHONY</SeedAlgorithm>
 			<!-- optional, Default=Infinite -->
 			<MaximumNumberOfTicks>300</MaximumNumberOfTicks>
 			<!-- optional, Default=1 -->
-			<NumberOfSimulationRuns>2</NumberOfSimulationRuns>
-			<!-- Pseudorandom seed across all simulation runs -->
-			<Seed>849365654</Seed>
+			<NumberOfSimulationRuns>3</NumberOfSimulationRuns>
+			<PseudorandomNumberSettings>
+				<!-- Does not depend on the actual simulation engine used. -->
+				<RandomNumberGenerator>REPAST_SIMPHONY</RandomNumberGenerator>
+			</PseudorandomNumberSettings>
 		</AllSimulationRuns>
 		<!-- Simulation Run Configuration. Each child represents a run, sequentially. Optional -->
 		<!-- Not Supported yet as of 6/27/2015 -->
@@ -61,18 +64,18 @@
 				<DistributedAutonomousAgents>
 					<!-- Attribute used internally by the simulation engine -->
 					<!-- The distributed system(s) should not be concerned with this attribute value -->
-					<AgentType type="jzombies.Human">
+					<AgentType type="prisonersdilemma.Player">
 						<DistributedAutonomousAgent>
-							<!-- The JADE Agent ID. Identifier #2 of 3 -->
+							The JADE Agent ID. Identifier #2 of 3
 							<DistributedAutonomousAgentID>DistributedSystemAutonomousAgent1</DistributedAutonomousAgentID>
 							<AgentModels>
-								<!-- The 1 to many agent models within the JADE agent -->
-								<!-- Only one is supported currently -->
+								The 1 to many agent models within the JADE agent
+								Only one is supported currently
 								<AgentModel>
-									<!-- Identifier #3 of 3 -->
+									Identifier #3 of 3
 									<DistributedAutonomousAgentModelID>DistributedSystemAutonomousAgent1MODEL</DistributedAutonomousAgentModelID>
-									<!-- Only used internally by the simulation engine -->
-									<!-- The distributed system(s) should not be concerned with this value -->
+									Only used internally by the simulation engine
+									The distributed system(s) should not be concerned with this value
 									<SimulationEngineClass>jzombies.Human</SimulationEngineClass>
 								</AgentModel>
 							</AgentModels>
@@ -146,6 +149,34 @@
 								<AgentModel>
 									<!-- Identifier #3 of 3 -->
 									<DistributedAutonomousAgentModelID>DistributedSystemAutonomousAgent6MODEL</DistributedAutonomousAgentModelID>
+									<!-- Only used internally by the simulation engine -->
+									<!-- The distributed system(s) should not be concerned witt his value -->
+									<SimulationEngineClass>jzombies.Human</SimulationEngineClass>
+								</AgentModel>
+							</AgentModels>
+						</DistributedAutonomousAgent>
+						<DistributedAutonomousAgent>
+							<DistributedAutonomousAgentID>DistributedSystemAutonomousAgent7</DistributedAutonomousAgentID>
+							<AgentModels>
+								<!-- The 1 to many agent models within the JADE agent -->
+								<!-- Only one is supported currently -->
+								<AgentModel>
+									<!-- Identifier #3 of 3 -->
+									<DistributedAutonomousAgentModelID>DistributedSystemAutonomousAgent7MODEL</DistributedAutonomousAgentModelID>
+									<!-- Only used internally by the simulation engine -->
+									<!-- The distributed system(s) should not be concerned witt his value -->
+									<SimulationEngineClass>jzombies.Human</SimulationEngineClass>
+								</AgentModel>
+							</AgentModels>
+						</DistributedAutonomousAgent>
+						<DistributedAutonomousAgent>
+							<DistributedAutonomousAgentID>DistributedSystemAutonomousAgent8</DistributedAutonomousAgentID>
+							<AgentModels>
+								<!-- The 1 to many agent models within the JADE agent -->
+								<!-- Only one is supported currently -->
+								<AgentModel>
+									<!-- Identifier #3 of 3 -->
+									<DistributedAutonomousAgentModelID>DistributedSystemAutonomousAgent8MODEL</DistributedAutonomousAgentModelID>
 									<!-- Only used internally by the simulation engine -->
 									<!-- The distributed system(s) should not be concerned witt his value -->
 									<SimulationEngineClass>jzombies.Human</SimulationEngineClass>

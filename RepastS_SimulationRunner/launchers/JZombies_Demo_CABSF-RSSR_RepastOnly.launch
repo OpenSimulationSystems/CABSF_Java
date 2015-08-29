@@ -10,5 +10,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.opensimulationsystems.cabsf.sim.engines.runners.repastS.RepastS_SimulationRunnerMain"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../ReferenceSimulations/JZombies_Demo_CABSF/JZombies_Demo_CABSF_Repast/JZombies_Demo_CABSF_Repast.rs ApplyRssrParametersFixApplyRssrRandomSeedContextAddFix"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="RepastS_SimulationRunner"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xss10M -Xmx400M -ea"/>
 </launchConfiguration>

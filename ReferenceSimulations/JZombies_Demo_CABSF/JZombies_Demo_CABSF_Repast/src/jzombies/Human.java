@@ -12,6 +12,7 @@ import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitial
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
@@ -143,21 +144,26 @@ public class Human {
         // Section Added to the CABSF-wired version of the JZombies
         // simulation
         if (cabsfSimulationType == null) {
-            nativeRepastScontext = RunState.getInstance().getMasterContext();
             cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
                     .getAgentContext();
-
             jZombies_CABSF_Helper = new JZombies_CABSF_Helper(cabsfRepastS_AgentContext);
             try {
-                final Iterable<Class> simulationAgentsClasses2 = RunState.getInstance()
+                this.getClass().getClassLoader();
+                // final RunState rs = RunState.getInstance();
+                final Iterable<Class> simulationAgentsClasses = RunState.getInstance()
                         .getMasterContext().getAgentTypes();
+                final Iterable<Object> cabsfRepastContextIterable = RunState
+                        .getInstance().getMasterContext()
+                        .getAgentLayer(RepastS_SimulationRunContext.class);
 
                 cabsfSimulationType = cabsfRepastS_AgentContext.initializeCabsfAgent(
-                    nativeRepastScontext, cabsfRepastS_AgentContext);
+                        simulationAgentsClasses, cabsfRepastContextIterable, RunState
+                        .getInstance().getMasterContext());
+
             } catch (final CabsfInitializationRuntimeException e) {
                 throw new CabsfInitializationRuntimeException(
                         "Cabsf initialization error in agent: " + this.getClass()
-                                + " hash: " + this.hashCode(), e);
+                        + " hash: " + this.hashCode(), e);
             }
         }
         // ////////////////////////////////

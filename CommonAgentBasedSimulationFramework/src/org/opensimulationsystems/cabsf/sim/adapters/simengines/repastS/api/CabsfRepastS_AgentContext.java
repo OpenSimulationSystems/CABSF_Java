@@ -11,7 +11,6 @@ import org.opensimulationsystems.cabsf.common.model.context.AgentContext;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 
 import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunState;
 
 // TODO: Auto-generated Javadoc
@@ -72,17 +71,16 @@ public class CabsfRepastS_AgentContext extends AgentContext {
      * @throws CabsfInitializationRuntimeException
      *             Signals that an initialization error occurred.
      */
+    /*
+     * public CABSF_SIMULATION_DISTRIBUATION_TYPE initializeCabsfAgent( final
+     * Context nativeRepastScontext, final CabsfRepastS_AgentContext
+     * cabsfRepastS_AgentContext) {
+     */
     public CABSF_SIMULATION_DISTRIBUATION_TYPE initializeCabsfAgent(
-            final Context nativeRepastScontext,
-            final CabsfRepastS_AgentContext cabsfRepastS_AgentContext) {
-        final Iterable<Class> simulationAgentsClasses2 = RunState.getInstance()
-                .getMasterContext().getAgentTypes();
-
-        final Iterable<Class> simulationAgentsClasses = (nativeRepastScontext
-                .getAgentTypes());
-        final Iterable<Object> cabsfRepastContextIterable = nativeRepastScontext
-                .getAgentLayer(RepastS_SimulationRunContext.class);
-
+            final Iterable<Class> simulationAgentsClasses,
+            final Iterable<Object> cabsfRepastContextIterable, final Context context) {
+        this.getClass().getClassLoader();
+        RunState.getInstance();
         // Get a hold of the REpast Simulation Run Context. The agent authors
         // only use
         // this API class.
@@ -97,7 +95,7 @@ public class CabsfRepastS_AgentContext extends AgentContext {
                 repastS_SimulationRunContext = (RepastS_SimulationRunContext) cabsfRepastContextIterable
                         .iterator().next();
             } catch (final NoSuchElementException e) {
-                if (RunEnvironment.getInstance().isBatch()) {
+                if (1 == 1) { // RunEnvironment.getInstance().isBatch()) {
                     return CABSF_SIMULATION_DISTRIBUATION_TYPE.NON_DISTRIBUTED;
                 }
             }

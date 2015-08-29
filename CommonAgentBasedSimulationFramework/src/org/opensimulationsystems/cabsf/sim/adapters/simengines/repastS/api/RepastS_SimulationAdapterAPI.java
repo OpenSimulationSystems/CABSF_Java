@@ -46,8 +46,7 @@ import repast.simphony.random.RandomHelper;
 public class RepastS_SimulationAdapterAPI {
 
     /** The instance. */
-    private static RepastS_SimulationAdapterAPI instance =
-            new RepastS_SimulationAdapterAPI();
+    private static RepastS_SimulationAdapterAPI instance = new RepastS_SimulationAdapterAPI();
 
     /**
      * The API singleton for adaptor.
@@ -59,12 +58,10 @@ public class RepastS_SimulationAdapterAPI {
     }
 
     /** The CABSF-wide Simulation API. Intended to be used across ABMS systems. */
-    private final SimulationAPI simulationAPI =
-            SimulationAPI.getInstance();
+    private final SimulationAPI simulationAPI = SimulationAPI.getInstance();
 
     /** The simulation tool name to set in simulation API. */
-    private final String simToolNameToSetInSimulationAPI =
-            "REPAST_SIMPHONY";
+    private final String simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
 
     /**
      * Instantiates a new repast s_ simulation adapter api.
@@ -91,50 +88,42 @@ public class RepastS_SimulationAdapterAPI {
 
     public DefaultParameters applyRssrParametersFix(final Controller controller,
             final File scenarioDir, final String secondProgramArgument)
-                    throws JDOMException, IOException {
+            throws JDOMException, IOException {
         if (!shouldApplypParametersFix(secondProgramArgument)) {
             return null;
         }
 
         /** The element filter. */
-        final Filter<Element> elementFilter =
-                new org.jdom2.filter.ElementFilter();
+        final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
 
         // Set the Parameters across all simulation runs of this simulation
-        final Document repastSconfigFile =
-                MessagingUtilities.createDocumentFromFileSystemPath(scenarioDir
-                        .getAbsolutePath() + "/parameters.xml");
+        final Document repastSconfigFile = MessagingUtilities
+                .createDocumentFromFileSystemPath(scenarioDir.getAbsolutePath()
+                        + "/parameters.xml");
         assert (repastSconfigFile != null);
 
-        final List<Element> parameters =
-                (List<Element>) XMLUtilities.executeXPath(repastSconfigFile,
-                        "/parameters", null, elementFilter);
+        final List<Element> parameters = (List<Element>) XMLUtilities.executeXPath(
+                repastSconfigFile, "/parameters", null, elementFilter);
         // TODO: Support more than 1 Distributed System
         assert (parameters.size() == 1);
 
-        final List<Element> parameterElements =
-                parameters.get(0).getChildren();
-        final DefaultParameters defaultParameters =
-                new DefaultParameters();
+        final List<Element> parameterElements = parameters.get(0).getChildren();
+        final DefaultParameters defaultParameters = new DefaultParameters();
 
-        for (int i =
-                0; i < parameterElements.size(); i++) {
+        for (int i = 0; i < parameterElements.size(); i++) {
             // Handle "int" parameters only
-            final String paramName =
-                    parameterElements.get(i).getAttributeValue("name");
-            final String displayName =
-                    parameterElements.get(i).getAttributeValue("displayName");
-            final String defaultValue =
-                    parameterElements.get(i).getAttributeValue("defaultValue");
+            final String paramName = parameterElements.get(i).getAttributeValue("name");
+            final String displayName = parameterElements.get(i).getAttributeValue(
+                    "displayName");
+            final String defaultValue = parameterElements.get(i).getAttributeValue(
+                    "defaultValue");
 
-            final Random rand =
-                    new Random();
-            final Number num =
-                    rand.nextInt(Integer.MAX_VALUE);
+            final Random rand = new Random();
+            final Number num = rand.nextInt(Integer.MAX_VALUE);
 
             if (defaultValue.equals("__NULL__")) {
                 defaultParameters.addParameter(paramName, displayName, Number.class,
-                        // null, true);
+                // null, true);
                         num, true);
             } else if (parameterElements.get(i).getAttributeValue("type").equals("int")) {
                 defaultParameters.addParameter(paramName, displayName, Number.class,
@@ -168,7 +157,7 @@ public class RepastS_SimulationAdapterAPI {
      */
     public boolean applyRssrRandomSeedContextAddFix(final Controller controller,
             final File scenarioDir, final String secondProgramArgument)
-                    throws JDOMException, IOException {
+            throws JDOMException, IOException {
         if (!shouldApplyRandomSeedContextAddFix(secondProgramArgument)) {
             return false;
         }
@@ -222,13 +211,13 @@ public class RepastS_SimulationAdapterAPI {
     public RepastS_SimulationRunGroupContext initializeAPI(
             final String cabsfConfigurationFileName) throws IOException {
 
-        final SimulationRunGroupContext simulationRunGroupContext =
-                simulationAPI.initializeAPI(cabsfConfigurationFileName,
+        final SimulationRunGroupContext simulationRunGroupContext = simulationAPI
+                .initializeAPI(cabsfConfigurationFileName,
                         simToolNameToSetInSimulationAPI);
 
         // Set the Repast-Simphony-specific objects, using the Decorator Pattern
-        final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext =
-                new RepastS_SimulationRunGroupContext(simulationRunGroupContext);
+        final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
+                simulationRunGroupContext);
 
         return repastS_SimulationRunGroupContext;
     }
@@ -252,18 +241,18 @@ public class RepastS_SimulationAdapterAPI {
             final Context<Object> nativeRepastScontextForThisRun,
             final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext,
             final boolean executeHandshake) {
-        final SimulationRunContext simulationRunContext =
-                simulationAPI.initializeSimulationRun(nativeRepastScontextForThisRun,
+        final SimulationRunContext simulationRunContext = simulationAPI
+                .initializeSimulationRun(nativeRepastScontextForThisRun,
                         repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
 
         // User Decorator Pattern for RepastS_SimulationRunContext
-        final RepastS_SimulationRunContext repastS_SimulationRunContext =
-                new RepastS_SimulationRunContext(simulationRunContext);
+        final RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
+                simulationRunContext);
         repastS_SimulationRunContext
-        .setRepastContextForThisRun(nativeRepastScontextForThisRun);
+                .setRepastContextForThisRun(nativeRepastScontextForThisRun);
 
         repastS_SimulationRunContext
-        .setRepastRunGroupContext(repastS_SimulationRunGroupContext);
+                .setRepastRunGroupContext(repastS_SimulationRunGroupContext);
 
         // Make the context available to the agents in the Repast model
         nativeRepastScontextForThisRun.add(repastS_SimulationRunContext);
@@ -274,10 +263,9 @@ public class RepastS_SimulationAdapterAPI {
         // TODO: Move distributed system manager to main level? same for on the
         // distributed side (simulation engine manager)
         repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
-        .next().createAgentMappingObjects();
+                .next().createAgentMappingObjects();
 
-        boolean atLeastOneMappingPerformed =
-                false;
+        boolean atLeastOneMappingPerformed = false;
 
         // Find all of the individual RepastS agents to be mapped in the
         // framework to distributed agents
@@ -285,8 +273,8 @@ public class RepastS_SimulationAdapterAPI {
         // code.
         // (Same for JADE API side)
         @SuppressWarnings({ "rawtypes" })
-        final Iterable<Class> simulationAgentsClasses =
-        nativeRepastScontextForThisRun.getAgentTypes();
+        final Iterable<Class> simulationAgentsClasses = nativeRepastScontextForThisRun
+                .getAgentTypes();
 
         // For each simulation agent class
         for (@SuppressWarnings("rawtypes")
@@ -297,10 +285,8 @@ public class RepastS_SimulationAdapterAPI {
             if (repastS_SimulationRunContext.getSimulationDistributedSystemManagers()
                     .iterator().next().isAgentClassDistributedType(simulationAgentClass)) {
                 @SuppressWarnings("unchecked")
-                final Class<Object> simulationAgentClazz =
-                simulationAgentClass;
-                final Iterable<Object> simulationAgentsInSingleClass =
-                        nativeRepastScontextForThisRun
+                final Class<Object> simulationAgentClazz = simulationAgentClass;
+                final Iterable<Object> simulationAgentsInSingleClass = nativeRepastScontextForThisRun
                         .getAgentLayer(simulationAgentClazz);
 
                 // TODO: Look into handling multiple classes in the mapping
@@ -314,8 +300,7 @@ public class RepastS_SimulationAdapterAPI {
                 // For an agent class type, for each individual simulation
                 // agent, map to an existing free AgentMapping object
                 for (final Object simulationAgent : simulationAgentsInSingleClass) {
-                    atLeastOneMappingPerformed =
-                            true;
+                    atLeastOneMappingPerformed = true;
                     System.out.println("Attempting to map: " + simulationAgent);
                     mapSimulationSideAgent(simulationAgent,
                             repastS_SimulationRunContext.getSimulationRunContext());
@@ -349,8 +334,7 @@ public class RepastS_SimulationAdapterAPI {
             // 1 - Wait for the command from the simulation administrator to
             // start
             // the simulation
-            final FRAMEWORK_COMMAND fc =
-                    repastS_SimulationRunContext
+            final FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
                     .readFrameworkMessageFromSimulationAdministrator()
                     .getFrameworkToSimulationEngineCommand();
             if (fc != FRAMEWORK_COMMAND.START_SIMULATION) {
@@ -361,11 +345,9 @@ public class RepastS_SimulationAdapterAPI {
             // 2 - Message the distributed systems that the simulation has
             // started
             // and is ready to accept messages from the distributed agents.
-            final FrameworkMessage msg =
-                    new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
-                            SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                            repastS_SimulationRunContext
-                            .getBlankCachedMessageExchangeTemplate());
+            final FrameworkMessage msg = new FrameworkMessageImpl(
+                    SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+                    repastS_SimulationRunContext.getBlankCachedMessageExchangeTemplate());
             msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
             // TODO: Loop through the multiple distributed systems
             repastS_SimulationRunContext.messageDistributedSystems(msg,
@@ -373,8 +355,7 @@ public class RepastS_SimulationAdapterAPI {
 
             // Wait for distributed system to confirm that simulation is ready
             // to begin
-            final STATUS st =
-                    repastS_SimulationRunContext
+            final STATUS st = repastS_SimulationRunContext
                     .readFrameworkMessageFromDistributedSystem().getStatus();
             // TODO: Identify which distributed system caused the error.
             // TODO: Set these up as checked exceptions?
@@ -457,21 +438,17 @@ public class RepastS_SimulationAdapterAPI {
 
         // The checks above are only for RSSR non-CABSF-enabled runs. Below, we
         // have to check the configuration file.
-        final Filter<Element> elementFilter =
-                new org.jdom2.filter.ElementFilter();
+        final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
         /** The namespace str. */
-        final String namespaceStr =
-                "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+        final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
 
         /** The namespace. */
 
-        final Document configFileDoc =
-                MessagingUtilities
+        final Document configFileDoc = MessagingUtilities
                 .createDocumentFromFileSystemPath(cabsfConfigurationDocumentStr);
         assert (configFileDoc != null);
 
-        final List<Element> applyRssrParametersFixElements =
-                (List<Element>) XMLUtilities
+        final List<Element> applyRssrParametersFixElements = (List<Element>) XMLUtilities
                 .executeXPath(
                         configFileDoc,
                         "/x:CabsfSimulationConfiguration/x:SimulationEngineSpecificConfigurations/x:AllSimulationRuns/x:SimulationEngineSpecific/x:ApplyRssrParametersFix",
@@ -517,21 +494,17 @@ public class RepastS_SimulationAdapterAPI {
 
         // The checks above are only for RSSR non-CABSF-enabled runs. Below, we
         // have to check the configuration file.
-        final Filter<Element> elementFilter =
-                new org.jdom2.filter.ElementFilter();
+        final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
         /** The namespace str. */
-        final String namespaceStr =
-                "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+        final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
 
         /** The namespace. */
 
-        final Document configFileDoc =
-                MessagingUtilities
+        final Document configFileDoc = MessagingUtilities
                 .createDocumentFromFileSystemPath(cabsfConfigurationDocumentStr);
         assert (configFileDoc != null);
 
-        final List<Element> applyRssrParametersFixElements =
-                (List<Element>) XMLUtilities
+        final List<Element> applyRssrParametersFixElements = (List<Element>) XMLUtilities
                 .executeXPath(
                         configFileDoc,
                         "/x:CabsfSimulationConfiguration/x:SimulationEngineSpecificConfigurations/x:AllSimulationRuns/x:SimulationEngineSpecific/x:ApplyRssrRandomSeedContextAddFix",

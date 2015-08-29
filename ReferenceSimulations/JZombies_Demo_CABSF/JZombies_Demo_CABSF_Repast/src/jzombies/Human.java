@@ -144,26 +144,26 @@ public class Human {
         // Section Added to the CABSF-wired version of the JZombies
         // simulation
         if (cabsfSimulationType == null) {
+            nativeRepastScontext = RunState.getInstance().getMasterContext();
             cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
                     .getAgentContext();
+
             jZombies_CABSF_Helper = new JZombies_CABSF_Helper(cabsfRepastS_AgentContext);
             try {
                 this.getClass().getClassLoader();
                 // final RunState rs = RunState.getInstance();
-                final Iterable<Class> simulationAgentsClasses = RunState.getInstance()
-                        .getMasterContext().getAgentTypes();
-                final Iterable<Object> cabsfRepastContextIterable = RunState
-                        .getInstance().getMasterContext()
+                final Iterable<Class> simulationAgentsClasses = nativeRepastScontext
+                        .getAgentTypes();
+                final Iterable<Object> cabsfRepastContextIterable = nativeRepastScontext
                         .getAgentLayer(RepastS_SimulationRunContext.class);
 
                 cabsfSimulationType = cabsfRepastS_AgentContext.initializeCabsfAgent(
-                        simulationAgentsClasses, cabsfRepastContextIterable, RunState
-                        .getInstance().getMasterContext());
+                        simulationAgentsClasses, cabsfRepastContextIterable);
 
             } catch (final CabsfInitializationRuntimeException e) {
                 throw new CabsfInitializationRuntimeException(
                         "Cabsf initialization error in agent: " + this.getClass()
-                        + " hash: " + this.hashCode(), e);
+                                + " hash: " + this.hashCode(), e);
             }
         }
         // ////////////////////////////////
@@ -241,8 +241,9 @@ public class Human {
             assert (moveTowardsPoint != null);
 
         }
-        // Non-Distributed. Make the decision here for where to move the Human
-        // agent to without asking the JADE agent agent model.
+        // Non-Distributed. Make the decision in RepastS for where to move the
+        // Human
+        // agent to, without asking the JADE agent's agent model.
         else {
             moveTowardsPoint = pointWithLeastZombies;
         }

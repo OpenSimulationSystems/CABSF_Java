@@ -12,6 +12,6 @@
     <string>SettingsRegistryId</string>
     <string>Repast.registry</string>
     <string>LastLoadedScenario</string>
-    <string>C:\Users\jorge\workspace\CABSF_Java\ReferenceSimulations\PrisonersDilemmaIterated_CABSF\PrisonersDilemmaIterated_CABSF_Repast\PrisonersDilemmaIterated_CABSF_Repast.rs</string>
+    <string>C:\Users\jorge\workspace\CABSF_Java\ReferenceSimulations\PrisonersDilemma_CABSF\PrisonersDilemma_CABSF_Repast\PrisonersDilemma_CABSF_Repast.rs</string>
   </hashtable>
 </simphony.settings.SettingsRegistry>

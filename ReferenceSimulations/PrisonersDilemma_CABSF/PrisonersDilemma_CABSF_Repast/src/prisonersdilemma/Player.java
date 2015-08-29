@@ -6,9 +6,9 @@ import org.opensimulationsystems.cabsf.common.model.messaging.messages.Framework
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 /**
- * The Player in the (Iterated) Prisoner's Dilemma simulation. When utilizing
- * CABSF's distributed mode, these prisoner agents are distributed outside of
- * the RepastS process/runtime, such as to agents running in a JADE multi-agent
+ * The Player in the Prisoner's Dilemma simulation. When utilizing CABSF's
+ * distributed mode, these prisoner agents are distributed outside of the
+ * RepastS process/runtime, such as to agents running in a JADE multi-agent
  * system. In such cases, this RepastS prisoner agent here in RepastS is still
  * used to communicate with the RepastS simulation runtime, but it becomes more
  * of a representation of the "actual" agent that exists outside of RepastS,
@@ -167,9 +167,9 @@ public class Player {
         // LOW: Add support for merging multiple messages bound for different
         // agents
         gameAdministrator.getPrisonersDilemma_CABSF()
-        .sendMsgFromSimAgentToDistributedAgentModel(loggingPrefix,
-                        this.getPlayerParent(), round, otherPlayerLastDecision,
-                        myDecision);
+                .sendMsgFromSimAgentToDistributedAgentModel(loggingPrefix,
+                this.getPlayerParent(), round, otherPlayerLastDecision,
+                myDecision);
 
         // FIXME: Move to simultaneous processing of these messages?
         final FrameworkMessage msg = gameAdministrator.getRepastS_AgentContext()

@@ -25,7 +25,7 @@ CP=$CP:$REPAST_SIMPHONY_LIB/commons-cli-1.2.jar
 CP=$CP:$PWD/groovylib/$Groovy_All_Jar
 
 # Change to the Default Repast Simphony Directory
-cd PrisonersDilemmaIterated_CABSF_Repast
+cd PrisonersDilemma_CABSF_Repast
 
 # Start the Model
-java -Xss10M -Xmx400M -cp $CP repast.simphony.runtime.RepastMain  ./PrisonersDilemmaIterated_CABSF_Repast.rs
+java -Xss10M -Xmx400M -cp $CP repast.simphony.runtime.RepastMain  ./PrisonersDilemma_CABSF_Repast.rs

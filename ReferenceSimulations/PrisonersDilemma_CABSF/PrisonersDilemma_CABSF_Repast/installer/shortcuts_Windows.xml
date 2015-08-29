@@ -4,10 +4,10 @@
 
   <skipIfNotSupported/>
   
-  <programGroup defaultName="PrisonersDilemmaIterated_CABSF_Repast" location="StartMenu"/>
+  <programGroup defaultName="PrisonersDilemma_CABSF_Repast" location="StartMenu"/>
   
   <shortcut
-     name="PrisonersDilemmaIterated_CABSF_Repast"
+     name="PrisonersDilemma_CABSF_Repast"
      programGroup="yes"
      desktop="no"
      applications="no"
@@ -17,7 +17,7 @@
      commandLine=""
      workingDirectory="$INSTALL_PATH"
      description="Model"
-     iconFile="$INSTALL_PATH\PrisonersDilemmaIterated_CABSF_Repast\icons\model.bmp"
+     iconFile="$INSTALL_PATH\PrisonersDilemma_CABSF_Repast\icons\model.bmp"
      iconIndex="0"
      initialState="noShow">
      <createForPack name="Model"/>
@@ -30,7 +30,7 @@
      applications="no"
      startMenu="no"
      startup="no"
-     target="$INSTALL_PATH\PrisonersDilemmaIterated_CABSF_Repast\docs\index.html"
+     target="$INSTALL_PATH\PrisonersDilemma_CABSF_Repast\docs\index.html"
      commandLine=""
 	 iconFile="%SystemRoot%\system32\SHELL32.dll"
      iconIndex="23" 
@@ -40,7 +40,7 @@
   </shortcut>
   
   <shortcut
-     name="PrisonersDilemmaIterated_CABSF_Repast Uninstaller"
+     name="PrisonersDilemma_CABSF_Repast Uninstaller"
      programGroup="yes"
      desktop="no"
      applications="no"

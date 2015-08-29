@@ -13,6 +13,7 @@ import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATI
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
 import org.paukov.combinatorics.Factory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
@@ -49,26 +50,22 @@ public class GameAdministrator {
     int pairingNumber;
 
     /** The game initialized. */
-    boolean gameInitialized =
-            false;
+    boolean gameInitialized = false;
 
     /** The round. */
-    private int round =
-            0;
+    private int round = 0;
 
     /** The simulation parameters in the simulation's .rs directory . */
-    Parameters params =
-            RunEnvironment.getInstance().getParameters();
+    Parameters params = RunEnvironment.getInstance().getParameters();
 
     /** The total number of rounds per pairing. */
-    int numberOfRounds =
-            (Integer) params.getValue("number_of_rounds");
+    int numberOfRounds = (Integer) params.getValue("number_of_rounds");
 
     /**
      * The native Repast Simphony context. Different from CABSF's RepastS agent
      * context
      */
-    private Context<Object> nativeRepastScontext;
+    private Context nativeRepastScontext;
 
     /**
      * The player pairings. Mapping unique player numbers to a List/Paring of 2
@@ -100,8 +97,7 @@ public class GameAdministrator {
     private PlayerB playerB;
 
     /** The CabsfRepastS_AgentContext. */
-    private CabsfRepastS_AgentContext cabsfRepastS_AgentContext =
-            null;
+    private CabsfRepastS_AgentContext cabsfRepastS_AgentContext = null;
 
     /** The simulation type. */
     private CABSF_SIMULATION_DISTRIBUATION_TYPE cabsfSimulationType;
@@ -131,43 +127,34 @@ public class GameAdministrator {
      */
     private HashMap<Long, List<Player>> createInitialPlayerPairings(
             final Set<Player> playersSet) {
-        playerPairings =
-                new HashMap<Long, List<Player>>();
+        playerPairings = new HashMap<Long, List<Player>>();
 
-        final Object[] playerArray =
-                playersSet.toArray();
+        final Object[] playerArray = playersSet.toArray();
         // Create the initial vector
-        final ICombinatoricsVector<Object> initialVector =
-                Factory.createVector(playerArray);
+        final ICombinatoricsVector<Object> initialVector = Factory
+                .createVector(playerArray);
 
         // Create a simple combination generator to generate
         // 2-player-combinations of
         // the initial vector
-        final Generator<Object> gen =
-                Factory.createSimpleCombinationGenerator(initialVector, 2);
+        final Generator<Object> gen = Factory.createSimpleCombinationGenerator(
+                initialVector, 2);
 
         // Print all possible combinations
-        long i =
-                0;
+        long i = 0;
         for (final ICombinatoricsVector<Object> combination : gen) {
             System.out.println(combination);
 
-            Player playeraTemp =
-                    null;
-            Player playerbTemp =
-                    null;
+            Player playeraTemp = null;
+            Player playerbTemp = null;
 
-            final List<Object> cominationLst =
-                    combination.getVector();
-            playeraTemp =
-                    (Player) cominationLst.get(0);
-            playerbTemp =
-                    (Player) cominationLst.get(1);
+            final List<Object> cominationLst = combination.getVector();
+            playeraTemp = (Player) cominationLst.get(0);
+            playerbTemp = (Player) cominationLst.get(1);
 
             assert (playeraTemp != null && playerbTemp != null && playeraTemp != playerbTemp);
 
-            final List<Player> newList =
-                    new ArrayList<Player>();
+            final List<Player> newList = new ArrayList<Player>();
             newList.add(playeraTemp);
             newList.add(playerbTemp);
             playerPairings.put(i, newList);
@@ -244,22 +231,29 @@ public class GameAdministrator {
      * Initialize overall tournament.
      */
     public void initializeOverallTournament() {
-        System.out.println("[Game Administrator] Initializing");
-
         // ////////////////////////////////
-        // Section Added to the CABSF version{
-        if (cabsfSimulationType == null) {
-            nativeRepastScontext =
-                    RunState.getInstance().getMasterContext();
-            cabsfRepastS_AgentContext =
-                    RepastS_AgentAdapterAPI.getInstance().getAgentContext();
+        // Section Added to the CABSF-wired version of the JZombies
+        // simulation
+        System.out.println("[Game Administrator] Initializing Game");
 
-            prisonersDilemma_CABSF_Helper =
-                    new PrisonersDilemma_CABSF_Helper(cabsfRepastS_AgentContext);
+        if (cabsfSimulationType == null) {
+            nativeRepastScontext = RunState.getInstance().getMasterContext();
+            cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
+                    .getAgentContext();
+
+            prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(
+                    cabsfRepastS_AgentContext);
             try {
-                cabsfSimulationType =
-                        cabsfRepastS_AgentContext.initializeCabsfAgent(
-                                nativeRepastScontext, cabsfRepastS_AgentContext);
+                this.getClass().getClassLoader();
+                // final RunState rs = RunState.getInstance();
+                final Iterable<Class> simulationAgentsClasses = nativeRepastScontext
+                        .getAgentTypes();
+                final Iterable<Object> cabsfRepastContextIterable = nativeRepastScontext
+                        .getAgentLayer(RepastS_SimulationRunContext.class);
+
+                cabsfSimulationType = cabsfRepastS_AgentContext.initializeCabsfAgent(
+                        simulationAgentsClasses, cabsfRepastContextIterable);
+
             } catch (final CabsfInitializationRuntimeException e) {
                 throw new CabsfInitializationRuntimeException(
                         "Cabsf initialization error in agent: " + this.getClass()
@@ -267,26 +261,22 @@ public class GameAdministrator {
             }
         }
         // ////////////////////////////////
+        // ////////////////////////////////
 
-        final Iterable<Player> players =
-                RunState.getInstance().getMasterContext().getAgentLayer(Player.class);
+        final Iterable<Player> players = RunState.getInstance().getMasterContext()
+                .getAgentLayer(Player.class);
         assert (players != null);
 
-        standaloneParentPlayerSet =
-                new HashSet<Player>();
+        standaloneParentPlayerSet = new HashSet<Player>();
         while (players.iterator().hasNext()) {
-            final Player player =
-                    players.iterator().next();
+            final Player player = players.iterator().next();
             standaloneParentPlayerSet.add(player);
         }
 
-        playerPairings =
-                createInitialPlayerPairings(standaloneParentPlayerSet);
-        playerPairingsIterator =
-                playerPairings.entrySet().iterator();
+        playerPairings = createInitialPlayerPairings(standaloneParentPlayerSet);
+        playerPairingsIterator = playerPairings.entrySet().iterator();
 
-        gameInitialized =
-                true;
+        gameInitialized = true;
 
     }
 
@@ -297,17 +287,12 @@ public class GameAdministrator {
      */
     private boolean initializePairing() {
         System.out.println("In initializePairing");
-        final boolean newPairingAvailable =
-                setupNewPairing();
+        final boolean newPairingAvailable = setupNewPairing();
         if (!newPairingAvailable) {
-            playerA =
-                    null;
-            playerB =
-                    null;
-            previousRoundPlayerADecision =
-                    null;
-            previousRoundPlayerBDecision =
-                    null;
+            playerA = null;
+            playerB = null;
+            previousRoundPlayerADecision = null;
+            previousRoundPlayerBDecision = null;
 
             System.out.println("[Game Administrator] No more agent pairings to process ");
         } else {
@@ -338,39 +323,29 @@ public class GameAdministrator {
     private boolean setupNewPairing() {
         System.out.println("In setupNewPairing");
         if (playerPairingsIterator.hasNext()) {
-            final Map.Entry<Long, List<Player>> entry =
-                    playerPairingsIterator.next();
+            final Map.Entry<Long, List<Player>> entry = playerPairingsIterator.next();
             System.out.println("[Game Administrator] Setting up new pairing.  "
                     + " (rounds start at 1, levels at 0) Pairing number: "
                     + String.valueOf(pairingNumber));
             pairingNumber++;
 
-            round =
-                    0;
+            round = 0;
 
-            previousRoundPlayerADecision =
-                    null;
-            previousRoundPlayerBDecision =
-                    null;
+            previousRoundPlayerADecision = null;
+            previousRoundPlayerBDecision = null;
 
-            previousPairingPlayerA =
-                    playerA;
-            previousPairingPlayerB =
-                    playerB;
+            previousPairingPlayerA = playerA;
+            previousPairingPlayerB = playerB;
 
-            final Player playerAparent =
-                    entry.getValue().get(0);
-            final Player playerBparent =
-                    entry.getValue().get(1);
+            final Player playerAparent = entry.getValue().get(0);
+            final Player playerBparent = entry.getValue().get(1);
 
             assert (playerAparent != null && playerBparent != null);
 
-            playerA =
-                    new PlayerA(this);
+            playerA = new PlayerA(this);
             playerA.setPlayerNumber(playerAparent.getPlayerNumber());
             playerA.setPlayerParent(playerAparent);
-            playerB =
-                    new PlayerB(this);
+            playerB = new PlayerB(this);
             playerB.setPlayerNumber(playerBparent.getPlayerNumber());
             playerB.setPlayerParent(playerBparent);
 
@@ -415,53 +390,38 @@ public class GameAdministrator {
             nativeRepastScontext.remove(previousPairingPlayerB);
         }
 
-        round +=
-                1; // Start counting at round 1
+        round += 1; // Start counting at round 1
         System.out.println("[Game Administrator] Starting Round: "
                 + String.valueOf(round));
 
-        final DECISION decision0 =
-                playerA.decide();
-        final DECISION decision1 =
-                playerB.decide();
+        final DECISION decision0 = playerA.decide();
+        final DECISION decision1 = playerB.decide();
 
-        previousRoundPlayerADecision =
-                decision0;
-        previousRoundPlayerBDecision =
-                decision1;
+        previousRoundPlayerADecision = decision0;
+        previousRoundPlayerBDecision = decision1;
 
-        int player0payoffThisRound =
-                0;
-        int player1payoffThisRound =
-                0;
+        int player0payoffThisRound = 0;
+        int player1payoffThisRound = 0;
 
         // TODO: Could make the payoffs configurable.
         if (decision0 == DECISION.COOPERATE && decision1 == DECISION.COOPERATE) {
-            player0payoffThisRound =
-                    3;
-            player1payoffThisRound =
-                    3;
+            player0payoffThisRound = 3;
+            player1payoffThisRound = 3;
         }
 
         if (decision0 == DECISION.DEFECT && decision1 == DECISION.DEFECT) {
-            player0payoffThisRound =
-                    1;
-            player1payoffThisRound =
-                    1;
+            player0payoffThisRound = 1;
+            player1payoffThisRound = 1;
         }
 
         if (decision0 == DECISION.COOPERATE && decision1 == DECISION.DEFECT) {
-            player0payoffThisRound =
-                    0;
-            player1payoffThisRound =
-                    5;
+            player0payoffThisRound = 0;
+            player1payoffThisRound = 5;
         }
 
         if (decision0 == DECISION.DEFECT && decision1 == DECISION.COOPERATE) {
-            player0payoffThisRound =
-                    5;
-            player1payoffThisRound =
-                    0;
+            player0payoffThisRound = 5;
+            player1payoffThisRound = 0;
         }
 
         playerA.updateRunningScore(player0payoffThisRound, "Player A");
@@ -476,8 +436,7 @@ public class GameAdministrator {
             System.out.println("Finished rounds for this pairing.");
             System.out.println("*********************************");
 
-            final boolean morePairingsAvailable =
-                    initializePairing();
+            final boolean morePairingsAvailable = initializePairing();
             if (!morePairingsAvailable) {
                 printFinalScores();
                 return;

@@ -77,7 +77,6 @@ public class Zombie {
 
     @ScheduledMethod(start = 1, interval = 1)
     public void step() {
-        this.getClass().getClassLoader();
         // get the grid location of this Zombie
         final GridPoint pt = grid.getLocation(this);
 

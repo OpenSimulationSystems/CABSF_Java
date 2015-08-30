@@ -311,6 +311,13 @@ releases.</p>
     is relaxed in the future.</li>
   <li>No assurances are made about the use of the Common Agent-Based Simulation
     Framework with JADE LEAP for execution on Android phones.</li>
+  <li>After running the RSSR through a set of 1+ number of simulation runs
+    specifed in the configuration, the RSSR terminates, but the JADE Controller
+    Agent stays running, allowing additional runs. However, the JADE Controller
+    Agent expects the same number of simulation runs to be executed (it does
+    not read the configuration file again). Therefore, if you change the CABSF
+    configuration at all, you should terminate the JADE Controller
+    Agent/JADEMAS and execute it again.</li>
   <li>It is best to start the JADE Controller Agent first as part of the JADE
     platform, and either include the other JADE agents in this single process,
     or start those other agents separately as a peripheral container after the
@@ -378,5 +385,34 @@ port 1099].</span></p>
 existing process (hit the red square in Eclipse for all JADE processes). You
 may want to clear the Redis cache then restart the simulation process as
 well.</p>
+
+<p></p>
+
+<p>Troubleshooting</p>
+
+<p>WARNING: Error adding ICP jade.imtp.leap.JICP.JICPPeer@1806e9d2[Cannot bind
+server socket to localhost port 1099].</p>
+
+<p>Aug 30, 2015 2:57:08 PM jade.core.AgentContainerImpl joinPlatform</p>
+
+<p>SEVERE: Communication failure while joining agent platform: No ICP active</p>
+
+<p>jade.core.IMTPException: No ICP active</p>
+
+<p>at jade.imtp.leap.LEAPIMTPManager.initialize(LEAPIMTPManager.java:138)</p>
+
+<p>at jade.core.AgentContainerImpl.init(AgentContainerImpl.java:319)</p>
+
+<p>at jade.core.AgentContainerImpl.joinPlatform(AgentContainerImpl.java:492)</p>
+
+<p>at jade.core.Runtime.createMainContainer(Runtime.java:166)</p>
+
+<p>at jade.Boot.main(Boot.java:89)</p>
+
+<p>Aug 30, 2015 2:57:08 PM jade.core.Runtime$1 run</p>
+
+<p>INFO: JADE is closing down now.</p>
+
+<p></p>
 </body>
 </html>

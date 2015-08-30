@@ -376,10 +376,10 @@ public class JADE_Controller_Agent extends jade.core.Agent {
     /**
      * Setup new simulation run.
      *
-     * @param resetRunGroup
+     * @param setupNewRunGroup
      *            the new up new simulation run
      */
-    private void setupNewSimulationRun(boolean resetRunGroup) {
+    private void setupNewSimulationRun(boolean setupNewRunGroup) {
         final DFAgentDescription template =
                 new DFAgentDescription();
         final ServiceDescription sd =
@@ -389,7 +389,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
         template.addServices(sd);
 
         while (true) {
-            if (resetRunGroup) {
+            if (setupNewRunGroup) {
                 simulationRunsLeft =
                         expectedNumOfSimulationRuns;
             }
@@ -409,9 +409,9 @@ public class JADE_Controller_Agent extends jade.core.Agent {
             final JADE_MAS_RunContext jade_MAS_RunContext =
                     jade_MAS_AdapterAPI.initializeSimulationRun(
                             new NativeJADEMockContext(), jade_MAS_RunGroupContext, null,
-                            mappedJadeAgents, resetRunGroup);
+                            mappedJadeAgents, setupNewRunGroup);
             setJade_MAS_RunContext(jade_MAS_RunContext);
-            resetRunGroup =
+            setupNewRunGroup =
                     false;
 
             // Get the message from the simulation engine, send it on to the
@@ -423,7 +423,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
                 System.out
                 .println("[JADE Controller Agent] Received Stop Simulation Command from Simulation Engine.  Listening for new simulation run");
                 // Reset back to listen for handshake.
-                resetRunGroup =
+                setupNewRunGroup =
                         true;
                 // Continue loop to get ready to listen for a new simulation
                 // run.

@@ -12,7 +12,6 @@ import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitial
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
@@ -147,23 +146,16 @@ public class Human {
             nativeRepastScontext = RunState.getInstance().getMasterContext();
             cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
                     .getAgentContext();
-
             jZombies_CABSF_Helper = new JZombies_CABSF_Helper(cabsfRepastS_AgentContext);
+
             try {
                 this.getClass().getClassLoader();
-                // final RunState rs = RunState.getInstance();
-                final Iterable<Class> simulationAgentsClasses = nativeRepastScontext
-                        .getAgentTypes();
-                final Iterable<Object> cabsfRepastContextIterable = nativeRepastScontext
-                        .getAgentLayer(RepastS_SimulationRunContext.class);
-
-                cabsfSimulationType = cabsfRepastS_AgentContext.initializeCabsfAgent(
-                        simulationAgentsClasses, cabsfRepastContextIterable);
-
+                cabsfSimulationType = cabsfRepastS_AgentContext
+                        .initializeCabsfAgent(nativeRepastScontext);
             } catch (final CabsfInitializationRuntimeException e) {
                 throw new CabsfInitializationRuntimeException(
                         "Cabsf initialization error in agent: " + this.getClass()
-                                + " hash: " + this.hashCode(), e);
+                        + " hash: " + this.hashCode(), e);
             }
         }
         // ////////////////////////////////

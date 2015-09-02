@@ -13,7 +13,6 @@ import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATI
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
 import org.paukov.combinatorics.Factory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
@@ -240,24 +239,16 @@ public class GameAdministrator {
             nativeRepastScontext = RunState.getInstance().getMasterContext();
             cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
                     .getAgentContext();
-
             prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(
                     cabsfRepastS_AgentContext);
+
             try {
-                this.getClass().getClassLoader();
-                // final RunState rs = RunState.getInstance();
-                final Iterable<Class> simulationAgentsClasses = nativeRepastScontext
-                        .getAgentTypes();
-                final Iterable<Object> cabsfRepastContextIterable = nativeRepastScontext
-                        .getAgentLayer(RepastS_SimulationRunContext.class);
-
-                cabsfSimulationType = cabsfRepastS_AgentContext.initializeCabsfAgent(
-                        simulationAgentsClasses, cabsfRepastContextIterable);
-
+                cabsfSimulationType = cabsfRepastS_AgentContext
+                        .initializeCabsfAgent(nativeRepastScontext);
             } catch (final CabsfInitializationRuntimeException e) {
                 throw new CabsfInitializationRuntimeException(
                         "Cabsf initialization error in agent: " + this.getClass()
-                                + " hash: " + this.hashCode(), e);
+                        + " hash: " + this.hashCode(), e);
             }
         }
         // ////////////////////////////////
@@ -277,6 +268,9 @@ public class GameAdministrator {
         playerPairingsIterator = playerPairings.entrySet().iterator();
 
         gameInitialized = true;
+
+        System.out.println("[Game Administrator] Number of Player pairings: "
+                + String.valueOf(playerPairings.size()));
 
     }
 
@@ -377,12 +371,10 @@ public class GameAdministrator {
         if (!gameInitialized) {
             initializeOverallTournament();
             initializePairing();
+
+            assert (playerPairings != null);
         }
 
-        if (playerPairings != null) {
-            System.out.println("[Game Administrator] Number of Player pairings: "
-                    + String.valueOf(playerPairings.size()));
-        }
         if (previousPairingPlayerA != null) {
             nativeRepastScontext.remove(previousPairingPlayerA);
         }
@@ -392,7 +384,9 @@ public class GameAdministrator {
 
         round += 1; // Start counting at round 1
         System.out.println("[Game Administrator] Starting Round: "
-                + String.valueOf(round));
+                + String.valueOf(round) + " Player A - Player "
+                + String.valueOf(playerA.getPlayerNumber()) + " Player - Player "
+                + String.valueOf(playerB.getPlayerNumber()));
 
         final DECISION decision0 = playerA.decide();
         final DECISION decision1 = playerB.decide();
@@ -444,5 +438,4 @@ public class GameAdministrator {
         }
 
     }
-
 }

@@ -10,6 +10,8 @@ import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitial
 import org.opensimulationsystems.cabsf.common.model.context.AgentContext;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 
+import repast.simphony.context.Context;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Repast Simphony Agent Context.
@@ -74,8 +76,12 @@ public class CabsfRepastS_AgentContext extends AgentContext {
      * cabsfRepastS_AgentContext) {
      */
     public CABSF_SIMULATION_DISTRIBUATION_TYPE initializeCabsfAgent(
-            final Iterable<Class> simulationAgentsClasses,
-            final Iterable<Object> cabsfRepastContextIterable) {
+            final Context nativeRepastScontext) {
+        final Iterable<Class> simulationAgentsClasses = nativeRepastScontext
+                .getAgentTypes();
+        final Iterable<Object> cabsfRepastContextIterable = nativeRepastScontext
+                .getAgentLayer(RepastS_SimulationRunContext.class);
+
         // Get a hold of the REpast Simulation Run Context. The agent authors
         // only use
         // this API class.

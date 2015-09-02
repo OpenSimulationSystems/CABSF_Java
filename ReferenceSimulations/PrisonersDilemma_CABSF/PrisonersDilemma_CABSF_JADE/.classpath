@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CommonAgentBasedSimulationFramework"/>
 	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/combinatoricslib-2.1.jar"/>
 	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/commons-pool2-2.0.jar"/>
 	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/guava-18.0.jar"/>
@@ -14,5 +13,6 @@
 	<classpathentry kind="lib" path="/CommonAgentBasedSimulationFramework/lib/xml-apis.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JADE_Controller_Agent"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PrisonersDilemma_CABSF_Repast"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CommonAgentBasedSimulationFramework"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

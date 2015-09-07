@@ -74,7 +74,7 @@ public class SimulationInitializationHelper {
 		// Cache the message exchange template from the file system
 		try {
 			simulationRunGroupContext
-			.setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
+			.setupCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
 					.createCachedMessageExchangeTemplateWithPlaceholders());
 		} catch (final JDOMException e) {
 			throw new CabsfInitializationRuntimeException(

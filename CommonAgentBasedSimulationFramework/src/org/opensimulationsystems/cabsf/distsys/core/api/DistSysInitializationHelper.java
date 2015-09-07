@@ -70,7 +70,7 @@ public class DistSysInitializationHelper {
 		// Cache the message exchange template from the file system
 		try {
 			simulationRunGroupConfiguration
-					.setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
+					.setupCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
 							.createCachedMessageExchangeTemplateWithPlaceholders());
 		} catch (final JDOMException e) {
 			throw new CabsfInitializationRuntimeException(

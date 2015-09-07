@@ -150,8 +150,7 @@ public class Player {
         // FIXME: Support multiple distributed system managers/provide method
         // for getting the appropriate one.
         final SimulationDistributedSystemManager dsm = gameAdministrator
-                .getRepastS_AgentContext().getRepastS_SimulationRunContext()
-                .getSimulationDistributedSystemManager(this);
+                .getRepastS_AgentContext().getSimulationDistributedSystemManager(this);
         final AgentMapping am = dsm.getAgentMappingForObject(this.getPlayerParent());
         assert (am != null);
 
@@ -164,10 +163,11 @@ public class Player {
 
         // Communicate the local environment information for this agent to the
         // distributed agent (agent model)
-        // LOW: Add support for merging multiple messages bound for different
+        // LOW (CABSF developers only): Add support for merging multiple
+        // messages bound for different
         // agents
         gameAdministrator.getPrisonersDilemma_CABSF()
-                .sendMsgFromSimAgentToDistributedAgentModel(loggingPrefix,
+        .sendMsgFromSimAgentToDistributedAgentModel(loggingPrefix,
                 this.getPlayerParent(), round, otherPlayerLastDecision,
                 myDecision);
 
@@ -177,8 +177,8 @@ public class Player {
 
         final int distributedAgentsRoundNumber = gameAdministrator
                 .getPrisonersDilemma_CABSF().getRoundNumber(
-                        msg.getNextDistributedAutonomousAgent(msg.getDocument(), null),
-                        msg);
+                        msg.getNextDistributedSoftwareAgentElement(msg.getDocument(),
+                                null), msg);
         assert (round == distributedAgentsRoundNumber);
 
         System.out.println(loggingPrefix
@@ -188,8 +188,8 @@ public class Player {
 
         final DECISION thisPlayersDecision = gameAdministrator
                 .getPrisonersDilemma_CABSF().getThisPlayerDecision(
-                        msg.getNextDistributedAutonomousAgent(msg.getDocument(), null),
-                        msg);
+                        msg.getNextDistributedSoftwareAgentElement(msg.getDocument(),
+                                null), msg);
 
         return thisPlayersDecision;
     }

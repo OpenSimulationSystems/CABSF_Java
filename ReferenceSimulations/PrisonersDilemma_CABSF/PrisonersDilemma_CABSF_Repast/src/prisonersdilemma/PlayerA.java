@@ -32,7 +32,7 @@ public class PlayerA extends Player {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see prisonersdilemma.Player#decide()
      */
     @Override
@@ -43,7 +43,11 @@ public class PlayerA extends Player {
                     this.gameAdministrator.getRound(),
                     this.gameAdministrator.getPreviousRoundPlayerBDecision(), null);
         } else {
-            // For purposes of testing with the GUI (non-CABSF functionality)
+            // Else it's Non-Distributed. Make the decision in RepastS for where
+            // to
+            // move the agent to, without asking the distributed agent
+            // model
+            // (in JADE)
             return DECISION.COOPERATE;
         }
 

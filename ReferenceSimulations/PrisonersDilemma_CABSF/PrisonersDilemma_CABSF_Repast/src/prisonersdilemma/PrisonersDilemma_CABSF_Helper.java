@@ -12,18 +12,20 @@ import org.jdom2.output.XMLOutputter;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 import org.opensimulationsystems.cabsf.common.model.AgentMapping;
 import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.model.context.AgentContext;
+import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext_Cabsf;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
+// TODO: Auto-generated Javadoc
 /**
- * Convenience class provided to the simulation and agent authors. Unlike all
- * other classes, this class has references to both the Repast Agent Context and
- * JADE Agent Context. This allows all common shared JZombies-specific code to
- * be in one place.
+ *
+ * The simulation-specific convenience class for the PrisonersDilemma_CABSF
+ * simulation. Contains methods to populate, read, and send FrameworkMessage
+ * messages. This helper method is used by both the RepastS and JADE agents for
+ * populating the messages in the XML.
  *
  * @author Jorge Calderon
  * @version 0.1
@@ -34,54 +36,57 @@ public class PrisonersDilemma_CABSF_Helper {
     /** The element filter used when querying the XML. */
     private final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
 
-    /** The CabsfRepastS_AgentContext context. */
-    private CabsfRepastS_AgentContext cabsfRepastS_AgentContext;
+    /** The RepastS_AgentContext_Cabsf context. */
+    private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf;
 
-    /** The namespace string. */
+    // TODO: Get this from the configuration
     private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
-
-    // LOW: Add support in the API for only needing to specify either the
-    // namespace or
-    // namespace string.
-    /** The namespace. */
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
-    /** The JADE_MAS_AgentContext context. */
-    private JADE_MAS_AgentContext jade_MAS_AgentContext;
+    /** The Jade_AgentContext_Cabsf context. */
+    private Jade_AgentContext_Cabsf jade_AgentContext;
 
-    /** The agent context. */
-    private final AgentContext agentContext;
+    private String frameworkConfigurationFileName;
 
     /**
-     * Instantiates a new PrisonersDilemma_CABSF_Helper.
+     * Instantiates a new PrisonersDilemma_CABSF_Helper for the calling JADE
+     * agent. This method should only be called by JADE agents.
      *
-     * @param cabsfRepastS_AgentContext
-     *            the CabsfRepastS_AgentContext context
+     * @param jade_AgentContext
+     *            the Jade_AgentContext_Cabsf
+     * @param frameworkConfigurationFileName
+     *            the framework configuration file name. May be null, as the
+     *            configuration file is not required in the JADE agents, only
+     *            the JCA and the RepastS simulation.
      */
-    public PrisonersDilemma_CABSF_Helper(
-            final CabsfRepastS_AgentContext cabsfRepastS_AgentContext) {
-        this.cabsfRepastS_AgentContext = cabsfRepastS_AgentContext;
-        agentContext = cabsfRepastS_AgentContext;
+    public PrisonersDilemma_CABSF_Helper(final Jade_AgentContext_Cabsf jade_MAS_AgentContext,
+            final String frameworkConfigurationFileName) {
+        this.jade_AgentContext = jade_MAS_AgentContext;
+        this.frameworkConfigurationFileName = frameworkConfigurationFileName;
+
+        try {
+            jade_MAS_AgentContext
+            .initializeJadeAgentForCabsf(frameworkConfigurationFileName);
+        } catch (final JDOMException | IOException e) {
+            throw new CabsfInitializationRuntimeException(
+                    "Error initializing JADE agent", e);
+
+        }
     }
 
     /**
-     * Instantiates a new PrisonersDilemma_CABSF_Helper.
+     * Instantiates a new PrisonersDilemma_CABSF_Helper for the calling RepastS
+     * agent. This method should only be called by RepastS agents.
+     * <p/>
+     * The framework configuration filename is not parameter as that
+     * configuration is handled by the RSSR, for the simulation side.
      *
-     * @param jade_MAS_AgentContext
-     *            the JADE_MAS_AgentContext context
+     * @param repastS_AgentContext_Cabsf
+     *            the RepastS_AgentContext_Cabsf context
      */
-    public PrisonersDilemma_CABSF_Helper(final JADE_MAS_AgentContext jade_MAS_AgentContext) {
-        this.jade_MAS_AgentContext = jade_MAS_AgentContext;
-        agentContext = jade_MAS_AgentContext;
-        try {
-            jade_MAS_AgentContext.initializeCabsfAgent("TEST");
-        } catch (final JDOMException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public PrisonersDilemma_CABSF_Helper(
+            final RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf) {
+        this.repastS_AgentContext_Cabsf = repastS_AgentContext_Cabsf;
     }
 
     /**
@@ -217,7 +222,7 @@ public class PrisonersDilemma_CABSF_Helper {
     }
 
     /**
-     * Populate Prison�r's Dilemma FrameworkMessage which wraps the XML message
+     * Populate Prison�r's Dilemma FrameworkMessage which wraps the XML message.
      *
      * @param msg
      *            the FrameworkMessage to update
@@ -261,11 +266,11 @@ public class PrisonersDilemma_CABSF_Helper {
      *            the my decision
      */
     public void sendMsgFromSimAgentToDistributedAgentModel(final String loggingPrefix,
-            final Object simAgent, final int round, final DECISION otherPlayerLastDecision,
-            final DECISION myDecision) {
+            final Object simAgent, final int round,
+            final DECISION otherPlayerLastDecision, final DECISION myDecision) {
         // TODO: Add support for multiple distributed systems
         // Get the Agent Mapping
-        final SimulationDistributedSystemManager dsm = cabsfRepastS_AgentContext
+        final SimulationDistributedSystemManager dsm = repastS_AgentContext_Cabsf
                 .getRepastS_SimulationRunContext().getSimulationDistributedSystemManager(
                         simAgent);
         final AgentMapping am = dsm.getAgentMappingForObject(simAgent);
@@ -275,21 +280,21 @@ public class PrisonersDilemma_CABSF_Helper {
         // Construct FrameworkMessage to send to the distributed agent
         final FrameworkMessage msg = new FrameworkMessageImpl(
                 SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                agentContext.getBlankCachedMessageExchangeTemplate());
-        assert (cabsfRepastS_AgentContext.getRepastS_SimulationRunContext()
+                jade_AgentContext.getBlankCachedMessageExchangeTemplate());
+        assert (repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
                 .getCachedDistributedAutonomousAgentTemplate() != null);
 
         // Get the distributed autonomous agent and set the ID
         final Element distributedAutonomousAgentElement = msg
-                .getNextDistributedAutonomousAgent(msg.getDocument(),
-                        agentContext.getCachedDistributedAutonomousAgentTemplate());
+                .getNextDistributedSoftwareAgentElement(msg.getDocument(),
+                        jade_AgentContext.getCachedDistributedAutonomousAgentTemplate());
         msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
                 am.getSoftwareAgentID());
 
         // Get the agent model actor and set the ID
         final Element agentModelActor = msg.getNextAgentModelActor(
                 distributedAutonomousAgentElement,
-                agentContext.getCachedAgentModelActorTemplate());
+                jade_AgentContext.getCachedAgentModelActorTemplate());
         msg.setIDForActorInAgentModel(agentModelActor, am.getAgentModelID());
 
         // TODO: First get the distributed system manager section.
@@ -306,10 +311,10 @@ public class PrisonersDilemma_CABSF_Helper {
                         .getRootElement(), true));
 
         // The message has been constructed, now send it over the wire
-        cabsfRepastS_AgentContext.getRepastS_SimulationRunContext()
+        repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
         .messageDistributedSystems(
                 msg,
-                cabsfRepastS_AgentContext.getRepastS_SimulationRunContext()
+                repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
                 .getSimulationRunContext());
     }
 

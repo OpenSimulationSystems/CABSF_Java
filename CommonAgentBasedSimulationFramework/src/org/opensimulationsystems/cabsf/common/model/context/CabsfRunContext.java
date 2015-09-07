@@ -7,6 +7,6 @@ package org.opensimulationsystems.cabsf.common.model.context;
  * @version 0.1
  * @since 0.1
  */
-public class CabsfRunContext extends AbstractContext {
+public class CabsfRunContext extends AbstractContext_Cabsf {
 
 }

@@ -11,8 +11,8 @@ import java.util.Set;
 
 import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATION_TYPE;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext_Cabsf;
 import org.paukov.combinatorics.Factory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
@@ -95,8 +95,8 @@ public class GameAdministrator {
     /** The player G in the current pairing. */
     private PlayerB playerB;
 
-    /** The CabsfRepastS_AgentContext. */
-    private CabsfRepastS_AgentContext cabsfRepastS_AgentContext = null;
+    /** The RepastS_AgentContext_Cabsf. */
+    private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf = null;
 
     /** The simulation type. */
     private CABSF_SIMULATION_DISTRIBUATION_TYPE cabsfSimulationType;
@@ -191,12 +191,12 @@ public class GameAdministrator {
     }
 
     /**
-     * Gets the CabsfRepastS_AgentContext.
+     * Gets the RepastS_AgentContext_Cabsf.
      *
-     * @return the CabsfRepastS_AgentContext
+     * @return the RepastS_AgentContext_Cabsf
      */
-    public CabsfRepastS_AgentContext getRepastS_AgentContext() {
-        return cabsfRepastS_AgentContext;
+    public RepastS_AgentContext_Cabsf getRepastS_AgentContext() {
+        return repastS_AgentContext_Cabsf;
     }
 
     /**
@@ -237,14 +237,14 @@ public class GameAdministrator {
 
         if (cabsfSimulationType == null) {
             nativeRepastScontext = RunState.getInstance().getMasterContext();
-            cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
+            repastS_AgentContext_Cabsf = RepastS_AgentAdapterAPI.getInstance()
                     .getAgentContext();
             prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(
-                    cabsfRepastS_AgentContext);
+                    repastS_AgentContext_Cabsf);
 
             try {
-                cabsfSimulationType = cabsfRepastS_AgentContext
-                        .initializeCabsfAgent(nativeRepastScontext);
+                cabsfSimulationType = repastS_AgentContext_Cabsf
+                        .initializeRepastSagentForCabsf(nativeRepastScontext);
             } catch (final CabsfInitializationRuntimeException e) {
                 throw new CabsfInitializationRuntimeException(
                         "Cabsf initialization error in agent: " + this.getClass()
@@ -252,6 +252,7 @@ public class GameAdministrator {
             }
         }
         // ////////////////////////////////
+
         // ////////////////////////////////
 
         final Iterable<Player> players = RunState.getInstance().getMasterContext()

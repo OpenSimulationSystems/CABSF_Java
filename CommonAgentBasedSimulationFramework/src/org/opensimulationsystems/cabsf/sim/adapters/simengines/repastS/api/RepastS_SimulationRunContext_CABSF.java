@@ -31,7 +31,7 @@ import repast.simphony.context.Context;
  * @version 0.1
  * @since 0.1
  */
-public class RepastS_SimulationRunContext {
+public class RepastS_SimulationRunContext_CABSF {
 
     /** The simulation run context. */
     private SimulationRunContext simulationRunContext;
@@ -44,13 +44,13 @@ public class RepastS_SimulationRunContext {
     Set<SimulationDistributedSystemManager> simulationDistributedSystemManagers = new HashSet<SimulationDistributedSystemManager>();
 
     /** The repast s_ simulation run group context. */
-    private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
+    private RepastS_SimulationRunGroupContext_CABSF repastS_SimulationRunGroupContext_CABSF;
 
     /**
      * Instantiates a new repast s_ simulation run context.
      */
     @SuppressWarnings("unused")
-    private RepastS_SimulationRunContext() {
+    private RepastS_SimulationRunContext_CABSF() {
 
     }
 
@@ -60,7 +60,8 @@ public class RepastS_SimulationRunContext {
      * @param simulationRunContext
      *            the simulation run context
      */
-    public RepastS_SimulationRunContext(final SimulationRunContext simulationRunContext) {
+    public RepastS_SimulationRunContext_CABSF(
+            final SimulationRunContext simulationRunContext) {
         this.simulationRunContext = simulationRunContext;
 
         // TODO: Make initialized based on configuration. For now, hard code one
@@ -83,7 +84,7 @@ public class RepastS_SimulationRunContext {
     }
 
     // TODO: These can probably be removed now that we added the abstract
-    // AgentContext
+    // AgentContext_Cabsf
     /**
      * Gets the blank cached message exchange template.
      *
@@ -129,7 +130,7 @@ public class RepastS_SimulationRunContext {
      *
      * @return the current repast context
      */
-    public Context<Object> getCurrentRepastContext() {
+    public Context<Object> getCurrentNativeRepastScontext() {
         return repastS_ContextForThisRun;
     }
 
@@ -138,8 +139,8 @@ public class RepastS_SimulationRunContext {
      *
      * @return the repast s_ simulation run group context
      */
-    public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
-        return repastS_SimulationRunGroupContext;
+    public RepastS_SimulationRunGroupContext_CABSF getRepastS_SimulationRunGroupContext() {
+        return repastS_SimulationRunGroupContext_CABSF;
     }
 
     /**
@@ -246,12 +247,12 @@ public class RepastS_SimulationRunContext {
     /**
      * Sets the repast run group context.
      *
-     * @param repastS_SimulationRunGroupContext
+     * @param repastS_SimulationRunGroupContext_CABSF
      *            the new repast run group context
      */
     public void setRepastRunGroupContext(
-            final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext) {
-        this.repastS_SimulationRunGroupContext = repastS_SimulationRunGroupContext;
+            final RepastS_SimulationRunGroupContext_CABSF repastS_SimulationRunGroupContext_CABSF) {
+        this.repastS_SimulationRunGroupContext_CABSF = repastS_SimulationRunGroupContext_CABSF;
     }
 
     /**

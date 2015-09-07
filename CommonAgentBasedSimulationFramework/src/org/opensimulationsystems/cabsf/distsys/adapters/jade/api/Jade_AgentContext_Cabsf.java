@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.MessagingUtilities;
-import org.opensimulationsystems.cabsf.common.model.context.AgentContext;
+import org.opensimulationsystems.cabsf.common.model.context.AgentContext_Cabsf;
 
 /**
  * The JADE MAS Agent Context. This class is used by the JADE agents as the mechanism for
@@ -16,10 +16,10 @@ import org.opensimulationsystems.cabsf.common.model.context.AgentContext;
  * @version 0.1
  * @since 0.1
  */
-public class JADE_MAS_AgentContext extends AgentContext {
+public class Jade_AgentContext_Cabsf extends AgentContext_Cabsf {
 
-	/** The JADE_MAS_AdapterAPI api. */
-	JADE_MAS_AdapterAPI jade_MAS_AdapterAPI;
+	/** The Jade_AdapterAPI api. */
+	Jade_AdapterAPI jade_MAS_AdapterAPI;
 
 	/**
 	 * Initialize cabsf agent.
@@ -31,12 +31,12 @@ public class JADE_MAS_AgentContext extends AgentContext {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public void initializeCabsfAgent(final String frameworkConfigurationFileName)
+	public void initializeJadeAgentForCabsf(final String frameworkConfigurationFileName)
 			throws JDOMException, IOException {
 
 		// TODO: Analyze whether this could can be removed.
 		/*
-		 * JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
+		 * Jade_AdapterAPI jade_MAS_AdapterAPI = Jade_AdapterAPI.getInstance();
 		 *
 		 * try { jade_MAS_RunGroupContext = jade_MAS_AdapterAPI
 		 * .initializeAPI(frameworkConfigurationFileName); } catch (IOException e) { throw
@@ -48,7 +48,7 @@ public class JADE_MAS_AgentContext extends AgentContext {
 		 * jade_MAS_RunGroupContext, isJADE_ControllerAgent);
 		 */
 
-		setCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
+		setupCachedMessageExchangeTemplateWithPlaceholders(MessagingUtilities
 				.createCachedMessageExchangeTemplateWithPlaceholders());
 
 	}

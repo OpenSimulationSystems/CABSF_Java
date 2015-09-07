@@ -8,8 +8,8 @@ import java.io.File;
 import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATION_TYPE;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationAdapterAPI;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunGroupContext;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunContext_CABSF;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunGroupContext_CABSF;
 
 import repast.simphony.batch.BatchScenarioLoader;
 import repast.simphony.context.Context;
@@ -50,10 +50,10 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	private RepastS_SimulationAdapterAPI repastS_SimulationAdapterAPI;
 
 	/** The repast s_ simulation run group context. */
-	private RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext;
+	private RepastS_SimulationRunGroupContext_CABSF repastS_SimulationRunGroupContext_CABSF;
 
 	/** The last repast s_ simulation run context. */
-	private RepastS_SimulationRunContext lastRepastS_SimulationRunContext;
+	private RepastS_SimulationRunContext_CABSF lastRepastS_SimulationRunContext;
 
 	/** The simulation runner type. */
 	private CABSF_SIMULATION_DISTRIBUATION_TYPE simulationRunnerType;
@@ -168,8 +168,8 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 *
 	 * @return the repast s_ run group context
 	 */
-	public RepastS_SimulationRunGroupContext getRepastS_SimulationRunGroupContext() {
-		return repastS_SimulationRunGroupContext;
+	public RepastS_SimulationRunGroupContext_CABSF getRepastS_SimulationRunGroupContext() {
+		return repastS_SimulationRunGroupContext_CABSF;
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		// otherwise run the simulation as a regular Repast Simphony simulation
 		// (programmatically).
 		if (cabsfConfigurationFileName != null) {
-			repastS_SimulationRunGroupContext = repastS_SimulationAdapterAPI
+			repastS_SimulationRunGroupContext_CABSF = repastS_SimulationAdapterAPI
 					.initializeAPI(cabsfConfigurationFileName);
 			simulationRunnerType = CABSF_SIMULATION_DISTRIBUATION_TYPE.DISTRIBUTED;
 		} else {
@@ -250,7 +250,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 	 *
 	 * @return the repast s_ simulation run context
 	 */
-	public RepastS_SimulationRunContext runInitialize(
+	public RepastS_SimulationRunContext_CABSF runInitialize(
 			final boolean executeHandshake) throws Exception {
 		controller.runInitialize(repastS_SimulationAdapterAPI
 				.applyRssrParametersFix(controller, scenarioDir,
@@ -262,13 +262,13 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 		final Context<Object> repastContextForThisRun = RunState.getInstance()
 				.getMasterContext();
 		assert (repastContextForThisRun != null);
-		RepastS_SimulationRunContext repastS_SimulationRunContext = null;
+		RepastS_SimulationRunContext_CABSF repastS_SimulationRunContext_CABSF = null;
 		if (simulationRunnerType == CABSF_SIMULATION_DISTRIBUATION_TYPE.DISTRIBUTED) {
-			repastS_SimulationRunContext = repastS_SimulationAdapterAPI
+			repastS_SimulationRunContext_CABSF = repastS_SimulationAdapterAPI
 					.initializeSimulationRun(repastContextForThisRun,
-							repastS_SimulationRunGroupContext, executeHandshake);
+							repastS_SimulationRunGroupContext_CABSF, executeHandshake);
 			// Fix after expanding to support multiple distributed systems.
-			System.out.println(repastS_SimulationRunContext
+			System.out.println(repastS_SimulationRunContext_CABSF
 					.getSimulationDistributedSystemManagers().iterator().next()
 					.logHelper());
 
@@ -276,7 +276,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 			// interface at the run group level, close after all runs have
 			// executed.
 
-			lastRepastS_SimulationRunContext = repastS_SimulationRunContext;
+			lastRepastS_SimulationRunContext = repastS_SimulationRunContext_CABSF;
 
 			// Now we're ready to start sending the tick information
 		} else {
@@ -286,7 +286,7 @@ public class RepastS_SimulationRunner extends AbstractRunner {
 					controller, scenarioDir, secondProgramArgument);
 		}
 
-		return repastS_SimulationRunContext;
+		return repastS_SimulationRunContext_CABSF;
 	}
 
 	/**

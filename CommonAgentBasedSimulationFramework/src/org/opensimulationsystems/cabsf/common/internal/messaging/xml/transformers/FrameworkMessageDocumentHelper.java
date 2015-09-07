@@ -315,7 +315,7 @@ public class FrameworkMessageDocumentHelper {
 	 *            the cached distributed autonomous agent template
 	 * @return the next distributed autonomous agent
 	 */
-	public Element getNextDistributedAutonomousAgent(final Object doc,
+	public Element getNextDistributedSoftwareAgent(final Object doc,
 			final Element cachedDistributedAutonomousAgentTemplate) {
 		@SuppressWarnings("unchecked")
 		final Element distributedAutonomousAgentsElement = getDistributedAutonomousAgentsElement(doc);
@@ -411,7 +411,7 @@ public class FrameworkMessageDocumentHelper {
 	public List<String> getSelfLocationFromNextDistributedAutonomousAgentNextAgentModelActor(
 			final FrameworkMessage msg) {
 		final Element distributedAutonomousAgentElement = msg
-				.getNextDistributedAutonomousAgent(msg.getDocument(), null);
+				.getNextDistributedSoftwareAgentElement(msg.getDocument(), null);
 
 		return getSelfLocationFromFirstAgentModel(distributedAutonomousAgentElement, msg);
 	}

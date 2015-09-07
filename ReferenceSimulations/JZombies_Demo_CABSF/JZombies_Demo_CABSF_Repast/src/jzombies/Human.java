@@ -10,8 +10,8 @@ import org.opensimulationsystems.cabsf.common.model.AgentMapping;
 import org.opensimulationsystems.cabsf.common.model.CABSF_SIMULATION_DISTRIBUATION_TYPE;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
 import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentAdapterAPI;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext_Cabsf;
 import org.opensimulationsystems.cabsf.sim.core.api.distributedsystems.SimulationDistributedSystemManager;
 
 import repast.simphony.context.Context;
@@ -44,8 +44,7 @@ import repast.simphony.util.SimUtilities;
  *
  *
  * @author nick
- * @author Jorge Calderon (modified Human class for integrating with the CABSF
- *         and therefore JADE)
+ * @author Jorge Calderon (modified Human class to integrate with CABSF)
  */
 public class Human {
     /** The space. */
@@ -69,7 +68,7 @@ public class Human {
 
     // CABSF's own RepastS agent context, different from the native RepastS
     // context.
-    private CabsfRepastS_AgentContext cabsfRepastS_AgentContext = null;
+    private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf = null;
 
     private CABSF_SIMULATION_DISTRIBUATION_TYPE cabsfSimulationType;
 
@@ -96,12 +95,12 @@ public class Human {
     }
 
     /**
-     * Gets the CabsfRepastS_AgentContext
+     * Gets the RepastS_AgentContext_Cabsf
      *
-     * @return the CabsfRepastS_AgentContext
+     * @return the RepastS_AgentContext_Cabsf
      */
-    public CabsfRepastS_AgentContext getCabsfRepastS_AgentContext() {
-        return cabsfRepastS_AgentContext;
+    public RepastS_AgentContext_Cabsf getCabsfRepastS_AgentContext() {
+        return repastS_AgentContext_Cabsf;
     }
 
     /**
@@ -135,7 +134,8 @@ public class Human {
     }
 
     /**
-     * The step method for the Human.
+     * The step method for the Human. In other simulations, the equivalent
+     * method is usually called "step".
      */
     @Watch(watcheeClassName = "jzombies.Zombie", watcheeFieldNames = "moved", query = "within_vn 1", whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
     public void run() {
@@ -144,14 +144,13 @@ public class Human {
         // simulation
         if (cabsfSimulationType == null) {
             nativeRepastScontext = RunState.getInstance().getMasterContext();
-            cabsfRepastS_AgentContext = RepastS_AgentAdapterAPI.getInstance()
+            repastS_AgentContext_Cabsf = RepastS_AgentAdapterAPI.getInstance()
                     .getAgentContext();
-            jZombies_CABSF_Helper = new JZombies_CABSF_Helper(cabsfRepastS_AgentContext);
+            jZombies_CABSF_Helper = new JZombies_CABSF_Helper(repastS_AgentContext_Cabsf);
 
             try {
-                this.getClass().getClassLoader();
-                cabsfSimulationType = cabsfRepastS_AgentContext
-                        .initializeCabsfAgent(nativeRepastScontext);
+                cabsfSimulationType = repastS_AgentContext_Cabsf
+                        .initializeRepastSagentForCabsf(nativeRepastScontext);
             } catch (final CabsfInitializationRuntimeException e) {
                 throw new CabsfInitializationRuntimeException(
                         "Cabsf initialization error in agent: " + this.getClass()
@@ -184,10 +183,9 @@ public class Human {
 
         // /////////////////////////////////////////////
         // Section Added to the CABSF-wired version of the JZombies
-        // simulation
+        // simulation to call the corresponding distributed agent.
         if (cabsfSimulationType == CABSF_SIMULATION_DISTRIBUATION_TYPE.DISTRIBUTED) {
-            final SimulationDistributedSystemManager dsm = cabsfRepastS_AgentContext
-                    .getRepastS_SimulationRunContext()
+            final SimulationDistributedSystemManager dsm = repastS_AgentContext_Cabsf
                     .getSimulationDistributedSystemManager(this);
             final AgentMapping am = dsm.getAgentMappingForObject(this);
 
@@ -205,7 +203,7 @@ public class Human {
 
             // LOW: (for CABSF developers only) Move to simultaneous processing
             // of these messages?
-            final FrameworkMessage msgFromDistSys = cabsfRepastS_AgentContext
+            final FrameworkMessage msgFromDistSys = repastS_AgentContext_Cabsf
                     .readFrameworkMessageFromDistributedSystem();
 
             System.out.println(loggingPrefix
@@ -233,9 +231,9 @@ public class Human {
             assert (moveTowardsPoint != null);
 
         }
-        // Non-Distributed. Make the decision in RepastS for where to move the
-        // Human
-        // agent to, without asking the JADE agent's agent model.
+        // Else it's Non-Distributed. Make the decision in RepastS for where to
+        // move the Human agent to, without asking the distributed agent model
+        // (in JADE)
         else {
             moveTowardsPoint = pointWithLeastZombies;
         }

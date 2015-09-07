@@ -16,14 +16,14 @@ import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilitie
 import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_RunContext;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AdapterAPI;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_RunContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.opensimulationsystems.cabsf.distsys.mas.mocks.MockHumanJADE_Agent;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.CabsfRepastS_AgentContext;
-import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunGroupContext;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_AgentContext_Cabsf;
+import org.opensimulationsystems.cabsf.sim.adapters.simengines.repastS.api.RepastS_SimulationRunGroupContext_CABSF;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationAPI;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunContext;
 import org.opensimulationsystems.cabsf.sim.core.api.SimulationRunGroupContext;
@@ -40,50 +40,12 @@ public class XMLTests implements JadeControllerInterface {
     static private String simToolNameToSetInSimulationAPI;
     private static JZombies_CABSF_Helper jZombies_CABSF_Helper;
     private static PrisonersDilemma_CABSF_Helper prisonersDilemma_CABSF_Helper;
-    static JADE_MAS_AgentContext jade_MAS_AgentContext;
-    static private CabsfRepastS_AgentContext cabsfRepastS_AgentContext;
+    static Jade_AgentContext_Cabsf jade_MAS_AgentContext;
+    static private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf;
 
-    private static JADE_MAS_RunContext jade_MAS_RunContext;
+    private static Jade_RunContext jade_MAS_RunContext;
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        cabsfRepastS_AgentContext = new CabsfRepastS_AgentContext();
-        cabsfRepastS_AgentContext.setBypassRepastRuntimeForTestingPurposes(true);
-        cabsfRepastS_AgentContext.initializeCabsfAgent(null);
-
-        final JADE_MAS_AdapterAPI jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
-        jade_MAS_AdapterAPI.initializeAPI("TEMP");
-        // jade_MAS_RunContext =
-        // jade_MAS_AdapterAPI.initializeSimulationRun(null,
-        // jade_MAS_RunGroupContext, instance);
-        jade_MAS_RunContext = new JADE_MAS_RunContext(null);
-
-        jZombies_CABSF_Helper = new JZombies_CABSF_Helper(cabsfRepastS_AgentContext);
-        prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(
-                cabsfRepastS_AgentContext);
-
-        jade_MAS_AgentContext = new JADE_MAS_AgentContext();
-        jade_MAS_AgentContext.initializeCabsfAgent("TEST");
-
-        simulationAPI = SimulationAPI.getInstance();
-        simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
-        simulationRunGroupContext = null;
-        simulationRunContext = null;
-
-        try {
-            simulationRunGroupContext = simulationAPI.initializeAPI("TEMP",
-                    simToolNameToSetInSimulationAPI);
-        } catch (final IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
-                simulationRunGroupContext);
-        cabsfRepastS_AgentContext
-        .setRepastS_SimulationRunGroupContext(repastS_SimulationRunGroupContext);
-
-    }
+    private static String frameworkConfigurationFileName;
 
     /*
      * static private Document documentTemplateInstance = null; static private
@@ -205,6 +167,47 @@ public class XMLTests implements JadeControllerInterface {
      * location.getChild("GridPointY", namespace).setText(GridPointY); return
      * location; }
      */
+
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        repastS_AgentContext_Cabsf = new RepastS_AgentContext_Cabsf();
+        repastS_AgentContext_Cabsf.testOnly_setBypassRepastSruntime(true);
+        repastS_AgentContext_Cabsf.initializeRepastSagentForCabsf(null);
+        frameworkConfigurationFileName = "TEST_configuration_file";
+
+        final Jade_AdapterAPI jade_MAS_AdapterAPI = Jade_AdapterAPI.getInstance();
+        jade_MAS_AdapterAPI.initializeAPI("TEMP");
+        // jade_MAS_RunContext =
+        // jade_MAS_AdapterAPI.initializeSimulationRun(null,
+        // jade_MAS_RunGroupContext, instance);
+        jade_MAS_RunContext = new Jade_RunContext(null);
+
+        jZombies_CABSF_Helper = new JZombies_CABSF_Helper(repastS_AgentContext_Cabsf);
+        prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(
+                repastS_AgentContext_Cabsf);
+
+        jade_MAS_AgentContext = new Jade_AgentContext_Cabsf();
+        jade_MAS_AgentContext.initializeJadeAgentForCabsf("TEST");
+
+        simulationAPI = SimulationAPI.getInstance();
+        simToolNameToSetInSimulationAPI = "REPAST_SIMPHONY";
+        simulationRunGroupContext = null;
+        simulationRunContext = null;
+
+        try {
+            simulationRunGroupContext = simulationAPI.initializeAPI("TEMP",
+                    simToolNameToSetInSimulationAPI);
+        } catch (final IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        final RepastS_SimulationRunGroupContext_CABSF repastS_SimulationRunGroupContext_CABSF = new RepastS_SimulationRunGroupContext_CABSF(
+                simulationRunGroupContext);
+        repastS_AgentContext_Cabsf
+        .testOnly_setRepastS_SimulationRunGroupContext(repastS_SimulationRunGroupContext_CABSF);
+
+    }
 
     String xmlString = "<DistributedAutonomousAgent xmlns=\"http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0\"\r\n"
             + "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n"
@@ -336,7 +339,7 @@ public class XMLTests implements JadeControllerInterface {
 
         // Get the distributed autonomous agent element and set the ID
         final Element distributedAutonomousAgentElement = msg
-                .getNextDistributedAutonomousAgent(msg.getDocument(),
+                .getNextDistributedSoftwareAgentElement(msg.getDocument(),
                         simulationRunGroupContext
                         .getCachedDistributedAutonomousAgentTemplate());
         msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
@@ -426,7 +429,7 @@ public class XMLTests implements JadeControllerInterface {
         msg.addDistributedAutonomousAgent(msg.getDocument(),
                 distributedAutonomousAgentElement, true);
 
-        new JADE_MAS_AgentContext();
+        new Jade_AgentContext_Cabsf();
 
         msg.getSelfLocationFromFirstAgentModel(distributedAutonomousAgentElement, msg);
 
@@ -444,7 +447,7 @@ public class XMLTests implements JadeControllerInterface {
     public void testReceiveMessageInJADEAgent() {
         final NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
                 "DistSys1", "DistributedSystemAutonomousAgent1",
-                "DistributedAgentModel1", "Human");
+                "DistributedAgentModel1", "Human", frameworkConfigurationFileName);
         try {
             final String messageID = UUID.randomUUID().toString();
             final String distributedAutonomousAgentID = UUID.randomUUID().toString();
@@ -472,13 +475,13 @@ public class XMLTests implements JadeControllerInterface {
     public void testReceiveMessageInPrisonersDilemmaJADEagent() {
         final FrameworkMessage msg = testPopulatePrisonersDilemmaMessageHelper();
 
-        final Element distributedAutonomousAgent = msg.getNextDistributedAutonomousAgent(
-                msg.getDocument(), null);
+        final Element distributedAutonomousAgent = msg
+                .getNextDistributedSoftwareAgentElement(msg.getDocument(), null);
 
         /*
          * Element agentModelActor =
          * msg.getNextAgentModelActor(distributedAutonomousAgent,
-         * cabsfRepastS_AgentContext.getCachedAgentModelActorTemplate());
+         * repastS_AgentContext_Cabsf.getCachedAgentModelActorTemplate());
          */
         final DECISION decision = prisonersDilemma_CABSF_Helper.getOtherPlayerDecision(
                 distributedAutonomousAgent, msg);

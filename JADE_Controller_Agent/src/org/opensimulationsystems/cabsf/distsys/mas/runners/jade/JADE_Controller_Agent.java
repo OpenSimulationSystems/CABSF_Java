@@ -20,9 +20,9 @@ import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfChecked
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AdapterAPI;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_RunContext;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_RunGroupContext;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AdapterAPI;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_RunContext;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_RunGroupContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.CabsfDistributedJADEagentWrapper;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
@@ -102,13 +102,13 @@ public class JADE_Controller_Agent extends jade.core.Agent {
     // All of these fields below are available to the inner class
 
     /** The setJade_MAS_RunContext group context. */
-    private static JADE_MAS_RunGroupContext jade_MAS_RunGroupContext;
+    private static Jade_RunGroupContext jade_MAS_RunGroupContext;
 
     /** The jade_ MAS_ adapter api. */
-    static private JADE_MAS_AdapterAPI jade_MAS_AdapterAPI;
+    static private Jade_AdapterAPI jade_MAS_AdapterAPI;
 
     /** The setJade_MAS_RunContext context. */
-    private JADE_MAS_RunContext jade_MAS_RunContext;
+    private Jade_RunContext jade_MAS_RunContext;
 
     /** The framework configuration file name. */
     String frameworkConfigurationFileName = null;
@@ -242,7 +242,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
      *
      * @return the jade_ MAS_ adapter api
      */
-    public final JADE_MAS_AdapterAPI getJade_MAS_AdapterAPI() {
+    public final Jade_AdapterAPI getJade_MAS_AdapterAPI() {
         return jade_MAS_AdapterAPI;
     }
 
@@ -251,7 +251,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
      *
      * @return the setJade_MAS_RunContext context
      */
-    public final JADE_MAS_RunContext getJade_MAS_RunContext() {
+    public final Jade_RunContext getJade_MAS_RunContext() {
         return jade_MAS_RunContext;
     }
 
@@ -261,7 +261,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
      * @param jade_MAS_RunContext
      *            the new setJade_MAS_RunContext context
      */
-    public void setJade_MAS_RunContext(final JADE_MAS_RunContext jade_MAS_RunContext) {
+    public void setJade_MAS_RunContext(final Jade_RunContext jade_MAS_RunContext) {
         this.jade_MAS_RunContext = jade_MAS_RunContext;
     }
 
@@ -288,7 +288,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
                     .println("[JADE Controller Agent] CABSF JADE Controller Agent Configuration file "
                             + frameworkConfigurationFileName);
 
-            jade_MAS_AdapterAPI = JADE_MAS_AdapterAPI.getInstance();
+            jade_MAS_AdapterAPI = Jade_AdapterAPI.getInstance();
             jade_MAS_RunGroupContext = null;
             try {
                 jade_MAS_RunGroupContext = jade_MAS_AdapterAPI
@@ -390,7 +390,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
                 }
             } while (!validationResult);
 
-            final JADE_MAS_RunContext jade_MAS_RunContext = jade_MAS_AdapterAPI
+            final Jade_RunContext jade_MAS_RunContext = jade_MAS_AdapterAPI
                     .initializeSimulationRun(new NativeJADEMockContext(),
                             jade_MAS_RunGroupContext, null, mappedJadeAgents,
                             setupNewRunGroup);

@@ -23,18 +23,18 @@ import org.opensimulationsystems.cabsf.distsys.core.api.DistributedSystemAPI;
  *
  * @author Jorge Calderon
  */
-public class JADE_MAS_AdapterAPI {
+public class Jade_AdapterAPI {
 
     /** The instance. */
-    private static JADE_MAS_AdapterAPI instance = new JADE_MAS_AdapterAPI();
+    private static Jade_AdapterAPI instance = new Jade_AdapterAPI();
 
     // private DistSysRunContext
     /**
      * The singleton
      *
-     * @return single instance of JADE_MAS_AdapterAPI
+     * @return single instance of Jade_AdapterAPI
      */
-    public static JADE_MAS_AdapterAPI getInstance() {
+    public static Jade_AdapterAPI getInstance() {
         return instance;
     }
 
@@ -46,7 +46,7 @@ public class JADE_MAS_AdapterAPI {
     private final String distributedSystemNameToSetInDistributedSystemAPI = "JADE";
 
     /** The jade_ ma s_ run context. */
-    private JADE_MAS_RunContext jade_MAS_RunContext;
+    private Jade_RunContext jade_MAS_RunContext;
 
     /** The jade controller mock. */
     private JadeControllerInterface jadeControllerInterface;
@@ -55,9 +55,9 @@ public class JADE_MAS_AdapterAPI {
     private Agent jadeControllerAgent;
 
     /**
-     * Instantiates a new JADE_MAS_AdapterAPI.
+     * Instantiates a new Jade_AdapterAPI.
      */
-    private JADE_MAS_AdapterAPI() {
+    private Jade_AdapterAPI() {
         super();
     }
 
@@ -73,7 +73,7 @@ public class JADE_MAS_AdapterAPI {
     @SuppressWarnings("unused")
     private void assignJadeAgentsToDistributedAutonomousAgents(
             final Set<NativeDistributedAutonomousAgent> jadeAgents,
-            final JADE_MAS_RunContext jade_MAS_RunContext) {
+            final Jade_RunContext jade_MAS_RunContext) {
         for (final NativeDistributedAutonomousAgent jadeAgent : jadeAgents) {
             assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
         }
@@ -90,7 +90,7 @@ public class JADE_MAS_AdapterAPI {
      */
     private void assignJadeAgentToDistributedAutonomousAgent(
             final NativeDistributedAutonomousAgent jadeAgent,
-            final JADE_MAS_RunContext jade_MAS_RunContext) {
+            final Jade_RunContext jade_MAS_RunContext) {
         distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent,
                 jade_MAS_RunContext.getDistSysRunContext());
     }
@@ -104,7 +104,7 @@ public class JADE_MAS_AdapterAPI {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public JADE_MAS_RunGroupContext initializeAPI(
+    public Jade_RunGroupContext initializeAPI(
             final String frameworkConfigurationFileName) throws IOException {
 
         final DistSysRunGroupContext distSysRunGroupContext = distributedSystemAPI
@@ -112,7 +112,7 @@ public class JADE_MAS_AdapterAPI {
                         distributedSystemNameToSetInDistributedSystemAPI);
 
         // Set the JADE-specific objects, using the Decorator Pattern
-        final JADE_MAS_RunGroupContext jade_MAS_RunGroupContext = new JADE_MAS_RunGroupContext(
+        final Jade_RunGroupContext jade_MAS_RunGroupContext = new Jade_RunGroupContext(
                 distSysRunGroupContext);
 
         return jade_MAS_RunGroupContext;
@@ -120,7 +120,7 @@ public class JADE_MAS_AdapterAPI {
 
     /**
      * Initialize simulation run and creates the JADE MAS Run Context. This
-     * method must be called after the JADE_MAS_RunGroupContext has been
+     * method must be called after the Jade_RunGroupContext has been
      * created.
      *
      * @param nativeJadeContextForThisRun
@@ -133,9 +133,9 @@ public class JADE_MAS_AdapterAPI {
      *            the native agents set
      * @return the JAD e_ ma s_ run context
      */
-    public JADE_MAS_RunContext initializeSimulationRun(
+    public Jade_RunContext initializeSimulationRun(
             final NativeJADEMockContext nativeJadeContextForThisRun,
-            final JADE_MAS_RunGroupContext jade_MAS_RunGroupContext,
+            final Jade_RunGroupContext jade_MAS_RunGroupContext,
             final JadeControllerInterface jadeControllerInterface,
             final Set<NativeDistributedAutonomousAgent> nativeAgentsSet,
             final boolean executeHandshake) {
@@ -146,7 +146,7 @@ public class JADE_MAS_AdapterAPI {
                         jade_MAS_RunGroupContext.getDistSysRunGroupContext());
 
         // User Decorator Pattern for JADE_DistSysRunContext
-        jade_MAS_RunContext = new JADE_MAS_RunContext(distSysRunContext);
+        jade_MAS_RunContext = new Jade_RunContext(distSysRunContext);
         jade_MAS_RunContext.setJadeContextForThisRun(nativeJadeContextForThisRun);
 
         // jade_MAS_RunContext.getDistSysRunContext().getSimulationEngineManager().initializeAgentMappings();

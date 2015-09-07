@@ -161,7 +161,7 @@ public class RepastS_SimulationAdapterAPI {
         if (!shouldApplyRandomSeedContextAddFix(secondProgramArgument)) {
             return false;
         }
-
+        System.out.println("Making two throwaway pseudorandom number generator calls.");
         RandomHelper.nextDouble();
         RandomHelper.nextDouble();
 
@@ -208,7 +208,7 @@ public class RepastS_SimulationAdapterAPI {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public RepastS_SimulationRunGroupContext initializeAPI(
+    public RepastS_SimulationRunGroupContext_CABSF initializeAPI(
             final String cabsfConfigurationFileName) throws IOException {
 
         final SimulationRunGroupContext simulationRunGroupContext = simulationAPI
@@ -216,10 +216,10 @@ public class RepastS_SimulationAdapterAPI {
                         simToolNameToSetInSimulationAPI);
 
         // Set the Repast-Simphony-specific objects, using the Decorator Pattern
-        final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext = new RepastS_SimulationRunGroupContext(
+        final RepastS_SimulationRunGroupContext_CABSF repastS_SimulationRunGroupContext_CABSF = new RepastS_SimulationRunGroupContext_CABSF(
                 simulationRunGroupContext);
 
-        return repastS_SimulationRunGroupContext;
+        return repastS_SimulationRunGroupContext_CABSF;
     }
 
     // LOW: Allow the same simulation agent class to be both distributed and
@@ -231,38 +231,38 @@ public class RepastS_SimulationAdapterAPI {
      *
      * @param nativeRepastScontextForThisRun
      *            the native repast context for this run
-     * @param repastS_SimulationRunGroupContext
+     * @param repastS_SimulationRunGroupContext_CABSF
      *            the repast s_ simulation run group context
      * @param executeHandshake
      *            the execute handshake
      * @return the repast s_ simulation run context
      */
-    public RepastS_SimulationRunContext initializeSimulationRun(
+    public RepastS_SimulationRunContext_CABSF initializeSimulationRun(
             final Context<Object> nativeRepastScontextForThisRun,
-            final RepastS_SimulationRunGroupContext repastS_SimulationRunGroupContext,
+            final RepastS_SimulationRunGroupContext_CABSF repastS_SimulationRunGroupContext_CABSF,
             final boolean executeHandshake) {
         final SimulationRunContext simulationRunContext = simulationAPI
                 .initializeSimulationRun(nativeRepastScontextForThisRun,
-                        repastS_SimulationRunGroupContext.getSimulationRunGroupContext());
+                        repastS_SimulationRunGroupContext_CABSF.getSimulationRunGroupContext());
 
-        // User Decorator Pattern for RepastS_SimulationRunContext
-        final RepastS_SimulationRunContext repastS_SimulationRunContext = new RepastS_SimulationRunContext(
+        // User Decorator Pattern for RepastS_SimulationRunContext_CABSF
+        final RepastS_SimulationRunContext_CABSF repastS_SimulationRunContext_CABSF = new RepastS_SimulationRunContext_CABSF(
                 simulationRunContext);
-        repastS_SimulationRunContext
+        repastS_SimulationRunContext_CABSF
         .setRepastContextForThisRun(nativeRepastScontextForThisRun);
 
-        repastS_SimulationRunContext
-        .setRepastRunGroupContext(repastS_SimulationRunGroupContext);
+        repastS_SimulationRunContext_CABSF
+        .setRepastRunGroupContext(repastS_SimulationRunGroupContext_CABSF);
 
         // Make the context available to the agents in the Repast model
-        nativeRepastScontextForThisRun.add(repastS_SimulationRunContext);
+        nativeRepastScontextForThisRun.add(repastS_SimulationRunContext_CABSF);
 
         // LOW: Support multiple Simulation Run Groups. For now just assume that
         // there's one.
         // LOW: Handle multiple distributed systems
         // TODO: Move distributed system manager to main level? same for on the
         // distributed side (simulation engine manager)
-        repastS_SimulationRunContext.getSimulationDistributedSystemManagers().iterator()
+        repastS_SimulationRunContext_CABSF.getSimulationDistributedSystemManagers().iterator()
         .next().createAgentMappingObjects();
 
         boolean atLeastOneMappingPerformed = false;
@@ -282,7 +282,7 @@ public class RepastS_SimulationAdapterAPI {
             // LOW: Allow individual simulation agent classes to be either
             // simulation-only or representations of distributed agents.
             // TODO: Handle multiple distributed systems
-            if (repastS_SimulationRunContext.getSimulationDistributedSystemManagers()
+            if (repastS_SimulationRunContext_CABSF.getSimulationDistributedSystemManagers()
                     .iterator().next().isAgentClassDistributedType(simulationAgentClass)) {
                 @SuppressWarnings("unchecked")
                 final Class<Object> simulationAgentClazz = simulationAgentClass;
@@ -303,7 +303,7 @@ public class RepastS_SimulationAdapterAPI {
                     atLeastOneMappingPerformed = true;
                     System.out.println("Attempting to map: " + simulationAgent);
                     mapSimulationSideAgent(simulationAgent,
-                            repastS_SimulationRunContext.getSimulationRunContext());
+                            repastS_SimulationRunContext_CABSF.getSimulationRunContext());
                 }
 
                 // TODO: Support partial mappings for one class
@@ -312,7 +312,7 @@ public class RepastS_SimulationAdapterAPI {
                 // configuration are less than the number of agents in the
                 // simulation
                 // runtime.
-                if (repastS_SimulationRunContext.getSimulationRunGroupConfiguration()
+                if (repastS_SimulationRunContext_CABSF.getSimulationRunGroupConfiguration()
                         .getAgentsReadyForSimulationSideMapping().size() > 0) {
                     throw new CabsfRuntimeException(
                             "The number of agent models to be mapped in the CABSF configuration exceed the number of agents instantiated in the simulation runtime, "
@@ -341,7 +341,7 @@ public class RepastS_SimulationAdapterAPI {
             // 1 - Wait for the command from the simulation administrator to
             // start
             // the simulation
-            final FRAMEWORK_COMMAND fc = repastS_SimulationRunContext
+            final FRAMEWORK_COMMAND fc = repastS_SimulationRunContext_CABSF
                     .readFrameworkMessageFromSimulationAdministrator()
                     .getFrameworkToSimulationEngineCommand();
             if (fc != FRAMEWORK_COMMAND.START_SIMULATION) {
@@ -354,15 +354,15 @@ public class RepastS_SimulationAdapterAPI {
             // and is ready to accept messages from the distributed agents.
             final FrameworkMessage msg = new FrameworkMessageImpl(
                     SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                    repastS_SimulationRunContext.getBlankCachedMessageExchangeTemplate());
+                    repastS_SimulationRunContext_CABSF.getBlankCachedMessageExchangeTemplate());
             msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
             // TODO: Loop through the multiple distributed systems
-            repastS_SimulationRunContext.messageDistributedSystems(msg,
-                    repastS_SimulationRunContext.getSimulationRunContext());
+            repastS_SimulationRunContext_CABSF.messageDistributedSystems(msg,
+                    repastS_SimulationRunContext_CABSF.getSimulationRunContext());
 
             // Wait for distributed system to confirm that simulation is ready
             // to begin
-            final STATUS st = repastS_SimulationRunContext
+            final STATUS st = repastS_SimulationRunContext_CABSF
                     .readFrameworkMessageFromDistributedSystem().getStatus();
             // TODO: Identify which distributed system caused the error.
             // TODO: Set these up as checked exceptions?
@@ -374,7 +374,7 @@ public class RepastS_SimulationAdapterAPI {
 
         // The distributed agent (models) have previously been mapped.
         // Now we're ready to perform the steps in the simulation.
-        return repastS_SimulationRunContext;
+        return repastS_SimulationRunContext_CABSF;
     }
 
     /**

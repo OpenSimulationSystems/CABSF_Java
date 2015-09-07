@@ -42,6 +42,11 @@ public class PlayerB extends Player {
                     this.gameAdministrator.getRound(),
                     this.gameAdministrator.getPreviousRoundPlayerADecision(), null);
         } else {
+            // Else it's Non-Distributed. Make the decision in RepastS for where
+            // to
+            // move the agent to, without asking the distributed agent
+            // model
+            // (in JADE)
             return DECISION.DEFECT;
         }
     }

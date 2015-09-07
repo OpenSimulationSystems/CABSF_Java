@@ -26,7 +26,7 @@ import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousage
  * @version 0.1
  * @since 0.1
  */
-public class JADE_MAS_RunContext {
+public class Jade_RunContext {
 
     /** The DistSysRunContext context. */
     private DistSysRunContext distSysRunContext;
@@ -41,10 +41,10 @@ public class JADE_MAS_RunContext {
     private JadeControllerInterface jadeControllerInterface;
 
     /**
-     * Instantiates a new JADE_MAS_RunContext.
+     * Instantiates a new Jade_RunContext.
      */
     @SuppressWarnings("unused")
-    private JADE_MAS_RunContext() {
+    private Jade_RunContext() {
 
     }
 
@@ -53,12 +53,12 @@ public class JADE_MAS_RunContext {
      * the general DistSystRunContext object.
      */
     /**
-     * Instantiates a new JADE_MAS_RunContext.
+     * Instantiates a new Jade_RunContext.
      *
      * @param distSysRunContext
      *            the dist sys run context
      */
-    public JADE_MAS_RunContext(final DistSysRunContext distSysRunContext) {
+    public Jade_RunContext(final DistSysRunContext distSysRunContext) {
         this.distSysRunContext = distSysRunContext;
 
         // TODO: Make initialized based on configuration. For now, hard code one

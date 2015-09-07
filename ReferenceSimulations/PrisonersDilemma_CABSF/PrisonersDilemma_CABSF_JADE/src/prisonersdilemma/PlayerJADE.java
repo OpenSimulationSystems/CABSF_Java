@@ -16,7 +16,7 @@ import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfCheckedException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JADE_MAS_AgentContext;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
 
 /**
  * Convenience class provided to the simulation and agent authors. Unlike all
@@ -43,7 +43,7 @@ public class PlayerJADE extends Agent {
          * Called every time a message comes into the queue to this agent. This
          * is done sequentially due to the fact that a JADE agent only runs a
          * single thread.
-         *
+         * 
          * @see jade.core.behaviours.Behaviour#action()
          */
         @Override
@@ -67,9 +67,9 @@ public class PlayerJADE extends Agent {
                             SYSTEM_TYPE.DISTRIBUTED_SYSTEM, msgStr);
                 } catch (final CabsfCheckedException e) {
                     System.out
-                    .println(logPrefix
-                            + " Error parsing message from the JADE Controller Agent to this agent.  Message: "
-                            + msgStr);
+                            .println(logPrefix
+                                    + " Error parsing message from the JADE Controller Agent to this agent.  Message: "
+                                    + msgStr);
                     doDelete(); // Cleanup and remove this agent from the MAS.
                     e.printStackTrace();
                 }
@@ -80,7 +80,7 @@ public class PlayerJADE extends Agent {
 
                 // Get the distributed autonomous agent element and set the ID
                 Element distributedAutonomousAgentElement = msg
-                        .getNextDistributedAutonomousAgent(msg.getDocument(), null);
+                        .getNextDistributedSoftwareAgentElement(msg.getDocument(), null);
                 msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
                         distributedAutonomousAgentID);
 
@@ -109,9 +109,9 @@ public class PlayerJADE extends Agent {
 
                 // Get the distributed autonomous agent and set the ID
                 distributedAutonomousAgentElement = replyMsg
-                        .getNextDistributedAutonomousAgent(replyMsg.getDocument(),
+                        .getNextDistributedSoftwareAgentElement(replyMsg.getDocument(),
                                 jade_MAS_AgentContext
-                                .getCachedDistributedAutonomousAgentTemplate());
+                                        .getCachedDistributedAutonomousAgentTemplate());
                 replyMsg.setDistributedAutonomousAgentID(
                         distributedAutonomousAgentElement, distributedAutonomousAgentID);
 
@@ -170,8 +170,8 @@ public class PlayerJADE extends Agent {
     /** The log prefix. */
     private String logPrefix;
 
-    /** The JADE_MAS_AgentContext context. */
-    private JADE_MAS_AgentContext jade_MAS_AgentContext;
+    /** The Jade_AgentContext_Cabsf context. */
+    private Jade_AgentContext_Cabsf jade_MAS_AgentContext;
 
     /** The PrisonersDilemma_CABSF_Helper. */
     private PrisonersDilemma_CABSF_Helper prisonersDilemma_CABSF_Helper;
@@ -185,14 +185,24 @@ public class PlayerJADE extends Agent {
     /** The jade controller agent. */
     private AID jadeControllerAgent;
 
+    private String frameworkConfigurationFileName;
+
     /*
      * The agent initialization.
-     *
+     * 
      * @see jade.core.Agent#setup()
      */
     @Override
     protected void setup() {
         logPrefix = "[PlayerJADE " + getAID().getName() + "]";
+
+        final Object[] args = getArguments();
+        if (args != null && args.length > 0) {
+            frameworkConfigurationFileName = (String) args[0];
+            System.out.println(logPrefix + " Configuration file "
+                    + frameworkConfigurationFileName);
+        }
+
         addBehaviour(new PrisonersDilemmaJADE_Server());
 
         /*
@@ -201,13 +211,13 @@ public class PlayerJADE extends Agent {
          * convenience methods for dealing with XML messages coming from the
          * simulation engine/runtime such as Repast Simphony.
          */
-        jade_MAS_AgentContext = new JADE_MAS_AgentContext();
+        jade_MAS_AgentContext = new Jade_AgentContext_Cabsf();
         /*
          * This class contains convenience methods specific to this one
          * simulation.
          */
         prisonersDilemma_CABSF_Helper = new PrisonersDilemma_CABSF_Helper(
-                jade_MAS_AgentContext);
+                jade_MAS_AgentContext, frameworkConfigurationFileName);
         // TODO: Support global JADE naming
         /*
          * The mapping between the JADE agent and RepastS agent actually happens
@@ -259,9 +269,9 @@ public class PlayerJADE extends Agent {
                 }
             } catch (final FIPAException fe) {
                 System.out
-                .println("[JADE Agent "
-                        + getAID().getName()
-                        + "] FIPA error in finding the JADE Controller Agent.  Terminating.");
+                        .println("[JADE Agent "
+                                + getAID().getName()
+                                + "] FIPA error in finding the JADE Controller Agent.  Terminating.");
                 doDelete();
                 fe.printStackTrace();
             } catch (final InterruptedException e) {

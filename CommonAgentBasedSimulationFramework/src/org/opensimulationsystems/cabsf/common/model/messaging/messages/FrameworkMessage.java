@@ -120,7 +120,7 @@ public interface FrameworkMessage {
 	 *            the cache distributed autonomous agent template
 	 * @return the next distributed autonomous agent
 	 */
-	Element getNextDistributedAutonomousAgent(Document doc,
+	Element getNextDistributedSoftwareAgentElement(Document doc,
 			Element cachedDistributedAutonomousAgentTemplate);
 
 	/**
@@ -142,14 +142,14 @@ public interface FrameworkMessage {
 	 * next agent model actor for a given distributed autonomous agent element. The
 	 * actor's own location is in the CommonEnvironmentChanges section.
 	 *
-	 * @param distributedAutononomousAgentElement
+	 * @param distributedSoftwareAgentElement
 	 *            the distributed autononomous agent element
 	 * @param msg
 	 *            the FrameworkMessage
 	 * @return the self location
 	 */
 	List<String> getSelfLocationFromFirstAgentModel(
-			Element distributedAutononomousAgentElement, FrameworkMessage msg);
+			Element distributedSoftwareAgentElement, FrameworkMessage msg);
 
 	/**
 	 * Gets the actor's own location element in the simulation-specific section for the

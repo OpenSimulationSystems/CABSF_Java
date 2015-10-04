@@ -114,6 +114,16 @@ public class FrameworkMessageImpl implements FrameworkMessage {
                 removeChildren);
     }
 
+    @Override
+    public Element getAboutAgentModelElementFromDistributedSoftwareAgentElement(
+            final Element distributedAutonomousAgentElement,
+            final Element cachedAgentModelTemplate, final String agentModelID) {
+        return frameworkMessageDocumentHelper
+                .getAboutAgentModelElementFromDistributedSoftwareAgentElement(
+                        distributedAutonomousAgentElement, cachedAgentModelTemplate,
+                        agentModelID);
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -133,7 +143,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * FrameworkMessage# getDistributedAutonomousAgentElements(java.lang.Object)
      */
     @Override
-    public List<Element> getDistributedAutonomousAgentElements(final Object doc) {
+    public List<Element> getDistributedSoftwareAgentElements(final Object doc) {
         return frameworkMessageDocumentHelper.getDistributedAutonomousAgentElements(doc);
     }
 
@@ -144,7 +154,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * FrameworkMessage# getDistributedAutonomousAgentID(org.jdom2.Element)
      */
     @Override
-    public String getDistributedAutonomousAgentID(
+    public String getDistributedSoftwareAgentID(
             final Element distributedAutononomousAgentElement) {
         return frameworkMessageDocumentHelper
                 .getDistributedAutonomousAgentID(distributedAutononomousAgentElement);
@@ -168,7 +178,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * FrameworkMessage# getFirstAgentModelActorAgentModelID(org.jdom2.Element)
      */
     @Override
-    public String getFirstAgentModelActorAgentModelID(final Element agentModel) {
+    public String getFirstAboutAgentModelID(final Element agentModel) {
         return frameworkMessageDocumentHelper
                 .getFirstAgentModelActorAgentModelID(agentModel);
     }
@@ -203,10 +213,11 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * org.jdom2.Element)
      */
     @Override
-    public Element getNextAgentModelActor(final Object distributedAutonomousAgent,
-            final Element cachedAgentModelTemplate) {
-        return frameworkMessageDocumentHelper.getNextAgentModelActor(
-                distributedAutonomousAgent, cachedAgentModelTemplate);
+    public Element getNextAboutAgentModelFromDistributedSoftwareAgentElement(
+            final Object distributedAutonomousAgent,
+            final Element cachedAgentModelActorTemplate) {
+        return frameworkMessageDocumentHelper.getNextAboutAgentModel(
+                distributedAutonomousAgent, cachedAgentModelActorTemplate);
     }
 
     // FIXME: Need to to rename these two getNext Function so it's obvious they
@@ -220,7 +231,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * org.jdom2.Element)
      */
     @Override
-    public Element getNextDistributedSoftwareAgentElement(final Document doc,
+    public Element getNextMsgForDistributedSoftwareAgentElement(final Document doc,
             final Element cacheDistributedSoftwareAgentTemplate) {
         return frameworkMessageDocumentHelper.getNextDistributedSoftwareAgent(doc,
                 cacheDistributedSoftwareAgentTemplate);
@@ -320,9 +331,18 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * FrameworkMessage# removeDistributedAutonomousAgents(org.jdom2.Document)
      */
     @Override
-    public void removeDistributedAutonomousAgents(final Document CabsfMessageExchangeDoc) {
+    public void removeDistributedSoftwareAgentElements(
+            final Document CabsfMessageExchangeDoc) {
         frameworkMessageDocumentHelper
         .removeDistributedAutonomousAgents(CabsfMessageExchangeDoc);
+
+    }
+
+    @Override
+    public void setAboutAgentModelID(final Element aboutAgentModel,
+            final String agentModelID) {
+        frameworkMessageDocumentHelper
+        .setAboutAgentModelID(aboutAgentModel, agentModelID);
 
     }
 
@@ -334,7 +354,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * java.lang.String)
      */
     @Override
-    public Element setDistributedAutonomousAgentID(
+    public Element setDistributedSoftwareAgentID(
             final Element distributedAutonomousAgent, final String ID) {
         return frameworkMessageDocumentHelper.setDistributedAutonomousAgentID(
                 distributedAutonomousAgent, ID);
@@ -378,8 +398,8 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * java.lang.String)
      */
     @Override
-    public void setIDForActorInAgentModel(final Element actor, final String ID) {
-        frameworkMessageDocumentHelper.setIDForActorInAgentModel(actor, ID);
+    public void setIDForAboutAgentModel(final Element actor, final String ID) {
+        frameworkMessageDocumentHelper.setIDForAboutAgentModel(actor, ID);
     }
 
     /*

@@ -1,10 +1,8 @@
 package prisonersdilemma;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
 import org.jdom2.output.Format;
@@ -12,7 +10,6 @@ import org.jdom2.output.XMLOutputter;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 import org.opensimulationsystems.cabsf.common.model.AgentMapping;
 import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
@@ -59,19 +56,10 @@ public class PrisonersDilemma_CABSF_Helper {
      *            configuration file is not required in the JADE agents, only
      *            the JCA and the RepastS simulation.
      */
-    public PrisonersDilemma_CABSF_Helper(final Jade_AgentContext_Cabsf jade_MAS_AgentContext,
+    public PrisonersDilemma_CABSF_Helper(final Jade_AgentContext_Cabsf jade_AgentContext,
             final String frameworkConfigurationFileName) {
-        this.jade_AgentContext = jade_MAS_AgentContext;
+        this.jade_AgentContext = jade_AgentContext;
         this.frameworkConfigurationFileName = frameworkConfigurationFileName;
-
-        try {
-            jade_MAS_AgentContext
-            .initializeJadeAgentForCabsf(frameworkConfigurationFileName);
-        } catch (final JDOMException | IOException e) {
-            throw new CabsfInitializationRuntimeException(
-                    "Error initializing JADE agent", e);
-
-        }
     }
 
     /**
@@ -101,7 +89,7 @@ public class PrisonersDilemma_CABSF_Helper {
     public DECISION getOtherPlayerDecision(
             final Element distributedAutonomousAgentElement, final FrameworkMessage msg) {
         // FIXME: Why does this have to be an element, and not Document?
-        final Element agentModelActor = msg.getNextAgentModelActor(
+        final Element agentModelActor = msg.getNextAboutAgentModelFromDistributedSoftwareAgentElement(
                 distributedAutonomousAgentElement, null);
         final List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
                 .executeXPath(agentModelActor,
@@ -132,7 +120,7 @@ public class PrisonersDilemma_CABSF_Helper {
     public Integer getRoundNumber(final Element distributedAutonomousAgentElement,
             final FrameworkMessage msg) {
         // FIXME: Why does this have to be an element, and not Document?
-        final Element agentModelActor = msg.getNextAgentModelActor(
+        final Element agentModelActor = msg.getNextAboutAgentModelFromDistributedSoftwareAgentElement(
                 distributedAutonomousAgentElement, null);
         final List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
                 .executeXPath(agentModelActor,
@@ -167,7 +155,7 @@ public class PrisonersDilemma_CABSF_Helper {
     public DECISION getThisPlayerDecision(
             final Element distributedAutonomousAgentElement, final FrameworkMessage msg) {
         // FIXME: Why does this have to be an element, and not Document?
-        final Element agentModelActor = msg.getNextAgentModelActor(
+        final Element agentModelActor = msg.getNextAboutAgentModelFromDistributedSoftwareAgentElement(
                 distributedAutonomousAgentElement, null);
         final List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
                 .executeXPath(agentModelActor,
@@ -280,22 +268,23 @@ public class PrisonersDilemma_CABSF_Helper {
         // Construct FrameworkMessage to send to the distributed agent
         final FrameworkMessage msg = new FrameworkMessageImpl(
                 SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                jade_AgentContext.getBlankCachedMessageExchangeTemplate());
+                repastS_AgentContext_Cabsf.getBlankCachedMessageExchangeTemplate());
         assert (repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
                 .getCachedDistributedAutonomousAgentTemplate() != null);
 
         // Get the distributed autonomous agent and set the ID
         final Element distributedAutonomousAgentElement = msg
-                .getNextDistributedSoftwareAgentElement(msg.getDocument(),
-                        jade_AgentContext.getCachedDistributedAutonomousAgentTemplate());
-        msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
+                .getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(),
+                        repastS_AgentContext_Cabsf
+                                .getCachedDistributedSoftwareAgentTemplate());
+        msg.setDistributedSoftwareAgentID(distributedAutonomousAgentElement,
                 am.getSoftwareAgentID());
 
         // Get the agent model actor and set the ID
-        final Element agentModelActor = msg.getNextAgentModelActor(
+        final Element agentModelActor = msg.getNextAboutAgentModelFromDistributedSoftwareAgentElement(
                 distributedAutonomousAgentElement,
-                jade_AgentContext.getCachedAgentModelActorTemplate());
-        msg.setIDForActorInAgentModel(agentModelActor, am.getAgentModelID());
+                repastS_AgentContext_Cabsf.getCachedAgentModelActorTemplate());
+        msg.setIDForAboutAgentModel(agentModelActor, am.getAgentModelID());
 
         // TODO: First get the distributed system manager section.
         // TODO: Add validation here

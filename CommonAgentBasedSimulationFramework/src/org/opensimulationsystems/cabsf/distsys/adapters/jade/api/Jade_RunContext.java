@@ -234,7 +234,7 @@ public class Jade_RunContext {
         // Now listen for the messages from the simulation engine
         final FrameworkMessage fm = listenForMessageFromSimulationEngine();
         final List<Element> distributedAutonomousAgentElements = fm
-                .getDistributedAutonomousAgentElements(fm.getDocument());
+                .getDistributedSoftwareAgentElements(fm.getDocument());
 
         // check whether to terminate the simulation
         // Listen for START_SIMULATION command from the simulation engine
@@ -259,7 +259,7 @@ public class Jade_RunContext {
         }
         for (final Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
             final String distributedAutonomousAgentID = fm
-                    .getDistributedAutonomousAgentID(distributedAutonomousAgentElement);
+                    .getDistributedSoftwareAgentID(distributedAutonomousAgentElement);
             final DistributedAutonomousAgent distAutAgent = dam
                     .getDistributedAutonomousAgent(distributedAutonomousAgentID);
             // TODO: better validation
@@ -280,7 +280,7 @@ public class Jade_RunContext {
             // autonomous agents
             for (final Element agentModelElement : agentModelElements) {
                 final String agentModelIDfromMessage = fm
-                        .getFirstAgentModelActorAgentModelID(agentModelElement);
+                        .getFirstAboutAgentModelID(agentModelElement);
                 final DistributedAgentModel distAgentModel = distAutAgent
                         .getDistributedAgentModelIDStoAgentModels().get(
                                 agentModelIDfromMessage);

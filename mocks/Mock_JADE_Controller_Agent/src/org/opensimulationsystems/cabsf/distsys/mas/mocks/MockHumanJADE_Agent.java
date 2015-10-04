@@ -1,26 +1,23 @@
 package org.opensimulationsystems.cabsf.distsys.mas.mocks;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 import jzombies.JZombies_CABSF_Helper;
 
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
-import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfRuntimeException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
 
 public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 
     private String distributedAutonomousAgentID;
-    private String modelName;
+    private final String modelName;
 
-    private String distributedAutonomousAgentModelID;
+    private final String distributedAutonomousAgentModelID;
 
     // This is not the same instance as the context running in the controller
     // agent due to
@@ -31,10 +28,10 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
 
     private final JZombies_CABSF_Helper jZombies_CABSF_Helper;
 
-    private String distributedSystemID;
+    private final String distributedSystemID;
 
     private String logPrefix = null;
-    private String frameworkConfigurationFileName;
+    private final String frameworkConfigurationFileName;
 
     public MockHumanJADE_Agent(final String distributedSystemID,
             final String distributedAutonomousAgentID, final String distAutAgentModelID,
@@ -42,22 +39,17 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
         jZombies_CABSF_Helper = new JZombies_CABSF_Helper(jade_MAS_AgentContext,
                 frameworkConfigurationFileName);
 
-        try {
-            this.distributedSystemID = distributedSystemID;
-            this.distributedAutonomousAgentID = distributedAutonomousAgentID;
-            this.distributedAutonomousAgentModelID = distAutAgentModelID;
-            this.modelName = modelName;
-            this.frameworkConfigurationFileName = frameworkConfigurationFileName;
+        this.distributedSystemID = distributedSystemID;
+        this.distributedAutonomousAgentID = distributedAutonomousAgentID;
+        this.distributedAutonomousAgentModelID = distAutAgentModelID;
+        this.modelName = modelName;
+        this.frameworkConfigurationFileName = frameworkConfigurationFileName;
 
-            logPrefix = "[MockHumanJADE_Agent " + distributedSystemID + " "
-                    + distributedAutonomousAgentID + " " + distAutAgentModelID + "]";
+        logPrefix = "[MockHumanJADE_Agent " + distributedSystemID + " "
+                + distributedAutonomousAgentID + " " + distAutAgentModelID + "]";
 
-            jade_MAS_AgentContext.initializeJadeAgentForCabsf("TESTconfigFile");
-        } catch (final JDOMException e) {
-            throw new CabsfRuntimeException("Error initializing the agent", e);
-        } catch (final IOException e) {
-            throw new CabsfRuntimeException("Error initializing the agent", e);
-        }
+        jade_MAS_AgentContext.initializeJadeAgentForCabsf("TESTconfigFile");
+
     }
 
     private List<String> chooseMoveTowardsLocation(final List<String> selfPoint,
@@ -117,7 +109,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
         }
 
         final Element distributedAutonomousAgentElement = msg
-                .getNextDistributedSoftwareAgentElement(msg.getDocument(), null);
+                .getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(), null);
 
         final List<String> pointWithLeastZombiesPoint = jZombies_CABSF_Helper
                 .getPointWithLeastZombies(distributedAutonomousAgentElement, msg);

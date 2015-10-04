@@ -1,11 +1,9 @@
 package jzombies;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.filter.Filter;
 import org.jdom2.output.Format;
@@ -13,7 +11,7 @@ import org.jdom2.output.XMLOutputter;
 import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilities;
 import org.opensimulationsystems.cabsf.common.model.AgentMapping;
 import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
-import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
+import org.opensimulationsystems.cabsf.common.model.context.AgentContext_Cabsf;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
@@ -57,18 +55,10 @@ public class JZombies_CABSF_Helper {
      *            configuration file is not required in the JADE agents, only
      *            the JCA and the RepastS simulation.
      */
-    public JZombies_CABSF_Helper(final Jade_AgentContext_Cabsf jade_MAS_AgentContext,
+    public JZombies_CABSF_Helper(final Jade_AgentContext_Cabsf jade_AgentContext,
             final String frameworkConfigurationFileName) {
-        this.jade_AgentContext = jade_MAS_AgentContext;
+        this.jade_AgentContext = jade_AgentContext;
         this.frameworkConfigurationFileName = frameworkConfigurationFileName;
-
-        try {
-            jade_MAS_AgentContext
-                    .initializeJadeAgentForCabsf(frameworkConfigurationFileName);
-        } catch (final JDOMException | IOException e) {
-            throw new CabsfInitializationRuntimeException(
-                    "Error initializing JADE agent", e);
-        }
     }
 
     /**
@@ -87,14 +77,15 @@ public class JZombies_CABSF_Helper {
     }
 
     /**
-     * Convert move to point to framework message.
+     * Convert the grid point the agent wants to move to, to a FrameworkMessage,
+     * which can be sent through the CABSF to the RepastS simulation agent.
      *
      * @param pointMoveTo
      *            the point move to
      * @param distributedSoftwareAgentID
-     *            the dist aut agent id
+     *            the distributed software agent ID
      * @param distSoftwareAgentModelID
-     *            the dist aut agent model id
+     *            the dist software agent model id
      * @return the framework message
      */
     public FrameworkMessage convertMoveToPointToFrameworkMessage(
@@ -110,19 +101,26 @@ public class JZombies_CABSF_Helper {
     }
 
     /**
-     * Gets the point with least zombies.
+     * Gets the point with least zombies from the FrameworkMessage
      *
-     * @param distributedAutonomousAgentElement
+     * @param distributedSoftwareAgentElement
      *            the distributed autonomous agent element
      * @param msg
      *            the msg
      * @return the point with least zombies
      */
     public List<String> getPointWithLeastZombies(
-            final Element distributedAutonomousAgentElement, final FrameworkMessage msg) {
-        // FIXME: Why does this have to be an element, and not Document?
-        final Element agentModelActor = msg.getNextAgentModelActor(
-                distributedAutonomousAgentElement, null);
+            final Element distributedSoftwareAgentElement, final FrameworkMessage msg,
+            final String agentModelID) {
+        final Element agentModelActor = msg
+                .getAboutAgentModelElementFromDistributedSoftwareAgentElement(
+                        distributedSoftwareAgentElement, null, agentModelID);
+
+        /*
+         * final Element agentModelActor = msg
+         * .getNextAboutAgentModelFromDistributedSoftwareAgentElement(
+         * distributedSoftwareAgentElement, null);
+         */
         final List<Element> simulationDefinedEnvironmentChanges = (List<Element>) XMLUtilities
                 .executeXPath(agentModelActor,
                         "./x:EnvironmentChanges/x:SimulationDefinedEnvironmentChanges",
@@ -134,7 +132,7 @@ public class JZombies_CABSF_Helper {
                         simulationDefinedEnvironmentChanges.get(0),
                         "./x:EnvironmentChange/x:Location[@category='neighborhood' and @entitytype='Zombie']",
                         namespaceStr, elementFilter);
-        XMLUtilities.convertElementToXMLString(distributedAutonomousAgentElement, true);
+        XMLUtilities.convertElementToXMLString(distributedSoftwareAgentElement, true);
         final Element location = locations.get(0);
 
         final String xValue = location.getChild("GridPointX", namespace).getText();
@@ -187,13 +185,12 @@ public class JZombies_CABSF_Helper {
         return location;
     }
 
-    // FIXME: Remove moveToPoint
     /**
      * Populate zombies message.
      *
      * @param msg
      *            the msg
-     * @param distributedAutononmousAgentID
+     * @param distributedSoftwareAgentID
      *            the distributed autononmous agent id
      * @param agentModelID
      *            the agent model id
@@ -203,33 +200,45 @@ public class JZombies_CABSF_Helper {
      *            the point least zombies
      * @return the framework message
      */
-    public FrameworkMessage populateZombiesMessage(final FrameworkMessage msg,
-            final String distributedAutononmousAgentID, final String agentModelID,
+    private FrameworkMessage populateZombiesMessage(final FrameworkMessage msg,
+            final String distributedSoftwareAgentID, final String agentModelID,
             final List<String> thisAgentModelPosition,
             final List<String> pointLeastZombies) {
 
-        final Element distributedAutonomousAgent = msg
-                .getNextDistributedSoftwareAgentElement(msg.getDocument(),
-                        jade_AgentContext.getCachedDistributedAutonomousAgentTemplate());
-        msg.setDistributedAutonomousAgentID(distributedAutonomousAgent,
-                distributedAutononmousAgentID);
-        final Element agentModelActor = msg.getNextAgentModelActor(
-                distributedAutonomousAgent,
-                jade_AgentContext.getCachedAgentModelActorTemplate());
-
-        if (thisAgentModelPosition.size() >= 2) {
-            msg.setIDForActorInAgentModel(agentModelActor, agentModelID);
-            msg.populateThisLocationInAgentModelActor(agentModelActor,
-                    thisAgentModelPosition.get(0), thisAgentModelPosition.get(1),
-                    jade_AgentContext.getCachedLocationTemplate());
+        // We don't know if this is being used by JADE or RepastS, so use the
+        // context's parent class instead.s parent class instead.
+        AgentContext_Cabsf agentContext;
+        assert (jade_AgentContext != null || repastS_AgentContext_Cabsf != null);
+        if (jade_AgentContext != null) {
+            agentContext = jade_AgentContext;
+        } else {
+            agentContext = repastS_AgentContext_Cabsf;
         }
+
+        // The XML message should
+        final Element distributedSoftwareAgent = msg
+                .getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(),
+                        agentContext.getCachedDistributedSoftwareAgentTemplate());
+        msg.setDistributedSoftwareAgentID(distributedSoftwareAgent,
+                distributedSoftwareAgentID);
+        final Element aboutAgentModel = msg
+                .getAboutAgentModelElementFromDistributedSoftwareAgentElement(
+                        distributedSoftwareAgent,
+                        agentContext.getCachedAgentModelActorTemplate(), agentModelID);
+
+        assert (thisAgentModelPosition.size() >= 2);
+
+        msg.setIDForAboutAgentModel(aboutAgentModel, agentModelID);
+        msg.populateThisLocationInAgentModelActor(aboutAgentModel,
+                thisAgentModelPosition.get(0), thisAgentModelPosition.get(1),
+                agentContext.getCachedLocationTemplate());
 
         // Use the shared class in the simulation for this.
         // FIXME: Move this to a common third project?
         if (pointLeastZombies.size() >= 2) {
-            populateLeastZombiesPointElement(msg, agentModelActor,
+            populateLeastZombiesPointElement(msg, aboutAgentModel,
                     pointLeastZombies.get(0), pointLeastZombies.get(1),
-                    jade_AgentContext.getCachedLocationTemplate());
+                    agentContext.getCachedLocationTemplate());
         }
 
         final XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -267,22 +276,24 @@ public class JZombies_CABSF_Helper {
         // Construct FrameworkMessage to send to the distributed agent
         final FrameworkMessage msg = new FrameworkMessageImpl(
                 SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                jade_AgentContext.getBlankCachedMessageExchangeTemplate());
+                repastS_AgentContext_Cabsf.getBlankCachedMessageExchangeTemplate());
         assert (repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
                 .getCachedDistributedAutonomousAgentTemplate() != null);
 
         // Get the distributed autonomous agent element and set the ID
         final Element distributedAutonomousAgentElement = msg
-                .getNextDistributedSoftwareAgentElement(msg.getDocument(),
-                        jade_AgentContext.getCachedDistributedAutonomousAgentTemplate());
-        msg.setDistributedAutonomousAgentID(distributedAutonomousAgentElement,
+                .getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(),
+                        repastS_AgentContext_Cabsf
+                        .getCachedDistributedSoftwareAgentTemplate());
+        msg.setDistributedSoftwareAgentID(distributedAutonomousAgentElement,
                 am.getSoftwareAgentID());
 
         // Get the agent model actor and set the ID
-        final Element agentModelActor = msg.getNextAgentModelActor(
-                distributedAutonomousAgentElement,
-                jade_AgentContext.getCachedAgentModelActorTemplate());
-        msg.setIDForActorInAgentModel(agentModelActor, am.getAgentModelID());
+        final Element agentModelActor = msg
+                .getNextAboutAgentModelFromDistributedSoftwareAgentElement(
+                        distributedAutonomousAgentElement,
+                        repastS_AgentContext_Cabsf.getCachedAgentModelActorTemplate());
+        msg.setIDForAboutAgentModel(agentModelActor, am.getAgentModelID());
 
         // TODO: First get the distributed system manager section.
         // TODO: Add validation here
@@ -291,13 +302,13 @@ public class JZombies_CABSF_Helper {
         // Set up the self agent model actor
         msg.populateThisLocationInAgentModelActor(agentModelActor,
                 String.valueOf(pt.getX()), String.valueOf(pt.getY()),
-                jade_AgentContext.getCachedLocationTemplate());
+                repastS_AgentContext_Cabsf.getCachedLocationTemplate());
 
         // Populate the Zombies info
         populateLeastZombiesPointElement(msg, agentModelActor,
                 String.valueOf(pointWithLeastZombies.getX()),
                 String.valueOf(pointWithLeastZombies.getY()),
-                jade_AgentContext.getCachedLocationTemplate());
+                repastS_AgentContext_Cabsf.getCachedLocationTemplate());
 
         System.out.println(loggingPrefix
                 + "Sending Message to Distributed System: "
@@ -306,11 +317,36 @@ public class JZombies_CABSF_Helper {
 
         // The message has been constructed, now send it over the wire
         repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
-                .messageDistributedSystems(
-                        msg,
-                        repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
-                                .getSimulationRunContext());
+        .messageDistributedSystems(
+                msg,
+                repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
+                .getSimulationRunContext());
 
+    }
+
+    /**
+     * Only used for unit testing. To be removed and replaced with reflection.
+     *
+     * @param msg
+     *            the msg
+     * @param distributedAutononmousAgentID
+     *            the distributed autononmous agent id
+     * @param agentModelID
+     *            the agent model id
+     * @param thisAgentModelPosition
+     *            the this agent model position
+     * @param pointLeastZombies
+     *            the point least zombies
+     * @deprecated
+     * @return the framework message
+     */
+    @Deprecated
+    public FrameworkMessage testOnly_populateZombiesMessage(final FrameworkMessage msg,
+            final String distributedAutononmousAgentID, final String agentModelID,
+            final List<String> thisAgentModelPosition,
+            final List<String> pointLeastZombies) {
+        return populateZombiesMessage(msg, distributedAutononmousAgentID, agentModelID,
+                thisAgentModelPosition, pointLeastZombies);
     }
 
 }

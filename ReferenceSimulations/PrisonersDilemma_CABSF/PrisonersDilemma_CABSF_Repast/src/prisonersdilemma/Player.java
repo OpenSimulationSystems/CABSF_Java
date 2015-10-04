@@ -177,7 +177,7 @@ public class Player {
 
         final int distributedAgentsRoundNumber = gameAdministrator
                 .getPrisonersDilemma_CABSF().getRoundNumber(
-                        msg.getNextDistributedSoftwareAgentElement(msg.getDocument(),
+                        msg.getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(),
                                 null), msg);
         assert (round == distributedAgentsRoundNumber);
 
@@ -188,7 +188,7 @@ public class Player {
 
         final DECISION thisPlayersDecision = gameAdministrator
                 .getPrisonersDilemma_CABSF().getThisPlayerDecision(
-                        msg.getNextDistributedSoftwareAgentElement(msg.getDocument(),
+                        msg.getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(),
                                 null), msg);
 
         return thisPlayersDecision;

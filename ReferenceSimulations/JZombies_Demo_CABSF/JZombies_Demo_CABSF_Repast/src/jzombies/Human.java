@@ -145,7 +145,7 @@ public class Human {
         if (cabsfSimulationType == null) {
             nativeRepastScontext = RunState.getInstance().getMasterContext();
             repastS_AgentContext_Cabsf = RepastS_AgentAdapterAPI.getInstance()
-                    .getAgentContext();
+                    .getRepastSagentContext();
             jZombies_CABSF_Helper = new JZombies_CABSF_Helper(repastS_AgentContext_Cabsf);
 
             try {

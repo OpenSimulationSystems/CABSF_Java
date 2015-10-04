@@ -93,7 +93,7 @@ public abstract class AbstractContext_Cabsf {
     public Document getBlankCachedMessageExchangeTemplate() {
         final FrameworkMessage fm = new FrameworkMessageImpl(null, null,
                 cachedMessageExchangeTemplateWithEmptyPlaceholders.clone());
-        fm.removeDistributedAutonomousAgents(fm.getDocument());
+        fm.removeDistributedSoftwareAgentElements(fm.getDocument());
         return fm.getDocument();
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractContext_Cabsf {
      *
      * @return the cached distributed autonomous agent template
      */
-    public Element getCachedDistributedAutonomousAgentTemplate() {
+    public Element getCachedDistributedSoftwareAgentTemplate() {
         return distributedAutonomousAgentTemplate.clone();
     }
 
@@ -145,10 +145,10 @@ public abstract class AbstractContext_Cabsf {
     public void setupElementTemplates(final Document doc) {
         @SuppressWarnings("unchecked")
         final List<Element> distributedAutonomousAgentElements = (List<Element>) XMLUtilities
-        .executeXPath(
-                doc,
-                "/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent",
-                namespaceStr, elementFilter);
+                .executeXPath(
+                        doc,
+                        "/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent",
+                        namespaceStr, elementFilter);
         distributedAutonomousAgentTemplate = distributedAutonomousAgentElements.get(0)
                 .clone();
 
@@ -165,10 +165,10 @@ public abstract class AbstractContext_Cabsf {
         @SuppressWarnings("unchecked")
         final// TODO: Support multiple actors
         List<Element> agentEnvironmentChangeLocation = (List<Element>) XMLUtilities
-        .executeXPath(
-                cachedAgentModelActorTemplate,
-                "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange",
-                namespaceStr, elementFilter);
+                .executeXPath(
+                        cachedAgentModelActorTemplate,
+                        "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange",
+                        namespaceStr, elementFilter);
         cachedLocationTemplate = agentEnvironmentChangeLocation.get(0).detach();
         cachedLocationTemplate.setAttribute("id", "");
 

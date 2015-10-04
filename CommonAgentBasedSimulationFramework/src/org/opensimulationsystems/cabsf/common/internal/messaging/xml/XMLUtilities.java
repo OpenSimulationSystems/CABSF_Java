@@ -32,223 +32,223 @@ import org.xml.sax.InputSource;
  */
 public class XMLUtilities {
 
-	/**
-	 * Convert Document to XML string.
-	 *
-	 * @param document
-	 *            the document
-	 * @param prettyPrint
-	 *            pretty-print the XML
-	 * @return the string
-	 */
-	static public String convertDocumentToXMLString(final Document document,
-			final boolean prettyPrint) {
-		if (document == null) {
-			throw new CabsfRuntimeException("Unable to convert document to string.");
-		}
-		return convertDocumentToXMLString(document.getRootElement(), prettyPrint);
-	}
+    /**
+     * Convert Document to XML string.
+     *
+     * @param document
+     *            the document
+     * @param prettyPrint
+     *            pretty-print the XML
+     * @return the string
+     */
+    static public String convertDocumentToXMLString(final Document document,
+            final boolean prettyPrint) {
+        if (document == null) {
+            throw new CabsfRuntimeException("Unable to convert document to string.");
+        }
+        return convertDocumentToXMLString(document.getRootElement(), prettyPrint);
+    }
 
-	/**
-	 * Convert Document to XML string.
-	 *
-	 * @param document
-	 *            the document
-	 * @param prettyPrint
-	 *            pretty-print the XML
-	 * @return the string
-	 */
-	static public String convertDocumentToXMLString(final Element document,
-			final boolean prettyPrint) {
-		XMLOutputter outputter = null;
-		if (prettyPrint) {
-			outputter = new XMLOutputter(Format.getPrettyFormat());
-		} else {
-			outputter = new XMLOutputter();
-		}
-		final String xmlString = outputter.outputString(document);
-		return xmlString;
-	}
+    /**
+     * Convert Document to XML string.
+     *
+     * @param document
+     *            the document
+     * @param prettyPrint
+     *            pretty-print the XML
+     * @return the string
+     */
+    static public String convertDocumentToXMLString(final Element document,
+            final boolean prettyPrint) {
+        XMLOutputter outputter = null;
+        if (prettyPrint) {
+            outputter = new XMLOutputter(Format.getPrettyFormat());
+        } else {
+            outputter = new XMLOutputter();
+        }
+        final String xmlString = outputter.outputString(document);
+        return xmlString;
+    }
 
-	/**
-	 * Convert an JDOM2 Element to an XML string.
-	 *
-	 * @param document
-	 *            the document
-	 * @param prettyPrint
-	 *            the pretty print
-	 * @return the string
-	 */
-	static public String convertElementToXMLString(final Element document,
-			final boolean prettyPrint) {
-		XMLOutputter outputter = null;
-		if (prettyPrint) {
-			outputter = new XMLOutputter(Format.getPrettyFormat());
-		} else {
-			outputter = new XMLOutputter();
-		}
-		final String xmlString = outputter.outputString(document);
-		return xmlString;
-	}
+    /**
+     * Convert an JDOM2 Element to an XML string.
+     *
+     * @param document
+     *            the document
+     * @param prettyPrint
+     *            the pretty print
+     * @return the string
+     */
+    static public String convertElementToXMLString(final Element document,
+            final boolean prettyPrint) {
+        XMLOutputter outputter = null;
+        if (prettyPrint) {
+            outputter = new XMLOutputter(Format.getPrettyFormat());
+        } else {
+            outputter = new XMLOutputter();
+        }
+        final String xmlString = outputter.outputString(document);
+        return xmlString;
+    }
 
-	/**
-	 * Execute an XPath.
-	 *
-	 * @param document
-	 *            the Document
-	 * @param xpathStr
-	 *            the Xpath String
-	 * @param namespaceStr
-	 *            the namespace str
-	 * @param filter
-	 *            the filter
-	 * @return the list<? extends content>
-	 */
-	static public List<? extends Content> executeXPath(final Object document,
-			final String xpathStr, final String namespaceStr,
-			final Filter<? extends Content> filter) {
-		final XPathFactory xpathFactory = XPathFactory.instance();
-		// XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
+    /**
+     * Execute an XPath.
+     *
+     * @param document
+     *            the Document
+     * @param xpathStr
+     *            the Xpath String
+     * @param namespaceStr
+     *            the namespace str
+     * @param filter
+     *            the filter
+     * @return the list<? extends content>
+     */
+    static public List<? extends Content> executeXPath(final Object document,
+            final String xpathStr, final String namespaceStr,
+            final Filter<? extends Content> filter) {
+        final XPathFactory xpathFactory = XPathFactory.instance();
+        // XPathExpression<Object> expr = xpathFactory.compile(xpathStr);
 
-		XPathExpression<? extends Content> expr = null;
-		if (namespaceStr != null) {
-			expr = xpathFactory.compile(xpathStr, filter, null,
-					Namespace.getNamespace("x", namespaceStr));
-		} else {
-			expr = xpathFactory.compile(xpathStr, filter);
-		}
+        XPathExpression<? extends Content> expr = null;
+        if (namespaceStr != null) {
+            expr = xpathFactory.compile(xpathStr, filter, null,
+                    Namespace.getNamespace("x", namespaceStr));
+        } else {
+            expr = xpathFactory.compile(xpathStr, filter);
+        }
 
-		List<? extends Content> xPathSearchedNodes = null;
-		try {
-			xPathSearchedNodes = expr.evaluate(document);
-		}
-		// TODO: Add better handling for these kinds of exceptions
-		catch (final Exception e) {
-			throw new CabsfRuntimeException("Error in querying the message", e);
-		}
-		return xPathSearchedNodes;
-	}
+        List<? extends Content> xPathSearchedNodes = null;
+        try {
+            xPathSearchedNodes = expr.evaluate(document);
+        }
+        // TODO: Add better handling for these kinds of exceptions
+        catch (final Exception e) {
+            throw new CabsfRuntimeException("Error in querying the message", e);
+        }
+        return xPathSearchedNodes;
+    }
 
-	/**
-	 * Take a filename from the classpath, read the file to an XML string, and convert the
-	 * string to a JDOM2 Document.
-	 *
-	 * @param fileName
-	 *            the filename on the classpath
-	 * @param isOnClassPath
-	 *            true if the supplied path is on the classpath. false if path is on file
-	 *            system.
-	 * @return the org.jdom2. document
-	 * @throws JDOMException
-	 *             the JDOM exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	static public org.jdom2.Document filenameStrTojdom2Document(final String fileName,
-			final boolean isOnClassPath) throws JDOMException, IOException {
-		File file = null;
-		InputStream inputStream = null;
-		Reader reader = null;
-		Document document = null;
+    /**
+     * Take a filename from the classpath, read the file to an XML string, and
+     * convert the string to a JDOM2 Document.
+     *
+     * @param fileName
+     *            the filename on the classpath
+     * @param isOnClassPath
+     *            true if the supplied path is on the classpath. false if path
+     *            is on file system.
+     * @return the org.jdom2. document
+     * @throws JDOMException
+     *             the JDOM exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    static public org.jdom2.Document filenameStrTojdom2Document(final String fileName,
+            final boolean isOnClassPath) throws JDOMException, IOException {
+        File file = null;
+        InputStream inputStream = null;
+        Reader reader = null;
+        Document document = null;
 
-		try {
+        try {
 
-			if (isOnClassPath) {
-				inputStream = Thread.currentThread().getContextClassLoader()
-						.getResourceAsStream(fileName);
-			} else {
-				file = new File(fileName);
-				inputStream = new FileInputStream(file);
-			}
+            if (isOnClassPath) {
+                inputStream = Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream(fileName);
+            } else {
+                file = new File(fileName);
+                inputStream = new FileInputStream(file);
+            }
 
-			// LOW: is there a way of not having to specify the encoding?
-			reader = new InputStreamReader(inputStream, "UTF-8");
+            // LOW: is there a way of not having to specify the encoding?
+            reader = new InputStreamReader(inputStream, "UTF-8");
 
-			final SAXBuilder saxBuilder = new SAXBuilder();
-			// begin of try - catch block
-			document = saxBuilder.build(inputStream);
+            final SAXBuilder saxBuilder = new SAXBuilder();
+            // begin of try - catch block
+            document = saxBuilder.build(inputStream);
 
-			final Element root = document.getRootElement();
-			System.out.println("[CABSF - Common API] Successfully loaded template file: "
-					+ root.getName());
-		} finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
-			if (reader != null) {
-				reader.close();
-			}
-		}
+            final Element root = document.getRootElement();
+            System.out.println("[CABSF - Common API] Successfully loaded template file: "
+                    + root.getName());
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (reader != null) {
+                reader.close();
+            }
+        }
 
-		return document;
+        return document;
 
-	}
+    }
 
-	static public org.jdom2.Document fileTojdom2Document(final File file)
-			throws JDOMException, IOException {
-		InputStream inputStream = null;
-		Reader reader = null;
-		Document document = null;
+    static public org.jdom2.Document fileTojdom2Document(final File file)
+            throws JDOMException, IOException {
+        InputStream inputStream = null;
+        Reader reader = null;
+        Document document = null;
 
-		try {
-			inputStream = new FileInputStream(file);
+        try {
+            inputStream = new FileInputStream(file);
 
-			// LOW: is there a way of not having to specify the encoding?
-			reader = new InputStreamReader(inputStream, "UTF-8");
+            // LOW: is there a way of not having to specify the encoding?
+            reader = new InputStreamReader(inputStream, "UTF-8");
 
-			final SAXBuilder saxBuilder = new SAXBuilder();
-			// begin of try - catch block
-			document = saxBuilder.build(inputStream);
+            final SAXBuilder saxBuilder = new SAXBuilder();
+            // begin of try - catch block
+            document = saxBuilder.build(inputStream);
 
-			final Element root = document.getRootElement();
-			System.out.println("[CABSF - Comon API] Successfully loaded template file: "
-					+ root.getName());
-		} finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
-			if (reader != null) {
-				reader.close();
-			}
-		}
+            final Element root = document.getRootElement();
+            System.out.println("[CABSF - Comon API] Successfully loaded template file: "
+                    + root.getName());
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (reader != null) {
+                reader.close();
+            }
+        }
 
-		return document;
-	}
+        return document;
+    }
 
-	/**
-	 * Xml string tojdom2 document.
-	 *
-	 * @param xmlString
-	 *            the xml string
-	 * @return the org.jdom2. document
-	 * @throws JDOMException
-	 *             the JDOM exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	static public org.jdom2.Document xmlStringTojdom2Document(final String xmlString)
-			throws JDOMException, IOException {
-		StringReader sr = null;
-		InputSource inputSource = null;
-		Document document = null;
+    /**
+     * Xml string tojdom2 document.
+     *
+     * @param xmlString
+     *            the xml string
+     * @return the org.jdom2. document
+     * @throws JDOMException
+     *             the JDOM exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    static public org.jdom2.Document xmlStringTojdom2Document(final String xmlString)
+            throws JDOMException, IOException {
+        StringReader sr = null;
+        InputSource inputSource = null;
+        Document document = null;
 
-		try {
-			sr = new StringReader(xmlString);
-			inputSource = new InputSource(sr);
+        try {
+            sr = new StringReader(xmlString);
+            inputSource = new InputSource(sr);
 
-			final SAXBuilder saxBuilder = new SAXBuilder();
-			// begin of try - catch block
-			document = saxBuilder.build(inputSource);
+            final SAXBuilder saxBuilder = new SAXBuilder();
+            // begin of try - catch block
+            document = saxBuilder.build(inputSource);
 
-			final Element root = document.getRootElement();
-			System.out.println("Successfully loaded template file: " + root.getName());
-		} finally {
-			if (sr != null) {
-				sr.close();
-			}
-		}
+            final Element root = document.getRootElement();
+            System.out.println("Successfully loaded template file: " + root.getName());
+        } finally {
+            if (sr != null) {
+                sr.close();
+            }
+        }
 
-		return document;
+        return document;
 
-	}
+    }
 }

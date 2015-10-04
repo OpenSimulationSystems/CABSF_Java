@@ -18,6 +18,7 @@ import org.opensimulationsystems.cabsf.common.model.SYSTEM_TYPE;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfCheckedException;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentAdapterAPI;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
 
 // TODO: Auto-generated Javadoc
@@ -43,7 +44,7 @@ public class HumanJADE extends Agent {
          * Called every time a message comes into the queue to this agent. This
          * is done sequentially due to the fact that a JADE agent only runs a
          * single thread.
-         * 
+         *
          * @see jade.core.behaviours.Behaviour#action()
          */
         @Override
@@ -67,9 +68,9 @@ public class HumanJADE extends Agent {
                             SYSTEM_TYPE.DISTRIBUTED_SYSTEM, msgStr);
                 } catch (final CabsfCheckedException e) {
                     System.out
-                            .println(logPrefix
-                                    + " Error parsing message from the JADE Controller Agent to this agent.  Message: "
-                                    + msgStr);
+                    .println(logPrefix
+                            + " Error parsing message from the JADE Controller Agent to this agent.  Message: "
+                            + msgStr);
                     doDelete(); // Cleanup and remove this agent from the MAS.
                     e.printStackTrace();
                 }
@@ -88,23 +89,18 @@ public class HumanJADE extends Agent {
                             + " : " + String.valueOf(selfPoint.get(i)));
                 }
 
-                // Get the part of the XML message dealing with this JADE agent
-                // (distributed autonomous agent)
+                // The JADE Controller Agent has already stripped out the part
+                // that needed to be routed to this JADE agent, so we can be
+                // sure that the very next distributed software agent section of
+                // the XML is meant for this agent. the part of the XML that
+                // needs to go to this agent.
                 final Element distributedAutonomousAgentElement = msg
-                        .getNextDistributedSoftwareAgentElement(msg.getDocument(), null);
+                        .getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(),
+                                null);
 
-                // Uses a convenience method that is specific to the JZombies
-                // simulation
-                // to get the location of the zombies. This convenience method
-                // is
-                // located in
-                // the Repast Simphony project, hence why we created a
-                // dependency on that
-                // project.
-                // However, there is no direct use of RepastS code from JADE
-                // agents in a CABSF MAS-ABMS-systems integrated simulation.
                 final List<String> pointWithLeastZombiesPoint = jZombies_CABSF_Helper
-                        .getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
+                        .getPointWithLeastZombies(distributedAutonomousAgentElement, msg,
+                                agentModelID);
 
                 for (int i = 0; i < pointWithLeastZombiesPoint.size(); i++) {
                     System.out.println(logPrefix + " Received Zombie location "
@@ -117,8 +113,7 @@ public class HumanJADE extends Agent {
 
                 // Send the decision on where to move to
                 msg = jZombies_CABSF_Helper.convertMoveToPointToFrameworkMessage(
-                        pointToMoveTo, distributedAutonomousAgentID,
-                        distributedAutonomousAgentModelID);
+                        pointToMoveTo, distributedSoftwareAgentID, agentModelID);
                 System.out.println(logPrefix
                         + " Sending move decision to the JADE Controller Agent: "
                         + aclMsg.getConversationId()
@@ -161,16 +156,16 @@ public class HumanJADE extends Agent {
     private String logPrefix;
 
     /** The jade_ ma s_ agent context. */
-    private Jade_AgentContext_Cabsf jade_MAS_AgentContext;
+    private Jade_AgentContext_Cabsf jade_AgentContext;
 
     /** The jZombies_CABSF_Helper */
     private JZombies_CABSF_Helper jZombies_CABSF_Helper;
 
     /** The distributed autonomous agent id. */
-    private String distributedAutonomousAgentID;
+    private String distributedSoftwareAgentID;
 
     /** The distributed autonomous agent model id. */
-    private String distributedAutonomousAgentModelID;
+    private String agentModelID;
 
     /** The jade controller agent. */
     private AID jadeControllerAgent;
@@ -179,7 +174,7 @@ public class HumanJADE extends Agent {
 
     /*
      * The agent initialization.
-     * 
+     *
      * @see jade.core.Agent#setup()
      */
     @Override
@@ -201,13 +196,16 @@ public class HumanJADE extends Agent {
          * convenience methods for dealing with XML messages coming from the
          * simulation engine/runtime such as Repast Simphony.
          */
-        jade_MAS_AgentContext = new Jade_AgentContext_Cabsf();
+        jade_AgentContext = Jade_AgentAdapterAPI.getInstance().getJadeAgentContext();
+        jade_AgentContext.initializeJadeAgentForCabsf(frameworkConfigurationFileName);
+
         /*
          * This class contains convenience methods specific to this one
          * simulation.
          */
-        jZombies_CABSF_Helper = new JZombies_CABSF_Helper(jade_MAS_AgentContext,
+        jZombies_CABSF_Helper = new JZombies_CABSF_Helper(jade_AgentContext,
                 frameworkConfigurationFileName);
+
         /*
          * The mapping between the JADE agent and RepastS agent actually happens
          * on the "distributed autonomous agent model" level. So a JADE agent
@@ -215,7 +213,7 @@ public class HumanJADE extends Agent {
          * only 1 to 1 is supported, however, the model must still be identified
          */
         // TODO: Support global JADE naming
-        distributedAutonomousAgentModelID = getAID().getLocalName() + "MODEL";
+        agentModelID = getAID().getLocalName() + "MODEL";
 
         /*
          * Register this agent as one of the distributed JADE agents in the
@@ -258,9 +256,9 @@ public class HumanJADE extends Agent {
 
             } catch (final FIPAException fe) {
                 System.out
-                        .println("[JADE Agent "
-                                + getAID().getName()
-                                + "] FIPA error in finding the JADE Controller Agent.  Terminating.");
+                .println("[JADE Agent "
+                        + getAID().getName()
+                        + "] FIPA error in finding the JADE Controller Agent.  Terminating.");
                 doDelete();
                 fe.printStackTrace();
             } catch (final InterruptedException e) {

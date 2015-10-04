@@ -135,7 +135,7 @@ public class Mock_JADE_Controller_Agent implements JadeControllerInterface {
     public void receiveMessage(final FrameworkMessage message, final String messageID,
             final String inReplyToMessageID) {
         final List<String> location = message.getSelfLocationFromFirstAgentModel(message
-                .getNextDistributedSoftwareAgentElement(message.getDocument(), null),
+                .getNextMsgForDistributedSoftwareAgentElement(message.getDocument(), null),
                 message);
         // TODO: Remove or add other validation.
         assert (location.size() == 2);

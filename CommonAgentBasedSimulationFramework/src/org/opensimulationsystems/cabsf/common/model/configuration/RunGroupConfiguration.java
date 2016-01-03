@@ -31,7 +31,7 @@ public class RunGroupConfiguration {
     private final String simulationEngineID = "REPAST_SIMPHONY";
 
     /** The namespace str. */
-    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
 
     /** The namespace. */
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);

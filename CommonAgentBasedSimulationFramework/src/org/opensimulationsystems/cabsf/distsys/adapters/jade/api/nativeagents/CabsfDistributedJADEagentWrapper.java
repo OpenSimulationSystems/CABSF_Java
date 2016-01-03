@@ -17,7 +17,7 @@ import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerI
  * @version 0.1
  * @since 0.1
  */
-public class CabsfDistributedJADEagentWrapper implements NativeDistributedAutonomousAgent {
+public class CabsfDistributedJADEagentWrapper implements NativeSoftwareAgent {
 
 	/** The aid. */
 	private final AID aid;
@@ -69,7 +69,7 @@ public class CabsfDistributedJADEagentWrapper implements NativeDistributedAutono
 	 * (non-Javadoc)
 	 * 
 	 * @see org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.
-	 * NativeDistributedAutonomousAgent#getDistributedAutonomousAgentID()
+	 * NativeSoftwareAgent#getDistributedAutonomousAgentID()
 	 */
 	@Override
 	public String getDistributedAutonomousAgentID() {
@@ -80,7 +80,7 @@ public class CabsfDistributedJADEagentWrapper implements NativeDistributedAutono
 	 * (non-Javadoc)
 	 * 
 	 * @see org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.
-	 * NativeDistributedAutonomousAgent#getDistributedAutonomousAgentModelID()
+	 * NativeSoftwareAgent#getDistributedAutonomousAgentModelID()
 	 */
 	@Override
 	public String getDistributedAutonomousAgentModelID() {
@@ -91,7 +91,7 @@ public class CabsfDistributedJADEagentWrapper implements NativeDistributedAutono
 	 * (non-Javadoc)
 	 * 
 	 * @see org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.
-	 * NativeDistributedAutonomousAgent#getModelName()
+	 * NativeSoftwareAgent#getModelName()
 	 */
 	@Override
 	public String getModelName() {
@@ -102,7 +102,7 @@ public class CabsfDistributedJADEagentWrapper implements NativeDistributedAutono
 	 * (non-Javadoc)
 	 * 
 	 * @see org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.
-	 * NativeDistributedAutonomousAgent
+	 * NativeSoftwareAgent
 	 * #receiveMessage(org.opensimulationsystems.cabsf.common.model
 	 * .messaging.messages.FrameworkMessage, java.lang.String, java.lang.String,
 	 * org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface)

@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents;
+package org.opensimulationsystems.cabsf.distsys.core.api.softwareagents;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,7 @@ import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
  * @version 0.1
  * @since 0.1
  */
-public class DistributedAutonomousAgent {
+public class SoftwareAgent {
 
 	/** The dist sys run context. */
 	private DistSysRunContext distSysRunContext;
@@ -26,7 +26,7 @@ public class DistributedAutonomousAgent {
 	private Object nativeDistributedAutonomousAgent;
 
 	/** The agents ready for distributed agent mapping. */
-	private final HashSet<DistributedAutonomousAgent> agentsReadyForDistributedAgentMapping = new HashSet<DistributedAutonomousAgent>();
+	private final HashSet<SoftwareAgent> agentsReadyForDistributedAgentMapping = new HashSet<SoftwareAgent>();
 
 	/** The distributed agent model id sto agent models. */
 	private final ConcurrentHashMap<String, DistributedAgentModel> distributedAgentModelIDStoAgentModels = new ConcurrentHashMap<String, DistributedAgentModel>();
@@ -38,7 +38,7 @@ public class DistributedAutonomousAgent {
 	 * Instantiates a new distributed autonomous agent.
 	 */
 	@SuppressWarnings("unused")
-	private DistributedAutonomousAgent() {
+	private SoftwareAgent() {
 	}
 
 	// TODO: Clean this up. We need a specific manager for the type of client (JADE
@@ -56,11 +56,11 @@ public class DistributedAutonomousAgent {
 	 * @param distributedAgentModelName
 	 *            the distributed agent model name
 	 */
-	public DistributedAutonomousAgent(final DistSysRunContext distSysRunContext,
+	public SoftwareAgent(final DistSysRunContext distSysRunContext,
 			final String distributedAutonomousAgentID,
 			final Set<String> distributedAgentModelIDs,
 			final String distributedAgentModelName) {
-		// public DistributedAutonomousAgent(DistSysRunContext distSysRunContext,
+		// public SoftwareAgent(DistSysRunContext distSysRunContext,
 		// String getCommonMessagingConcreteImplStr) {
 		this.distSysRunContext = distSysRunContext;
 		this.distributedAutonomousAgentID = distributedAutonomousAgentID;

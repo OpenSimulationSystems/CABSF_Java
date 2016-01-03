@@ -262,7 +262,7 @@ public class RepastS_SimulationRunContext_CABSF {
         // 2 - Message the distributed systems that the simulation has started
         // and is ready to accept messages from the distributed agents.
         final FrameworkMessage msg = new FrameworkMessageImpl(
-                SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+                SYSTEM_TYPE.SIMULATION_RUNTIME, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
                 getBlankCachedMessageExchangeTemplate());
         msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.STOP_SIMULATION);
         // TODO: Loop through the multiple distributed systems

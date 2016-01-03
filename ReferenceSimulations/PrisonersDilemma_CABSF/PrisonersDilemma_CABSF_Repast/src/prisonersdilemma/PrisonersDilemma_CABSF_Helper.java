@@ -37,7 +37,7 @@ public class PrisonersDilemma_CABSF_Helper {
     private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf;
 
     // TODO: Get this from the configuration
-    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
     /** The Jade_AgentContext_Cabsf context. */
@@ -267,7 +267,7 @@ public class PrisonersDilemma_CABSF_Helper {
 
         // Construct FrameworkMessage to send to the distributed agent
         final FrameworkMessage msg = new FrameworkMessageImpl(
-                SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+                SYSTEM_TYPE.SIMULATION_RUNTIME, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
                 repastS_AgentContext_Cabsf.getBlankCachedMessageExchangeTemplate());
         assert (repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
                 .getCachedDistributedAutonomousAgentTemplate() != null);

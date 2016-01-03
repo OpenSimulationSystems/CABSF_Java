@@ -353,7 +353,7 @@ public class RepastS_SimulationAdapterAPI {
             // started
             // and is ready to accept messages from the distributed agents.
             final FrameworkMessage msg = new FrameworkMessageImpl(
-                    SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+                    SYSTEM_TYPE.SIMULATION_RUNTIME, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
                     repastS_SimulationRunContext_CABSF.getBlankCachedMessageExchangeTemplate());
             msg.setFrameworkToDistributedSystemCommand(FRAMEWORK_COMMAND.START_SIMULATION);
             // TODO: Loop through the multiple distributed systems
@@ -447,7 +447,7 @@ public class RepastS_SimulationAdapterAPI {
         // have to check the configuration file.
         final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
         /** The namespace str. */
-        final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+        final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
 
         /** The namespace. */
 
@@ -503,7 +503,7 @@ public class RepastS_SimulationAdapterAPI {
         // have to check the configuration file.
         final Filter<Element> elementFilter = new org.jdom2.filter.ElementFilter();
         /** The namespace str. */
-        final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+        final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
 
         /** The namespace. */
 

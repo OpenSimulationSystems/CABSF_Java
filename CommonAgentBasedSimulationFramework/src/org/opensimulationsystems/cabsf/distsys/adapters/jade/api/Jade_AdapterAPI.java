@@ -12,7 +12,7 @@ import org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessageImpl;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.STATUS;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeSoftwareAgent;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunGroupContext;
@@ -72,10 +72,10 @@ public class Jade_AdapterAPI {
      */
     @SuppressWarnings("unused")
     private void assignJadeAgentsToDistributedAutonomousAgents(
-            final Set<NativeDistributedAutonomousAgent> jadeAgents,
+            final Set<NativeSoftwareAgent> jadeAgents,
             final Jade_RunContext jade_MAS_RunContext) {
-        for (final NativeDistributedAutonomousAgent jadeAgent : jadeAgents) {
-            assignJadeAgentToDistributedAutonomousAgent(jadeAgent, jade_MAS_RunContext);
+        for (final NativeSoftwareAgent jadeAgent : jadeAgents) {
+            assignJadeAgentToSoftwareAgent(jadeAgent, jade_MAS_RunContext);
         }
     }
 
@@ -88,10 +88,10 @@ public class Jade_AdapterAPI {
      *            the jade_ ma s_ run context
      * @see assignJadeAgentsToDistributedAutonomousAgents
      */
-    private void assignJadeAgentToDistributedAutonomousAgent(
-            final NativeDistributedAutonomousAgent jadeAgent,
+    private void assignJadeAgentToSoftwareAgent(
+            final NativeSoftwareAgent jadeAgent,
             final Jade_RunContext jade_MAS_RunContext) {
-        distributedSystemAPI.assignNativeDistributedAutonomousAgent(jadeAgent,
+        distributedSystemAPI.assignNativeSoftwareAgent(jadeAgent,
                 jade_MAS_RunContext.getDistSysRunContext());
     }
 
@@ -137,7 +137,7 @@ public class Jade_AdapterAPI {
             final NativeJADEMockContext nativeJadeContextForThisRun,
             final Jade_RunGroupContext jade_MAS_RunGroupContext,
             final JadeControllerInterface jadeControllerInterface,
-            final Set<NativeDistributedAutonomousAgent> nativeAgentsSet,
+            final Set<NativeSoftwareAgent> nativeAgentsSet,
             final boolean executeHandshake) {
         this.jadeControllerInterface = jadeControllerInterface;
 
@@ -189,7 +189,7 @@ public class Jade_AdapterAPI {
 
             // Push Status of Ready back to the simulation engine
             final FrameworkMessage fm = new FrameworkMessageImpl(
-                    SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_ENGINE,
+                    SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_RUNTIME,
                     jade_MAS_RunContext.getCachedMessageExchangeTemplate());
             fm.setStatus(STATUS.READY_TO_START_SIMULATION);
             jade_MAS_RunContext.sendMessageToSimulationEngine(fm,

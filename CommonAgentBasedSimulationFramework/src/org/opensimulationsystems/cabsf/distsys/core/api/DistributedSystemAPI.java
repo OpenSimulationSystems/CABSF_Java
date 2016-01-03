@@ -100,9 +100,9 @@ public class DistributedSystemAPI {
 		return distSysInitializationHelper;
 	}
 
-	public void assignNativeDistributedAutonomousAgent(Object nativeDistributedAutonomousAgent,
+	public void assignNativeSoftwareAgent(Object nativeSoftwareAgent,
 			DistSysRunContext distSysRunContext) {
-		distSysInitializationHelper.assignNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent,
+		distSysInitializationHelper.assignNativeSoftwareAgent(nativeSoftwareAgent,
 				distSysRunContext);
 	}
 

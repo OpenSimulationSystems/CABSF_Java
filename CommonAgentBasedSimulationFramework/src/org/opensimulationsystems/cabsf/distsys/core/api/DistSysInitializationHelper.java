@@ -8,8 +8,8 @@ import org.opensimulationsystems.cabsf.common.model.SimulationRunGroup;
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
 import org.opensimulationsystems.cabsf.common.model.configuration.RunGroupConfiguration;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
-import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
 import org.opensimulationsystems.cabsf.distsys.core.api.simulationruntime.SimulationEngineManager;
+import org.opensimulationsystems.cabsf.distsys.core.api.softwareagents.DistributedAgentsManager;
 
 public class DistSysInitializationHelper {
 	private DistributedSystemAPI distributedSystemAPI;
@@ -29,7 +29,7 @@ public class DistSysInitializationHelper {
 	 * This method is caused to assign an existing AgentMapping object (created at CABSF
 	 * initialization) to a simulation-side agent.
 	 */
-	public void assignNativeDistributedAutonomousAgent(
+	public void assignNativeSoftwareAgent(
 			final Object nativeDistributedAutonomousAgent,
 			final DistSysRunContext distSysRunContext) {
 		// TODO: Handle multiple distributed systems

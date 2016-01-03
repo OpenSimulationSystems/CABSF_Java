@@ -64,7 +64,7 @@ public class HumanJADE extends Agent {
                 // Convert the message content from an XML string to a (CABSF)
                 // FrameworkMessage to gain access to convenience methods.
                 try {
-                    msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+                    msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_RUNTIME,
                             SYSTEM_TYPE.DISTRIBUTED_SYSTEM, msgStr);
                 } catch (final CabsfCheckedException e) {
                     System.out

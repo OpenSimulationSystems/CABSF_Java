@@ -64,7 +64,7 @@ public class PlayerJADE extends Agent {
                 // Convert the message content from an XML string to a (CABSF)
                 // FrameworkMessage to gain access to convenience methods.
                 try {
-                    msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+                    msg = new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_RUNTIME,
                             SYSTEM_TYPE.DISTRIBUTED_SYSTEM, msgStr);
                 } catch (final CabsfCheckedException e) {
                     System.out
@@ -105,7 +105,7 @@ public class PlayerJADE extends Agent {
                 System.out.println(logPrefix + " Decided: " + myDecision.toString());
 
                 FrameworkMessage replyMsg = new FrameworkMessageImpl(
-                        SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_ENGINE,
+                        SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_RUNTIME,
                         jade_AgentContext.getBlankCachedMessageExchangeTemplate());
 
                 // Get the distributed autonomous agent and set the ID

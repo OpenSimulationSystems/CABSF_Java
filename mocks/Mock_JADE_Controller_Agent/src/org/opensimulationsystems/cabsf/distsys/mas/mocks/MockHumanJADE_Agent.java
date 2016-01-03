@@ -10,9 +10,9 @@ import org.opensimulationsystems.cabsf.common.internal.messaging.xml.XMLUtilitie
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AgentContext_Cabsf;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeSoftwareAgent;
 
-public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
+public class MockHumanJADE_Agent implements NativeSoftwareAgent {
 
     private String distributedAutonomousAgentID;
     private final String modelName;
@@ -89,7 +89,7 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
         // autonomous agent is
         // not present either in the original or converted XML
 
-        System.out.println("[NativeDistributedAutonomousAgent "
+        System.out.println("[NativeSoftwareAgent "
                 + distributedAutonomousAgentID
                 + "] Received message ID: "
                 + distributedAutonomousAgentID
@@ -112,7 +112,8 @@ public class MockHumanJADE_Agent implements NativeDistributedAutonomousAgent {
                 .getNextMsgForDistributedSoftwareAgentElement(msg.getDocument(), null);
 
         final List<String> pointWithLeastZombiesPoint = jZombies_CABSF_Helper
-                .getPointWithLeastZombies(distributedAutonomousAgentElement, msg);
+                .getPointWithLeastZombies(distributedAutonomousAgentElement, msg,
+                        distributedAutonomousAgentModelID);
 
         for (int i = 0; i < pointWithLeastZombiesPoint.size(); i++) {
             System.out.println(logPrefix + " Received Zombie location "

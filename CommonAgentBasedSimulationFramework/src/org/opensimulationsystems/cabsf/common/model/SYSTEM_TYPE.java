@@ -12,7 +12,7 @@ public enum SYSTEM_TYPE {
 	/** The distributed system. */
 	DISTRIBUTED_SYSTEM,
 	/** The simulation engine. */
-	SIMULATION_ENGINE,
+	SIMULATION_RUNTIME,
 	/** The system administrator. */
 	SYSTEM_ADMINISTRATOR
 }

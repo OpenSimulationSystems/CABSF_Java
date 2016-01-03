@@ -12,7 +12,7 @@ import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AdapterAPI
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_RunContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_RunGroupContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerInterface;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeSoftwareAgent;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.opensimulationsystems.cabsf.distsys.mas.mocks.MockHumanJADE_Agent;
 
@@ -23,39 +23,39 @@ public class Mock_JADE_Controller_Agent implements JadeControllerInterface {
 
     private static String frameworkConfigurationFileName;
 
-    private static Set<NativeDistributedAutonomousAgent> getInitialSetOfNativeJADEagents() {
-        final Set<NativeDistributedAutonomousAgent> st = new HashSet<NativeDistributedAutonomousAgent>();
+    private static Set<NativeSoftwareAgent> getInitialSetOfNativeJADEagents() {
+        final Set<NativeSoftwareAgent> st = new HashSet<NativeSoftwareAgent>();
 
-        NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = new MockHumanJADE_Agent(
+        NativeSoftwareAgent nativeSoftwareAgent = new MockHumanJADE_Agent(
                 "DistSys1", "DistributedSystemAutonomousAgent1",
                 "DistributedSystemAutonomousAgent1MODEL", "Human",
                 frameworkConfigurationFileName);
-        st.add(nativeDistributedAutonomousAgent);
-        nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+        st.add(nativeSoftwareAgent);
+        nativeSoftwareAgent = new MockHumanJADE_Agent("DistSys1",
                 "DistributedSystemAutonomousAgent2",
                 "DistributedSystemAutonomousAgent2MODEL", "Human",
                 frameworkConfigurationFileName);
-        st.add(nativeDistributedAutonomousAgent);
-        nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+        st.add(nativeSoftwareAgent);
+        nativeSoftwareAgent = new MockHumanJADE_Agent("DistSys1",
                 "DistributedSystemAutonomousAgent3",
                 "DistributedSystemAutonomousAgent3MODEL", "Human",
                 frameworkConfigurationFileName);
-        st.add(nativeDistributedAutonomousAgent);
-        nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+        st.add(nativeSoftwareAgent);
+        nativeSoftwareAgent = new MockHumanJADE_Agent("DistSys1",
                 "DistributedSystemAutonomousAgent4",
                 "DistributedSystemAutonomousAgent4MODEL", "Human",
                 frameworkConfigurationFileName);
-        st.add(nativeDistributedAutonomousAgent);
-        nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+        st.add(nativeSoftwareAgent);
+        nativeSoftwareAgent = new MockHumanJADE_Agent("DistSys1",
                 "DistributedSystemAutonomousAgent5",
                 "DistributedSystemAutonomousAgent5MODEL", "Human",
                 frameworkConfigurationFileName);
-        st.add(nativeDistributedAutonomousAgent);
-        nativeDistributedAutonomousAgent = new MockHumanJADE_Agent("DistSys1",
+        st.add(nativeSoftwareAgent);
+        nativeSoftwareAgent = new MockHumanJADE_Agent("DistSys1",
                 "DistributedSystemAutonomousAgent6",
                 "DistributedSystemAutonomousAgent6MODEL", "Human",
                 frameworkConfigurationFileName);
-        st.add(nativeDistributedAutonomousAgent);
+        st.add(nativeSoftwareAgent);
         return st;
     }
 
@@ -85,7 +85,7 @@ public class Mock_JADE_Controller_Agent implements JadeControllerInterface {
         // TODO: Fix the native JADE context
         final Mock_JADE_Controller_Agent jade_Controller_Agent = new Mock_JADE_Controller_Agent(
                 frameworkConfigurationFileName);
-        final Set<NativeDistributedAutonomousAgent> st = getInitialSetOfNativeJADEagents();
+        final Set<NativeSoftwareAgent> st = getInitialSetOfNativeJADEagents();
 
         jade_Controller_Agent.listenLoop(st);
 
@@ -108,7 +108,7 @@ public class Mock_JADE_Controller_Agent implements JadeControllerInterface {
         return jade_MAS_RunContext;
     }
 
-    private void listenLoop(final Set<NativeDistributedAutonomousAgent> st) {
+    private void listenLoop(final Set<NativeSoftwareAgent> st) {
         while (true) {
             try {
                 // Handshake with the simulation system for a new simulation
@@ -151,7 +151,7 @@ public class Mock_JADE_Controller_Agent implements JadeControllerInterface {
         if (fc == FRAMEWORK_COMMAND.STOP_SIMULATION) {
             System.out
             .println("[JADE Controller Agent] Simulation Run Ended. Listening for new simulation run");
-            final Set<NativeDistributedAutonomousAgent> st = getInitialSetOfNativeJADEagents();
+            final Set<NativeSoftwareAgent> st = getInitialSetOfNativeJADEagents();
             listenLoop(st);
         }
     }

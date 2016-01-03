@@ -1024,7 +1024,7 @@ exchange (CsfMessageExchange) template&#xD;
 		final List&lt;Element> distributedAutonomousAgentElements = (List&lt;Element>) XMLUtilities&#xD;
 				.executeXPath(&#xD;
 						doc,&#xD;
-						&quot;/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent&quot;,&#xD;
+						&quot;/x:CsfMessageExchange/x:MessageRecipients/x:DistributedSystem/x:DistributedAutonomousAgents/x:DistributedAutonomousAgent&quot;,&#xD;
 						namespaceStr, elementFilter);&#xD;
 		distributedAutonomousAgentTemplate = distributedAutonomousAgentElements.get(0)&#xD;
 				.clone();&#xD;
@@ -2279,11 +2279,11 @@ simulation runs.&#xD;
                       <ownedAttribute xmi:id="_LmS4AKtVEeSb7-jUi2rLpg" name="frameworkMessage" visibility="package" type="_LAmJ9KtVEeSb7-jUi2rLpg" association="_LrzqKqtVEeSb7-jUi2rLpg"/>
                       <ownedAttribute xmi:id="_LmS4AqtVEeSb7-jUi2rLpg" name="frameworkToDistributedSystemCommand_XPath" visibility="private" isLeaf="true" isReadOnly="true">
                         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-                        <defaultValue xmi:type="uml:LiteralString" xmi:id="_LmS4A6tVEeSb7-jUi2rLpg" value="&quot;/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents/x:AllDistributedAutonomousAgents/x:ControlMessages/x:Command&quot;"/>
+                        <defaultValue xmi:type="uml:LiteralString" xmi:id="_LmS4A6tVEeSb7-jUi2rLpg" value="&quot;/x:CsfMessageExchange/x:MessageRecipients/x:DistributedSystem/x:DistributedAutonomousAgents/x:AllDistributedAutonomousAgents/x:ControlMessages/x:Command&quot;"/>
                       </ownedAttribute>
                       <ownedAttribute xmi:id="_LmS4BatVEeSb7-jUi2rLpg" name="frameworkToSimulationEngineCommnad_XPath" visibility="private" isLeaf="true" isReadOnly="true">
                         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-                        <defaultValue xmi:type="uml:LiteralString" xmi:id="_LmS4BqtVEeSb7-jUi2rLpg" value="&quot;/x:CsfMessageExchange/x:ReceivingEntities/x:SimulationSystem/x:ControlMessages/x:Command&quot;"/>
+                        <defaultValue xmi:type="uml:LiteralString" xmi:id="_LmS4BqtVEeSb7-jUi2rLpg" value="&quot;/x:CsfMessageExchange/x:MessageRecipients/x:SimulationSystem/x:ControlMessages/x:Command&quot;"/>
                       </ownedAttribute>
                       <ownedAttribute xmi:id="_LmS4CKtVEeSb7-jUi2rLpg" name="frameworkStatus_XPath" visibility="private" isLeaf="true" isReadOnly="true">
                         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
@@ -2291,7 +2291,7 @@ simulation runs.&#xD;
                       </ownedAttribute>
                       <ownedAttribute xmi:id="_LmS4C6tVEeSb7-jUi2rLpg" name="distributedAutonomousAgentsXpath" visibility="private" isLeaf="true" isReadOnly="true">
                         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-                        <defaultValue xmi:type="uml:LiteralString" xmi:id="_LmS4DKtVEeSb7-jUi2rLpg" value="&quot;/x:CsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedAutonomousAgents&quot;"/>
+                        <defaultValue xmi:type="uml:LiteralString" xmi:id="_LmS4DKtVEeSb7-jUi2rLpg" value="&quot;/x:CsfMessageExchange/x:MessageRecipients/x:DistributedSystem/x:DistributedAutonomousAgents&quot;"/>
                       </ownedAttribute>
                       <ownedAttribute xmi:id="_LmcpAatVEeSb7-jUi2rLpg" name="namespaceStr" visibility="private" isLeaf="true" isReadOnly="true">
                         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>

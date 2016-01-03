@@ -12,7 +12,7 @@ import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.JadeControllerI
  * @version 0.1
  * @since 0.1
  */
-public interface NativeDistributedAutonomousAgent {
+public interface NativeSoftwareAgent {
 	/**
 	 * Gets the distributed autonomous agent id.
 	 * 

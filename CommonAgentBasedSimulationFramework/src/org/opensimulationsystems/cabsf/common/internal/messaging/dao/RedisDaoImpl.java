@@ -143,7 +143,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
     // FIXME: Pass back the actual value and handle it upstream
     public FrameworkMessage listenForMessageFromSimulationEngine(
             final SYSTEM_TYPE targetSystemType, final String clientID) {
-        return retrieveFrameworkMessage(SYSTEM_TYPE.SIMULATION_ENGINE,
+        return retrieveFrameworkMessage(SYSTEM_TYPE.SIMULATION_RUNTIME,
                 SYSTEM_TYPE.DISTRIBUTED_SYSTEM, clientID);
 
     }
@@ -160,7 +160,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
     public FrameworkMessage readFrameworkMessageFromDistributedSystem(
             final String clientID) {
         return retrieveFrameworkMessage(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                SYSTEM_TYPE.SIMULATION_ENGINE, clientID);
+                SYSTEM_TYPE.SIMULATION_RUNTIME, clientID);
     }
 
     /*
@@ -175,7 +175,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
     public FrameworkMessage readFrameworkMessageFromSimulationAdministrator(
             final String clientID) {
         return retrieveFrameworkMessage(SYSTEM_TYPE.SYSTEM_ADMINISTRATOR,
-                SYSTEM_TYPE.SIMULATION_ENGINE, clientID);
+                SYSTEM_TYPE.SIMULATION_RUNTIME, clientID);
     }
 
     /*
@@ -190,7 +190,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
     public FrameworkMessage requestEnvironmentInformation(
             final SYSTEM_TYPE targetSystemType, final String clientID) {
         final String redisChannelStr =
-                createRedisChannelStr(SYSTEM_TYPE.SIMULATION_ENGINE, targetSystemType,
+                createRedisChannelStr(SYSTEM_TYPE.SIMULATION_RUNTIME, targetSystemType,
                         clientID);
 
         // LOW: Improve performance, use publish/subscribe
@@ -201,7 +201,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
                 null;
         try {
             fm =
-                    new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+                    new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_RUNTIME,
                             SYSTEM_TYPE.DISTRIBUTED_SYSTEM, messageXML);
         } catch (final CabsfCheckedException e) {
             throw new CabsfMessagingRuntimeException(e);
@@ -251,7 +251,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
         // whether
         // cloning is required or not.
         final FrameworkMessage fm =
-                new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_ENGINE,
+                new FrameworkMessageImpl(SYSTEM_TYPE.SIMULATION_RUNTIME,
                         SYSTEM_TYPE.DISTRIBUTED_SYSTEM, doc);
         return fm;
     }
@@ -274,7 +274,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
             final DistributedSystem distributedSystem) {
 
         final String redisChannelStr =
-                createRedisChannelStr(SYSTEM_TYPE.SIMULATION_ENGINE,
+                createRedisChannelStr(SYSTEM_TYPE.SIMULATION_RUNTIME,
                         SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
                         distributedSystem.getDistributedSystemID());
         redisConnectionManager.postMessage(redisChannelStr,
@@ -297,7 +297,7 @@ public class RedisDaoImpl implements CommonMessagingDao {
             final FrameworkMessage frameworkMessage, final String simulationEngineID) {
         final String redisChannelStr =
                 createRedisChannelStr(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                        SYSTEM_TYPE.SIMULATION_ENGINE, simulationEngineID);
+                        SYSTEM_TYPE.SIMULATION_RUNTIME, simulationEngineID);
         redisConnectionManager.postMessage(redisChannelStr,
                 frameworkMessage.transformToCommonMessagingXMLString(true));
 

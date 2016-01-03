@@ -145,7 +145,7 @@ public class PublishSubscribeListener extends JedisPubSub {
 
         // TODO: remove after reading?
         // Rely on Polling for now, keep everything Synchronous and simple.
-        redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_ENGINE,
+        redisConnectionManager.redisSynchronousPolling(SYSTEM_TYPE.SIMULATION_RUNTIME,
                 "cabsf.commands.simToDistSystem:19def3fa-a1d4-4996-a1ac-22c3a041e6ff",
                 0.001d, null);
 

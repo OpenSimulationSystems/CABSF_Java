@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents;
+package org.opensimulationsystems.cabsf.distsys.core.api.softwareagents;
 
 import java.util.UUID;
 

@@ -31,19 +31,19 @@ public class FrameworkMessageDocumentHelper {
     FrameworkMessage frameworkMessage;
 
     /** The framework to distributed system command_ x path. */
-    final private String frameworkToDistributedSystemCommand_XPath = "/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedSoftwareAgents/x:ToAllDistributedSoftwareAgents/x:ControlMessages/x:Command";
+    final private String frameworkToDistributedSystemCommand_XPath = "/x:CabsfMessageExchange//x:DistributedSystem/x:DistributedSoftwareAgents/x:ToAllDistributedSoftwareAgents/x:ControlMessages/x:Command";
 
     /** The framework to simulation engine commnad_ x path. */
-    final private String frameworkToSimulationEngineCommnad_XPath = "/x:CabsfMessageExchange/x:ReceivingEntities/x:SimulationSystem/x:ControlMessages/x:Command";
+    final private String frameworkToSimulationEngineCommnad_XPath = "/x:CabsfMessageExchange//x:ControlMessages/x:Command";
 
     /** The framework status_ x path. */
     final private String frameworkStatus_XPath = "/x:CabsfMessageExchange/x:Status";
 
     /** The distributed autonomous agents xpath. */
-    final private String distributedAutonomousAgentsXpath = "/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedSoftwareAgents";
+    final private String distributedAutonomousAgentsXpath = "/x:CabsfMessageExchange//x:DistributedSystem/x:DistributedSoftwareAgents";
     // TODO: Get this from the configuration
     /** The namespace str. */
-    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
 
     /** The namespace. */
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
@@ -154,7 +154,7 @@ public class FrameworkMessageDocumentHelper {
         @SuppressWarnings("unchecked")
         final List<Element> agentModelElements = (List<Element>) XMLUtilities
         .executeXPath(distributedSoftwareAgent,
-                "./x:AgentModels/x:AgentModel[/ID='" + agentModelID + '+',
+                "./x:AgentModels/x:AgentModel[Id='" + agentModelID + '+',
                 namespaceStr, elementFilter);
         assert (agentModelElements.size() == 1);
 
@@ -480,7 +480,7 @@ public class FrameworkMessageDocumentHelper {
         .executeXPath(
                 frameworkMessage.getDocument(),
                 frameworkStatus_XPath,
-                "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0",
+                "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2",
                 elementFilter);
         System.out.println(xPathSearchedNodes.get(0).getValue());
 
@@ -594,7 +594,7 @@ public class FrameworkMessageDocumentHelper {
         .executeXPath(
                 frameworkMessage.getDocument(),
                 frameworkToSimulationEngineCommnad_XPath,
-                "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0",
+                "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2",
                 elementFilter);
         System.out.println(xPathSearchedNodes.get(0).getValue());
 
@@ -616,7 +616,7 @@ public class FrameworkMessageDocumentHelper {
     public void setIDForAboutAgentModel(final Element actor, final String ID) {
         // TODO: Support multiple actors
         final List<Element> agentModelID = (List<Element>) XMLUtilities.executeXPath(
-                actor, "./x:ID", namespaceStr, elementFilter);
+                actor, "./x:Id", namespaceStr, elementFilter);
         if (agentModelID.size() > 0) {
             final Element e = agentModelID.get(0);
             e.setText(ID);
@@ -638,7 +638,7 @@ public class FrameworkMessageDocumentHelper {
             final Element distributedAutonomousAgent, final String ID) {
         // TODO: Support multiple actors
         final List<Element> distributedAutonomousAgentID = (List<Element>) XMLUtilities
-                .executeXPath(distributedAutonomousAgent, "./x:ID", namespaceStr,
+                .executeXPath(distributedAutonomousAgent, "./x:Id", namespaceStr,
                         elementFilter);
         if (distributedAutonomousAgentID.size() > 0) {
             final Element e = distributedAutonomousAgentID.get(0);

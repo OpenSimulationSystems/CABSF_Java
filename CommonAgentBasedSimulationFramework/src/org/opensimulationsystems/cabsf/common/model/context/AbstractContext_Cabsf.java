@@ -27,7 +27,7 @@ public abstract class AbstractContext_Cabsf {
     // TODO: Get these two from the configuration
     // TODO: Only use either the string or the namespace.
     /** The namespace str. */
-    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
 
     /** The namespace. */
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
@@ -56,7 +56,7 @@ public abstract class AbstractContext_Cabsf {
      * access to convenience methods in FrameworkMessage for working with the
      * XML.
      *
-     * @param distributedAutononomousAgentElement
+     * @param softwareAgentElement
      *            the distributed autononomous agent element
      * @param distributedAutonomousAgentID
      *            the distributed autonomous agent id.
@@ -70,8 +70,8 @@ public abstract class AbstractContext_Cabsf {
      *            actually sending this FrameworkMessage across the wire.
      * @return the FrameworkMessage
      */
-    public FrameworkMessage convertDocumentToSendToDAAtoFrameworkMessage(
-            final Element distributedAutononomousAgentElement,
+    public FrameworkMessage convertDocumentToSendToSoftwareAgentToFrameworkMessage(
+            final Element softwareAgentElement,
             final String distributedAutonomousAgentID, final SYSTEM_TYPE sourceSystem,
             final SYSTEM_TYPE targetSystem) {
 
@@ -79,8 +79,8 @@ public abstract class AbstractContext_Cabsf {
                 this.getBlankCachedMessageExchangeTemplate());
         // FIXME: Need a better name if all we're doing is setting the ID.
         // populateDistributedAutonomousAgent
-        fm.addDistributedAutonomousAgent(fm.getDocument(),
-                distributedAutononomousAgentElement, true);
+        fm.addSoftwareAgent(fm.getDocument(),
+                softwareAgentElement, true);
 
         return fm;
     }
@@ -147,7 +147,7 @@ public abstract class AbstractContext_Cabsf {
         final List<Element> distributedAutonomousAgentElements = (List<Element>) XMLUtilities
                 .executeXPath(
                         doc,
-                        "/x:CabsfMessageExchange/x:ReceivingEntities/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent",
+                        "/x:CabsfMessageExchange/x:MessageRecipients/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent",
                         namespaceStr, elementFilter);
         distributedAutonomousAgentTemplate = distributedAutonomousAgentElements.get(0)
                 .clone();

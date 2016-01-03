@@ -1,4 +1,4 @@
-package org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents;
+package org.opensimulationsystems.cabsf.distsys.core.api.softwareagents;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitializationRuntimeException;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeSoftwareAgent;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
@@ -47,10 +47,10 @@ public class DistributedAgentsManager {
 	private DistSysRunContext distSysRunContext;
 
 	/** The distributed autonomous agent id sto distributed autonomous agents. */
-	private final ConcurrentHashMap<String, DistributedAutonomousAgent> distributedAutonomousAgentIDStoDistributedAutonomousAgents = new ConcurrentHashMap<String, DistributedAutonomousAgent>();
+	private final ConcurrentHashMap<String, SoftwareAgent> distributedAutonomousAgentIDStoDistributedAutonomousAgents = new ConcurrentHashMap<String, SoftwareAgent>();
 
 	/** The agents readyfor native distributed agent mapping. */
-	private final HashSet<DistributedAutonomousAgent> agentsReadyforNativeDistributedAgentMapping = new HashSet<DistributedAutonomousAgent>();
+	private final HashSet<SoftwareAgent> agentsReadyforNativeDistributedAgentMapping = new HashSet<SoftwareAgent>();
 
 	/**
 	 * Instantiates a new distributed agents manager.
@@ -72,7 +72,7 @@ public class DistributedAgentsManager {
 	public DistributedAgentsManager(final String distributedSystemID,
 			final DistSysRunContext distSysRunContext,
 			final DistSysRunConfiguration distSysRunConfiguration) {
-		// public DistributedAutonomousAgent(DistSysRunContext distSysRunContext,
+		// public SoftwareAgent(DistSysRunContext distSysRunContext,
 		// String getCommonMessagingConcreteImplStr) {
 		this.distributedSystemID = distributedSystemID;
 		this.distSysRunConfiguration = distSysRunConfiguration;
@@ -90,28 +90,28 @@ public class DistributedAgentsManager {
 	 *            the native distributed autonomous agent
 	 * @return the distributed autonomous agent
 	 */
-	public DistributedAutonomousAgent assignNativeDistributedAutonomousAgent(
+	public SoftwareAgent assignNativeDistributedAutonomousAgent(
 			final Object nativeDistributedAutonomousAgent) {
 		// TODO: Add Validation to make sure mappings exist. / Throw exception
 		// LOW: Support for matching distributed agent by id and/or changing status to
 		// "Ready"
-		DistributedAutonomousAgent distributedAutonomousAgent = null;
+		SoftwareAgent softwareAgent = null;
 
 		try {
 			// Take first available
-			distributedAutonomousAgent = agentsReadyforNativeDistributedAgentMapping
+			softwareAgent = agentsReadyforNativeDistributedAgentMapping
 					.iterator().next();
-			distributedAutonomousAgent
+			softwareAgent
 					.setNativeDistributedAutonomousAgent(nativeDistributedAutonomousAgent);
 			agentsReadyforNativeDistributedAgentMapping
-					.remove(distributedAutonomousAgent);
+					.remove(softwareAgent);
 
 			// TODO: Support multiple agent models
 			System.out.println("[DISTRIBUTED_SYSTEM] "
 					+ "Successfully assigned agent. Dist Aut. Agent ID: "
-					+ distributedAutonomousAgent.getDistributedAutonomousAgentID()
+					+ softwareAgent.getDistributedAutonomousAgentID()
 					+ "  Agent Model ID (1st): "
-					+ distributedAutonomousAgent
+					+ softwareAgent
 							.getDistributedAgentModelIDStoAgentModels().values()
 							.iterator().next().getDistributedAgentModelID()
 					+ " native class: "
@@ -121,7 +121,7 @@ public class DistributedAgentsManager {
 					"Error Assigning native JADE agent to mapping.", e);
 		}
 
-		return distributedAutonomousAgent;
+		return softwareAgent;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class DistributedAgentsManager {
 	 *            the distributed agent model name
 	 * @return the distributed autonomous agent
 	 */
-	public DistributedAutonomousAgent createDistributedAutonomousAgent(
+	public SoftwareAgent createDistributedAutonomousAgent(
 			final DistSysRunContext distSysRunContext,
 			String distributedAutonomousAgentID,
 			final Set<String> distributedAgentModelIDs,
@@ -148,16 +148,16 @@ public class DistributedAgentsManager {
 			distributedAutonomousAgentID = UUID.randomUUID().toString();
 
 		// TODO: Add support for multiple agent models
-		final DistributedAutonomousAgent distributedAutonomousAgent = new DistributedAutonomousAgent(
+		final SoftwareAgent softwareAgent = new SoftwareAgent(
 				distSysRunContext, distributedAutonomousAgentID,
 				distributedAgentModelIDs, distributedAgentModelName);
 
 		// TODO: Add validation
-		agentsReadyforNativeDistributedAgentMapping.add(distributedAutonomousAgent);
+		agentsReadyforNativeDistributedAgentMapping.add(softwareAgent);
 		distributedAutonomousAgentIDStoDistributedAutonomousAgents.put(
-				distributedAutonomousAgentID, distributedAutonomousAgent);
+				distributedAutonomousAgentID, softwareAgent);
 
-		return distributedAutonomousAgent;
+		return softwareAgent;
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class DistributedAgentsManager {
 	 *            the id
 	 * @return the distributed autonomous agent
 	 */
-	public DistributedAutonomousAgent getDistributedAutonomousAgent(final String ID) {
+	public SoftwareAgent getSoftwareAgent(final String ID) {
 		return distributedAutonomousAgentIDStoDistributedAutonomousAgents.get(ID);
 	}
 
@@ -176,7 +176,7 @@ public class DistributedAgentsManager {
 	 * 
 	 * @return the distributed autonomous agent id sto distributed autonomous agents
 	 */
-	public ConcurrentHashMap<String, DistributedAutonomousAgent> getDistributedAutonomousAgentIDStoDistributedAutonomousAgents() {
+	public ConcurrentHashMap<String, SoftwareAgent> getDistributedAutonomousAgentIDStoDistributedAutonomousAgents() {
 		return distributedAutonomousAgentIDStoDistributedAutonomousAgents;
 	}
 
@@ -191,7 +191,7 @@ public class DistributedAgentsManager {
 	 */
 	public void initializeDistributedAutonomousAgents(
 			final NativeJADEMockContext nativeJadeContextForThisRun,
-			final Set<NativeDistributedAutonomousAgent> nativeAgentsSet) {
+			final Set<NativeSoftwareAgent> nativeAgentsSet) {
 		/*
 		 * Create AgentMapping objects based on the configured type and number of agents.
 		 * These objects will be populated with actual mapped simulation-side and
@@ -202,10 +202,10 @@ public class DistributedAgentsManager {
 		 * TODO: Pull from configuration (actual JADE objects) For now just assuming one
 		 * model agent per distributed autonomous software agent.
 		 */
-		for (final NativeDistributedAutonomousAgent agent : nativeAgentsSet) {
+		for (final NativeSoftwareAgent agent : nativeAgentsSet) {
 			final HashSet<String> hs = new HashSet<String>();
 			hs.add(agent.getDistributedAutonomousAgentModelID());
-			final DistributedAutonomousAgent distributedAutonomousAgent = createDistributedAutonomousAgent(
+			final SoftwareAgent softwareAgent = createDistributedAutonomousAgent(
 					distSysRunContext, agent.getDistributedAutonomousAgentID(), hs,
 					agent.getModelName());
 			assignNativeDistributedAutonomousAgent(agent);

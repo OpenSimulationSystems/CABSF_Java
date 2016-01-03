@@ -11,11 +11,11 @@ import org.opensimulationsystems.cabsf.common.model.cabsfexceptions.CabsfInitial
 import org.opensimulationsystems.cabsf.common.model.configuration.RunGroupConfiguration;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FRAMEWORK_COMMAND;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeSoftwareAgent;
 import org.opensimulationsystems.cabsf.distsys.core.api.DistSysRunContext;
-import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAgentModel;
-import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
-import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.core.api.softwareagents.DistributedAgentModel;
+import org.opensimulationsystems.cabsf.distsys.core.api.softwareagents.DistributedAgentsManager;
+import org.opensimulationsystems.cabsf.distsys.core.api.softwareagents.SoftwareAgent;
 
 /**
  * The simulation run context for the JADE MAS. Provides the mechanism for the
@@ -257,15 +257,15 @@ public class Jade_RunContext {
                             + " from the simulation administrator left in the queue.  If it's the second problem, try flushing the Redis cache (if using Redis"
                             + " for the common CABSF interface.");
         }
-        for (final Element distributedAutonomousAgentElement : distributedAutonomousAgentElements) {
-            final String distributedAutonomousAgentID = fm
-                    .getDistributedSoftwareAgentID(distributedAutonomousAgentElement);
-            final DistributedAutonomousAgent distAutAgent = dam
-                    .getDistributedAutonomousAgent(distributedAutonomousAgentID);
+        for (final Element softwareAgentElement : distributedAutonomousAgentElements) {
+            final String softwareAgentID = fm
+                    .getSoftwareAgentID(softwareAgentElement);
+            final SoftwareAgent distAutAgent = dam
+                    .getSoftwareAgent(softwareAgentID);
             // TODO: better validation
             assert (distAutAgent != null);
             final List<Element> agentModelElements = fm
-                    .getAgentModels(distributedAutonomousAgentElement); // TODO:
+                    .getAgentModels(softwareAgentElement); // TODO:
             // better
             // validation
             assert (agentModelElements.size() != 0);
@@ -294,23 +294,23 @@ public class Jade_RunContext {
             // else in
             // the main DistaSys API
             // FIXME: Look into whether we need both
-            // NativeDistributedAutonomousAgent and
-            // DistributedAutonomousAgent
-            final NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent = (NativeDistributedAutonomousAgent) distAutAgent
+            // NativeSoftwareAgent and
+            // SoftwareAgent
+            final NativeSoftwareAgent nativeSoftwareAgent = (NativeSoftwareAgent) distAutAgent
                     .getNativeDistributedAutonomousAgent();
-            assert (nativeDistributedAutonomousAgent != null);
+            assert (nativeSoftwareAgent != null);
 
             final FrameworkMessage fmToDistributedAutomousAgent = getDistSysRunContext()
                     .getDistSysRunGroupContext()
-                    .convertDocumentToSendToDAAtoFrameworkMessage(
-                            distributedAutonomousAgentElement,
+                    .convertDocumentToSendToSoftwareAgentToFrameworkMessage(
+                            softwareAgentElement,
                             distAutAgent.getDistributedAutonomousAgentID(),
-                            SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
+                            SYSTEM_TYPE.SIMULATION_RUNTIME, SYSTEM_TYPE.DISTRIBUTED_SYSTEM);
 
-            assert (nativeDistributedAutonomousAgent.getDistributedAutonomousAgentID()
-                    .equals(distributedAutonomousAgentID));
+            assert (nativeSoftwareAgent.getDistributedAutonomousAgentID()
+                    .equals(softwareAgentID));
             final String messageID = UUID.randomUUID().toString();
-            nativeDistributedAutonomousAgent.receiveMessage(fmToDistributedAutomousAgent,
+            nativeSoftwareAgent.receiveMessage(fmToDistributedAutomousAgent,
                     messageID, null, jadeControllerInterface);
 
             // At this point the distributed agent has received the message from

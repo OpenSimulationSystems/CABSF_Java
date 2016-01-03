@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CabsfMessageExchange
-	xmlns="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0"
+	xmlns="http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Identifiers>
 		<Simulation>
@@ -31,7 +31,7 @@
 		<Name>RepastSimulationRunner</Name>
 		<ID/>
 	</SendingEntity>
-	<ReceivingEntities>
+	<MessageRecipients>
 		<SimulationSystem>
 			<ControlMessages>
 				<!-- START_SIMULATION or END_SIMULATION -->
@@ -111,5 +111,5 @@
 				</DistributedAutonomousAgent>
 			</DistributedAutonomousAgents>
 		</DistributedSystem>
-	</ReceivingEntities>
+	</MessageRecipients>
 </CabsfMessageExchange>

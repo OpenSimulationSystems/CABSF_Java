@@ -106,7 +106,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * org.jdom2.Element, boolean)
      */
     @Override
-    public Document addDistributedAutonomousAgent(final Document CabsfMessageExchangeDoc,
+    public Document addSoftwareAgent(final Document CabsfMessageExchangeDoc,
             final Element distributedAutononomousAgentElement,
             final boolean removeChildren) {
         return frameworkMessageDocumentHelper.addDistributedAutonomousAgent(
@@ -154,7 +154,7 @@ public class FrameworkMessageImpl implements FrameworkMessage {
      * FrameworkMessage# getDistributedAutonomousAgentID(org.jdom2.Element)
      */
     @Override
-    public String getDistributedSoftwareAgentID(
+    public String getSoftwareAgentID(
             final Element distributedAutononomousAgentElement) {
         return frameworkMessageDocumentHelper
                 .getDistributedAutonomousAgentID(distributedAutononomousAgentElement);
@@ -338,14 +338,6 @@ public class FrameworkMessageImpl implements FrameworkMessage {
 
     }
 
-    @Override
-    public void setAboutAgentModelID(final Element aboutAgentModel,
-            final String agentModelID) {
-        frameworkMessageDocumentHelper
-        .setAboutAgentModelID(aboutAgentModel, agentModelID);
-
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -389,6 +381,15 @@ public class FrameworkMessageImpl implements FrameworkMessage {
         frameworkMessageDocumentHelper
         .setFrameworkToSimulationEngineCommnad(frameworkToSimulationEngineCommand);
     }
+
+    /*
+     * @Override public void setIDForAboutAgentModel(final Element
+     * aboutAgentModel, final String agentModelID) {
+     * frameworkMessageDocumentHelper.setIDForAboutAgentModel(aboutAgentModel,
+     * agentModelID);
+     * 
+     * }
+     */
 
     /*
      * (non-Javadoc)

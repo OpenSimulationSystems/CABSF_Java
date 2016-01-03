@@ -36,7 +36,7 @@ public interface FrameworkMessage {
      *            agents.
      * @return the document
      */
-    public Document addDistributedAutonomousAgent(Document CabsfMessageExchangeDoc,
+    public Document addSoftwareAgent(Document CabsfMessageExchangeDoc,
             Element distributedAutononomousAgentElement, boolean removeChildren);
 
     /**
@@ -82,7 +82,7 @@ public interface FrameworkMessage {
      *            the distributed autononomous agent element
      * @return the distributed autonomous agent id
      */
-    String getDistributedSoftwareAgentID(Element distributedAutononomousAgentElement);
+    String getSoftwareAgentID(Element distributedAutononomousAgentElement);
 
     /**
      * Gets the CabsfMessageExchange XML Document which thie FrameworkMessage

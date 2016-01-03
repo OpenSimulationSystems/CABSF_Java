@@ -24,7 +24,7 @@ import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_AdapterAPI
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_RunContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.Jade_RunGroupContext;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.CabsfDistributedJADEagentWrapper;
-import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeDistributedAutonomousAgent;
+import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeSoftwareAgent;
 import org.opensimulationsystems.cabsf.distsys.adapters.jade.api.nativeagents.NativeJADEMockContext;
 
 // TODO: Auto-generated Javadoc
@@ -66,7 +66,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
                 FrameworkMessage message = null;
                 try {
                     message = new FrameworkMessageImpl(SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
-                            SYSTEM_TYPE.SIMULATION_ENGINE, msgStr);
+                            SYSTEM_TYPE.SIMULATION_RUNTIME, msgStr);
                 } catch (final CabsfCheckedException e) {
                     // FIXME: Remove all of the agents/shutdown the MAS?
                     System.out
@@ -117,7 +117,7 @@ public class JADE_Controller_Agent extends jade.core.Agent {
     boolean newSimulationRun = true;
 
     /** The jade agents. */
-    private final Set<NativeDistributedAutonomousAgent> mappedJadeAgents = new HashSet<NativeDistributedAutonomousAgent>();
+    private final Set<NativeSoftwareAgent> mappedJadeAgents = new HashSet<NativeSoftwareAgent>();
 
     /** The number of agents. */
     private long expectedNumOfAgentsFromConfig;

@@ -13,8 +13,8 @@ import org.opensimulationsystems.cabsf.common.model.configuration.RunGroupConfig
 import org.opensimulationsystems.cabsf.common.model.context.CabsfRunContext;
 import org.opensimulationsystems.cabsf.common.model.messaging.messages.FrameworkMessage;
 import org.opensimulationsystems.cabsf.distsys.core.api.configuration.DistSysRunConfiguration;
-import org.opensimulationsystems.cabsf.distsys.core.api.distributedautonomousagents.DistributedAgentsManager;
 import org.opensimulationsystems.cabsf.distsys.core.api.simulationruntime.SimulationEngineManager;
+import org.opensimulationsystems.cabsf.distsys.core.api.softwareagents.DistributedAgentsManager;
 
 /*
  * Provides the context for the Common Agent-Based Simulation Framework. Adapter developers may use this context

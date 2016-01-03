@@ -36,7 +36,7 @@ public class JZombies_CABSF_Helper {
     private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf;
 
     // TODO: Get this from the configuration
-    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.1.0";
+    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
     // Only used by the JADE agent
@@ -92,7 +92,7 @@ public class JZombies_CABSF_Helper {
             final List<String> pointMoveTo, final String distributedSoftwareAgentID,
             final String distSoftwareAgentModelID) {
         final FrameworkMessage msg = new FrameworkMessageImpl(
-                SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_ENGINE,
+                SYSTEM_TYPE.DISTRIBUTED_SYSTEM, SYSTEM_TYPE.SIMULATION_RUNTIME,
                 jade_AgentContext.getBlankCachedMessageExchangeTemplate());
         populateZombiesMessage(msg, distributedSoftwareAgentID, distSoftwareAgentModelID,
                 pointMoveTo, new ArrayList<String>());
@@ -275,7 +275,7 @@ public class JZombies_CABSF_Helper {
 
         // Construct FrameworkMessage to send to the distributed agent
         final FrameworkMessage msg = new FrameworkMessageImpl(
-                SYSTEM_TYPE.SIMULATION_ENGINE, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
+                SYSTEM_TYPE.SIMULATION_RUNTIME, SYSTEM_TYPE.DISTRIBUTED_SYSTEM,
                 repastS_AgentContext_Cabsf.getBlankCachedMessageExchangeTemplate());
         assert (repastS_AgentContext_Cabsf.getRepastS_SimulationRunContext()
                 .getCachedDistributedAutonomousAgentTemplate() != null);

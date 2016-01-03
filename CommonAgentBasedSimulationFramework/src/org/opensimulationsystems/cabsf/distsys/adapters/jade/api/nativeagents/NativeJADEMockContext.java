@@ -14,17 +14,17 @@ import java.util.Set;
 public class NativeJADEMockContext {
 
 	/** The native distributed autonomous agents. */
-	private final Set<NativeDistributedAutonomousAgent> nativeDistributedAutonomousAgents = new HashSet<NativeDistributedAutonomousAgent>();
+	private final Set<NativeSoftwareAgent> nativeSoftwareAgents = new HashSet<NativeSoftwareAgent>();
 
 	/**
 	 * Adds the agent.
 	 * 
-	 * @param nativeDistributedAutonomousAgent
+	 * @param nativeSoftwareAgent
 	 *            the native distributed autonomous agent
 	 */
 	public void addAgent(
-			final NativeDistributedAutonomousAgent nativeDistributedAutonomousAgent) {
-		nativeDistributedAutonomousAgents.add(nativeDistributedAutonomousAgent);
+			final NativeSoftwareAgent nativeSoftwareAgent) {
+		nativeSoftwareAgents.add(nativeSoftwareAgent);
 	}
 
 	/**
@@ -32,8 +32,8 @@ public class NativeJADEMockContext {
 	 * 
 	 * @return the mock jad e_ agents
 	 */
-	public Set<NativeDistributedAutonomousAgent> getMockJADE_Agents() {
-		return nativeDistributedAutonomousAgents;
+	public Set<NativeSoftwareAgent> getMockJADE_Agents() {
+		return nativeSoftwareAgents;
 	}
 
 }

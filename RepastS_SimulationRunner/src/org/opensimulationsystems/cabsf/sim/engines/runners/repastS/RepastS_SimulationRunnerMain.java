@@ -2,9 +2,6 @@ package org.opensimulationsystems.cabsf.sim.engines.runners.repastS;
 
 import java.io.File;
 
-import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.random.RandomHelper;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Repast Simphony (RepastS) Simulation Runner programmatically runs a
@@ -49,14 +46,12 @@ public class RepastS_SimulationRunnerMain {
      *             the exception
      */
     public static void main(final String[] args) throws Exception {
-        String firstProgramArgument =
-                null;
+        String firstProgramArgument = null;
         if (args.length >= 2) {
             // Read the directory to the Common Agent-Based Simulation Framework
             // configuration file (second
             // argument)
-            firstProgramArgument =
-                    args[1];
+            firstProgramArgument = args[1];
             // TODO: Add Validation of CABSF configuration file
             // if (frameworkConfigurationFileName == null)
             // throw new
@@ -64,35 +59,31 @@ public class RepastS_SimulationRunnerMain {
         }
 
         // The Repast scenario Directory
-        final File file =
-                new File(args[0]);
-        final RepastS_SimulationRunner repastS_SimulationRunner =
-                new RepastS_SimulationRunner();
+        final File file = new File(args[0]);
+        final RepastS_SimulationRunner repastS_SimulationRunner = new RepastS_SimulationRunner();
 
         repastS_SimulationRunner.load(file, firstProgramArgument); // Load
 
         // Run the simulation a few times to check for cleanup and init issues.
-        long simulation_runs =
-                2;
+        // FIXME: Use configuration.
+        long simulation_runs = 2;
 
         if (repastS_SimulationRunner.getRepastS_SimulationRunGroupContext() != null) {
-            simulation_runs =
-                    repastS_SimulationRunner.getRepastS_SimulationRunGroupContext()
-                            .getSimulationRunGroupContext().getRunGroupConfiguration()
-                            .getNumberOfSimulationRuns();
+            simulation_runs = repastS_SimulationRunner
+                    .getRepastS_SimulationRunGroupContext()
+                    .getSimulationRunGroupContext().getRunGroupConfiguration()
+                    .getNumberOfSimulationRuns();
         }
 
-        for (int i =
-                0; i < simulation_runs; i++) {
+        for (int i = 0; i < simulation_runs; i++) {
             repastS_SimulationRunner.runInitialize(i == 0);
             RandomHelper.nextDouble();
             // Hard Coded for now
             // TODO: Tie in the maximum ticks in this simulation run from the
             // configuration
-            final Double max_ticks =
-                    null; // = 300d;
-            double tick =
-                    RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+            final Double max_ticks = null; // = 300d;
+            double tick = RunEnvironment.getInstance().getCurrentSchedule()
+                    .getTickCount();
 
             System.out
                     .println("Starting simulation run.  -1 means initial state.  Corresponding values in model out files use 0 instead of -1");
@@ -112,8 +103,7 @@ public class RepastS_SimulationRunnerMain {
                 // execute all scheduled actions at next tick
                 repastS_SimulationRunner.step();
 
-                tick =
-                        RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+                tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
                 System.out.println("Finished Stepping.  New Tick: " + tick);
 
                 // Call stop() after the last step. One "end" action is left, so

@@ -134,7 +134,7 @@ public class Mock_JADE_Controller_Agent implements JadeControllerInterface {
     @Override
     public void receiveMessage(final FrameworkMessage message, final String messageID,
             final String inReplyToMessageID) {
-        final List<String> location = message.getSelfLocationFromFirstAgentModel(message
+        final List<String> location = message.getAgentModelGridCellLocation(message
                 .getNextMsgForDistributedSoftwareAgentElement(message.getDocument(), null),
                 message);
         // TODO: Remove or add other validation.

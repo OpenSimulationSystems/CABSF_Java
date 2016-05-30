@@ -37,7 +37,7 @@ public class PrisonersDilemma_CABSF_Helper {
     private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf;
 
     // TODO: Get this from the configuration
-    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
+    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessage/0.2";
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
     /** The Jade_AgentContext_Cabsf context. */

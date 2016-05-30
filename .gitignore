@@ -1,8 +1,12 @@
-*.class
-.settings
-bin/
+.project/
+
+*.class/
+.settings/
+.classpath/
+/bin/
 *.log
-ModelOutput*.txt
+ModelOutput*
+.txt
 debug.log.*
 velocity.log.*
 
@@ -13,9 +17,9 @@ Repast.settings
 .mtj.tmp/
 
 # Package Files #
-*.jar
-*.war
-*.ear
+*.jar/
+*.war/
+*.ear/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

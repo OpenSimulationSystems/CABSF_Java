@@ -1,0 +1,110 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.opensimulationsystems.cabsf</groupId>
+	<artifactId>repast.simphony.bin_and_src</artifactId>
+	<version>2.3.1</version>
+	<packaging>jar</packaging>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<url>http://www.opensimulationsystems.org</url>
+
+	<licenses>
+		<license>
+			<name>Repast Suite License, Copyright (c) 2015 Argonne National Laboratory</name>
+			<url>http://repast.sourceforge.net/license.php</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Jorge Calderon</name>
+			<email>jcald1@gmail.com</email>
+			<organization>Open Simulation Systems (Open Source Simulation Software)</organization>
+			<organizationUrl>http://www.opensimulationsystems.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<!-- <connection>scm:git:git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</connection>
+			<developerConnection>scm:git:git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</developerConnection> -->
+		<url>https://github.com/OpenSimulationSystems</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>CP1252</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<stagingProfileId>935d33603e6f5</stagingProfileId>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<description>The Repast Simphony ${repast.simphony.version} repast.simphony.bin_and_src.jar.  This artifact in the Maven central repository is not maintained by the Repast/Argonne National Laboratory team, but the source is under their license.  This jar is compiled from source and may not match byte-for-byte with the repast.simphony.bin_and_src.jar deployed with Repast Simphony ${repast.simphony.version}.  Maven adds the version number to the jar filename, which is not present in the jar distributed with Repast Simphony ${repast.simphony.version}.</description>
+</project>

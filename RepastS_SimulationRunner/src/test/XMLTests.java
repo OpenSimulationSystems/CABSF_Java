@@ -48,7 +48,7 @@ public class XMLTests implements JadeControllerInterface {
 
     private static String frameworkConfigurationFileName;
 
-    private static String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
+    private static String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessage/0.2";
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -94,7 +94,7 @@ public class XMLTests implements JadeControllerInterface {
     /*
      * static private Document documentTemplateInstance = null; static private
      * String namespaceStr =
-     * "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2"
+     * "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessage/0.2"
      * ; static private Namespace namespace = Namespace.getNamespace("x",
      * namespaceStr); static private Element agentModelTemplate = null; static
      * private Element locationTemplate; static private Filter<Element>
@@ -106,7 +106,7 @@ public class XMLTests implements JadeControllerInterface {
      * static private void setupElementTemplates(Document doc) { // Agent Model
      * Template List<Element> agentModel = (List<Element>) XMLUtilities
      * .executeXPath( doc,
-     * "/x:CabsfMessageExchange/x:MessageRecipients/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent/x:AgentModels/x:AgentModel[1]"
+     * "/x:CabsfMessage/x:MessageRecipients/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent/x:AgentModels/x:AgentModel[1]"
      * , namespaceStr, elementFilter); agentModelTemplate = agentModel.get(0);
      *
      * // Location Template
@@ -114,7 +114,7 @@ public class XMLTests implements JadeControllerInterface {
      * @SuppressWarnings("unchecked") // TODO: Support multiple actors
      * List<Element> agentLocation = (List<Element>) XMLUtilities .executeXPath(
      * doc,
-     * "/x:CabsfMessageExchange/x:MessageRecipients/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent/x:AgentModels/x:AgentModel/x:Actor/x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location"
+     * "/x:CabsfMessage/x:MessageRecipients/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent/x:AgentModels/x:AgentModel/x:Actor/x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:AgentModelLocationChanges"
      * , namespaceStr, elementFilter); locationTemplate =
      * agentLocation.get(0).clone(); locationTemplate.setAttribute("id", ""); }
      *
@@ -143,7 +143,7 @@ public class XMLTests implements JadeControllerInterface {
      *
      * @SuppressWarnings("unchecked") List<Element> xPathSearchedNodes =
      * (List<Element>) XMLUtilities.executeXPath(doc,
-     * "/x:CabsfMessageExchange/x:SendingEntity/x:Name", namespaceStr,
+     * "/x:CabsfMessage/x:SendingEntity/x:Name", namespaceStr,
      * elementFilter); System.out.println(xPathSearchedNodes.get(0).getValue());
      *
      * xPathSearchedNodes.get(0).setText("new");
@@ -157,7 +157,7 @@ public class XMLTests implements JadeControllerInterface {
      * @SuppressWarnings("unchecked") // TODO: Support multiple actors
      * List<Element> thisAgentLocation = (List<Element>) XMLUtilities
      * .executeXPath( actor,
-     * "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:Location[@id='self']"
+     * "./x:EnvironmentChanges/x:CommonEnvironmentChanges/x:EnvironmentChange/x:AgentModelLocationChanges[@id='self']"
      * , namespaceStr, elementFilter);
      *
      * thisAgentLocation.get(0).getChild("GridPointX",
@@ -178,7 +178,7 @@ public class XMLTests implements JadeControllerInterface {
      *
      * @SuppressWarnings("unchecked") List<Element> agentModels =
      * (List<Element>) XMLUtilities .executeXPath( doc,
-     * "/x:CabsfMessageExchange/x:MessageRecipients/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent/x:AgentModels/x:AgentModel"
+     * "/x:CabsfMessage/x:MessageRecipients/x:DistributedSystem/x:DistributedSoftwareAgents/x:DistributedSoftwareAgent/x:AgentModels/x:AgentModel"
      * , namespaceStr, elementFilter); Element agentModel = null; if
      * (!firstAgentModelActorPopulated) { firstAgentModelActorPopulated = true;
      * agentModel = agentModels.get(0).getChild("Actor", namespace); return
@@ -214,7 +214,7 @@ public class XMLTests implements JadeControllerInterface {
 
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
-    String xmlString = "<SoftwareAgent xmlns=\"http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2\"\r\n"
+    String xmlString = "<SoftwareAgent xmlns=\"http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessage/0.2\"\r\n"
             + "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n"
             + "          <Name />\r\n"
             + "          <ID>distAutAgent2<Id>\r\n"
@@ -437,7 +437,7 @@ public class XMLTests implements JadeControllerInterface {
 
         new Jade_AgentContext_Cabsf();
 
-        msg.getSelfLocationFromFirstAgentModel(distributedAutonomousAgentElement, msg);
+        msg.getAgentModelGridCellLocation(distributedAutonomousAgentElement, msg);
 
         jZombies_CABSF_Helper.getPointWithLeastZombies(distributedAutonomousAgentElement,
                 msg, agentModelId);

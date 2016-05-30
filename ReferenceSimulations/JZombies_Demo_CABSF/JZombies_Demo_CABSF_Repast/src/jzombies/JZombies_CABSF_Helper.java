@@ -36,7 +36,7 @@ public class JZombies_CABSF_Helper {
     private RepastS_AgentContext_Cabsf repastS_AgentContext_Cabsf;
 
     // TODO: Get this from the configuration
-    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessageExchange/0.2";
+    private final String namespaceStr = "http://www.opensimulationsystems.org/cabsf/schemas/CabsfMessage/0.2";
     private final Namespace namespace = Namespace.getNamespace("x", namespaceStr);
 
     // Only used by the JADE agent
@@ -130,7 +130,7 @@ public class JZombies_CABSF_Helper {
         final List<Element> locations = (List<Element>) XMLUtilities
                 .executeXPath(
                         simulationDefinedEnvironmentChanges.get(0),
-                        "./x:EnvironmentChange/x:Location[@category='neighborhood' and @entitytype='Zombie']",
+                        "./x:EnvironmentChange/x:AgentModelLocationChanges[@category='neighborhood' and @entitytype='Zombie']",
                         namespaceStr, elementFilter);
         XMLUtilities.convertElementToXMLString(distributedSoftwareAgentElement, true);
         final Element location = locations.get(0);
@@ -229,7 +229,7 @@ public class JZombies_CABSF_Helper {
         assert (thisAgentModelPosition.size() >= 2);
 
         msg.setIDForAboutAgentModel(aboutAgentModel, agentModelID);
-        msg.populateThisLocationInAgentModelActor(aboutAgentModel,
+        msg.populateThisLocationGridCellInAgentModelActor(aboutAgentModel,
                 thisAgentModelPosition.get(0), thisAgentModelPosition.get(1),
                 agentContext.getCachedLocationTemplate());
 
@@ -300,7 +300,7 @@ public class JZombies_CABSF_Helper {
         assert (am.getAgentModelID() != null);
 
         // Set up the self agent model actor
-        msg.populateThisLocationInAgentModelActor(agentModelActor,
+        msg.populateThisLocationGridCellInAgentModelActor(agentModelActor,
                 String.valueOf(pt.getX()), String.valueOf(pt.getY()),
                 repastS_AgentContext_Cabsf.getCachedLocationTemplate());
 

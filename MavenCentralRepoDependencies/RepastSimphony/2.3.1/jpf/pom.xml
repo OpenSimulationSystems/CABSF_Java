@@ -1,0 +1,129 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.opensimulationsystems.jpf</groupId>
+	<artifactId>jpf</artifactId>
+	<version>2011-12-15</version>
+	<packaging>jar</packaging>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<url>http://www.opensimulationsystems.org</url>
+
+	<licenses>
+		<license>
+			<name>Repast Suite License, Copyright (c) 2015 Argonne National Laboratory</name>
+			<url>https://sourceforge.net/p/repast/simphony-app-framework/ci/master/tree/runtime/licenses/</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Jorge Calderon</name>
+			<email>jcald1@gmail.com</email>
+			<organization>Open Simulation Systems (Open Source Simulation Software)</organization>
+			<organizationUrl>http://www.opensimulationsystems.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<!-- <connection>scm:git:git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</connection>
+			<developerConnection>scm:git:git@github.com:IDRSolutions/maven-OpenViewerFX-src.git</developerConnection> -->
+		<url>https://sourceforge.net/p/repast/simphony-app-framework/ci/master/tree/runtime/lib/</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>CP1252</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<repast.simphony.version>2.3.1</repast.simphony.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>local-maven-repo</id>
+			<url>file:///${project.basedir}/local-maven-repo</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- Version differs from the one in Repast Simphony ${repast.simphony.version}
+			runtime lib directory. -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.0.2</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<stagingProfileId>935d33603e6f5</stagingProfileId>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<description>The Repast Simphony {Repast_Simphony_Installation}/plugins/repast.simphony.runtime_{version}/lib/jpf.jar. This Maven central repository artifact is not maintained by the Repast/Argonne National Laboratory development team. The source is under their license and the source control scm url points to their code repository. Maven adds the version number to the jar filename built from this artifact, which is not present in the original jar distributed with Repast Simphony. The generated jar may not match byte-for-byte with the saf.core.runtime.jar deployed with Repast Simphony. The JPF code was modified by the Repast development team.  This artifact does not include the source code.</description>
+</project>

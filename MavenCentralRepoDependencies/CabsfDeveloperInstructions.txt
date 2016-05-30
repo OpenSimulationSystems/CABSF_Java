@@ -1,0 +1,47 @@
+4/3/216
+
+INSTRUCTIONS FOR UPDATING FOR NEW REPAST SIMPHONY VERSIONS
+----------------------------------------------------------
+CABSF is dependent on native Repast Simphony classes to compile.  These classes are included in the Repast Simphony installation, but in order to make the building of CABSF independent of the installation of Repast Simphony itself, some of the Repast Simphony code is included with the CABSF code repo.  We use Maven to build CABSF. While we could have added the Repast code to a local Maven repo (local folder), we chose to upload it to the central Maven repository to benefit a wider user base that may not necessarily be using CABSF.  It also simplifies the process to build CABSF.
+
+There is another option at the bottom that does not use the Maven central repository.  That option can be used if you are trying to use a newer version of Repast Simphony with CABSF and CABSF has not yet been updated to use that newer version. 
+
+See the CABSF user instructions to upgrading Repast Simphony for additional steps to be performed.
+
+
+
+Updating CABSF for use with an new version of Repast Simphony by updating Maven Central Repo - Preferred Option
+---------------------------------------------------------------------------------------------------------------
+Whenever there is a new version of Repast Simphony, we need to update the Maven central repository with the last Repast Simphony code.
+
+1) git clone (or git pull if you already have the local repo) the Repast source.  We can't use the the regular Repast download for this.  See http://repast.sourceforge.net/download-extras.php
+Currently the repo can be cloned using the command "git clone git://repast.git.sourceforge.net/gitroot/repast/repast.simphony"
+
+2) The "repast.simphony" is source folder.  Copy the
+   {Repast_source}/eclipse/plugins/repast.simphony.bin_and_src_2.3.1
+	and
+   {Repast_source}/eclipse/plugins/repast.simphony.runtime
+
+to the MavenCentralRepoProjects/RepastSimphony/{Repast_Simphony_version} folder in the CABSF_Java folder.  You may need to create the new version folder first.
+
+   Note, these JARs correspond to the
+   {Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.bin_and_src_2.3.1
+	and
+   {Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.runtime
+
+folders in the Repast Simphony installation.  The Repast Simnphony installation does not contain the src however.
+
+3) Extract the {Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.bin_and_src_2.3.1/repast.simphony.bin_and_src.jar overwriting any existing files by executing "jar -xvzf repast.simphony.bin_and_src.jar" or in Windows you can use 7zip.
+
+4)  Extract the
+{Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.runtime
+overwriting any existing files by executing "jar -xvzf repast.simphony.bin_and_src.jar" or in Windows you can use 7zip.
+
+5) Follow the instructions here http://blog.sonatype.com/2008/11/adding-a-jar-to-a-maven-repository-with-sonatype-nexus/ for downloading Nexus Repository Manager OSS.
+
+6) Upload .
+
+
+Updating CABSF for use with an new version of Repast Simphony by updating Maven Central Repo - For developers who do want to use a newer version of Repast Simphony and do not want to wait for CABSF to be updated.
+---------------------------------------------------------------------------------------------------------------
+TODO: Copy instructions from the pom file.

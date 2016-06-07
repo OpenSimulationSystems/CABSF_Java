@@ -4,14 +4,14 @@
 .settings/
 .classpath/
 /bin/
-*.log
-ModelOutput*
+*.log/
+ModelOutput*.*/
 .txt
 debug.log.*
 velocity.log.*
 
 #Repast
-Repast.settings
+Repast.settings/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

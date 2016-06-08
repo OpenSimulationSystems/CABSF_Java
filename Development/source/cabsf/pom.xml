@@ -1,0 +1,183 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.opensimulationsystems.cabsf</groupId>
+	<artifactId>cabsf</artifactId>
+	<version>0.2.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>CommonAgentBasedSimulationFramework</name>
+	<url>http://www.opensimulationsystems.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+
+		<repastS.version>2.3.1</repastS.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>tilab</id>
+			<url>http://jade.tilab.com/maven/</url>
+		</repository>
+
+		<repository>
+			<id>local-maven-repo</id>
+			<url>file:///${project.basedir}/local-maven-repo</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- ********************************************* -->
+		<!-- ** CABSF-Only Dependencies ** -->
+		<dependency>
+			<groupId>com.googlecode.combinatoricslib</groupId>
+			<artifactId>combinatoricslib</artifactId>
+			<version>2.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- 2.4.2. is the latest as of 1/24/16 -->
+		<!-- <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.0</version>
+			</dependency> -->
+
+		<!-- 19.0 is the latest as of 1/24/16 -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
+
+		<!-- 4.4.0 is the latest as of 1/24/16 -->
+		<dependency>
+			<groupId>com.tilab.jade</groupId>
+			<artifactId>jade</artifactId>
+			<version>4.3.3</version>
+		</dependency>
+
+		<!-- 2.0.6 is the latest as of 1/24/16 -->
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+			<version>2.0.5</version>
+		</dependency>
+
+		<!-- 2.8.0 is the latest as of 1/24/16 -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.4.2</version>
+		</dependency>
+
+		<!-- ********************************************* -->
+
+
+	</dependencies>
+
+	<build>
+
+		<pluginManagement>
+			<plugins>
+
+				<!-- Force clean first to get the local repo JARs installed
+					<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.0.0</version>
+					<executions>
+					<execution>
+					<id>auto-clean</id>
+					<phase>initialize</phase>
+					<goals>
+					<goal>clean</goal>
+					</goals>
+					</execution>
+					</executions>
+					</plugin> -->
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+					<executions>
+						<execution>
+							<id>install-external</id>
+							<phase>clean</phase>
+							<configuration>
+								<file>${project.basedir}/local-maven-repo/saf.core.runtime.jar</file>
+								<repositoryLayout>default</repositoryLayout>
+								<groupId>saf.core</groupId>
+								<artifactId>runtime</artifactId>
+								<version>${repastS.version}</version>
+								<packaging>jar</packaging>
+								<generatePom>true</generatePom>
+							</configuration>
+							<goals>
+								<goal>install-file</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+					<executions>
+						<execution>
+							<id>install-external</id>
+							<phase>clean</phase>
+							<configuration>
+								<file>${project.basedir}/local-maven-repo/repast.simphony.bin_and_src.jar</file>
+								<repositoryLayout>default</repositoryLayout>
+								<groupId>repast.simphony</groupId>
+								<artifactId>bin_and_src</artifactId>
+								<version>${repastS.version}</version>
+								<packaging>jar</packaging>
+								<generatePom>true</generatePom>
+							</configuration>
+							<goals>
+								<goal>install-file</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.10</version>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}</outputDirectory>
+<!-- 							<overWriteReleases>false</overWriteReleases>
+								<overWriteSnapshots>false</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer> -->
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+</project>

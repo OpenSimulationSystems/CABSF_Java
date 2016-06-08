@@ -1,12 +1,12 @@
-.project/
+.project
 
-*.class/
+*.class
 .settings/
-.classpath/
-/bin/
-*.log/
-ModelOutput*.*/
-.txt
+.classpath
+bin/
+*.log
+*.log.*
+ModelOutput*
 debug.log.*
 velocity.log.*
 

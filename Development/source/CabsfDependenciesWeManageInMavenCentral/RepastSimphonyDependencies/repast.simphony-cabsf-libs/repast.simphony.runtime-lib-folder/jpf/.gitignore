@@ -1,0 +1,5 @@
+/target/
+
+# The original JPF jar was installed to the local-maven-repo folder.
+
+!*.jar

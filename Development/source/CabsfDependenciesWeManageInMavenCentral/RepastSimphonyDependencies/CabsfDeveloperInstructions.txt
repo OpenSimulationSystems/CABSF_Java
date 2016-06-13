@@ -1,0 +1,144 @@
+git config core.longpaths true
+
+*** git config --system core.longpaths true ***
+*** Add instructions about copying in the simphony core. ***
+*** Add instructions about not copying project when importing**
+*** Separate out out instructions into two files. ***
+
+**Add note:  when running the original JZombies in batch mode, it ends at 20.  Our version removes this from JZombiesBuilder so we can set the number of runs through the CABSF configuration file.
+
+4/3/216
+
+1-  Download the new release version of Repast Simphony (http://repast.sourceforge.net/download.php).  Don't uninstall the old version of Repast Simphony yet.
+
+2-  git clone the Repast Simphony platform development repo to get the source code (Link at the bottom of the page above).
+
+3-  In the user Repast Simphony installation directory ({Repast_Simphony_Installation}/plugins/repast.simphony.runtime_{repast.simphony.version}/lib/), do a binary diff between the jpf.jar, jpf-boot.jar, and saf.core.runtime.jar in the new and old Repast Simphony versions.
+
+2-If either jpf.jar, jpf-boot, or saf.core.runtime.jar  have changed, execute the following steps to update these artifacts on Maven Central Repo and in our own Repast Simphony artifacts that use them.  These instructions must be executed in the following order: jpf, jpf-boot, saf.core.runtime as there are internal dependencies among these artifacts themselves.
+
+2a - Go into the internal maven repo(s) directory(ies) "internal-maven-repo" in the jpf, jpf-boot, and/or saf.core.runtime folders.  Internal maven repositories are just like remote repositories in that Maven goes out that repo to retrieve the artifact.  The difference is that the repo is located locally in the file system ("file://" used in the pom instead of "http://").  In our cases we these repos in the "internal-maven-repo" directory inside of the jpf, jpf-boot, and saf.core.runtime directories.  These repositories are not the same as the local maven repo/maven cache (.m2 directory).  When running mvn clean install, Maven retrieves these local JARs and uses them as dependencies to create our artifacts under the org.opensimulationsystems group id, which we then deploy to the Maven central repo to be available to all users, including our own artifacts.  (For more information about Internal Repositories, see https://maven.apache.org/guides/introduction/introduction-to-repositories.html)
+
+2b- Delete all of the contents in those "internal-maven-repo" directory(ies).  Remember that the instructions in this section apply only to the artifacts that have changed since the last version of Repast Simphony for which CABSF was previously built. For example, if only jpf.jar and saf.core.runtime have changed, do NOT delete the contents of jpf-boot's internal-maven-repo directory.  
+
+2d change back to the root directory ("jpf", "jpf-boot", or "saf.core.runtime" depending on which one you are working on.  Remember to finish the instructions in this section for one artifact at a time.).  Deploy the new JAR(s) to the internal Maven Repository in using the following instructions.  
+
+2e
+If you're using Cygwin with Windows (git bash) and you receive an error with Maven commands below, try it in a regular Windows cmd window.  In the command below, change the version to the repast.simphony.version-opensimulationsystems.artifact.version (e.g. 2.3.1-1.0.0).  The opensimulationsystems.artifact.version properties should start back with 1.0.0 for any new version of Repast Simphony. This part of the version allows us to create multiple versions of our artifact for jpf, jpf-boot, for any given version of Repast Simphony.  This would be necessary if we accidently create a bad build in Maven Central and need a new build.  Once we release a build to Maven Central, it's not possible to undo it/delete the artifact.  For the second part of the version, start with "1.0.0" unless we did create a bad version in Maven Central.  Change the location of the jar file to the new jar from the new Repast Simphony distribution.  Remember to be in the root directory for each artifact.
+
+(For jpf.jar):
+mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.simphony.runtime_2.3.1\lib\jpf.jar -DgroupId=org.opensimulationsystems.jpf -DartifactId=jpf-internal-maven-repo -Dversion=2.3.1-1.0.0 -Dpackaging=jar -DlocalRepositoryPath=./internal-maven-repo
+
+(For jpf-boot.jar)
+mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.simphony.runtime_2.3.1\lib\jpf-boot.jar -DgroupId=org.opensimulationsystems.jpf-boot -DartifactId=jpf-boot-internal-maven-repo -Dversion=2.3.1-1.0.0 -Dpackaging=jar -DlocalRepositoryPath=./internal-maven-repo
+
+(For saf.core.runtime.jar)
+mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.simphony.runtime_2.3.1\lib\saf.core.runtime.jar -DgroupId=org.opensimulationsystems.saf -DartifactId=saf.core.runtime-internal-maven-repo -Dversion=2.3.1-1.0.0 -Dpackaging=jar -DlocalRepositoryPath=./internal-maven-repo
+
+(For repast.simphony.bin_and_src.jar)
+mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.simphony.bin_and_src_2.3.1\repast.simphony.bin_and_src.jar -DgroupId=org.opensimulationsystems.repast.simphony -DartifactId=repast.simphony.bin_and_src-internal-maven-repo -Dversion=2.3.1-1.0.0 -Dpackaging=jar -DlocalRepositoryPath=./internal-maven-repo
+
+
+(For repast.core-lib-folder.jar)
+mvn clean install
+mvn clean deploy
+
+(For repast.runtime-lib-folder.jar)
+mvn clean install
+mvn clean deploy
+
+
+Make sure that you see a "BUILD SUCCESS" message.  Go into the "internal-maven-repo" directory and into the deepest subdirectory.  Verify that the artifact has been added and that the jar is the same size as the new JAR you just added.
+
+3-Go into the pom file at the root directory (jpf/pom.xml, jpf-boot/pom.xml, and/or saf.core.runtime/pom.xml).  Change the repast.simphony.version and opensimulationsystems.artifact.version properties to the new version of Repast Simphony to match the versions set in the internal-maven-repo(s).  
+
+4- In the jpf/jpf-boot/saf.core.runtime directories, execute "mvn clean install".  Ensure that the build is successful.
+
+4-(See Instructions below to get access to push artifacts to Maven Central Repo) In the jpf/jpf-boot/saf.core.runtime directories, execute "mvn clean deploy" to deploy the artifact to Maven Central Repo's staging repository.  Note that the autoReleaseAfterClose option in the nexus-staging-maven-plugin has been set to false so the "release" will have to be performed manually in the Nexus Repository Manager.
+
+5-Log into the Nexus Repository Manager (https://oss.sonatype.org/).
+
+6-Type "org.opensimulationsystems" into the Arifact Search and click the hourglass.  Click on the new artifact, review it  and make sure everything is correct.
+
+7-Click on  "Staging Repositories" on the left side.  Type "org.opensimulationsystems" in the top right and click the hourglass.
+
+8 Repeat the steps for the remaining artifacts (jpf-boot.jar or saf.core.runtime.jar as necessary).  Verify that only one staging repository has been created per artifact.  If more than one was created, delete a duplicate.
+
+9  NOTE: HOLD OFF ON THIS STEP UNTIL ALL ARTIFACTS HAVE BEEN CREATED, THE NEW VERSION OF CABSF IS CREATED, AND CABSF HAS BEEN SUCCESSFULLY UNIT AND INTEGRATION TESTED. 
+Double click on the artifact and click Release.  The new artifact should appear in the Maven Central repository within a few hours.
+
+10  Now that jpf, jpf-boot, and saf.core.runtime have been updated, we need to get the rest of Repast Simphony Updated in our Maven artifacts, which we also have to push to Maven Central.
+
+11 Check all of the JARs in the following "lib" directories in the Repast Simphony release installation.  Note that this is not all of the Repast code, just the part that we need to compile CABSF.
+	{Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.runtime_{repast.simphony.version}/lib
+	{Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.batch_${repast.simphony.version}/lib
+	{Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.core_${repast.simphony.version}/lib
+	{Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.scenario_${repast.simphony.version}/lib
+
+Do a diff on the corresponding "lib" directories from the previous Repast Simphony installation.  Note any changed JAR versions, as specified in the filenames.  Note that some of the JARs do not contain the versions in them, so you'll need to perform a binary diff to check for file content differences.  jpf.jar, jpf-boot.jar, and saf.core.runtime.jar should already have been taken care of above.
+
+12  For any versions that need to change, go into the appropriate subdirectory in the "Development/CabsfDependenciesWeManageInMavenCentral/RepastSimphonyDependencies" directory, edit the pom file.  Update the necessary version(s) in the "dependencies/dependency" section for that artifact.  Check to make sure the new version(s) is available in the Maven Central repo: http://mvnrepository.com/.  If a new dependency has been introduced that does not exist in Maven Central, check whether it exists in another public repository and if so, add the dependency and the alternate repository to the pom file.  If the new dependency does not exist in any public repository (not likely), we'll have to add it to Maven central just as we did with jpf.jar, jpf-boot.jar, and saf.core.runtime.jar, which includes setting up an interna maven repository for that Maven project.  It's not strictly necessary that we have the source code, although that is recommended.  To set up a new dependency that does not exist in a public repo, copy one of these three directories (jpf, jpf-boot, saf.core.runtime) to a new directory at the same level and carefully update all of the appropriate id, version, and file/directory names in the pom.xml file.  Also make sure to extract the original JAR file first and copy out any licenses, META-INFO or other files/directories that should go in src/main/resources.  Do not copy any of the class files or embedded JARs.  Any embedded JARs should be mapped to a public repository artifact if possible.  Follow the steps above to push it to the Maven Central staging repository, and release it.
+
+13  If any of the 4 pom files in the repast.simphony.* code were not updated, go ahead and update the version numbers for the remaining proejcts. While we could get away with using the previous version(s), it would only make it more confusing for people, particularly those who want to use the Maven artifacts for Repast Simphony.  While these dependencies are required for CABSF to compile, never include these four Repast Simphony artifacts in the runtime classpath of the simulations themselves.  They will interefe with the classpath loading of Repast Simphony.  If you follow the CABSF user instructions, you shouldn't have classpath issues.  The four Repast Simphony artifacts are only required to be in the classpath of the Repast Simulation Runner or the TestMain.java (as described in the Repast Simphony FAQ (http://repast.sourceforge.net/docs/RepastSimphonyFAQ.pdf) under the "How can I control the Repast Simphony schedule from another Java
+application?" section.  In both of those cases we must provide the Repast Simphony runtime to be able to run Repast Simphony simulations.  Alternatively, we can use the original Repast Simphony source code corresponding to the four directories plus their lib directory JARs, but in our instructions we assume that we are using the artifacts we set up in Maven. 
+
+14  Now the versions of the four Repast Simphony Maven projects and their dependencies are updated.  We must update the source code as well.  Follow the Repast Simphony downloads page (http://repast.sourceforge.net/download.php) instructions to clone their source code.  Find the four directories and copy the source code.  Make sure that the contents of "src" is compied to the Maven equivalent "src/main/java".  For any non-Java files that we need, such as META-INF directoreies to "src/main/resources".  Do not copy in any binaries (*.jar files or the bin directories.)
+	Special instructions for repast.simphony.runtime_{repast.simphony.version}: Don't add boot.properties, MessageCenter.log4j, plugin_jpf.xml, or ui.properties to the repast.simphony.runtime directory.  We don't want these JARed up.  They should be configurable.  These should go in the separate repast.simphony.runtime-config directory/project.
+
+
+  Now go into the "cabsf" directory at the root of the git repository.  Modify the repast-simphony-gui-cabsf-libs, repast-simphony-simulation-runner-cabsf-libs to point to the updated versions of all of the dependencies.  Bump up the version of Repast Simphony.  Note that if no changes were made to one of the four libraries for a Repast
+
+15  Update the cabsf-lib pom.xml file to point to the
+
+*** Add instructions to get access to Maven Central Repo
+
+NOTE: This artifact was a mistake and should not have been loaded to Maven Central repo, but there's no way to remove it:
+http://search.maven.org/#artifactdetails|org.opensimulationsystems.cabsf|repast.simphony.bin_and_src|2.3.1|jar
+We now use the "org.opensimulationsystems.repast.simphony" instead of the "org.opensimulationsystems.cabsf" group id for repast simphony dependencies, and use the two part artifact versioning.
+
+
+INSTRUCTIONS FOR UPDATING FOR NEW REPAST SIMPHONY VERSIONS
+----------------------------------------------------------
+CABSF is dependent on native Repast Simphony classes to compile.  These classes are included in the Repast Simphony installation, but in order to make the building of CABSF independent of the installation of Repast Simphony itself, some of the Repast Simphony code is included with the CABSF code repo.  We use Maven to build CABSF. While we could have added the Repast code to a local Maven repo (local folder), we chose to upload it to the central Maven repository to benefit a wider user base that may not necessarily be using CABSF.  It also simplifies the process to build CABSF.
+
+There is another option at the bottom that does not use the Maven central repository.  That option can be used if you are trying to use a newer version of Repast Simphony with CABSF and CABSF has not yet been updated to use that newer version. 
+
+See the CABSF user instructions to upgrading Repast Simphony for additional steps to be performed.
+
+
+
+Updating CABSF for use with an new version of Repast Simphony by updating Maven Central Repo - Preferred Option
+---------------------------------------------------------------------------------------------------------------
+Whenever there is a new version of Repast Simphony, we need to update the Maven central repository with the last Repast Simphony code.
+
+1) git clone (or git pull if you already have the local repo) the Repast source.  We can't use the the regular Repast download for this.  See http://repast.sourceforge.net/download-extras.php
+Currently the repo can be cloned using the command "git clone git://repast.git.sourceforge.net/gitroot/repast/repast.simphony"
+
+2) The "repast.simphony" is source folder.  Copy the
+   {Repast_source}/eclipse/plugins/repast.simphony.bin_and_src_2.3.1
+	and
+   {Repast_source}/eclipse/plugins/repast.simphony.runtime
+
+to the MavenCentralRepoProjects/RepastSimphony/{Repast_Simphony_version} folder in the CABSF_Java folder.  You may need to create the new version folder first.
+
+   Note, these JARs correspond to the
+   {Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.bin_and_src_${repast.simphony.version}
+	and
+   {Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.runtime
+
+folders in the Repast Simphony installation.  The Repast Simnphony installation does not contain the src however.
+
+3) Extract the {Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.bin_and_src_${repast.simphony.version}/repast.simphony.bin_and_src.jar overwriting any existing files by executing "jar -xvzf repast.simphony.bin_and_src.jar" or in Windows you can use 7zip.
+
+4)  Extract the
+{Repast_Simphony_Installation}/eclipse/plugins/repast.simphony.runtime
+overwriting any existing files by executing "jar -xvzf repast.simphony.bin_and_src.jar" or in Windows you can use 7zip.
+
+5) Follow the instructions here http://blog.sonatype.com/2008/11/adding-a-jar-to-a-maven-repository-with-sonatype-nexus/ for downloading Nexus Repository Manager OSS.
+
+6) Upload .
+
+
+Updating CABSF for use with an new version of Repast Simphony by updating Maven Central Repo - For developers who do want to use a newer version of Repast Simphony and do not want to wait for CABSF to be updated.
+---------------------------------------------------------------------------------------------------------------
+TODO: Copy instructions from the pom file.

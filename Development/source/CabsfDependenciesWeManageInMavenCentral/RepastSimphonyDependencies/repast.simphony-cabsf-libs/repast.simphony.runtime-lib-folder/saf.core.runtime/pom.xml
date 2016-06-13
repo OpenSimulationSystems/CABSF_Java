@@ -1,0 +1,179 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.opensimulationsystems.saf</groupId>
+	<artifactId>saf.core.runtime</artifactId>
+	<version>${repast.simphony.version}-${opensimulationsystems.artifact.version}</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.opensimulationsystems.repast.simphony</groupId>
+		<artifactId>repast.simphony.runtime-lib-folder</artifactId>
+		<version>${repast.simphony.version}-${opensimulationsystems.artifact.version}</version>
+	</parent>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<url>http://www.opensimulationsystems.org</url>
+
+	<licenses>
+		<license>
+			<name>Repast Suite License, Copyright (c) 2015 Argonne National Laboratory</name>
+			<url>http://repast.sourceforge.net/license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Jorge Calderon</name>
+			<email>jcald1@gmail.com</email>
+			<organization>Open Simulation Systems (Open Source Simulation Software)</organization>
+			<organizationUrl>http://www.opensimulationsystems.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<!-- We received errors when compiling from source, so suspect that the
+			version on SourceForge was not the one used to compile saf.core.runtime.jar
+			distributed with Repast Simphony. We have packed the actual saf.core.runtime.jar
+			deployed with Repast Simphony in this artifact. -->
+		<url>https://sourceforge.net/p/repast/simphony-app-framework/ci/master/tree/runtime/b</url>
+	</scm>
+
+	<properties />
+
+	<repositories>
+		<repository>
+			<id>internal-maven-repo</id>
+			<url>file://${project.basedir}/./internal-maven-repo</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- The original Repast Simphony "saf.core.runtime.jar" was installed
+			to this internal
+			Maven repository. The resulting artifact
+			name does not match the original "saf.core.runtime.jar" name. -->
+		<dependency>
+			<groupId>org.opensimulationsystems.saf</groupId>
+			<artifactId>saf.core.runtime-internal-maven-repo</artifactId>
+			<version>${repast.simphony.version}-${opensimulationsystems.artifact.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<!-- <overWriteReleases>false</overWriteReleases>
+								<overWriteSnapshots>false</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer> -->
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<stagingProfileId>935d33603e6f5</stagingProfileId>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.1</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+						<manifestEntries>
+							<mode>development</mode>
+							<url>${project.url}</url>
+							<key>value</key>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<description>The version of Simphony App Framework (SAF) in the Repast Simphony {Repast_Simphony_Installation}/plugins/repast.simphony.runtime_${repast.simphony.version}/lib/saf.core.runtime.jar, repackaged here for Maven. This Maven central repository artifact is not maintained by the Repast/Argonne National Laboratory development team. The generated jar may not match byte-for-byte with the saf.core.runtime.jar deployed with Repast Simphony.</description>
+</project>

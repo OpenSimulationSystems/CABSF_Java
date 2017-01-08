@@ -35,6 +35,10 @@ mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.s
 (For saf.core.runtime.jar)
 mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.simphony.runtime_2.3.1\lib\saf.core.runtime.jar -DgroupId=org.opensimulationsystems.saf -DartifactId=saf.core.runtime-internal-maven-repo -Dversion=2.3.1-1.0.0 -Dpackaging=jar -DlocalRepositoryPath=./internal-maven-repo
 
+(For cglib-nodep-{cglib-nodep-version}.jar.  Replace the version in the jar file name.)
+mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.simphony.core_2.3.1\lib\cglib-nodep-2.2.3.jar -DgroupId=org.opensimulationsystems.cglib -DartifactId=cglib-nodep-internal-maven-repo -Dversion=2.3.1-1.0.0 -Dpackaging=jar -DlocalRepositoryPath=./internal-maven-repo
+
+
 (For repast.simphony.bin_and_src.jar)
 mvn install:install-file -Dfile=C:\RepastSimphony-2.3.1\eclipse\plugins\repast.simphony.bin_and_src_2.3.1\repast.simphony.bin_and_src.jar -DgroupId=org.opensimulationsystems.repast.simphony -DartifactId=repast.simphony.bin_and_src-internal-maven-repo -Dversion=2.3.1-1.0.0 -Dpackaging=jar -DlocalRepositoryPath=./internal-maven-repo
 
